@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../../models/EpisodeModel.dart';
 
 class EpisodesButton extends StatelessWidget {
+  final List<EpisodeModel> episodes;
+
+  EpisodesButton({@required this.episodes});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +27,7 @@ class EpisodesButton extends StatelessWidget {
             vertical: 10.0,
           ),
           child: AutoSizeText(
-            "Episodes",
+            episodes.length.toString() + " Episodes",
             maxLines: 1,
             minFontSize: 10.0,
             maxFontSize: 20.0,

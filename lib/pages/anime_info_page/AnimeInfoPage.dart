@@ -134,7 +134,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                         WatchTrailerButton(
                                           kitsuModel: kitsuModel,
                                         ),
-                                        EpisodesButton(),
+                                        EpisodesButton(
+                                          episodes: episodeModel,
+                                        ),
                                       ],
                                     ),
                                   ),
