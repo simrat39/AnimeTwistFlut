@@ -18,15 +18,19 @@ class InfoChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       padding: EdgeInsets.all(7.5),
-      label: AutoSizeText(
-        text,
-        textAlign: TextAlign.start,
-        maxLines: 1,
-        minFontSize: 15.0,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Theme.of(context).textTheme.headline6.color,
+      label: Center(
+        child: AutoSizeText(
+          text,
+          textAlign: TextAlign.start,
+          maxLines: 1,
+          minFontSize: 12,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 17.5,
+            color: Theme.of(context).textTheme.headline6.color.withOpacity(
+                  0.9,
+                ),
+          ),
         ),
       ),
     );
