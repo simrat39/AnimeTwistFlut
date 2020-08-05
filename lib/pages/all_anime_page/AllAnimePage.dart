@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/TwistUtils.dart';
-import '../../models/AnimeModel.dart';
+import '../../models/TwistModel.dart';
 import '../anime_info_page/AnimeInfoPage.dart';
 import '../search_page/SearchPage.dart';
 
@@ -116,7 +116,7 @@ class _AllAnimePageState extends State<AllAnimePage> {
         body: ListView.builder(
           controller: _controller,
           itemBuilder: (context, index) {
-            AnimeModel model = TwistUtils.allTwistModel.elementAt(index);
+            TwistModel model = TwistUtils.allTwistModel.elementAt(index);
             return ListTile(
               title: Text(
                 model.title.toString(),
@@ -137,7 +137,7 @@ class _AllAnimePageState extends State<AllAnimePage> {
                   PageRouteBuilder(
                     transitionDuration: Duration(milliseconds: 400),
                     pageBuilder: (context, anim, secondAnim) => AnimeInfoPage(
-                      animeModel: TwistUtils.allTwistModel.elementAt(index),
+                      twistModel: TwistUtils.allTwistModel.elementAt(index),
                     ),
                     transitionsBuilder: (context, anim, secondAnim, child) {
                       var tween = Tween(

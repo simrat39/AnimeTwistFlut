@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../models/AnimeModel.dart';
+import '../../models/TwistModel.dart';
 import '../anime_info_page/AnimeInfoPage.dart';
 
 class SearchListTile extends StatelessWidget {
-  final AnimeModel animeModel;
+  final TwistModel twistModel;
   final FocusNode node;
 
   SearchListTile({
-    @required this.animeModel,
+    @required this.twistModel,
     @required this.node,
   });
 
@@ -15,13 +15,13 @@ class SearchListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        animeModel.title,
+        twistModel.title,
         maxLines: 1,
       ),
       subtitle: Text(
-        animeModel.altTitle == null
-            ? "Season " + animeModel.season.toString()
-            : animeModel.altTitle + " | Season " + animeModel.season.toString(),
+        twistModel.altTitle == null
+            ? "Season " + twistModel.season.toString()
+            : twistModel.altTitle + " | Season " + twistModel.season.toString(),
         maxLines: 1,
       ),
       trailing: Row(
@@ -29,7 +29,7 @@ class SearchListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          !animeModel.ongoing
+          !twistModel.ongoing
               ? Container()
               : Text(
                   "Ongoing",
@@ -51,7 +51,7 @@ class SearchListTile extends StatelessWidget {
           PageRouteBuilder(
             transitionDuration: Duration(milliseconds: 400),
             pageBuilder: (context, anim, secondAnim) => AnimeInfoPage(
-              animeModel: animeModel,
+              twistModel: twistModel,
               isFromSearchPage: true,
               focusNode: node,
             ),

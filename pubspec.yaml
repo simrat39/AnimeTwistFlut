@@ -27,6 +27,8 @@ dependencies:
   http:
   auto_size_text:
   url_launcher:
+  tuple:
+  encrypt:
 
 
 dev_dependencies:

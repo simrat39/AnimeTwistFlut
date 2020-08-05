@@ -1,10 +1,10 @@
-import '../models/AnimeModel.dart';
+import '../models/TwistModel.dart';
 
 class SearchUtils {
-  static bool isTextInAnimeModel({String text, AnimeModel model}) {
+  static bool isTextInAnimeModel({String text, TwistModel twistModel}) {
     if (text.isEmpty ||
-        model.title.toLowerCase().contains(text.toLowerCase()) ||
-        (model.altTitle ?? model.title)
+        twistModel.title.toLowerCase().contains(text.toLowerCase()) ||
+        (twistModel.altTitle ?? twistModel.title)
             .toLowerCase()
             .contains(text.toLowerCase())) {
       return true;

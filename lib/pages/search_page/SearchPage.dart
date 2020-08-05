@@ -86,11 +86,11 @@ class _SearchPageState extends State<SearchPage> {
                         var elem = TwistUtils.allTwistModel.elementAt(i);
                         if (SearchUtils.isTextInAnimeModel(
                           text: _textEditingController.text,
-                          model: elem,
+                          twistModel: elem,
                         )) {
                           results.add(
                             SearchListTile(
-                              animeModel: elem,
+                              twistModel: elem,
                               node: _focusNode,
                             ),
                           );

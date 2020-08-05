@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../models/KitsuModel.dart';
-import '../../models/AnimeModel.dart';
+import '../../models/TwistModel.dart';
+import '../../models/EpisodeModel.dart';
 
 import '../../utils/KitsuUtils.dart';
+import '../../utils/EpisodeUtils.dart';
 
 import 'AnimeInfoPageAppBar.dart';
 import 'WatchTrailerButton.dart';
@@ -15,14 +17,14 @@ import 'EpisodesButton.dart';
 import 'InfoChip.dart';
 
 class AnimeInfoPage extends StatefulWidget {
-  final AnimeModel animeModel;
+  final TwistModel twistModel;
   final KitsuModel kitsuModel;
   final bool isFromSearchPage;
   final FocusNode focusNode;
   final String heroTag;
 
   AnimeInfoPage({
-    this.animeModel,
+    this.twistModel,
     this.kitsuModel,
     this.isFromSearchPage,
     this.focusNode,
@@ -44,12 +46,15 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     super.initState();
   }
 
-  Future getKitsuModel() {
-    if (widget.kitsuModel != null)
-      return Future.delayed(
-        Duration(microseconds: 1),
-      );
-    return KitsuUtils.getKitsuModel(widget.animeModel.kitsuId);
+  KitsuModel kitsuModel;
+  List<EpisodeModel> episodeModel;
+
+  Future getKitsuModel() async {
+    if (widget.kitsuModel == null)
+      kitsuModel = await KitsuUtils.getKitsuModel(widget.twistModel.kitsuId);
+    else
+      kitsuModel = widget.kitsuModel;
+    episodeModel = await EpisodeUtils.getEpisodes(widget.twistModel);
   }
 
   @override
@@ -71,12 +76,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _getKitsuModel,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              KitsuModel kitsuModel;
-              if (widget.kitsuModel != null) {
-                kitsuModel = widget.kitsuModel;
-              } else {
-                kitsuModel = snapshot.data;
-              }
               return Scrollbar(
                 child: ListView(
                   physics: BouncingScrollPhysics(),
@@ -156,7 +155,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   right: 15.0,
                                 ),
                                 child: AutoSizeText(
-                                  widget.animeModel.title,
+                                  widget.twistModel.title,
                                   textAlign: TextAlign.start,
                                   maxLines: 3,
                                   minFontSize: 30.0,
@@ -179,7 +178,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                       ),
                                       child: InfoChip(
                                         text: "Season " +
-                                            widget.animeModel.season.toString(),
+                                            widget.twistModel.season.toString(),
                                       ),
                                     ),
                                     Padding(
@@ -187,7 +186,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                         left: 10.0,
                                       ),
                                       child: InfoChip(
-                                        text: widget.animeModel.ongoing
+                                        text: widget.twistModel.ongoing
                                             ? "Ongoing"
                                             : "Finished",
                                       ),
@@ -203,7 +202,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   bottom: 20.0,
                                 ),
                                 child: DescriptionBox(
-                                  animeModel: widget.animeModel,
+                                  twistModel: widget.twistModel,
                                   kitsuModel: kitsuModel,
                                 ),
                               ),

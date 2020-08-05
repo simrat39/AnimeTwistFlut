@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../models/AnimeModel.dart';
+import '../../../models/TwistModel.dart';
 import '../../../models/KitsuModel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../anime_info_page/AnimeInfoPage.dart';
 import '../../anime_info_page/WatchTrailerButton.dart';
 
 class ExploreCard extends StatefulWidget {
-  final AnimeModel twistModel;
+  final TwistModel twistModel;
   final KitsuModel kitsuModel;
 
   ExploreCard({this.twistModel, this.kitsuModel});
@@ -38,7 +38,7 @@ class _ExploreCardState extends State<ExploreCard> {
               PageRouteBuilder(
                 transitionDuration: Duration(milliseconds: 400),
                 pageBuilder: (context, anim, secondAnim) => AnimeInfoPage(
-                  animeModel: widget.twistModel,
+                  twistModel: widget.twistModel,
                   kitsuModel: widget.kitsuModel,
                   heroTag: widget.twistModel.id.toString() + "fromExploreCard",
                 ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../models/KitsuModel.dart';
-import '../../models/AnimeModel.dart';
+import '../../models/TwistModel.dart';
 
 class DescriptionBox extends StatelessWidget {
-  final AnimeModel animeModel;
+  final TwistModel twistModel;
   final KitsuModel kitsuModel;
 
-  DescriptionBox({this.kitsuModel, this.animeModel});
+  DescriptionBox({this.kitsuModel, this.twistModel});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,8 @@ class DescriptionBox extends StatelessWidget {
           15.0,
         ),
         child: Text(
-          animeModel.altTitle != null
-              ? animeModel.altTitle + "\n\n" + kitsuModel.description
+          twistModel.altTitle != null
+              ? twistModel.altTitle + "\n\n" + kitsuModel.description
               : kitsuModel.description,
           textAlign: TextAlign.start,
           style: TextStyle(
