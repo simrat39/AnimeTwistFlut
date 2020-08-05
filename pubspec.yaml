@@ -29,6 +29,7 @@ dependencies:
   url_launcher:
   tuple:
   encrypt:
+  simple_animations:
 
 
 dev_dependencies:
