@@ -21,7 +21,6 @@ class TwistUtils {
     );
 
     List<dynamic> jsonData = jsonDecode(response);
-    jsonData.shuffle();
 
     jsonData.forEach(
       (element) async {
