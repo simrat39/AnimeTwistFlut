@@ -179,6 +179,24 @@ class _WatchPageState extends State<WatchPage> {
                                         padding: EdgeInsets.only(
                                           right: 15.0,
                                         ),
+                                        child: AnimatedOpacity(
+                                          duration: 300.milliseconds,
+                                          opacity: _controller.value.isBuffering
+                                              ? 1.0
+                                              : 0.0,
+                                          child: Center(
+                                            child: Transform.scale(
+                                              scale: 0.5,
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 15.0,
+                                        ),
                                         child: RaisedButton(
                                           child: Text("Next Ep"),
                                           color: Theme.of(context).accentColor,
@@ -318,18 +336,6 @@ class _WatchPageState extends State<WatchPage> {
                         ),
                       ),
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     toggleUI();
-                    //   },
-                    //   child: AnimatedOpacity(
-                    //     duration: 300.milliseconds,
-                    //     opacity: _controller.value.isBuffering ? 1.0 : 0.0,
-                    //     child: Center(
-                    //       child: CircularProgressIndicator(),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 )
               : Center(
