@@ -252,84 +252,90 @@ class _WatchPageState extends State<WatchPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              height: MediaQuery.of(context).orientation ==
-                                      Orientation.portrait
-                                  ? MediaQuery.of(context).size.height * 0.075
-                                  : MediaQuery.of(context).size.height * 0.125,
-                              width: double.infinity,
-                              color: Theme.of(context)
-                                  .scaffoldBackgroundColor
-                                  .withOpacity(0.75),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.skip_previous_outlined,
-                                    ),
-                                    onPressed: () {
-                                      _controller.seekTo((_controller
-                                                  .value.position.inSeconds -
-                                              10)
-                                          .seconds);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      _controller.value.isPlaying
-                                          ? Icons.pause
-                                          : Icons.play_arrow,
-                                    ),
-                                    onPressed: () {
-                                      togglePlay();
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.skip_next_outlined),
-                                    onPressed: () {
-                                      _controller.seekTo((_controller
-                                                  .value.position.inSeconds +
-                                              10)
-                                          .seconds);
-                                    },
-                                  ),
-                                  Text(
-                                    currentPositionStr,
-                                  ),
-                                  Expanded(
-                                    child: Slider(
-                                      value: _controller
-                                          .value.position.inSeconds
-                                          .toDouble(),
-                                      activeColor:
-                                          Theme.of(context).accentColor,
-                                      inactiveColor: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.5),
-                                      min: 0,
-                                      max: _controller.value.duration.inSeconds
-                                          .toDouble(),
-                                      label: secondsToHumanReadable(
-                                          _controller.value.position.inSeconds),
-                                      divisions:
-                                          _controller.value.duration.inSeconds,
-                                      onChanged: (pos) {
-                                        setState(
-                                          () {
-                                            _controller.seekTo(pos.seconds);
-                                          },
-                                        );
+                            IgnorePointer(
+                              ignoring: !isUIvisible,
+                              child: Container(
+                                height: MediaQuery.of(context).orientation ==
+                                        Orientation.portrait
+                                    ? MediaQuery.of(context).size.height * 0.075
+                                    : MediaQuery.of(context).size.height *
+                                        0.125,
+                                width: double.infinity,
+                                color: Theme.of(context)
+                                    .scaffoldBackgroundColor
+                                    .withOpacity(0.75),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.skip_previous_outlined,
+                                      ),
+                                      onPressed: () {
+                                        _controller.seekTo((_controller
+                                                    .value.position.inSeconds -
+                                                10)
+                                            .seconds);
                                       },
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      right: 15.0,
+                                    IconButton(
+                                      icon: Icon(
+                                        _controller.value.isPlaying
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                      ),
+                                      onPressed: () {
+                                        togglePlay();
+                                      },
                                     ),
-                                    child: Text(_duration),
-                                  ),
-                                ],
+                                    IconButton(
+                                      icon: Icon(Icons.skip_next_outlined),
+                                      onPressed: () {
+                                        _controller.seekTo((_controller
+                                                    .value.position.inSeconds +
+                                                10)
+                                            .seconds);
+                                      },
+                                    ),
+                                    Text(
+                                      currentPositionStr,
+                                    ),
+                                    Expanded(
+                                      child: Slider(
+                                        value: _controller
+                                            .value.position.inSeconds
+                                            .toDouble(),
+                                        activeColor:
+                                            Theme.of(context).accentColor,
+                                        inactiveColor: Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.5),
+                                        min: 0,
+                                        max: _controller
+                                            .value.duration.inSeconds
+                                            .toDouble(),
+                                        label: secondsToHumanReadable(
+                                            _controller
+                                                .value.position.inSeconds),
+                                        divisions: _controller
+                                            .value.duration.inSeconds,
+                                        onChanged: (pos) {
+                                          setState(
+                                            () {
+                                              _controller.seekTo(pos.seconds);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 15.0,
+                                      ),
+                                      child: Text(_duration),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
