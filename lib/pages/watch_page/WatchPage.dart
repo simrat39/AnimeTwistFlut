@@ -98,6 +98,7 @@ class _WatchPageState extends State<WatchPage> {
     String minutes = (val ~/ 60).toString();
     String seconds = (val % 60).toString();
     if (seconds.length == 1) seconds = "0$seconds";
+    if (minutes.length == 1) minutes = "0$minutes";
     return "$minutes:$seconds";
   }
 
