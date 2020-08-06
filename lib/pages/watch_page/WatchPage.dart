@@ -292,6 +292,10 @@ class _WatchPageState extends State<WatchPage> {
                                       min: 0,
                                       max: _controller.value.duration.inSeconds
                                           .toDouble(),
+                                      label: secondsToHumanReadable(
+                                          _controller.value.position.inSeconds),
+                                      divisions:
+                                          _controller.value.duration.inSeconds,
                                       onChanged: (pos) {
                                         setState(
                                           () {

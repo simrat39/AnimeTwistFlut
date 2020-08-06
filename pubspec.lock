@@ -355,7 +355,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "79b1518364c792203a0507901f495e9f92102949"
+      resolved-ref: ed06d3dfa8bee9122528defd8772b0e55c2b3fc8
       url: "https://github.com/simrat39/videoPlayerWithHeader"
     source: git
     version: "0.10.2+4"
