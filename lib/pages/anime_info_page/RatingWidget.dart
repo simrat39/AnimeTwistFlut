@@ -25,11 +25,13 @@ class RatingWidget extends StatelessWidget {
       ),
       child: Center(
         child: AutoSizeText(
-          kitsuModel.rating.substring(
-                0,
-                kitsuModel.rating.indexOf('.'),
-              ) +
-              "%",
+          kitsuModel.rating != null
+              ? kitsuModel.rating.substring(
+                    0,
+                    kitsuModel.rating.indexOf('.'),
+                  ) +
+                  "%"
+              : "?",
           maxLines: 1,
           minFontSize: 30.0,
           maxFontSize: 60.0,
