@@ -224,7 +224,7 @@ class _WatchPageState extends State<WatchPage> {
                                                         .value
                                                         .position
                                                         .inSeconds +
-                                                    90)
+                                                    85)
                                                 .seconds);
                                           },
                                         ),
