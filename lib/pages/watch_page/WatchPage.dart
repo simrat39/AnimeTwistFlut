@@ -248,12 +248,32 @@ class _WatchPageState extends State<WatchPage> {
                                 children: [
                                   IconButton(
                                     icon: Icon(
+                                      Icons.skip_previous_outlined,
+                                    ),
+                                    onPressed: () {
+                                      _controller.seekTo((_controller
+                                                  .value.position.inSeconds -
+                                              10)
+                                          .seconds);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
                                       _controller.value.isPlaying
                                           ? Icons.pause
                                           : Icons.play_arrow,
                                     ),
                                     onPressed: () {
                                       togglePlay();
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.skip_next_outlined),
+                                    onPressed: () {
+                                      _controller.seekTo((_controller
+                                                  .value.position.inSeconds +
+                                              10)
+                                          .seconds);
                                     },
                                   ),
                                   Text(
