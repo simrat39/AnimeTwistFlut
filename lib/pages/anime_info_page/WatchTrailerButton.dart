@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../models/KitsuModel.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
+import '../../models/KitsuModel.dart';
 
 class WatchTrailerButton extends StatelessWidget {
   final KitsuModel kitsuModel;

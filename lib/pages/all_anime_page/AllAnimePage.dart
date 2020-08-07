@@ -1,6 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import '../../utils/TwistUtils.dart';
+
+// Project imports:
 import '../../models/TwistModel.dart';
+import '../../utils/TwistUtils.dart';
 import '../anime_info_page/AnimeInfoPage.dart';
 import '../search_page/SearchPage.dart';
 

@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 

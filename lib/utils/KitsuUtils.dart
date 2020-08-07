@@ -1,6 +1,9 @@
+// Dart imports:
 import 'dart:convert';
-import '../models/KitsuModel.dart';
+
+// Project imports:
 import '../cached_http_get/CachedHttpGet.dart';
+import '../models/KitsuModel.dart';
 
 class KitsuUtils {
   static Future<KitsuModel> getKitsuModel(int kitsuID) async {

@@ -1,17 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-
+// Dart imports:
 import 'dart:async';
 
-import 'package:video_player_header/video_player_header.dart';
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:supercharged/supercharged.dart';
+import 'package:video_player_header/video_player_header.dart';
 
-import '../../utils/CryptoUtils.dart';
-import '../../secrets.dart';
-
-import '../../models/TwistModel.dart';
+// Project imports:
 import '../../models/EpisodeModel.dart';
+import '../../models/TwistModel.dart';
+import '../../secrets.dart';
+import '../../utils/CryptoUtils.dart';
 
 class WatchPage extends StatefulWidget {
   final EpisodeModel episodeModel;

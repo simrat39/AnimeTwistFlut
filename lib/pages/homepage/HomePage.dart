@@ -1,10 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'MOTDCard.dart';
-import 'explore_slider/ExploreSlider.dart';
+
+// Project imports:
 import '../../utils/TwistUtils.dart';
-import 'ViewAllAnimeCard.dart';
-import 'DonationCard.dart';
 import '../search_page/SearchPage.dart';
+import 'DonationCard.dart';
+import 'MOTDCard.dart';
+import 'ViewAllAnimeCard.dart';
+import 'explore_slider/ExploreSlider.dart';
 
 class HomePage extends StatefulWidget {
   @override

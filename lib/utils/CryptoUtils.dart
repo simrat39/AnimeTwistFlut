@@ -1,9 +1,12 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+
+// Package imports:
 import 'package:crypto/crypto.dart';
-import 'package:tuple/tuple.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:tuple/tuple.dart';
 
 // Source: https://medium.com/@chingsuehok/cryptojs-aes-encryption-decryption-for-flutter-dart-7ca123bd7464
 

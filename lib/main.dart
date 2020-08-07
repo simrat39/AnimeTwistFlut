@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'pages/homepage/HomePage.dart';
 
 class CustomImageCache extends WidgetsFlutterBinding {

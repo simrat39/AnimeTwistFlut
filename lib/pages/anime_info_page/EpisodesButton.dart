@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../models/EpisodeModel.dart';
 import 'package:supercharged/supercharged.dart';
+
+// Project imports:
+import '../../models/EpisodeModel.dart';
 
 class EpisodesButton extends StatelessWidget {
   final List<EpisodeModel> episodes;

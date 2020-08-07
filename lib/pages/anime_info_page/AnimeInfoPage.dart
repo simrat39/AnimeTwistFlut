@@ -1,21 +1,23 @@
-import 'package:flutter/material.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 
+// Project imports:
+import '../../models/EpisodeModel.dart';
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
-import '../../models/EpisodeModel.dart';
-
-import '../../utils/KitsuUtils.dart';
 import '../../utils/EpisodeUtils.dart';
-
+import '../../utils/KitsuUtils.dart';
 import 'AnimeInfoPageAppBar.dart';
-import 'WatchTrailerButton.dart';
-import 'RatingWidget.dart';
 import 'DescriptionBox.dart';
 import 'EpisodesButton.dart';
-import 'InfoChip.dart';
 import 'EpisodesCard.dart';
+import 'InfoChip.dart';
+import 'RatingWidget.dart';
+import 'WatchTrailerButton.dart';
 
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;

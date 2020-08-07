@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
-import '../../../utils/TwistUtils.dart';
-import '../../../utils/KitsuUtils.dart';
-import 'dart:math';
-import 'ExploreCard.dart';
+// Dart imports:
 import 'dart:async';
+import 'dart:math';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../../models/KitsuModel.dart';
+import '../../../utils/KitsuUtils.dart';
+import '../../../utils/TwistUtils.dart';
+import 'ExploreCard.dart';
 
 class ExploreSlider extends StatefulWidget {
   @override

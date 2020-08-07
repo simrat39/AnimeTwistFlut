@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../utils/TwistUtils.dart';
+// Project imports:
 import '../../utils/SearchUtils.dart';
-
-import 'SearchPageInputBox.dart';
+import '../../utils/TwistUtils.dart';
 import 'SearchListTile.dart';
+import 'SearchPageInputBox.dart';
 
 class SearchPage extends StatefulWidget {
   @override

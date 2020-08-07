@@ -34,8 +34,7 @@ dependencies:
   video_player_header:
     git:
       url: https://github.com/simrat39/videoPlayerWithHeader
-  relative_scale:
-
+  import_sorter:
 
 dev_dependencies:
   flutter_test:

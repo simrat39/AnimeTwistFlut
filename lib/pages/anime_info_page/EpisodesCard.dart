@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:supercharged/supercharged.dart';
 
+// Project imports:
 import '../../models/EpisodeModel.dart';
 import '../../models/TwistModel.dart';
-
 import '../watch_page/WatchPage.dart';
 
 class EpisodesCard extends StatelessWidget {

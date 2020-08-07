@@ -1,7 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:simple_animations/simple_animations.dart';
-
 import 'package:supercharged/supercharged.dart';
 
 enum Properties { opacity, offset }

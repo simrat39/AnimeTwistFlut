@@ -1,10 +1,13 @@
 // Message of the day utils
 
-import '../secrets.dart';
+// Dart imports:
+import 'dart:convert';
 
+// Package imports:
 import 'package:http/http.dart' as http;
 
-import 'dart:convert';
+// Project imports:
+import '../secrets.dart';
 
 class MOTDUtils {
   static Future<List<String>> getMOTD() async {
