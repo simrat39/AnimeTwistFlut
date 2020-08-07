@@ -73,6 +73,8 @@ class _ExploreSliderState extends State<ExploreSlider> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -100,7 +102,9 @@ class _ExploreSliderState extends State<ExploreSlider> {
                   left: 15.0,
                   right: 15.0,
                 ),
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: orientation == Orientation.portrait
+                    ? height * 0.25
+                    : height * 0.4,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -120,7 +124,9 @@ class _ExploreSliderState extends State<ExploreSlider> {
                 ),
               );
             return Container(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: orientation == Orientation.portrait
+                  ? height * 0.25
+                  : height * 0.4,
               child: PageView.builder(
                 controller: _controller,
                 itemBuilder: (context, index) {

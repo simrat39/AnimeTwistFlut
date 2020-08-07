@@ -30,6 +30,8 @@ class _ExploreCardState extends State<ExploreCard> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       width: double.infinity,
       child: Card(
@@ -82,7 +84,9 @@ class _ExploreCardState extends State<ExploreCard> {
                     frameBuilder: (context, child, inn, boo) {
                       return Container(
                         width: MediaQuery.of(context).size.width * 0.35,
-                        height: MediaQuery.of(context).size.height * 0.25,
+                        height: orientation == Orientation.portrait
+                            ? height * 0.25
+                            : height * 0.4,
                         color: Theme.of(context).cardColor,
                         child: child,
                       );
@@ -91,7 +95,9 @@ class _ExploreCardState extends State<ExploreCard> {
                       if (progress == null) return child;
                       return Container(
                         width: MediaQuery.of(context).size.width * 0.35,
-                        height: MediaQuery.of(context).size.height * 0.25,
+                        height: orientation == Orientation.portrait
+                            ? height * 0.25
+                            : height * 0.4,
                         color: Theme.of(context).cardColor,
                         child: Center(
                           child: Transform.scale(
