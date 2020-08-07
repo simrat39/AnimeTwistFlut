@@ -15,8 +15,11 @@ class WatchTrailerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
-      width: MediaQuery.of(context).size.height * 0.16,
+      width: orientation == Orientation.portrait
+          ? MediaQuery.of(context).size.height * 0.16
+          : MediaQuery.of(context).size.width * 0.16,
       child: OutlineButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
@@ -28,17 +31,19 @@ class WatchTrailerButton extends StatelessWidget {
           color: Colors.redAccent,
           width: 2.0,
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 10.0,
-          ),
-          child: AutoSizeText(
-            "Watch Trailer",
-            maxLines: 1,
-            minFontSize: 10.0,
-            maxFontSize: 20.0,
-            style: TextStyle(
-              fontSize: 20.0,
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 10.0,
+            ),
+            child: AutoSizeText(
+              "Watch Trailer",
+              maxLines: 1,
+              minFontSize: 10.0,
+              maxFontSize: 20.0,
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
             ),
           ),
         ),
