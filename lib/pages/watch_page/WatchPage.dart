@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+import 'dart:async';
+
 import 'package:video_player_header/video_player_header.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -30,6 +32,7 @@ class _WatchPageState extends State<WatchPage> {
   VideoPlayerController _controller;
   String _duration;
   bool isUIvisible = false;
+  bool isWaiting = false;
   double currentPosition;
   String currentPositionStr;
 
@@ -92,6 +95,16 @@ class _WatchPageState extends State<WatchPage> {
       SystemChrome.setEnabledSystemUIOverlays([]);
       isUIvisible = !isUIvisible;
     });
+
+    if (!isWaiting) {
+      isWaiting = true;
+      Timer(2.seconds, () {
+        setState(() {
+          isUIvisible = false;
+        });
+        isWaiting = false;
+      });
+    }
   }
 
   String secondsToHumanReadable(int val) {
