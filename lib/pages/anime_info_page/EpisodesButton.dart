@@ -19,8 +19,11 @@ class EpisodesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
-      width: MediaQuery.of(context).size.height * 0.16,
+      width: orientation == Orientation.portrait
+          ? MediaQuery.of(context).size.height * 0.16
+          : MediaQuery.of(context).size.width * 0.18,
       child: OutlineButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(

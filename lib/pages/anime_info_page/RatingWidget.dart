@@ -15,9 +15,13 @@ class RatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    double sideLen = orientation == Orientation.portrait
+        ? MediaQuery.of(context).size.height * 0.16
+        : MediaQuery.of(context).size.width * 0.16;
     return Container(
-      width: MediaQuery.of(context).size.height * 0.16,
-      height: MediaQuery.of(context).size.height * 0.16,
+      width: sideLen,
+      height: sideLen,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.yellow,

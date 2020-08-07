@@ -13,11 +13,9 @@ import '../../utils/EpisodeUtils.dart';
 import '../../utils/KitsuUtils.dart';
 import 'AnimeInfoPageAppBar.dart';
 import 'DescriptionBox.dart';
-import 'EpisodesButton.dart';
 import 'EpisodesCard.dart';
 import 'InfoChip.dart';
-import 'RatingWidget.dart';
-import 'WatchTrailerButton.dart';
+import 'InfoCard.dart';
 
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;
@@ -42,12 +40,12 @@ class AnimeInfoPage extends StatefulWidget {
 
 class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _getKitsuModel;
-  ScrollController _controller;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     _getKitsuModel = getKitsuModel();
-    _controller = ScrollController();
+    _scrollController = ScrollController();
     super.initState();
   }
 
@@ -64,8 +62,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
         if (widget.isFromSearchPage ?? false) {
@@ -83,7 +79,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
                 physics: ClampingScrollPhysics(),
-                controller: _controller,
+                controller: _scrollController,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   switch (index) {
@@ -92,63 +88,11 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Card(
-                            margin: EdgeInsets.symmetric(
-                              horizontal: 15.0,
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              height: height * 0.35,
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: width * 0.225,
-                                    height: height * 0.35,
-                                    child: Hero(
-                                      tag: widget.heroTag,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                          8.0,
-                                        ),
-                                        child: Image(
-                                          image: NetworkImage(
-                                            kitsuModel.imageURL,
-                                          ),
-                                          loadingBuilder:
-                                              (context, child, progress) {
-                                            if (progress == null) return child;
-                                            return Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            );
-                                          },
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        RatingWidget(
-                                          kitsuModel: kitsuModel,
-                                        ),
-                                        WatchTrailerButton(
-                                          kitsuModel: kitsuModel,
-                                        ),
-                                        EpisodesButton(
-                                          episodes: episodes,
-                                          controller: _controller,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          InfoCard(
+                            heroTag: widget.heroTag,
+                            kitsuModel: kitsuModel,
+                            episodes: episodes,
+                            controller: _scrollController,
                           ),
                           Card(
                             margin: EdgeInsets.only(

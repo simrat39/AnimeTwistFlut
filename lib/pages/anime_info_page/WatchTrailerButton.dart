@@ -19,7 +19,7 @@ class WatchTrailerButton extends StatelessWidget {
     return Container(
       width: orientation == Orientation.portrait
           ? MediaQuery.of(context).size.height * 0.16
-          : MediaQuery.of(context).size.width * 0.16,
+          : MediaQuery.of(context).size.width * 0.18,
       child: OutlineButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
