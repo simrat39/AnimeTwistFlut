@@ -228,7 +228,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                         padding: EdgeInsets.only(
                           left: 15.0,
                           right: 15.0,
-                          bottom: 20.0,
+                          bottom: 10.0,
                         ),
                         child: EpisodesCard(
                           episodes: episodes,

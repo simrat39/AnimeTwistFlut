@@ -20,7 +20,6 @@ class EpisodesCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           List<Widget> tiles = [];
-
           for (int i = 0; i < episodes.length; i++) {
             tiles.add(
               Container(
@@ -68,7 +67,7 @@ class EpisodesCard extends StatelessWidget {
                   child: Text(
                     episodes.elementAt(i).number.toString(),
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
@@ -80,24 +79,25 @@ class EpisodesCard extends StatelessWidget {
               constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height * 0.7,
               ),
-              margin: EdgeInsets.only(
+              padding: EdgeInsets.only(
                 top: 10.0,
-                bottom: 15.0,
                 left: 15.0,
                 right: 15.0,
+                bottom: 15.0,
               ),
               child: CustomScrollView(
                 controller: _controller,
-                physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
                 slivers: [
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(
-                        bottom: 20.0,
+                        bottom: 15.0,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             "${episodes.length} Episode" +
