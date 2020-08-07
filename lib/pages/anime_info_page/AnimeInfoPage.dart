@@ -40,10 +40,12 @@ class AnimeInfoPage extends StatefulWidget {
 
 class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _getKitsuModel;
+  ScrollController _controller;
 
   @override
   void initState() {
     _getKitsuModel = getKitsuModel();
+    _controller = ScrollController();
     super.initState();
   }
 
@@ -79,6 +81,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
                 physics: ClampingScrollPhysics(),
+                controller: _controller,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   switch (index) {
@@ -136,6 +139,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                         ),
                                         EpisodesButton(
                                           episodes: episodes,
+                                          controller: _controller,
                                         ),
                                       ],
                                     ),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../models/EpisodeModel.dart';
+import 'package:supercharged/supercharged.dart';
 
 class EpisodesButton extends StatelessWidget {
   final List<EpisodeModel> episodes;
+  final ScrollController controller;
 
   EpisodesButton({
     @required this.episodes,
+    @required this.controller,
   });
 
   @override
@@ -38,7 +41,13 @@ class EpisodesButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          controller.animateTo(
+            controller.position.maxScrollExtent,
+            duration: 500.milliseconds,
+            curve: Curves.ease,
+          );
+        },
       ),
     );
   }
