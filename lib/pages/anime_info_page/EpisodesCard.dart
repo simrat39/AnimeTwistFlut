@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:supercharged/supercharged.dart';
 
 import '../../models/EpisodeModel.dart';
 import '../../models/TwistModel.dart';
@@ -9,6 +10,7 @@ import '../watch_page/WatchPage.dart';
 class EpisodesCard extends StatelessWidget {
   final List<EpisodeModel> episodes;
   final TwistModel twistModel;
+  final ScrollController _controller = ScrollController();
 
   EpisodesCard({@required this.episodes, @required this.twistModel});
 
@@ -85,23 +87,41 @@ class EpisodesCard extends StatelessWidget {
                 right: 15.0,
               ),
               child: CustomScrollView(
+                controller: _controller,
                 physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
                 slivers: [
                   SliverToBoxAdapter(
-                    child: IgnorePointer(
-                      ignoring: true,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 20.0,
-                        ),
-                        child: Text(
-                          "${episodes.length} Episodes",
-                          style: TextStyle(
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.bold,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 20.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${episodes.length} Episode" +
+                                (episodes.length > 1 ? "s" : ""),
+                            style: TextStyle(
+                              fontSize: 40.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_downward,
+                            ),
+                            onPressed: () {
+                              _controller.position.animateTo(
+                                _controller.position.maxScrollExtent,
+                                duration: episodes.length >= 150
+                                    ? (episodes.length ~/ 150).seconds
+                                    : 750.milliseconds,
+                                curve: Curves.ease,
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
