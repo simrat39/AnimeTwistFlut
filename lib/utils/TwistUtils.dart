@@ -29,7 +29,7 @@ class TwistUtils {
             id: element["id"],
             title: element["title"],
             altTitle: element["alt_title"],
-            season: element["season"],
+            season: element["season"] == 0 ? 1 : element["season"],
             ongoing: element["ongoing"] == 1,
             kitsuId: element["hb_id"],
             slug: SlugModel(
