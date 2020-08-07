@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../models/EpisodeModel.dart';
 import '../../models/TwistModel.dart';
@@ -72,53 +73,55 @@ class EpisodesCard extends StatelessWidget {
               ),
             );
           }
-          return Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.6,
-            ),
-            margin: EdgeInsets.only(
-              top: 10.0,
-              bottom: 15.0,
-              left: 15.0,
-              right: 15.0,
-            ),
-            child: CustomScrollView(
-              controller: ScrollController(
-                initialScrollOffset: 0.0,
+          return CupertinoScrollbar(
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.7,
               ),
-              physics: BouncingScrollPhysics(),
-              shrinkWrap: true,
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 20.0,
-                    ),
-                    child: Text(
-                      "Episodes!",
-                      style: TextStyle(
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
+              margin: EdgeInsets.only(
+                top: 10.0,
+                bottom: 15.0,
+                left: 15.0,
+                right: 15.0,
+              ),
+              child: CustomScrollView(
+                physics: BouncingScrollPhysics(),
+                shrinkWrap: true,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 20.0,
+                        ),
+                        child: Text(
+                          "${episodes.length} Episodes",
+                          style: TextStyle(
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:
-                        MediaQuery.of(context).size.width * 0.01 ~/ 1.25,
-                    mainAxisSpacing: 15.0,
-                    crossAxisSpacing: 10.0,
-                    childAspectRatio: 2,
+                  SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:
+                          MediaQuery.of(context).size.width * 0.01 ~/ 1.25,
+                      mainAxisSpacing: 15.0,
+                      crossAxisSpacing: 10.0,
+                      childAspectRatio: 2,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return tiles[index];
+                      },
+                      childCount: tiles.length,
+                    ),
                   ),
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return tiles[index];
-                    },
-                    childCount: tiles.length,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

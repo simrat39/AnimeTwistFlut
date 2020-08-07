@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
@@ -41,12 +40,10 @@ class AnimeInfoPage extends StatefulWidget {
 
 class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _getKitsuModel;
-  ItemScrollController _controller;
 
   @override
   void initState() {
     _getKitsuModel = getKitsuModel();
-    _controller = ItemScrollController();
     super.initState();
   }
 
@@ -80,13 +77,12 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _getKitsuModel,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Scrollbar(
-                child: ScrollablePositionedList.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemScrollController: _controller,
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
+              return ListView.builder(
+                physics: ClampingScrollPhysics(),
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  switch (index) {
+                    case 0:
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +136,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                         ),
                                         EpisodesButton(
                                           episodes: episodes,
-                                          controller: _controller,
                                         ),
                                       ],
                                     ),
@@ -223,7 +218,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                           ),
                         ],
                       );
-                    } else if (index == 1) {
+                      break;
+                    case 1:
                       return Padding(
                         padding: EdgeInsets.only(
                           left: 15.0,
@@ -235,10 +231,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                           twistModel: widget.twistModel,
                         ),
                       );
-                    }
-                    return Container();
-                  },
-                ),
+                      break;
+                  }
+                  return Container();
+                },
               );
             }
             return Center(

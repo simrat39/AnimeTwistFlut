@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../models/EpisodeModel.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class EpisodesButton extends StatelessWidget {
   final List<EpisodeModel> episodes;
-  final ItemScrollController controller;
 
-  EpisodesButton({@required this.episodes, @required this.controller});
+  EpisodesButton({
+    @required this.episodes,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,7 @@ class EpisodesButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {
-          controller.jumpTo(
-            index: 1,
-          );
-        },
+        onPressed: () {},
       ),
     );
   }
