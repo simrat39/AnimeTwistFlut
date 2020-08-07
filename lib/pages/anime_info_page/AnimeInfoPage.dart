@@ -14,8 +14,8 @@ import '../../utils/KitsuUtils.dart';
 import 'AnimeInfoPageAppBar.dart';
 import 'DescriptionBox.dart';
 import 'EpisodesCard.dart';
-import 'InfoChip.dart';
 import 'InfoCard.dart';
+import 'InfoChip.dart';
 
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;

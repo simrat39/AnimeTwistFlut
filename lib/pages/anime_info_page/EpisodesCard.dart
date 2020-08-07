@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
@@ -93,21 +94,26 @@ class EpisodesCard extends StatelessWidget {
                 shrinkWrap: true,
                 slivers: [
                   SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.only(
+                    child: Container(
+                      margin: EdgeInsets.only(
                         bottom: 15.0,
                       ),
+                      width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(
-                            "${episodes.length} Episode" +
-                                (episodes.length > 1 ? "s" : ""),
-                            style: TextStyle(
-                              fontSize: 40.0,
-                              fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: AutoSizeText(
+                              "${episodes.length} Episode" +
+                                  (episodes.length > 1 ? "s" : ""),
+                              minFontSize: 10.0,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           IconButton(

@@ -1,10 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import '../../models/KitsuModel.dart';
+
+// Package imports:
+import 'package:responsive_builder/responsive_builder.dart';
+
+// Project imports:
 import '../../models/EpisodeModel.dart';
+import '../../models/KitsuModel.dart';
 import 'EpisodesButton.dart';
 import 'RatingWidget.dart';
 import 'WatchTrailerButton.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class InfoCard extends StatelessWidget {
   final KitsuModel kitsuModel;
