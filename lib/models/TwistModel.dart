@@ -1,14 +1,30 @@
-// Project imports:
-import 'SlugModel.dart';
+// Package imports:
+import 'package:hive/hive.dart';
 
-class TwistModel {
+part 'TwistModel.g.dart';
+
+@HiveType(typeId: 0)
+class TwistModel extends HiveObject {
+  @HiveField(0)
   final int id;
+
+  @HiveField(1)
   final String title;
+
+  @HiveField(2)
   final String altTitle;
+
+  @HiveField(3)
   final int season;
+
+  @HiveField(4)
   final bool ongoing;
+
+  @HiveField(5)
   final int kitsuId;
-  final SlugModel slug;
+
+  @HiveField(6)
+  final String slug;
 
   TwistModel(
       {this.id,

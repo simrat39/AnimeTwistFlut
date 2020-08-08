@@ -1,10 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:provider/provider.dart';
+
 // Project imports:
+import '../../providers/LastWatchedProvider.dart';
 import '../../utils/TwistUtils.dart';
 import '../search_page/SearchPage.dart';
 import 'DonationCard.dart';
+import 'LastWatchedWidget.dart';
 import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
 import 'explore_slider/ExploreSlider.dart';
@@ -17,12 +22,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future _getAnime;
+  Future _initData;
 
   @override
   void initState() {
-    _getAnime = TwistUtils.getAllTwistModel();
+    _initData = initData();
     super.initState();
+  }
+
+  Future initData() async {
+    await TwistUtils.getAllTwistModel();
+    await LastWatchedProvider.provider.initData();
   }
 
   @override
@@ -85,7 +95,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: FutureBuilder(
-          future: _getAnime,
+          future: _initData,
           builder: (context, snapshot) {
             if (!(snapshot.connectionState == ConnectionState.done))
               return Center(
@@ -133,6 +143,13 @@ class _HomePageState extends State<HomePage> {
                       bottom: 15.0,
                     ),
                     child: ViewAllAnimeCard(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.zero,
+                    child: ChangeNotifierProvider<LastWatchedProvider>.value(
+                      value: LastWatchedProvider.provider,
+                      child: LastWatchedWidget(),
+                    ),
                   ),
                   // Donation Card
                   Padding(

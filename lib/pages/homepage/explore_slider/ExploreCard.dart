@@ -47,7 +47,6 @@ class _ExploreCardState extends State<ExploreCard> {
                 pageBuilder: (context, anim, secondAnim) => AnimeInfoPage(
                   twistModel: widget.twistModel,
                   kitsuModel: widget.kitsuModel,
-                  heroTag: widget.twistModel.id.toString() + "fromExploreCard",
                 ),
                 transitionsBuilder: (context, anim, secondAnim, child) {
                   var tween = Tween(

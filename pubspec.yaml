@@ -36,10 +36,16 @@ dependencies:
       url: https://github.com/simrat39/videoPlayerWithHeader
   import_sorter:
   responsive_builder:
+  provider:
+  hive:
+  hive_flutter:
+  path_provider:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

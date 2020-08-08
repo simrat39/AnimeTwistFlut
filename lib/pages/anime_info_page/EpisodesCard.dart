@@ -4,19 +4,27 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
+import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
+import '../../providers/LastWatchedProvider.dart';
 import '../watch_page/WatchPage.dart';
 
 class EpisodesCard extends StatelessWidget {
   final List<EpisodeModel> episodes;
   final TwistModel twistModel;
+  final KitsuModel kitsuModel;
   final ScrollController _controller = ScrollController();
 
-  EpisodesCard({@required this.episodes, @required this.twistModel});
+  EpisodesCard({
+    @required this.episodes,
+    @required this.twistModel,
+    @required this.kitsuModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +50,12 @@ class EpisodesCard extends StatelessWidget {
                   ),
                   highlightedBorderColor: Theme.of(context).accentColor,
                   onPressed: () {
+                    Provider.of<LastWatchedProvider>(context, listen: false)
+                        .setData(
+                      twistModel: twistModel,
+                      kitsuModel: kitsuModel,
+                      episodeModel: episodes.elementAt(i),
+                    );
                     Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -50,6 +64,7 @@ class EpisodesCard extends StatelessWidget {
                           episodeModel: episodes.elementAt(i),
                           episodes: episodes,
                           twistModel: twistModel,
+                          kitsuModel: kitsuModel,
                         ),
                         transitionsBuilder: (context, anim, secondAnim, child) {
                           var tween = Tween(

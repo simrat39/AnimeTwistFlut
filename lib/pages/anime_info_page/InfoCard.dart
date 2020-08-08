@@ -14,13 +14,11 @@ import 'WatchTrailerButton.dart';
 class InfoCard extends StatelessWidget {
   final KitsuModel kitsuModel;
   final List<EpisodeModel> episodes;
-  final String heroTag;
   final ScrollController controller;
 
   InfoCard({
     @required this.kitsuModel,
     @required this.episodes,
-    @required this.heroTag,
     @required this.controller,
   });
 
@@ -44,24 +42,21 @@ class InfoCard extends StatelessWidget {
               height: orientation == Orientation.portrait
                   ? height * 0.35
                   : height * 0.5,
-              child: Hero(
-                tag: heroTag,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    8.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  8.0,
+                ),
+                child: Image(
+                  image: NetworkImage(
+                    kitsuModel.imageURL,
                   ),
-                  child: Image(
-                    image: NetworkImage(
-                      kitsuModel.imageURL,
-                    ),
-                    loadingBuilder: (context, child, progress) {
-                      if (progress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    fit: BoxFit.cover,
-                  ),
+                  loadingBuilder: (context, child, progress) {
+                    if (progress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

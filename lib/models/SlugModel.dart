@@ -1,5 +1,5 @@
-class SlugModel {
-  final String slug;
+// class SlugModel {
+//   final String slug;
 
-  SlugModel({this.slug});
-}
+//   SlugModel({this.slug});
+// }

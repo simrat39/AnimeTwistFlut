@@ -3,7 +3,6 @@ import 'dart:convert';
 
 // Project imports:
 import '../cached_http_get/CachedHttpGet.dart';
-import '../models/SlugModel.dart';
 import '../models/TwistModel.dart';
 import '../secrets.dart';
 
@@ -32,9 +31,7 @@ class TwistUtils {
             season: element["season"] == 0 ? 1 : element["season"],
             ongoing: element["ongoing"] == 1,
             kitsuId: element["hb_id"],
-            slug: SlugModel(
-              slug: element["slug"]["slug"],
-            ),
+            slug: element["slug"]["slug"],
           ),
         );
       },

@@ -13,7 +13,7 @@ class EpisodeUtils {
     String response = await CachedHttpGet.get(
       Request(
         url: 'https://twist.moe/api/anime/' +
-            twistModel.slug.slug.toString() +
+            twistModel.slug.toString() +
             "/sources",
         header: {
           'x-access-token': x_access_token,

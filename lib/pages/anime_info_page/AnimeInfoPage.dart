@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:provider/provider.dart';
+import 'package:supercharged/supercharged.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
+import '../../providers/LastWatchedProvider.dart';
 import '../../utils/EpisodeUtils.dart';
 import '../../utils/KitsuUtils.dart';
 import 'AnimeInfoPageAppBar.dart';
@@ -22,14 +25,14 @@ class AnimeInfoPage extends StatefulWidget {
   final KitsuModel kitsuModel;
   final bool isFromSearchPage;
   final FocusNode focusNode;
-  final String heroTag;
+  final bool shouldGoToEpisodes;
 
   AnimeInfoPage({
     this.twistModel,
     this.kitsuModel,
     this.isFromSearchPage,
     this.focusNode,
-    this.heroTag = "Hero",
+    this.shouldGoToEpisodes = false,
   });
 
   @override
@@ -77,6 +80,16 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _getKitsuModel,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (duration) {
+                  if (widget.shouldGoToEpisodes)
+                    _scrollController.animateTo(
+                      _scrollController.position.maxScrollExtent,
+                      duration: 500.milliseconds,
+                      curve: Curves.ease,
+                    );
+                },
+              );
               return ListView.builder(
                 physics: ClampingScrollPhysics(),
                 controller: _scrollController,
@@ -89,7 +102,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           InfoCard(
-                            heroTag: widget.heroTag,
                             kitsuModel: kitsuModel,
                             episodes: episodes,
                             controller: _scrollController,
@@ -176,9 +188,14 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                           right: 15.0,
                           bottom: 10.0,
                         ),
-                        child: EpisodesCard(
-                          episodes: episodes,
-                          twistModel: widget.twistModel,
+                        child:
+                            ChangeNotifierProvider<LastWatchedProvider>.value(
+                          value: LastWatchedProvider.provider,
+                          child: EpisodesCard(
+                            episodes: episodes,
+                            twistModel: widget.twistModel,
+                            kitsuModel: kitsuModel,
+                          ),
                         ),
                       );
                       break;

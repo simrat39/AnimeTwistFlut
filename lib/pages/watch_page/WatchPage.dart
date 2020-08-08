@@ -7,12 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_player_header/video_player_header.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
+import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
+import '../../providers/LastWatchedProvider.dart';
 import '../../secrets.dart';
 import '../../utils/CryptoUtils.dart';
 
@@ -20,11 +23,13 @@ class WatchPage extends StatefulWidget {
   final EpisodeModel episodeModel;
   final List<EpisodeModel> episodes;
   final TwistModel twistModel;
+  final KitsuModel kitsuModel;
 
   WatchPage({
     this.episodeModel,
     this.episodes,
     this.twistModel,
+    this.kitsuModel,
   });
 
   @override
@@ -44,7 +49,7 @@ class _WatchPageState extends State<WatchPage> {
     SystemChrome.setEnabledSystemUIOverlays([]);
     var headers = {
       'Referer':
-          'https://twist.moe/a/${widget.twistModel.slug.slug}/${widget.episodeModel.number}'
+          'https://twist.moe/a/${widget.twistModel.slug}/${widget.episodeModel.number}'
     };
 
     String vidUrl = Uri.parse("https://twistcdn.bunny.sh/" +
@@ -214,36 +219,59 @@ class _WatchPageState extends State<WatchPage> {
                                         padding: EdgeInsets.only(
                                           right: 15.0,
                                         ),
-                                        child: RaisedButton(
-                                          child: Text("Next Ep"),
-                                          color: Theme.of(context).accentColor,
-                                          colorBrightness: Brightness.light,
-                                          onPressed:
-                                              widget.episodes.last ==
-                                                      widget.episodeModel
-                                                  ? null
-                                                  : () {
-                                                      Navigator.pop(context);
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              WatchPage(
-                                                            episodeModel: widget
-                                                                .episodes
-                                                                .elementAt(widget
-                                                                        .episodes
-                                                                        .indexOf(
-                                                                            widget.episodeModel) +
-                                                                    1),
-                                                            episodes:
-                                                                widget.episodes,
-                                                            twistModel: widget
-                                                                .twistModel,
-                                                          ),
+                                        child: ChangeNotifierProvider.value(
+                                          value: LastWatchedProvider.provider,
+                                          builder: (context, child) =>
+                                              RaisedButton(
+                                            child: Text("Next Ep"),
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            colorBrightness: Brightness.light,
+                                            onPressed: widget.episodes.last ==
+                                                    widget.episodeModel
+                                                ? null
+                                                : () {
+                                                    Navigator.pop(context);
+                                                    Provider.of<LastWatchedProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .setData(
+                                                      episodeModel: widget
+                                                          .episodes
+                                                          .elementAt(widget
+                                                                  .episodes
+                                                                  .indexOf(widget
+                                                                      .episodeModel) +
+                                                              1),
+                                                      twistModel:
+                                                          widget.twistModel,
+                                                      kitsuModel:
+                                                          widget.kitsuModel,
+                                                    );
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WatchPage(
+                                                          episodeModel: widget
+                                                              .episodes
+                                                              .elementAt(widget
+                                                                      .episodes
+                                                                      .indexOf(
+                                                                          widget
+                                                                              .episodeModel) +
+                                                                  1),
+                                                          episodes:
+                                                              widget.episodes,
+                                                          twistModel:
+                                                              widget.twistModel,
+                                                          kitsuModel:
+                                                              widget.kitsuModel,
                                                         ),
-                                                      );
-                                                    },
+                                                      ),
+                                                    );
+                                                  },
+                                          ),
                                         ),
                                       ),
                                       Padding(
