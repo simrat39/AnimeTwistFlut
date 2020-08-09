@@ -113,17 +113,17 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     widget.twistModel.title,
                                     textAlign: TextAlign.start,
                                     maxLines: 3,
-                                    minFontSize: 30.0,
+                                    minFontSize: 25.0,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 35.0,
+                                      fontSize: 30.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 10.0,
+                                    top: 5.0,
                                   ),
                                   child: Row(
                                     children: [
@@ -152,7 +152,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 15.0,
+                                    top: 10.0,
                                     left: 15.0,
                                     right: 15.0,
                                     bottom: 20.0,

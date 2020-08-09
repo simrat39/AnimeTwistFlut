@@ -107,17 +107,17 @@ class EpisodesCard extends StatelessWidget {
               child: CustomScrollView(
                 controller: _controller,
                 shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
                 slivers: [
                   SliverToBoxAdapter(
                     child: Container(
                       margin: EdgeInsets.only(
-                        bottom: 15.0,
+                        bottom: 10.0,
                       ),
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: AutoSizeText(
@@ -126,16 +126,23 @@ class EpisodesCard extends StatelessWidget {
                               minFontSize: 10.0,
                               maxLines: 1,
                               style: TextStyle(
-                                fontSize: 40.0,
+                                fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.arrow_downward,
+                          InkWell(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: 5.0,
+                              ),
+                              child: Icon(
+                                Icons.arrow_downward,
+                                color: Colors.white,
+                                size: 25.0,
+                              ),
                             ),
-                            onPressed: () {
+                            onTap: () {
                               _controller.position.animateTo(
                                 _controller.position.maxScrollExtent,
                                 duration: episodes.length >= 150
@@ -152,14 +159,19 @@ class EpisodesCard extends StatelessWidget {
                   SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount:
-                          MediaQuery.of(context).size.width * 0.01 ~/ 1.25,
-                      mainAxisSpacing: 15.0,
-                      crossAxisSpacing: 10.0,
+                          MediaQuery.of(context).size.width * 0.01 ~/ 1,
+                      mainAxisSpacing: 7.0,
+                      crossAxisSpacing: 7.0,
                       childAspectRatio: 2,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        return tiles[index];
+                        return Padding(
+                          padding: EdgeInsets.all(
+                            1.0,
+                          ),
+                          child: tiles[index],
+                        );
                       },
                       childCount: tiles.length,
                     ),
