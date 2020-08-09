@@ -24,15 +24,7 @@ class TwistUtils {
     jsonData.forEach(
       (element) async {
         allTwistModel.add(
-          TwistModel(
-            id: element["id"],
-            title: element["title"],
-            altTitle: element["alt_title"],
-            season: element["season"] == 0 ? 1 : element["season"],
-            ongoing: element["ongoing"] == 1,
-            kitsuId: element["hb_id"],
-            slug: element["slug"]["slug"],
-          ),
+          TwistModel.fromJson(element),
         );
       },
     );

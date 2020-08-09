@@ -34,4 +34,16 @@ class TwistModel extends HiveObject {
       this.ongoing,
       this.kitsuId,
       this.slug});
+
+  factory TwistModel.fromJson(Map<String, dynamic> data) {
+    return TwistModel(
+      id: data["id"],
+      title: data["title"],
+      altTitle: data["alt_title"],
+      season: data["season"] == 0 ? 1 : data["season"],
+      ongoing: data["ongoing"] == 1,
+      kitsuId: data["hb_id"],
+      slug: data["slug"]["slug"],
+    );
+  }
 }

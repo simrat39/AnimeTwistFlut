@@ -25,10 +25,7 @@ class EpisodeUtils {
     jsonData.forEach(
       (element) {
         ret.add(
-          EpisodeModel(
-            source: element["source"],
-            number: element["number"],
-          ),
+          EpisodeModel.fromJson(element),
         );
       },
     );

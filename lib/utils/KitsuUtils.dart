@@ -19,25 +19,6 @@ class KitsuUtils {
 
     Map<dynamic, dynamic> jsonData = jsonDecode(response);
 
-    return KitsuModel(
-      id: jsonData["data"]["id"],
-      rating: jsonData["data"]["attributes"]["averageRating"],
-      imageURL: jsonData["data"]["attributes"]["posterImage"]["large"],
-      description: jsonData["data"]["attributes"]["synopsis"],
-      trailerURL: jsonData["data"]["attributes"]["youtubeVideoId"],
-    );
+    return KitsuModel.fromJson(jsonData);
   }
-
-  // static Future<String> getThumbnailUrl(int id) async {
-  //   var response = await http.get(
-  //     "https://kitsu.io/api/edge/anime/$id",
-  //     headers: {
-  //       'accept': 'application/vnd.api+json',
-  //       'content-type': 'application/vnd.api+json'
-  //     },
-  //   );
-  //   Map<dynamic, dynamic> jsonData = jsonDecode(response.body);
-
-  //   return jsonData["data"]["attributes"]["posterImage"]["medium"];
-  // }
 }

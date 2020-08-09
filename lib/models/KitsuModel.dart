@@ -27,4 +27,14 @@ class KitsuModel extends HiveObject {
     this.imageURL,
     this.trailerURL,
   });
+
+  factory KitsuModel.fromJson(Map<String, dynamic> data) {
+    return KitsuModel(
+      id: data["data"]["id"],
+      rating: data["data"]["attributes"]["averageRating"],
+      imageURL: data["data"]["attributes"]["posterImage"]["large"],
+      description: data["data"]["attributes"]["synopsis"],
+      trailerURL: data["data"]["attributes"]["youtubeVideoId"],
+    );
+  }
 }
