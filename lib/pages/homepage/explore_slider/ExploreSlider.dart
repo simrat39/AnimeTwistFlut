@@ -60,7 +60,7 @@ class _ExploreSliderState extends State<ExploreSlider> {
           try {
             _controller.animateToPage(
               _currentPage,
-              duration: Duration(milliseconds: 2000),
+              duration: Duration(milliseconds: 1000),
               curve: Curves.ease,
             );
           } catch (e) {
