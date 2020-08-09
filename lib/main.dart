@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+import 'package:flutter/services.dart';
 // Project imports:
 import 'pages/homepage/HomePage.dart';
 
@@ -17,6 +18,8 @@ class CustomImageCache extends WidgetsFlutterBinding {
 
 void main() {
   CustomImageCache();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(RootWindow());
 }
 

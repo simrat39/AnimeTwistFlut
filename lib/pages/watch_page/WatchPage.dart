@@ -1,12 +1,10 @@
-// Dart imports:
-import 'dart:async';
-
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_player_header/video_player_header.dart';
@@ -24,12 +22,14 @@ class WatchPage extends StatefulWidget {
   final List<EpisodeModel> episodes;
   final TwistModel twistModel;
   final KitsuModel kitsuModel;
+  final bool isFromPrevEpisode;
 
   WatchPage({
     this.episodeModel,
     this.episodes,
     this.twistModel,
     this.kitsuModel,
+    this.isFromPrevEpisode = false,
   });
 
   @override
@@ -40,9 +40,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   VideoPlayerController _controller;
   String _duration;
   bool isUIvisible = false;
-  bool isWaiting = false;
   double currentPosition;
   String currentPositionStr;
+  bool isRotated = true;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -75,6 +75,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
           _duration =
               secondsToHumanReadable(_controller.value.duration.inSeconds);
         });
+        toggleUI();
       });
 
     _controller.addListener(() {
@@ -116,16 +117,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       SystemChrome.setEnabledSystemUIOverlays([]);
       isUIvisible = !isUIvisible;
     });
+  }
 
-    if (!isWaiting) {
-      isWaiting = true;
-      Timer(2.seconds, () {
-        setState(() {
-          isUIvisible = false;
-        });
-        isWaiting = false;
-      });
-    }
+  void rotate() {
+    setState(() {
+      isRotated = !isRotated;
+    });
   }
 
   String secondsToHumanReadable(int val) {
@@ -142,268 +139,269 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       onTap: () {
         toggleUI();
       },
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: _controller.value.initialized
-              ? Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        toggleUI();
-                      },
-                      child: Center(
-                        child: AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(
-                            _controller,
+      child: RotatedBox(
+        quarterTurns: isRotated ? 1 : 0,
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Center(
+            child: _controller.value.initialized
+                ? Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          toggleUI();
+                        },
+                        child: Center(
+                          child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(
+                              _controller,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    AnimatedOpacity(
-                      duration: 300.milliseconds,
-                      opacity: isUIvisible ? 1.0 : 0.0,
-                      child: GestureDetector(
-                        onTap: () {
-                          if (!(isUIvisible)) toggleUI();
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).orientation ==
-                                      Orientation.portrait
-                                  ? MediaQuery.of(context).size.height * 0.075
-                                  : MediaQuery.of(context).size.height * 0.125,
-                              width: double.infinity,
-                              color: Theme.of(context)
-                                  .scaffoldBackgroundColor
-                                  .withOpacity(0.75),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.navigate_before,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      Text(
-                                        widget.twistModel.title +
-                                            "\n" +
-                                            "Season " +
-                                            widget.twistModel.season
-                                                .toString() +
-                                            " | Episode " +
-                                            widget.episodeModel.number
-                                                .toString(),
-                                      ),
+                      AnimatedOpacity(
+                        duration: 300.milliseconds,
+                        opacity: _controller.value.isBuffering ? 1.0 : 0.0,
+                        child: Center(
+                          child: Transform.scale(
+                            scale: 0.5,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      ),
+                      AnimatedOpacity(
+                        duration: 300.milliseconds,
+                        opacity: isUIvisible ? 1.0 : 0.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (!(isUIvisible)) toggleUI();
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: !isRotated
+                                    ? MediaQuery.of(context).size.height * 0.075
+                                    : MediaQuery.of(context).size.height * 0.06,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Colors.transparent,
+                                      Colors.black38,
+                                      Colors.black87,
                                     ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
                                   ),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 15.0,
-                                        ),
-                                        child: AnimatedOpacity(
-                                          duration: 300.milliseconds,
-                                          opacity: _controller.value.isBuffering
-                                              ? 1.0
-                                              : 0.0,
-                                          child: Center(
-                                            child: Transform.scale(
-                                              scale: 0.5,
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.navigate_before,
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 15.0,
-                                        ),
-                                        child: ChangeNotifierProvider.value(
-                                          value: LastWatchedProvider.provider,
-                                          builder: (context, child) =>
-                                              OutlineButton(
-                                            child: Text("Next Ep"),
-                                            highlightedBorderColor:
-                                                Theme.of(context).accentColor,
-                                            onPressed: widget.episodes.last ==
-                                                    widget.episodeModel
-                                                ? null
-                                                : () {
-                                                    Navigator.pop(context);
-                                                    Provider.of<LastWatchedProvider>(
-                                                            context,
-                                                            listen: false)
-                                                        .setData(
-                                                      episodeModel: widget
-                                                          .episodes
-                                                          .elementAt(widget
-                                                                  .episodes
-                                                                  .indexOf(widget
-                                                                      .episodeModel) +
-                                                              1),
-                                                      twistModel:
-                                                          widget.twistModel,
-                                                      kitsuModel:
-                                                          widget.kitsuModel,
-                                                    );
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            WatchPage(
-                                                          episodeModel: widget
-                                                              .episodes
-                                                              .elementAt(widget
-                                                                      .episodes
-                                                                      .indexOf(
-                                                                          widget
-                                                                              .episodeModel) +
-                                                                  1),
-                                                          episodes:
-                                                              widget.episodes,
-                                                          twistModel:
-                                                              widget.twistModel,
-                                                          kitsuModel:
-                                                              widget.kitsuModel,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 15.0,
-                                        ),
-                                        child: OutlineButton(
-                                          highlightedBorderColor:
-                                              Theme.of(context).accentColor,
-                                          child: Text("Skip Intro"),
                                           onPressed: () {
-                                            _controller.seekTo((_controller
-                                                        .value
-                                                        .position
-                                                        .inSeconds +
-                                                    85)
-                                                .seconds);
+                                            Navigator.pop(context);
                                           },
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IgnorePointer(
-                              ignoring: !isUIvisible,
-                              child: Container(
-                                height: MediaQuery.of(context).orientation ==
-                                        Orientation.portrait
-                                    ? MediaQuery.of(context).size.height * 0.075
-                                    : MediaQuery.of(context).size.height *
-                                        0.125,
-                                width: double.infinity,
-                                color: Theme.of(context)
-                                    .scaffoldBackgroundColor
-                                    .withOpacity(0.75),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.skip_previous_outlined,
-                                      ),
-                                      onPressed: () {
-                                        _controller.seekTo((_controller
-                                                    .value.position.inSeconds -
-                                                10)
-                                            .seconds);
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        _controller.value.isPlaying
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
-                                      ),
-                                      onPressed: () {
-                                        togglePlay();
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.skip_next_outlined),
-                                      onPressed: () {
-                                        _controller.seekTo((_controller
-                                                    .value.position.inSeconds +
-                                                10)
-                                            .seconds);
-                                      },
-                                    ),
-                                    Text(
-                                      currentPositionStr,
-                                    ),
-                                    Expanded(
-                                      child: Slider(
-                                        value: _controller
-                                            .value.position.inSeconds
-                                            .toDouble(),
-                                        activeColor:
-                                            Theme.of(context).accentColor,
-                                        inactiveColor: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.5),
-                                        min: 0,
-                                        max: _controller
-                                            .value.duration.inSeconds
-                                            .toDouble(),
-                                        label: secondsToHumanReadable(
-                                            _controller
-                                                .value.position.inSeconds),
-                                        divisions: _controller
-                                            .value.duration.inSeconds,
-                                        onChanged: (pos) {
-                                          setState(
-                                            () {
-                                              _controller.seekTo(pos.seconds);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 15.0,
-                                      ),
-                                      child: Text(_duration),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AutoSizeText(
+                                              widget.twistModel.title,
+                                              maxLines: 1,
+                                              minFontSize: 5.0,
+                                              maxFontSize: 20.0,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            AutoSizeText(
+                                              "Season " +
+                                                  widget.twistModel.season
+                                                      .toString() +
+                                                  " | Episode " +
+                                                  widget.episodeModel.number
+                                                      .toString(),
+                                              maxLines: 1,
+                                              minFontSize: 5.0,
+                                              maxFontSize: 20.0,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                          ],
+                              IgnorePointer(
+                                ignoring: !isUIvisible,
+                                child: Container(
+                                  height: !isRotated
+                                      ? MediaQuery.of(context).size.height *
+                                          0.075
+                                      : MediaQuery.of(context).size.height *
+                                          0.06,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Colors.transparent,
+                                        Colors.black87,
+                                      ],
+                                      end: Alignment.bottomCenter,
+                                      begin: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          _controller.value.isPlaying
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                        ),
+                                        onPressed: () {
+                                          togglePlay();
+                                        },
+                                      ),
+                                      ChangeNotifierProvider.value(
+                                        value: LastWatchedProvider.provider,
+                                        builder: (context, child) => IconButton(
+                                          icon: Icon(Icons.skip_next_outlined),
+                                          onPressed: widget.episodes.last ==
+                                                  widget.episodeModel
+                                              ? null
+                                              : () {
+                                                  Navigator.pop(context);
+                                                  Provider.of<LastWatchedProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .setData(
+                                                    episodeModel: widget
+                                                        .episodes
+                                                        .elementAt(widget
+                                                                .episodes
+                                                                .indexOf(widget
+                                                                    .episodeModel) +
+                                                            1),
+                                                    twistModel:
+                                                        widget.twistModel,
+                                                    kitsuModel:
+                                                        widget.kitsuModel,
+                                                  );
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          WatchPage(
+                                                        episodeModel: widget
+                                                            .episodes
+                                                            .elementAt(widget
+                                                                    .episodes
+                                                                    .indexOf(widget
+                                                                        .episodeModel) +
+                                                                1),
+                                                        episodes:
+                                                            widget.episodes,
+                                                        twistModel:
+                                                            widget.twistModel,
+                                                        kitsuModel:
+                                                            widget.kitsuModel,
+                                                        isFromPrevEpisode: true,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                        ),
+                                      ),
+                                      Text(
+                                        currentPositionStr,
+                                      ),
+                                      Expanded(
+                                        child: Slider(
+                                          value: _controller
+                                              .value.position.inSeconds
+                                              .toDouble(),
+                                          activeColor:
+                                              Theme.of(context).accentColor,
+                                          inactiveColor: Theme.of(context)
+                                              .accentColor
+                                              .withOpacity(0.5),
+                                          min: 0,
+                                          max: _controller
+                                              .value.duration.inSeconds
+                                              .toDouble(),
+                                          label: secondsToHumanReadable(
+                                              _controller
+                                                  .value.position.inSeconds),
+                                          divisions: _controller
+                                              .value.duration.inSeconds,
+                                          onChanged: (pos) {
+                                            setState(
+                                              () {
+                                                _controller.seekTo(pos.seconds);
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 5.0,
+                                        ),
+                                        child: Text(_duration),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.screen_rotation_rounded,
+                                        ),
+                                        onPressed: () {
+                                          rotate();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    ],
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Builder(
+                          builder: (context) {
+                            SystemChrome.setEnabledSystemUIOverlays([]);
+                            return CircularProgressIndicator();
+                          },
+                        ),
+                        SizedBox(
+                          height: 24.0,
+                        ),
+                        widget.isFromPrevEpisode
+                            ? Text("Loading Next Episode")
+                            : Text("Loading Episode"),
+                      ],
                     ),
-                  ],
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                ),
+                  ),
+          ),
         ),
       ),
     );
