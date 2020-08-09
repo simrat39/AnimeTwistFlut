@@ -36,7 +36,7 @@ class WatchPage extends StatefulWidget {
   _WatchPageState createState() => _WatchPageState();
 }
 
-class _WatchPageState extends State<WatchPage> {
+class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   VideoPlayerController _controller;
   String _duration;
   bool isUIvisible = false;
@@ -45,8 +45,20 @@ class _WatchPageState extends State<WatchPage> {
   String currentPositionStr;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state.index != AppLifecycleState.resumed.index) {
+      setState(() {
+        pause();
+      });
+    }
+  }
+
+  @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
+
+    WidgetsBinding.instance.addObserver(this);
+
     var headers = {
       'Referer':
           'https://twist.moe/a/${widget.twistModel.slug}/${widget.episodeModel.number}'
@@ -59,7 +71,7 @@ class _WatchPageState extends State<WatchPage> {
     _controller = VideoPlayerController.network(vidUrl, headers: headers)
       ..initialize().then((_) {
         setState(() {
-          _controller.play();
+          play();
           _duration =
               secondsToHumanReadable(_controller.value.duration.inSeconds);
         });
@@ -80,6 +92,7 @@ class _WatchPageState extends State<WatchPage> {
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }
