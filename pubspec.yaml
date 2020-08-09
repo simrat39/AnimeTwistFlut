@@ -40,6 +40,7 @@ dependencies:
   hive:
   hive_flutter:
   path_provider:
+  web_socket_channel:
 
 dev_dependencies:
   flutter_test:

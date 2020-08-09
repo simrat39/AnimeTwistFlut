@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import '../../providers/LastWatchedProvider.dart';
 import '../../utils/TwistUtils.dart';
+import '../chat_page/ChatPage.dart';
 import '../search_page/SearchPage.dart';
 import 'DonationCard.dart';
 import 'LastWatchedWidget.dart';
@@ -63,6 +64,34 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          IconButton(
+            icon: Icon(
+              Icons.chat_bubble,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: Duration(milliseconds: 400),
+                  pageBuilder: (context, anim, secondAnim) => ChatPage(),
+                  transitionsBuilder: (context, anim, secondAnim, child) {
+                    var tween = Tween(
+                      begin: Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    );
+                    var curvedAnimation = CurvedAnimation(
+                      parent: anim,
+                      curve: Curves.ease,
+                    );
+                    return SlideTransition(
+                      position: tween.animate(curvedAnimation),
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: Icon(
               Icons.search,
