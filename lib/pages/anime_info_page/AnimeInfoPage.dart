@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
-import 'package:supercharged/supercharged.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
@@ -25,14 +24,12 @@ class AnimeInfoPage extends StatefulWidget {
   final KitsuModel kitsuModel;
   final bool isFromSearchPage;
   final FocusNode focusNode;
-  final bool shouldGoToEpisodes;
 
   AnimeInfoPage({
     this.twistModel,
     this.kitsuModel,
     this.isFromSearchPage,
     this.focusNode,
-    this.shouldGoToEpisodes = false,
   });
 
   @override
@@ -80,16 +77,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _getKitsuModel,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              WidgetsBinding.instance.addPostFrameCallback(
-                (duration) {
-                  if (widget.shouldGoToEpisodes)
-                    _scrollController.animateTo(
-                      _scrollController.position.maxScrollExtent,
-                      duration: 500.milliseconds,
-                      curve: Curves.ease,
-                    );
-                },
-              );
               return ListView.builder(
                 physics: ClampingScrollPhysics(),
                 controller: _scrollController,
