@@ -39,14 +39,26 @@ class EpisodesButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             vertical: 10.0,
           ),
-          child: AutoSizeText(
-            episodes.length.toString() + " Episodes",
-            maxLines: 1,
-            minFontSize: 10.0,
-            maxFontSize: 20.0,
-            style: TextStyle(
-              fontSize: 20.0,
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: AutoSizeText(
+                  episodes.length.toString() + " Episodes",
+                  maxLines: 1,
+                  minFontSize: 5.0,
+                  maxFontSize: 20.0,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.arrow_downward,
+                size: 20.0,
+              ),
+            ],
           ),
         ),
         onPressed: () {
