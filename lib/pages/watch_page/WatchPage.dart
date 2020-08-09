@@ -235,11 +235,10 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         child: ChangeNotifierProvider.value(
                                           value: LastWatchedProvider.provider,
                                           builder: (context, child) =>
-                                              RaisedButton(
+                                              OutlineButton(
                                             child: Text("Next Ep"),
-                                            color:
+                                            highlightedBorderColor:
                                                 Theme.of(context).accentColor,
-                                            colorBrightness: Brightness.light,
                                             onPressed: widget.episodes.last ==
                                                     widget.episodeModel
                                                 ? null
@@ -291,9 +290,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         padding: EdgeInsets.only(
                                           right: 15.0,
                                         ),
-                                        child: RaisedButton(
-                                          color: Theme.of(context).accentColor,
-                                          colorBrightness: Brightness.light,
+                                        child: OutlineButton(
+                                          highlightedBorderColor:
+                                              Theme.of(context).accentColor,
                                           child: Text("Skip Intro"),
                                           onPressed: () {
                                             _controller.seekTo((_controller
