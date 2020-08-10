@@ -50,10 +50,11 @@ class RootWindow extends StatelessWidget {
           elevation: 0.0,
         ),
         cardTheme: CardTheme(
+          margin: EdgeInsets.zero,
+          clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          margin: EdgeInsets.zero,
         ),
       ),
       themeMode: ThemeMode.dark,

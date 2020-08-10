@@ -94,15 +94,17 @@ class EpisodesCard extends StatelessWidget {
             );
           }
           return CupertinoScrollbar(
+            isAlwaysShown: true,
+            controller: _controller,
             child: Container(
               constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height * 0.7,
               ),
               padding: EdgeInsets.only(
-                top: 10.0,
-                left: 15.0,
-                right: 15.0,
-                bottom: 15.0,
+                top: 12.0,
+                left: 16.0,
+                right: 16.0,
+                bottom: 16.0,
               ),
               child: CustomScrollView(
                 controller: _controller,
@@ -112,7 +114,7 @@ class EpisodesCard extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Container(
                       margin: EdgeInsets.only(
-                        bottom: 10.0,
+                        bottom: 15.0,
                       ),
                       width: double.infinity,
                       child: Row(
@@ -126,7 +128,7 @@ class EpisodesCard extends StatelessWidget {
                               minFontSize: 10.0,
                               maxLines: 1,
                               style: TextStyle(
-                                fontSize: 30.0,
+                                fontSize: 32.5,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -159,7 +161,7 @@ class EpisodesCard extends StatelessWidget {
                   SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount:
-                          MediaQuery.of(context).size.width * 0.01 ~/ 1,
+                          MediaQuery.of(context).size.width * 0.01 ~/ 1.2,
                       mainAxisSpacing: 7.0,
                       crossAxisSpacing: 7.0,
                       childAspectRatio: 2,
