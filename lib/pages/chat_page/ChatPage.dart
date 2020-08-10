@@ -37,6 +37,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void dispose() {
     _channel.sink.close();
+    ChatPage.messages.add(null);
     super.dispose();
   }
 
@@ -117,6 +118,9 @@ class _ChatPageState extends State<ChatPage> {
               controller: _controller,
               itemCount: ChatPage.messages.length,
               itemBuilder: (context, index) {
+                if (ChatPage.messages.elementAt(index) == null) {
+                  return Divider();
+                }
                 return ListTile(
                   title: Text(
                       ChatPage.messages.elementAt(index).userModel.username),
