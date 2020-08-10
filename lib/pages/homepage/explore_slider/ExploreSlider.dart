@@ -54,7 +54,7 @@ class _ExploreSliderState extends State<ExploreSlider> {
       Duration(seconds: 5),
       (Timer timer) {
         if (ModalRoute.of(context).isCurrent) {
-          int _currentPage = _controller.page ~/ 1;
+          int _currentPage = _controller.page == 0 ? 1 : _controller.page ~/ 1;
           _currentPage++;
 
           try {
