@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
@@ -42,7 +43,6 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   bool isUIvisible = false;
   double currentPosition;
   String currentPositionStr;
-  bool isRotated = true;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -93,6 +93,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    AutoOrientation.fullAutoMode();
     WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
@@ -121,7 +122,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   void rotate() {
     setState(() {
-      isRotated = !isRotated;
+      if (MediaQuery.of(context).orientation == Orientation.portrait) {
+        AutoOrientation.landscapeAutoMode();
+      } else {
+        AutoOrientation.portraitAutoMode();
+      }
     });
   }
 
@@ -139,269 +144,260 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       onTap: () {
         toggleUI();
       },
-      child: RotatedBox(
-        quarterTurns: isRotated ? 1 : 0,
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          body: Center(
-            child: _controller.value.initialized
-                ? Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      GestureDetector(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: _controller.value.initialized
+              ? Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        toggleUI();
+                      },
+                      child: Center(
+                        child: AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(
+                            _controller,
+                          ),
+                        ),
+                      ),
+                    ),
+                    AnimatedOpacity(
+                      duration: 300.milliseconds,
+                      opacity: _controller.value.isBuffering ? 1.0 : 0.0,
+                      child: Center(
+                        child: Transform.scale(
+                          scale: 0.5,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                    AnimatedOpacity(
+                      duration: 300.milliseconds,
+                      opacity: isUIvisible ? 1.0 : 0.0,
+                      child: GestureDetector(
                         onTap: () {
-                          toggleUI();
+                          if (!(isUIvisible)) toggleUI();
                         },
-                        child: Center(
-                          child: AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(
-                              _controller,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).orientation ==
+                                      Orientation.portrait
+                                  ? MediaQuery.of(context).size.height * 0.075
+                                  : MediaQuery.of(context).size.height * 0.11,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Colors.transparent,
+                                    Colors.black38,
+                                    Colors.black87,
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.navigate_before,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                            widget.twistModel.title,
+                                            maxLines: 1,
+                                            minFontSize: 5.0,
+                                            maxFontSize: 20.0,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          AutoSizeText(
+                                            "Season " +
+                                                widget.twistModel.season
+                                                    .toString() +
+                                                " | Episode " +
+                                                widget.episodeModel.number
+                                                    .toString(),
+                                            maxLines: 1,
+                                            minFontSize: 5.0,
+                                            maxFontSize: 20.0,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      AnimatedOpacity(
-                        duration: 300.milliseconds,
-                        opacity: _controller.value.isBuffering ? 1.0 : 0.0,
-                        child: Center(
-                          child: Transform.scale(
-                            scale: 0.5,
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
-                      ),
-                      AnimatedOpacity(
-                        duration: 300.milliseconds,
-                        opacity: isUIvisible ? 1.0 : 0.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!(isUIvisible)) toggleUI();
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: !isRotated
+                            IgnorePointer(
+                              ignoring: !isUIvisible,
+                              child: Container(
+                                height: MediaQuery.of(context).orientation ==
+                                        Orientation.portrait
                                     ? MediaQuery.of(context).size.height * 0.075
-                                    : MediaQuery.of(context).size.height * 0.06,
+                                    : MediaQuery.of(context).size.height * 0.11,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: <Color>[
                                       Colors.transparent,
-                                      Colors.black38,
                                       Colors.black87,
                                     ],
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    begin: Alignment.topCenter,
                                   ),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.navigate_before,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            AutoSizeText(
-                                              widget.twistModel.title,
-                                              maxLines: 1,
-                                              minFontSize: 5.0,
-                                              maxFontSize: 20.0,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            AutoSizeText(
-                                              "Season " +
-                                                  widget.twistModel.season
-                                                      .toString() +
-                                                  " | Episode " +
-                                                  widget.episodeModel.number
-                                                      .toString(),
-                                              maxLines: 1,
-                                              minFontSize: 5.0,
-                                              maxFontSize: 20.0,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                    IconButton(
+                                      icon: Icon(
+                                        _controller.value.isPlaying
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                      ),
+                                      onPressed: () {
+                                        togglePlay();
+                                      },
+                                    ),
+                                    ChangeNotifierProvider.value(
+                                      value: LastWatchedProvider.provider,
+                                      builder: (context, child) => IconButton(
+                                        icon: Icon(Icons.skip_next_outlined),
+                                        onPressed: widget.episodes.last ==
+                                                widget.episodeModel
+                                            ? null
+                                            : () {
+                                                Navigator.pop(context);
+                                                Provider.of<LastWatchedProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .setData(
+                                                  episodeModel: widget.episodes
+                                                      .elementAt(widget.episodes
+                                                              .indexOf(widget
+                                                                  .episodeModel) +
+                                                          1),
+                                                  twistModel: widget.twistModel,
+                                                  kitsuModel: widget.kitsuModel,
+                                                );
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        WatchPage(
+                                                      episodeModel: widget
+                                                          .episodes
+                                                          .elementAt(widget
+                                                                  .episodes
+                                                                  .indexOf(widget
+                                                                      .episodeModel) +
+                                                              1),
+                                                      episodes: widget.episodes,
+                                                      twistModel:
+                                                          widget.twistModel,
+                                                      kitsuModel:
+                                                          widget.kitsuModel,
+                                                      isFromPrevEpisode: true,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                      ),
+                                    ),
+                                    Text(
+                                      currentPositionStr,
+                                    ),
+                                    Expanded(
+                                      child: Slider(
+                                        value: _controller
+                                            .value.position.inSeconds
+                                            .toDouble(),
+                                        activeColor:
+                                            Theme.of(context).accentColor,
+                                        inactiveColor: Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.5),
+                                        min: 0,
+                                        max: _controller
+                                            .value.duration.inSeconds
+                                            .toDouble(),
+                                        label: secondsToHumanReadable(
+                                            _controller
+                                                .value.position.inSeconds),
+                                        divisions: _controller
+                                            .value.duration.inSeconds,
+                                        onChanged: (pos) {
+                                          setState(
+                                            () {
+                                              _controller.seekTo(pos.seconds);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 5.0,
+                                      ),
+                                      child: Text(_duration),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.screen_rotation_rounded,
+                                      ),
+                                      onPressed: () {
+                                        rotate();
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
-                              IgnorePointer(
-                                ignoring: !isUIvisible,
-                                child: Container(
-                                  height: !isRotated
-                                      ? MediaQuery.of(context).size.height *
-                                          0.075
-                                      : MediaQuery.of(context).size.height *
-                                          0.06,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: <Color>[
-                                        Colors.transparent,
-                                        Colors.black87,
-                                      ],
-                                      end: Alignment.bottomCenter,
-                                      begin: Alignment.topCenter,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          _controller.value.isPlaying
-                                              ? Icons.pause
-                                              : Icons.play_arrow,
-                                        ),
-                                        onPressed: () {
-                                          togglePlay();
-                                        },
-                                      ),
-                                      ChangeNotifierProvider.value(
-                                        value: LastWatchedProvider.provider,
-                                        builder: (context, child) => IconButton(
-                                          icon: Icon(Icons.skip_next_outlined),
-                                          onPressed: widget.episodes.last ==
-                                                  widget.episodeModel
-                                              ? null
-                                              : () {
-                                                  Navigator.pop(context);
-                                                  Provider.of<LastWatchedProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .setData(
-                                                    episodeModel: widget
-                                                        .episodes
-                                                        .elementAt(widget
-                                                                .episodes
-                                                                .indexOf(widget
-                                                                    .episodeModel) +
-                                                            1),
-                                                    twistModel:
-                                                        widget.twistModel,
-                                                    kitsuModel:
-                                                        widget.kitsuModel,
-                                                  );
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          WatchPage(
-                                                        episodeModel: widget
-                                                            .episodes
-                                                            .elementAt(widget
-                                                                    .episodes
-                                                                    .indexOf(widget
-                                                                        .episodeModel) +
-                                                                1),
-                                                        episodes:
-                                                            widget.episodes,
-                                                        twistModel:
-                                                            widget.twistModel,
-                                                        kitsuModel:
-                                                            widget.kitsuModel,
-                                                        isFromPrevEpisode: true,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                        ),
-                                      ),
-                                      Text(
-                                        currentPositionStr,
-                                      ),
-                                      Expanded(
-                                        child: Slider(
-                                          value: _controller
-                                              .value.position.inSeconds
-                                              .toDouble(),
-                                          activeColor:
-                                              Theme.of(context).accentColor,
-                                          inactiveColor: Theme.of(context)
-                                              .accentColor
-                                              .withOpacity(0.5),
-                                          min: 0,
-                                          max: _controller
-                                              .value.duration.inSeconds
-                                              .toDouble(),
-                                          label: secondsToHumanReadable(
-                                              _controller
-                                                  .value.position.inSeconds),
-                                          divisions: _controller
-                                              .value.duration.inSeconds,
-                                          onChanged: (pos) {
-                                            setState(
-                                              () {
-                                                _controller.seekTo(pos.seconds);
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 5.0,
-                                        ),
-                                        child: Text(_duration),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.screen_rotation_rounded,
-                                        ),
-                                        onPressed: () {
-                                          rotate();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  )
-                : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Builder(
-                          builder: (context) {
-                            SystemChrome.setEnabledSystemUIOverlays([]);
-                            return CircularProgressIndicator();
-                          },
-                        ),
-                        SizedBox(
-                          height: 24.0,
-                        ),
-                        widget.isFromPrevEpisode
-                            ? Text("Loading Next Episode")
-                            : Text("Loading Episode"),
-                      ],
                     ),
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Builder(
+                        builder: (context) {
+                          SystemChrome.setEnabledSystemUIOverlays([]);
+                          return CircularProgressIndicator();
+                        },
+                      ),
+                      SizedBox(
+                        height: 24.0,
+                      ),
+                      widget.isFromPrevEpisode
+                          ? Text("Loading Next Episode")
+                          : Text("Loading Episode"),
+                    ],
                   ),
-          ),
+                ),
         ),
       ),
     );

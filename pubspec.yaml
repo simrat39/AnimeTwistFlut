@@ -42,6 +42,7 @@ dependencies:
   path_provider:
   web_socket_channel:
   retry:
+  auto_orientation:
 
 dev_dependencies:
   flutter_test:
