@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 // Project imports:
 import '../../providers/LastWatchedProvider.dart';
 import '../anime_info_page/AnimeInfoPage.dart';
-import '../anime_info_page/InfoChip.dart';
 
 class LastWatchedWidget extends StatefulWidget {
   @override
@@ -27,6 +26,7 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Consumer<LastWatchedProvider>(
       builder: (context, prov, child) {
@@ -104,8 +104,7 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                               fit: BoxFit.cover,
                               frameBuilder: (context, child, inn, boo) {
                                 return Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
+                                  width: width * 0.35,
                                   height: orientation == Orientation.portrait
                                       ? height * 0.25
                                       : height * 0.4,
@@ -116,8 +115,7 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                               loadingBuilder: (context, child, progress) {
                                 if (progress == null) return child;
                                 return Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
+                                  width: width * 0.35,
                                   height: orientation == Orientation.portrait
                                       ? height * 0.25
                                       : height * 0.4,
@@ -149,28 +147,81 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                                     textAlign: TextAlign.center,
                                     overflow: TextOverflow.ellipsis,
                                     minFontSize: 15.0,
-                                    maxFontSize: 30.0,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25.0,
+                                      fontSize: 27.5,
                                       fontFamily: "ProductSans",
                                     ),
                                   ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    child: InfoChip(
-                                      text: "Season " +
-                                          prov.twistModel.season.toString(),
-                                    ),
-                                  ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    child: InfoChip(
-                                      text: "Episode " +
-                                          prov.episodeModel.number.toString(),
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width:
+                                            orientation == Orientation.portrait
+                                                ? width * 0.15
+                                                : height * 0.15,
+                                        height:
+                                            orientation == Orientation.portrait
+                                                ? width * 0.15
+                                                : height * 0.15,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "S" +
+                                                prov.twistModel.season
+                                                    .toString(),
+                                            style: TextStyle(
+                                              fontSize: 35.0,
+                                              fontFamily: "ProductSans",
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 16.0,
+                                      ),
+                                      Container(
+                                        width:
+                                            orientation == Orientation.portrait
+                                                ? width * 0.15
+                                                : height * 0.15,
+                                        height:
+                                            orientation == Orientation.portrait
+                                                ? width * 0.15
+                                                : height * 0.15,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "E" +
+                                                prov.episodeModel.number
+                                                    .toString(),
+                                            style: TextStyle(
+                                              fontSize: 35.0,
+                                              fontFamily: "ProductSans",
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
