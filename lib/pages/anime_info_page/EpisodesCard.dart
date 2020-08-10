@@ -114,7 +114,7 @@ class EpisodesCard extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Container(
                       margin: EdgeInsets.only(
-                        bottom: 15.0,
+                        bottom: 12.0,
                       ),
                       width: double.infinity,
                       child: Row(
