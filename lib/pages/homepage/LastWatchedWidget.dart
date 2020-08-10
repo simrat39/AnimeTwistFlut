@@ -148,80 +148,83 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                                     overflow: TextOverflow.ellipsis,
                                     minFontSize: 15.0,
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w700,
                                       fontSize: 27.5,
                                       fontFamily: "ProductSans",
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width:
-                                            orientation == Orientation.portrait
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.05,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            height: orientation ==
+                                                    Orientation.portrait
                                                 ? width * 0.15
                                                 : height * 0.15,
-                                        height:
-                                            orientation == Orientation.portrait
-                                                ? width * 0.15
-                                                : height * 0.15,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                Theme.of(context).accentColor,
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "S" +
-                                                prov.twistModel.season
-                                                    .toString(),
-                                            style: TextStyle(
-                                              fontSize: 35.0,
-                                              fontFamily: "ProductSans",
-                                              fontWeight: FontWeight.bold,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "S" +
+                                                    prov.twistModel.season
+                                                        .toString(),
+                                                style: TextStyle(
+                                                  fontSize: 35.0,
+                                                  fontFamily: "ProductSans",
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 16.0,
-                                      ),
-                                      Container(
-                                        width:
-                                            orientation == Orientation.portrait
-                                                ? width * 0.15
-                                                : height * 0.15,
-                                        height:
-                                            orientation == Orientation.portrait
-                                                ? width * 0.15
-                                                : height * 0.15,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                Theme.of(context).accentColor,
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                        SizedBox(
+                                          width: 16.0,
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            "E" +
-                                                prov.episodeModel.number
-                                                    .toString(),
-                                            style: TextStyle(
-                                              fontSize: 35.0,
-                                              fontFamily: "ProductSans",
-                                              fontWeight: FontWeight.bold,
+                                        Expanded(
+                                          child: Container(
+                                            height: orientation ==
+                                                    Orientation.portrait
+                                                ? width * 0.15
+                                                : height * 0.15,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "E" +
+                                                    prov.episodeModel.number
+                                                        .toString(),
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  fontSize: 35.0,
+                                                  fontFamily: "ProductSans",
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
