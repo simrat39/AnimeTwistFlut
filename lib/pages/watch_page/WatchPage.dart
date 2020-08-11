@@ -187,7 +187,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                             Container(
                               height: MediaQuery.of(context).orientation ==
                                       Orientation.portrait
-                                  ? MediaQuery.of(context).size.height * 0.075
+                                  ? MediaQuery.of(context).size.height * 0.055
                                   : MediaQuery.of(context).size.height * 0.11,
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -253,7 +253,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                               child: Container(
                                 height: MediaQuery.of(context).orientation ==
                                         Orientation.portrait
-                                    ? MediaQuery.of(context).size.height * 0.075
+                                    ? MediaQuery.of(context).size.height * 0.055
                                     : MediaQuery.of(context).size.height * 0.11,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -269,21 +269,38 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        _controller.value.isPlaying
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
+                                    GestureDetector(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 5.0,
+                                          left: 10.0,
+                                        ),
+                                        child: Icon(
+                                          _controller.value.isPlaying
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          size: 22.5,
+                                        ),
                                       ),
-                                      onPressed: () {
+                                      onTap: () {
                                         togglePlay();
                                       },
                                     ),
                                     ChangeNotifierProvider.value(
                                       value: LastWatchedProvider.provider,
-                                      builder: (context, child) => IconButton(
-                                        icon: Icon(Icons.skip_next_outlined),
-                                        onPressed: widget.episodes.last ==
+                                      builder: (context, child) =>
+                                          GestureDetector(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 10.0,
+                                            left: 5.0,
+                                          ),
+                                          child: Icon(
+                                            Icons.skip_next_outlined,
+                                            size: 22.5,
+                                          ),
+                                        ),
+                                        onTap: widget.episodes.last ==
                                                 widget.episodeModel
                                             ? null
                                             : () {
@@ -361,11 +378,19 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                       ),
                                       child: Text(_duration),
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.screen_rotation_rounded,
+                                    GestureDetector(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          bottom: 3.0,
+                                          right: 10.0,
+                                          left: 10.0,
+                                        ),
+                                        child: Icon(
+                                          Icons.screen_rotation_rounded,
+                                          size: 18.0,
+                                        ),
                                       ),
-                                      onPressed: () {
+                                      onTap: () {
                                         rotate();
                                       },
                                     ),
