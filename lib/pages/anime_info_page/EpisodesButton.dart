@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:supercharged/supercharged.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
@@ -55,8 +56,8 @@ class EpisodesButton extends StatelessWidget {
                 ),
               ),
               Icon(
-                Icons.arrow_downward,
-                size: 20.0,
+                FontAwesomeIcons.chevronDown,
+                size: 15.0,
               ),
             ],
           ),
