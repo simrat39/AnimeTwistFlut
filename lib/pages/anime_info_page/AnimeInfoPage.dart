@@ -80,95 +80,90 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
               return ListView.builder(
                 physics: ClampingScrollPhysics(),
                 controller: _scrollController,
-                itemCount: 2,
+                itemCount: 3,
                 itemBuilder: (context, index) {
                   switch (index) {
                     case 0:
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          InfoCard(
-                            kitsuModel: kitsuModel,
-                            episodes: episodes,
-                            controller: _scrollController,
-                          ),
-                          Card(
-                            margin: EdgeInsets.only(
-                              top: 10.0,
-                              left: 15.0,
-                              right: 15.0,
-                              bottom: 10.0,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 12.0,
-                                    left: 16.0,
-                                    right: 16.0,
-                                  ),
-                                  child: AutoSizeText(
-                                    widget.twistModel.title,
-                                    textAlign: TextAlign.start,
-                                    maxLines: 3,
-                                    minFontSize: 25.0,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 32.5,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 5.0,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 15.0,
-                                        ),
-                                        child: InfoChip(
-                                          text: "Season " +
-                                              widget.twistModel.season
-                                                  .toString(),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10.0,
-                                        ),
-                                        child: InfoChip(
-                                          text: widget.twistModel.ongoing
-                                              ? "Ongoing"
-                                              : "Finished",
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 10.0,
-                                    left: 15.0,
-                                    right: 15.0,
-                                    bottom: 20.0,
-                                  ),
-                                  child: DescriptionBox(
-                                    twistModel: widget.twistModel,
-                                    kitsuModel: kitsuModel,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      return InfoCard(
+                        kitsuModel: kitsuModel,
+                        episodes: episodes,
+                        controller: _scrollController,
                       );
                       break;
                     case 1:
+                      return Card(
+                        margin: EdgeInsets.only(
+                          top: 10.0,
+                          left: 15.0,
+                          right: 15.0,
+                          bottom: 10.0,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 12.0,
+                                left: 16.0,
+                                right: 16.0,
+                              ),
+                              child: AutoSizeText(
+                                widget.twistModel.title,
+                                textAlign: TextAlign.start,
+                                maxLines: 3,
+                                minFontSize: 25.0,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 32.5,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 5.0,
+                              ),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.0,
+                                    ),
+                                    child: InfoChip(
+                                      text: "Season " +
+                                          widget.twistModel.season.toString(),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 10.0,
+                                    ),
+                                    child: InfoChip(
+                                      text: widget.twistModel.ongoing
+                                          ? "Ongoing"
+                                          : "Finished",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 10.0,
+                                left: 15.0,
+                                right: 15.0,
+                                bottom: 20.0,
+                              ),
+                              child: DescriptionBox(
+                                twistModel: widget.twistModel,
+                                kitsuModel: kitsuModel,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                      break;
+                    case 2:
                       return Padding(
                         padding: EdgeInsets.only(
                           left: 15.0,
