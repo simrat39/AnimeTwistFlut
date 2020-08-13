@@ -191,7 +191,7 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 16.0,
+                                          width: 8.0,
                                         ),
                                         Expanded(
                                           child: Container(
