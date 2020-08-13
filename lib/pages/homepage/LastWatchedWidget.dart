@@ -68,7 +68,7 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                             pageBuilder: (context, anim, secondAnim) =>
                                 AnimeInfoPage(
                               twistModel: prov.twistModel,
-                              // kitsuModel: prov.kitsuModel,
+                              kitsuModel: prov.kitsuModel,
                             ),
                             transitionsBuilder:
                                 (context, anim, secondAnim, child) {

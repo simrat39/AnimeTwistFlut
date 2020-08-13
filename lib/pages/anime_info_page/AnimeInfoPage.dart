@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
+import 'package:supercharged/supercharged.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
@@ -39,12 +40,12 @@ class AnimeInfoPage extends StatefulWidget {
 }
 
 class _AnimeInfoPageState extends State<AnimeInfoPage> {
-  Future _getKitsuModel;
+  Future _initData;
   ScrollController _scrollController;
 
   @override
   void initState() {
-    _getKitsuModel = getKitsuModel();
+    _initData = initData();
     _scrollController = ScrollController();
     super.initState();
   }
@@ -52,11 +53,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   KitsuModel kitsuModel;
   List<EpisodeModel> episodes;
 
-  Future getKitsuModel() async {
+  Future initData() async {
     if (widget.kitsuModel == null)
       kitsuModel = await KitsuUtils.getKitsuModel(widget.twistModel.kitsuId);
-    else
+    else {
+      await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
+    }
     episodes = await EpisodeUtils.getEpisodes(widget.twistModel);
   }
 
@@ -75,7 +78,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           twistModel: widget.twistModel,
         ).build(context),
         body: FutureBuilder(
-          future: _getKitsuModel,
+          future: _initData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
