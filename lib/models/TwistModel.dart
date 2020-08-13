@@ -26,6 +26,9 @@ class TwistModel extends HiveObject {
   @HiveField(6)
   final String slug;
 
+  @HiveField(7)
+  final int malId;
+
   TwistModel(
       {this.id,
       this.title,
@@ -33,7 +36,8 @@ class TwistModel extends HiveObject {
       this.season,
       this.ongoing,
       this.kitsuId,
-      this.slug});
+      this.slug,
+      this.malId});
 
   factory TwistModel.fromJson(Map<String, dynamic> data) {
     return TwistModel(
@@ -44,6 +48,7 @@ class TwistModel extends HiveObject {
       ongoing: data["ongoing"] == 1,
       kitsuId: data["hb_id"],
       slug: data["slug"]["slug"],
+      malId: data["mal_id"],
     );
   }
 }

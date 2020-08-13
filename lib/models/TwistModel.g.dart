@@ -24,13 +24,14 @@ class TwistModelAdapter extends TypeAdapter<TwistModel> {
       ongoing: fields[4] as bool,
       kitsuId: fields[5] as int,
       slug: fields[6] as String,
+      malId: fields[7] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, TwistModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class TwistModelAdapter extends TypeAdapter<TwistModel> {
       ..writeByte(5)
       ..write(obj.kitsuId)
       ..writeByte(6)
-      ..write(obj.slug);
+      ..write(obj.slug)
+      ..writeByte(7)
+      ..write(obj.malId);
   }
 
   @override

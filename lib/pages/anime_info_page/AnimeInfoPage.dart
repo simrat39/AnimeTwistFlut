@@ -71,8 +71,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       },
       child: Scaffold(
         appBar: AnimeInfoPageAppBar(
-                isFromSearchPage: widget.isFromSearchPage ?? false)
-            .build(context),
+          isFromSearchPage: widget.isFromSearchPage ?? false,
+          twistModel: widget.twistModel,
+        ).build(context),
         body: FutureBuilder(
           future: _getKitsuModel,
           builder: (context, snapshot) {

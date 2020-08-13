@@ -2,13 +2,17 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import '../../models/TwistModel.dart';
+import '../../utils/MALUtils.dart';
 import '../search_page/SearchPage.dart';
 
 class AnimeInfoPageAppBar {
   final bool isFromSearchPage;
+  final TwistModel twistModel;
 
   AnimeInfoPageAppBar({
     @required this.isFromSearchPage,
+    @required this.twistModel,
   });
 
   Widget build(BuildContext context) {
@@ -37,6 +41,16 @@ class AnimeInfoPageAppBar {
         ),
       ),
       actions: [
+        twistModel.malId != null
+            ? IconButton(
+                icon: Icon(
+                  Icons.info,
+                ),
+                onPressed: () {
+                  MALUtils.launchMalLink(twistModel.malId);
+                },
+              )
+            : Container(),
         IconButton(
           icon: Icon(
             Icons.search,
