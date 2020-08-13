@@ -273,7 +273,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                       child: Padding(
                                         padding: EdgeInsets.only(
                                           right: 5.0,
-                                          left: 10.0,
+                                          left: 15.0,
                                         ),
                                         child: Icon(
                                           _controller.value.isPlaying
@@ -382,12 +382,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                       child: Padding(
                                         padding: EdgeInsets.only(
                                           bottom: 3.0,
-                                          right: 10.0,
+                                          right: 15.0,
                                           left: 10.0,
                                         ),
                                         child: Icon(
                                           Icons.screen_rotation_rounded,
-                                          size: 18.0,
+                                          size: 20.0,
                                         ),
                                       ),
                                       onTap: () {
