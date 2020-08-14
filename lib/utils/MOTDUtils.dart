@@ -8,15 +8,18 @@ import 'package:http/http.dart' as http;
 
 // Project imports:
 import '../secrets.dart';
+import 'package:retry/retry.dart' as retry;
 
 class MOTDUtils {
   static Future<List<String>> getMOTD() async {
     List<String> data = [];
-    var response = await http.get(
-      'https://twist.moe/api/motd',
-      headers: {
-        'x-access-token': x_access_token,
-      },
+    var response = await retry.retry(
+      () => http.get(
+        'https://twist.moe/api/motd',
+        headers: {
+          'x-access-token': x_access_token,
+        },
+      ),
     );
 
     Map<String, dynamic> jsonData = jsonDecode(response.body);
