@@ -157,7 +157,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
               ),
             ),
             Image.network(
-              'https://twist.moe/public/img/bitcoin-qr.png',
+              'https://twist.moe/public/img/ethereum-qr.png',
               fit: BoxFit.cover,
               width: height * 0.5,
               height: height * 0.5,
