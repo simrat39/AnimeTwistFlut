@@ -29,8 +29,10 @@ class DescriptionBox extends StatelessWidget {
         ),
         child: Text(
           twistModel.altTitle != null
-              ? twistModel.altTitle + "\n\n" + kitsuModel.description
-              : kitsuModel.description,
+              ? twistModel.altTitle + "\n\n" + kitsuModel?.description ??
+                  "Season ${twistModel.season} of ${twistModel.title}"
+              : kitsuModel?.description ??
+                  "Season ${twistModel.season} of ${twistModel.title}",
           textAlign: TextAlign.start,
           style: TextStyle(
             fontSize: 15.0,

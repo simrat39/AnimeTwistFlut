@@ -98,7 +98,8 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
-                              prov.kitsuModel.imageURL,
+                              prov.kitsuModel?.imageURL ??
+                                  "https://designshack.net/wp-content/uploads/placeholder-image.png",
                               cacheWidth: 480,
                               cacheHeight: 640,
                               fit: BoxFit.cover,

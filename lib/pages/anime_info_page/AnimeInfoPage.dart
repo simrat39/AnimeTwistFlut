@@ -54,13 +54,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   List<EpisodeModel> episodes;
 
   Future initData() async {
+    episodes = await EpisodeUtils.getEpisodes(widget.twistModel);
     if (widget.kitsuModel == null)
       kitsuModel = await KitsuUtils.getKitsuModel(widget.twistModel.kitsuId);
     else {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
     }
-    episodes = await EpisodeUtils.getEpisodes(widget.twistModel);
   }
 
   @override

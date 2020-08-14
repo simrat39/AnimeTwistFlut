@@ -34,7 +34,7 @@ class RatingWidget extends StatelessWidget {
       ),
       child: Center(
         child: AutoSizeText(
-          kitsuModel.rating != null
+          kitsuModel != null && kitsuModel.rating != null
               ? kitsuModel.rating.substring(
                     0,
                     kitsuModel.rating.indexOf('.'),

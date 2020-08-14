@@ -48,8 +48,12 @@ class WatchTrailerButton extends StatelessWidget {
           ),
         ),
         onPressed: () async {
-          kitsuModel.trailerURL != null || kitsuModel.trailerURL.isEmpty
-              ? launch("https://youtu.be/" + kitsuModel.trailerURL)
+          kitsuModel != null &&
+                  (kitsuModel.trailerURL != null ||
+                      kitsuModel.trailerURL.isNotEmpty)
+              ? launch(
+                  "https://youtu.be/" + kitsuModel.trailerURL,
+                )
               : Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text("Trailer not found!"),

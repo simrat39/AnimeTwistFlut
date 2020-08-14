@@ -48,7 +48,8 @@ class InfoCard extends StatelessWidget {
                 ),
                 child: Image(
                   image: NetworkImage(
-                    kitsuModel.imageURL,
+                    kitsuModel?.imageURL ??
+                        "https://designshack.net/wp-content/uploads/placeholder-image.png",
                   ),
                   loadingBuilder: (context, child, progress) {
                     if (progress == null) return child;
