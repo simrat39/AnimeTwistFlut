@@ -3,6 +3,7 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import '../secrets.dart';
@@ -22,5 +23,12 @@ class DonationUtils {
     data.add(jsonData["received"].floor());
     data.add(jsonData["target"].floor());
     return data;
+  }
+
+  static Future donatePatreon() async {
+    String url = 'https://www.patreon.com/bePatron?c=1850965';
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
   }
 }

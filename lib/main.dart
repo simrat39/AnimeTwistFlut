@@ -53,6 +53,9 @@ class RootWindow extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: Color(0xff1d1f3e),
+        ),
       ),
       themeMode: ThemeMode.dark,
     );

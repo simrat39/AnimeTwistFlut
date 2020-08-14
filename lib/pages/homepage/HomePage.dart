@@ -9,10 +9,10 @@ import '../../providers/LastWatchedProvider.dart';
 import '../../utils/TwistUtils.dart';
 import '../chat_page/ChatPage.dart';
 import '../search_page/SearchPage.dart';
-import 'DonationCard.dart';
 import 'LastWatchedWidget.dart';
 import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
+import 'donation_card/DonationCard.dart';
 import 'explore_slider/ExploreSlider.dart';
 
 class HomePage extends StatefulWidget {
