@@ -140,6 +140,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    double containerHeight =
+        MediaQuery.of(context).orientation == Orientation.portrait
+            ? MediaQuery.of(context).size.height * 0.05
+            : MediaQuery.of(context).size.height * 0.1;
+
     return GestureDetector(
       onTap: () {
         toggleUI();
@@ -185,10 +190,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: MediaQuery.of(context).orientation ==
-                                      Orientation.portrait
-                                  ? MediaQuery.of(context).size.height * 0.055
-                                  : MediaQuery.of(context).size.height * 0.11,
+                              height: containerHeight,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
@@ -206,7 +208,6 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       IconButton(
                                         icon: Icon(
@@ -216,34 +217,35 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                           Navigator.pop(context);
                                         },
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AutoSizeText(
-                                            widget.twistModel.title,
-                                            maxLines: 1,
-                                            minFontSize: 5.0,
-                                            maxFontSize: 20.0,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          AutoSizeText(
-                                            "Season " +
-                                                widget.twistModel.season
-                                                    .toString() +
-                                                " | Episode " +
-                                                widget.episodeModel.number
-                                                    .toString(),
-                                            maxLines: 1,
-                                            minFontSize: 5.0,
-                                            maxFontSize: 20.0,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
+                                      AutoSizeText(
+                                        widget.twistModel.title,
+                                        maxLines: 1,
+                                        minFontSize: 5.0,
+                                        maxFontSize: 25.0,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      right: 15.0,
+                                    ),
+                                    child: AutoSizeText(
+                                      "S" +
+                                          widget.twistModel.season.toString() +
+                                          " | E" +
+                                          widget.episodeModel.number.toString(),
+                                      maxLines: 1,
+                                      minFontSize: 5.0,
+                                      maxFontSize: 25.0,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -251,15 +253,13 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                             IgnorePointer(
                               ignoring: !isUIvisible,
                               child: Container(
-                                height: MediaQuery.of(context).orientation ==
-                                        Orientation.portrait
-                                    ? MediaQuery.of(context).size.height * 0.055
-                                    : MediaQuery.of(context).size.height * 0.11,
+                                height: containerHeight,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: <Color>[
                                       Colors.transparent,
+                                      Colors.black38,
                                       Colors.black87,
                                     ],
                                     end: Alignment.bottomCenter,
