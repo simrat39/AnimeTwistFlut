@@ -12,6 +12,19 @@ class DescriptionBox extends StatelessWidget {
 
   DescriptionBox({this.kitsuModel, this.twistModel});
 
+  String getDescription() {
+    if (kitsuModel != null) {
+      if (twistModel.altTitle != null) {
+        return twistModel.altTitle + "\n\n" + kitsuModel?.description ?? "";
+      } else {
+        return kitsuModel?.description ??
+            "Season ${twistModel.season} of ${twistModel.title}";
+      }
+    } else {
+      return "Season ${twistModel.season} of ${twistModel.title}";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,11 +41,7 @@ class DescriptionBox extends StatelessWidget {
           15.0,
         ),
         child: Text(
-          twistModel.altTitle != null
-              ? twistModel.altTitle + "\n\n" + kitsuModel?.description ??
-                  "Season ${twistModel.season} of ${twistModel.title}"
-              : kitsuModel?.description ??
-                  "Season ${twistModel.season} of ${twistModel.title}",
+          getDescription(),
           textAlign: TextAlign.start,
           style: TextStyle(
             fontSize: 15.0,
