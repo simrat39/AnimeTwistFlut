@@ -1,4 +1,5 @@
 // Dart imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:async';
 
 // Flutter imports:
@@ -51,17 +52,32 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
         portrait: (context) => Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.chevronDown,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.chevronDown,
+                  ),
+                  iconSize: 15.0,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-                iconSize: 15.0,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: 10.0,
+                    top: 5.0,
+                  ),
+                  child: AutoSizeText(
+                    "Ethereum",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: Column(
@@ -112,17 +128,32 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.chevronDown,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.chevronDown,
+                        ),
+                        iconSize: 15.0,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                      iconSize: 15.0,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          right: 10.0,
+                          top: 5.0,
+                        ),
+                        child: AutoSizeText(
+                          "Ethereum",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   AnimatedSwitcher(
                     duration: 1.seconds,
