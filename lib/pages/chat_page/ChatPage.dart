@@ -19,7 +19,7 @@ class ChatPage extends StatefulWidget {
   }
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   IOWebSocketChannel _channel;
   ScrollController _controller;
 
@@ -30,6 +30,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     connect();
+    WidgetsBinding.instance.addObserver(this);
     _controller = ScrollController();
     super.initState();
   }
@@ -37,7 +38,24 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void dispose() {
     _channel.sink.close();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      switch (state) {
+        case AppLifecycleState.paused:
+        case AppLifecycleState.detached:
+        case AppLifecycleState.inactive:
+          _channel.sink.close();
+          break;
+        case AppLifecycleState.resumed:
+          connect();
+          break;
+      }
+    });
   }
 
   @override
