@@ -1,5 +1,5 @@
 // Project imports:
-import '../models/TwistModel.dart';
+import '../../models/TwistModel.dart';
 
 class SearchUtils {
   static bool isTextInAnimeModel({String text, TwistModel twistModel}) {

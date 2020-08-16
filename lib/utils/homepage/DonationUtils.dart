@@ -3,11 +3,11 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:http/http.dart' as http;
+import 'package:retry/retry.dart' as retry;
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:retry/retry.dart' as retry;
 // Project imports:
-import '../secrets.dart';
+import '../../secrets.dart';
 
 class DonationUtils {
   static Future<List<int>> getDonations() async {

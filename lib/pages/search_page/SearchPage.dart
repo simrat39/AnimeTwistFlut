@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 // Project imports:
-import '../../utils/SearchUtils.dart';
 import '../../utils/TwistUtils.dart';
+import '../../utils/search_page/SearchUtils.dart';
 import 'SearchListTile.dart';
 import 'SearchPageInputBox.dart';
 

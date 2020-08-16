@@ -16,7 +16,7 @@ import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/LastWatchedProvider.dart';
 import '../../secrets.dart';
-import '../../utils/CryptoUtils.dart';
+import '../../utils/watch_page/CryptoUtils.dart';
 
 class WatchPage extends StatefulWidget {
   final EpisodeModel episodeModel;

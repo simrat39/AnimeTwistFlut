@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
-import '../../utils/MOTDUtils.dart';
+import '../../utils/homepage/MOTDUtils.dart';
 
 class MOTDCard extends StatefulWidget {
   @override

@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 // Project imports:
-import '../cached_http_get/CachedHttpGet.dart';
-import '../models/EpisodeModel.dart';
-import '../models/TwistModel.dart';
-import '../secrets.dart';
+import '../../cached_http_get/CachedHttpGet.dart';
+import '../../models/EpisodeModel.dart';
+import '../../models/TwistModel.dart';
+import '../../secrets.dart';
 
 class EpisodeUtils {
   static Future<List<EpisodeModel>> getEpisodes(TwistModel twistModel) async {

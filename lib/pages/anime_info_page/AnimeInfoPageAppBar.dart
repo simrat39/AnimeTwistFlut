@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../models/TwistModel.dart';
-import '../../utils/MALUtils.dart';
+import '../../utils/anime_info_page/MALUtils.dart';
 import '../search_page/SearchPage.dart';
 
 class AnimeInfoPageAppBar {

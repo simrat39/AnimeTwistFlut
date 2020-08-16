@@ -5,10 +5,10 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:http/http.dart' as http;
+import 'package:retry/retry.dart' as retry;
 
 // Project imports:
-import '../secrets.dart';
-import 'package:retry/retry.dart' as retry;
+import '../../secrets.dart';
 
 class MOTDUtils {
   static Future<List<String>> getMOTD() async {

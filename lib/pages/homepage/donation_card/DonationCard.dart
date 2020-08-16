@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../utils/DonationUtils.dart';
+import '../../../utils/homepage/DonationUtils.dart';
 import 'BitcoinDonationSheet.dart';
 import 'EthereumDonationSheet.dart';
 
