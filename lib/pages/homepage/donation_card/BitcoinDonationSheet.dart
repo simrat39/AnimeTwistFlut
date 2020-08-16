@@ -1,5 +1,4 @@
 // Dart imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:async';
 
 // Flutter imports:
@@ -7,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supercharged/supercharged.dart';

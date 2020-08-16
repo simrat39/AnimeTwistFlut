@@ -14,6 +14,7 @@ import 'package:video_player_header/video_player_header.dart';
 import '../../models/EpisodeModel.dart';
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
+import '../../providers/EpisodesWatchedProvider.dart';
 import '../../providers/LastWatchedProvider.dart';
 import '../../secrets.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
@@ -24,13 +25,15 @@ class WatchPage extends StatefulWidget {
   final TwistModel twistModel;
   final KitsuModel kitsuModel;
   final bool isFromPrevEpisode;
+  final EpisodesWatchedProvider episodesWatchedProvider;
 
   WatchPage({
-    this.episodeModel,
-    this.episodes,
-    this.twistModel,
-    this.kitsuModel,
+    @required this.episodeModel,
+    @required this.episodes,
+    @required this.twistModel,
+    @required this.kitsuModel,
     this.isFromPrevEpisode = false,
+    @required this.episodesWatchedProvider,
   });
 
   @override
@@ -229,23 +232,51 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      right: 15.0,
-                                    ),
-                                    child: AutoSizeText(
-                                      "S" +
-                                          widget.twistModel.season.toString() +
-                                          " | E" +
-                                          widget.episodeModel.number.toString(),
-                                      maxLines: 1,
-                                      minFontSize: 5.0,
-                                      maxFontSize: 25.0,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                  Row(
+                                    children: [
+                                      ChangeNotifierProvider<
+                                          EpisodesWatchedProvider>.value(
+                                        value: widget.episodesWatchedProvider,
+                                        child:
+                                            Consumer<EpisodesWatchedProvider>(
+                                          builder: (context, prov, child) =>
+                                              Checkbox(
+                                            value: prov.isWatched(
+                                              widget.episodeModel.number,
+                                            ),
+                                            checkColor: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                prov.toggleWatched(
+                                                  widget.episodeModel.number,
+                                                );
+                                              });
+                                            },
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 15.0,
+                                        ),
+                                        child: AutoSizeText(
+                                          "S" +
+                                              widget.twistModel.season
+                                                  .toString() +
+                                              " | E" +
+                                              widget.episodeModel.number
+                                                  .toString(),
+                                          maxLines: 1,
+                                          minFontSize: 5.0,
+                                          maxFontSize: 25.0,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -335,6 +366,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                       kitsuModel:
                                                           widget.kitsuModel,
                                                       isFromPrevEpisode: true,
+                                                      episodesWatchedProvider:
+                                                          widget
+                                                              .episodesWatchedProvider,
                                                     ),
                                                   ),
                                                 );
