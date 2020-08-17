@@ -16,7 +16,7 @@ import '../../utils/KitsuUtils.dart';
 import '../../utils/anime_info_page/EpisodeUtils.dart';
 import 'AnimeInfoPageAppBar.dart';
 import 'DescriptionBox.dart';
-import 'EpisodesCard.dart';
+import 'episodes_card/EpisodesCard.dart';
 import 'InfoCard.dart';
 import 'InfoChip.dart';
 

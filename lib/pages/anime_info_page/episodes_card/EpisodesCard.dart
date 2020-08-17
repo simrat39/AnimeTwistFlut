@@ -8,12 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
-import '../../models/EpisodeModel.dart';
-import '../../models/KitsuModel.dart';
-import '../../models/TwistModel.dart';
-import '../../providers/EpisodesWatchedProvider.dart';
-import '../../providers/LastWatchedProvider.dart';
-import '../watch_page/WatchPage.dart';
+import '../../../models/EpisodeModel.dart';
+import 'EpisodeButton.dart';
+import '../../../models/KitsuModel.dart';
+import '../../../models/TwistModel.dart';
+import '../../../providers/EpisodesWatchedProvider.dart';
 
 class EpisodesCard extends StatefulWidget {
   final List<EpisodeModel> episodes;
@@ -53,75 +52,12 @@ class _EpisodesCardState extends State<EpisodesCard> {
             List<Widget> tiles = [];
             for (int i = 0; i < widget.episodes.length; i++) {
               tiles.add(
-                Consumer<EpisodesWatchedProvider>(
-                  builder: (context, prov, child) => Container(
-                    width: MediaQuery.of(context).size.height * 0.16,
-                    child: OutlineButton(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 5.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          8.0,
-                        ),
-                      ),
-                      borderSide: BorderSide(
-                          width: 2.0,
-                          color: prov.isWatched(i + 1)
-                              ? Colors.red
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.12)),
-                      highlightedBorderColor: Theme.of(context).accentColor,
-                      onPressed: () {
-                        Provider.of<LastWatchedProvider>(context, listen: false)
-                            .setData(
-                          twistModel: widget.twistModel,
-                          kitsuModel: widget.kitsuModel,
-                          episodeModel: widget.episodes.elementAt(i),
-                        );
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 400),
-                            pageBuilder: (context, anim, secondAnim) =>
-                                WatchPage(
-                              episodeModel: widget.episodes.elementAt(i),
-                              episodes: widget.episodes,
-                              twistModel: widget.twistModel,
-                              kitsuModel: widget.kitsuModel,
-                              episodesWatchedProvider: _episodesWatchedProvider,
-                            ),
-                            transitionsBuilder:
-                                (context, anim, secondAnim, child) {
-                              var tween = Tween(
-                                begin: Offset(1.0, 0.0),
-                                end: Offset.zero,
-                              );
-                              var curvedAnimation = CurvedAnimation(
-                                parent: anim,
-                                curve: Curves.ease,
-                              );
-                              return SlideTransition(
-                                position: tween.animate(curvedAnimation),
-                                child: child,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: Text(
-                        widget.episodes.elementAt(i).number.toString(),
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ),
-                  ),
+                EpisodeButton(
+                  index: i,
+                  episodes: widget.episodes,
+                  twistModel: widget.twistModel,
+                  kitsuModel: widget.kitsuModel,
+                  episodesWatchedProvider: _episodesWatchedProvider,
                 ),
               );
             }
