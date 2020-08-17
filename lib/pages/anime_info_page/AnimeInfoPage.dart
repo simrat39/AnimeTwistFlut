@@ -61,6 +61,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
     }
+    await precacheImage(
+        NetworkImage(kitsuModel?.imageURL ??
+            "https://designshack.net/wp-content/uploads/placeholder-image.png"),
+        context);
   }
 
   @override
