@@ -1,4 +1,5 @@
 // Flutter imports:
+import '../../utils/watch_page/TimeUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,16 +68,25 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
           'https://twist.moe/a/${widget.twistModel.slug}/${widget.episodeModel.number}'
     };
 
-    String vidUrl = Uri.parse("https://twistcdn.bunny.sh/" +
-            CryptoUtils.decryptAESCryptoJS(widget.episodeModel.source, key))
-        .toString();
+    String sourceSuffix =
+        CryptoUtils.decryptAESCryptoJS(widget.episodeModel.source, key);
+
+    String vidUrl;
+    if (sourceSuffix.startsWith('https')) {
+      vidUrl = Uri.parse(sourceSuffix).toString();
+    } else {
+      vidUrl =
+          Uri.parse("https://twistcdn.bunny.sh/" + sourceSuffix).toString();
+    }
+
+    print(vidUrl);
 
     _controller = VideoPlayerController.network(vidUrl, headers: headers)
       ..initialize().then((_) {
         setState(() {
           play();
-          _duration =
-              secondsToHumanReadable(_controller.value.duration.inSeconds);
+          _duration = TimeUtils.secondsToHumanReadable(
+              _controller.value.duration.inSeconds);
         });
         toggleUI();
       });
@@ -84,8 +94,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     _controller.addListener(() {
       setState(() {
         currentPosition = _controller.value.position.inSeconds.toDouble();
-        currentPositionStr =
-            secondsToHumanReadable(_controller.value.position.inSeconds);
+        currentPositionStr = TimeUtils.secondsToHumanReadable(
+            _controller.value.position.inSeconds);
       });
     });
 
@@ -131,14 +141,6 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         AutoOrientation.portraitAutoMode();
       }
     });
-  }
-
-  String secondsToHumanReadable(int val) {
-    String minutes = (val ~/ 60).toString();
-    String seconds = (val % 60).toString();
-    if (seconds.length == 1) seconds = "0$seconds";
-    if (minutes.length == 1) minutes = "0$minutes";
-    return "$minutes:$seconds";
   }
 
   @override
@@ -392,7 +394,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         max: _controller
                                             .value.duration.inSeconds
                                             .toDouble(),
-                                        label: secondsToHumanReadable(
+                                        label: TimeUtils.secondsToHumanReadable(
                                             _controller
                                                 .value.position.inSeconds),
                                         divisions: _controller
