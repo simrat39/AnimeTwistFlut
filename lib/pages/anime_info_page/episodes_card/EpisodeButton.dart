@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../animations/Transitions.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/EpisodesWatchedProvider.dart';
 import '../../../models/TwistModel.dart';
@@ -51,31 +52,14 @@ class EpisodeButton extends StatelessWidget {
               kitsuModel: kitsuModel,
               episodeModel: episodes.elementAt(index),
             );
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                transitionDuration: Duration(milliseconds: 400),
-                pageBuilder: (context, anim, secondAnim) => WatchPage(
-                  episodeModel: episodes.elementAt(index),
-                  episodes: episodes,
-                  twistModel: twistModel,
-                  kitsuModel: kitsuModel,
-                  episodesWatchedProvider: episodesWatchedProvider,
-                ),
-                transitionsBuilder: (context, anim, secondAnim, child) {
-                  var tween = Tween(
-                    begin: Offset(1.0, 0.0),
-                    end: Offset.zero,
-                  );
-                  var curvedAnimation = CurvedAnimation(
-                    parent: anim,
-                    curve: Curves.ease,
-                  );
-                  return SlideTransition(
-                    position: tween.animate(curvedAnimation),
-                    child: child,
-                  );
-                },
+            Transitions.slideTransition(
+              context: context,
+              pageBuilder: () => WatchPage(
+                episodeModel: episodes.elementAt(index),
+                episodes: episodes,
+                twistModel: twistModel,
+                kitsuModel: kitsuModel,
+                episodesWatchedProvider: episodesWatchedProvider,
               ),
             );
           },

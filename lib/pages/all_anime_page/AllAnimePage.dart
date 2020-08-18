@@ -1,4 +1,5 @@
 // Flutter imports:
+import '../../animations/Transitions.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -90,26 +91,9 @@ class _AllAnimePageState extends State<AllAnimePage> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
-                    pageBuilder: (context, anim, secondAnim) => SearchPage(),
-                    transitionsBuilder: (context, anim, secondAnim, child) {
-                      var tween = Tween(
-                        begin: Offset(1.0, 0.0),
-                        end: Offset.zero,
-                      );
-                      var curvedAnimation = CurvedAnimation(
-                        parent: anim,
-                        curve: Curves.ease,
-                      );
-                      return SlideTransition(
-                        position: tween.animate(curvedAnimation),
-                        child: child,
-                      );
-                    },
-                  ),
+                Transitions.slideTransition(
+                  context: context,
+                  pageBuilder: () => SearchPage(),
                 );
               },
             ),
@@ -135,27 +119,10 @@ class _AllAnimePageState extends State<AllAnimePage> {
                 Icons.navigate_next,
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 400),
-                    pageBuilder: (context, anim, secondAnim) => AnimeInfoPage(
-                      twistModel: TwistUtils.allTwistModel.elementAt(index),
-                    ),
-                    transitionsBuilder: (context, anim, secondAnim, child) {
-                      var tween = Tween(
-                        begin: Offset(1.0, 0.0),
-                        end: Offset.zero,
-                      );
-                      var curvedAnimation = CurvedAnimation(
-                        parent: anim,
-                        curve: Curves.ease,
-                      );
-                      return SlideTransition(
-                        position: tween.animate(curvedAnimation),
-                        child: child,
-                      );
-                    },
+                Transitions.slideTransition(
+                  context: context,
+                  pageBuilder: () => AnimeInfoPage(
+                    twistModel: TwistUtils.allTwistModel.elementAt(index),
                   ),
                 );
               },

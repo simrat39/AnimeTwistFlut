@@ -1,4 +1,5 @@
 // Flutter imports:
+import '../../animations/Transitions.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -69,26 +70,9 @@ class _HomePageState extends State<HomePage> {
               Icons.chat_bubble,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  transitionDuration: Duration(milliseconds: 400),
-                  pageBuilder: (context, anim, secondAnim) => ChatPage(),
-                  transitionsBuilder: (context, anim, secondAnim, child) {
-                    var tween = Tween(
-                      begin: Offset(1.0, 0.0),
-                      end: Offset.zero,
-                    );
-                    var curvedAnimation = CurvedAnimation(
-                      parent: anim,
-                      curve: Curves.ease,
-                    );
-                    return SlideTransition(
-                      position: tween.animate(curvedAnimation),
-                      child: child,
-                    );
-                  },
-                ),
+              Transitions.slideTransition(
+                context: context,
+                pageBuilder: () => ChatPage(),
               );
             },
           ),
@@ -97,26 +81,9 @@ class _HomePageState extends State<HomePage> {
               Icons.search,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  transitionDuration: Duration(milliseconds: 400),
-                  pageBuilder: (context, anim, secondAnim) => SearchPage(),
-                  transitionsBuilder: (context, anim, secondAnim, child) {
-                    var tween = Tween(
-                      begin: Offset(1.0, 0.0),
-                      end: Offset.zero,
-                    );
-                    var curvedAnimation = CurvedAnimation(
-                      parent: anim,
-                      curve: Curves.ease,
-                    );
-                    return SlideTransition(
-                      position: tween.animate(curvedAnimation),
-                      child: child,
-                    );
-                  },
-                ),
+              Transitions.slideTransition(
+                context: context,
+                pageBuilder: () => SearchPage(),
               );
             },
           ),

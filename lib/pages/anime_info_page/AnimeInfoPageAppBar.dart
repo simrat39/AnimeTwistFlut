@@ -1,4 +1,5 @@
 // Flutter imports:
+import '../../animations/Transitions.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -59,26 +60,9 @@ class AnimeInfoPageAppBar {
             if (isFromSearchPage ?? false) {
               Navigator.pop(context);
             } else {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  transitionDuration: Duration(milliseconds: 400),
-                  pageBuilder: (context, anim, secondAnim) => SearchPage(),
-                  transitionsBuilder: (context, anim, secondAnim, child) {
-                    var tween = Tween(
-                      begin: Offset(1.0, 0.0),
-                      end: Offset.zero,
-                    );
-                    var curvedAnimation = CurvedAnimation(
-                      parent: anim,
-                      curve: Curves.ease,
-                    );
-                    return SlideTransition(
-                      position: tween.animate(curvedAnimation),
-                      child: child,
-                    );
-                  },
-                ),
+              Transitions.slideTransition(
+                context: context,
+                pageBuilder: () => SearchPage(),
               );
             }
           },

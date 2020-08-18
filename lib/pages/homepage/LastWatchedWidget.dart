@@ -1,4 +1,5 @@
 // Flutter imports:
+import '../../animations/Transitions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -61,30 +62,11 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                   child: Card(
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 400),
-                            pageBuilder: (context, anim, secondAnim) =>
-                                AnimeInfoPage(
-                              twistModel: prov.twistModel,
-                              kitsuModel: prov.kitsuModel,
-                            ),
-                            transitionsBuilder:
-                                (context, anim, secondAnim, child) {
-                              var tween = Tween(
-                                begin: Offset(1.0, 0.0),
-                                end: Offset.zero,
-                              ).chain(
-                                CurveTween(
-                                  curve: Curves.ease,
-                                ),
-                              );
-                              return SlideTransition(
-                                position: anim.drive(tween),
-                                child: child,
-                              );
-                            },
+                        Transitions.slideTransition(
+                          context: context,
+                          pageBuilder: () => AnimeInfoPage(
+                            twistModel: prov.twistModel,
+                            kitsuModel: prov.kitsuModel,
                           ),
                         );
                       },
