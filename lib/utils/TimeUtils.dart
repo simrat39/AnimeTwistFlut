@@ -6,4 +6,12 @@ class TimeUtils {
     if (minutes.length == 1) minutes = "0$minutes";
     return "$minutes:$seconds";
   }
+
+  static String dateTimetoHumanReadable(DateTime dt) {
+    String hour = (dt.hour > 12 ? dt.hour - 12 : dt.hour).toString();
+    String minutes = dt.minute.toString();
+    if (hour.length == 1) hour = "0$hour";
+    if (minutes.length == 1) minutes = "0$minutes";
+    return "$hour:$minutes";
+  }
 }

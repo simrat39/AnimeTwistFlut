@@ -1,4 +1,5 @@
 // Dart imports:
+import '../../utils/TimeUtils.dart';
 import 'dart:convert';
 
 // Flutter imports:
@@ -140,6 +141,11 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                       ChatPage.messages.elementAt(index).userModel.username),
                   subtitle: SelectableText(
                       ChatPage.messages.elementAt(index).message),
+                  trailing: Text(
+                    TimeUtils.dateTimetoHumanReadable(
+                      ChatPage.messages.elementAt(index).time,
+                    ),
+                  ),
                 );
               },
             ),
