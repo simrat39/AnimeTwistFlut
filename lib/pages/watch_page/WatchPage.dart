@@ -352,8 +352,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                 );
                                                 Navigator.push(
                                                   context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
+                                                  PageRouteBuilder(
+                                                    transitionDuration:
+                                                        0.seconds,
+                                                    pageBuilder: (context, anim,
+                                                            anime2) =>
                                                         WatchPage(
                                                       episodeModel: widget
                                                           .episodes
