@@ -57,7 +57,6 @@ class TwistUtils {
   /// Returns true if cachedData is empty
   /// Returns true if stored date is longer than 7 days
   static bool shouldUpdateCache(List<String> cachedData, DateTime dt) {
-    // return false;
     return (cachedData == null ||
         cachedData.isEmpty ||
         dt.difference(DateTime.parse(cachedData[0])).abs() > 7.days);
