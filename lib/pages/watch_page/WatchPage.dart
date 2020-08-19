@@ -424,7 +424,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         ),
                                         child: Icon(
                                           Icons.screen_rotation_rounded,
-                                          size: 20.0,
+                                          size: 19.0,
                                         ),
                                       ),
                                       onTap: () {
