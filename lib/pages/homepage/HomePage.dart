@@ -15,6 +15,7 @@ import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
 import 'explore_slider/ExploreSlider.dart';
+import 'AboutIcon.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          AboutIcon(),
           IconButton(
             icon: Icon(
               Icons.chat_bubble,

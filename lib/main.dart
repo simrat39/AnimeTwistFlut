@@ -41,6 +41,7 @@ class RootWindow extends StatelessWidget {
       darkTheme: ThemeData.dark().copyWith(
         cardColor: Color(0xff262845),
         scaffoldBackgroundColor: Color(0xff1d1f3e),
+        dialogBackgroundColor: Color(0xff1d1f3e),
         accentColor: Color(0xff69f0ae),
         appBarTheme: AppBarTheme(
           color: Color(0xff1d1f3e),
@@ -51,6 +52,16 @@ class RootWindow extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: ButtonStyleButton.allOrNull<Color>(
+              Color(0xff69f0ae),
+            ),
+            overlayColor: ButtonStyleButton.allOrNull<Color>(
+              Color(0xff69f0ae).withOpacity(0.2),
+            ),
           ),
         ),
         bottomSheetTheme: BottomSheetThemeData(
