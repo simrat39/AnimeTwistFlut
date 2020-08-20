@@ -45,6 +45,7 @@ dependencies:
   auto_orientation:
   shared_preferences:
   font_awesome_flutter:
+  flutter_android_pip:
 
 dev_dependencies:
   flutter_test:

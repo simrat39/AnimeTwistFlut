@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:flutter_android_pip/flutter_android_pip.dart';
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:provider/provider.dart';
@@ -47,14 +48,21 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   bool isUIvisible = false;
   double currentPosition;
   String currentPositionStr;
+  bool isPictureInPicture = false;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state.index != AppLifecycleState.resumed.index) {
-      setState(() {
-        pause();
-      });
-    }
+    setState(() {
+      switch (state) {
+        case AppLifecycleState.paused:
+        case AppLifecycleState.detached:
+        case AppLifecycleState.inactive:
+          break;
+        case AppLifecycleState.resumed:
+          isPictureInPicture = false;
+          break;
+      }
+    });
   }
 
   @override
@@ -192,97 +200,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              height: containerHeight,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Colors.transparent,
-                                    Colors.black38,
-                                    Colors.black87,
-                                  ],
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.navigate_before,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      AutoSizeText(
-                                        widget.twistModel.title,
-                                        maxLines: 1,
-                                        minFontSize: 5.0,
-                                        maxFontSize: 25.0,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      ChangeNotifierProvider<
-                                          EpisodesWatchedProvider>.value(
-                                        value: widget.episodesWatchedProvider,
-                                        child:
-                                            Consumer<EpisodesWatchedProvider>(
-                                          builder: (context, prov, child) =>
-                                              Checkbox(
-                                            value: prov.isWatched(
-                                              widget.episodeModel.number,
-                                            ),
-                                            checkColor: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                prov.toggleWatched(
-                                                  widget.episodeModel.number,
-                                                );
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 15.0,
-                                        ),
-                                        child: AutoSizeText(
-                                          "S" +
-                                              widget.twistModel.season
-                                                  .toString() +
-                                              " | E" +
-                                              widget.episodeModel.number
-                                                  .toString(),
-                                          maxLines: 1,
-                                          minFontSize: 5.0,
-                                          maxFontSize: 25.0,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IgnorePointer(
-                              ignoring: !isUIvisible,
+                            Visibility(
+                              visible: !isPictureInPicture,
                               child: Container(
                                 height: containerHeight,
                                 width: double.infinity,
@@ -293,145 +212,267 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                       Colors.black38,
                                       Colors.black87,
                                     ],
-                                    end: Alignment.bottomCenter,
-                                    begin: Alignment.topCenter,
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
                                   ),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    GestureDetector(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 5.0,
-                                          left: 15.0,
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.navigate_before,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
                                         ),
-                                        child: Icon(
-                                          _controller.value.isPlaying
-                                              ? Icons.pause
-                                              : Icons.play_arrow,
-                                          size: 22.5,
+                                        AutoSizeText(
+                                          widget.twistModel.title,
+                                          maxLines: 1,
+                                          minFontSize: 5.0,
+                                          maxFontSize: 25.0,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      onTap: () {
-                                        togglePlay();
-                                      },
+                                      ],
                                     ),
-                                    ChangeNotifierProvider.value(
-                                      value: LastWatchedProvider.provider,
-                                      builder: (context, child) =>
-                                          GestureDetector(
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 5.0,
+                                          ),
+                                          child: GestureDetector(
+                                            child: Icon(
+                                              Icons.picture_in_picture_rounded,
+                                            ),
+                                            onTap: () {
+                                              print(isPictureInPicture
+                                                  .toString());
+                                              setState(() {
+                                                isPictureInPicture = true;
+                                                FlutterAndroidPip
+                                                    .enterPictureInPictureMode;
+                                              });
+                                              print(isPictureInPicture
+                                                  .toString());
+                                            },
+                                          ),
+                                        ),
+                                        ChangeNotifierProvider<
+                                            EpisodesWatchedProvider>.value(
+                                          value: widget.episodesWatchedProvider,
+                                          child:
+                                              Consumer<EpisodesWatchedProvider>(
+                                            builder: (context, prov, child) =>
+                                                Checkbox(
+                                              value: prov.isWatched(
+                                                widget.episodeModel.number,
+                                              ),
+                                              checkColor: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  prov.toggleWatched(
+                                                    widget.episodeModel.number,
+                                                  );
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 15.0,
+                                          ),
+                                          child: AutoSizeText(
+                                            "S" +
+                                                widget.twistModel.season
+                                                    .toString() +
+                                                " | E" +
+                                                widget.episodeModel.number
+                                                    .toString(),
+                                            maxLines: 1,
+                                            minFontSize: 5.0,
+                                            maxFontSize: 25.0,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            IgnorePointer(
+                              ignoring: !isUIvisible,
+                              child: Visibility(
+                                visible: !isPictureInPicture,
+                                child: Container(
+                                  height: containerHeight,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Colors.transparent,
+                                        Colors.black38,
+                                        Colors.black87,
+                                      ],
+                                      end: Alignment.bottomCenter,
+                                      begin: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
                                         child: Padding(
                                           padding: EdgeInsets.only(
-                                            right: 10.0,
-                                            left: 5.0,
+                                            right: 5.0,
+                                            left: 15.0,
                                           ),
                                           child: Icon(
-                                            Icons.skip_next_outlined,
+                                            _controller.value.isPlaying
+                                                ? Icons.pause
+                                                : Icons.play_arrow,
                                             size: 22.5,
                                           ),
                                         ),
-                                        onTap: widget.episodes.last ==
-                                                widget.episodeModel
-                                            ? null
-                                            : () {
-                                                Navigator.pop(context);
-                                                Provider.of<LastWatchedProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .setData(
-                                                  episodeModel: widget.episodes
-                                                      .elementAt(widget.episodes
-                                                              .indexOf(widget
-                                                                  .episodeModel) +
-                                                          1),
-                                                  twistModel: widget.twistModel,
-                                                  kitsuModel: widget.kitsuModel,
-                                                );
-                                                Navigator.push(
-                                                  context,
-                                                  PageRouteBuilder(
-                                                    transitionDuration:
-                                                        0.seconds,
-                                                    pageBuilder: (context, anim,
-                                                            anime2) =>
-                                                        WatchPage(
-                                                      episodeModel: widget
-                                                          .episodes
-                                                          .elementAt(widget
-                                                                  .episodes
-                                                                  .indexOf(widget
-                                                                      .episodeModel) +
-                                                              1),
-                                                      episodes: widget.episodes,
-                                                      twistModel:
-                                                          widget.twistModel,
-                                                      kitsuModel:
-                                                          widget.kitsuModel,
-                                                      isFromPrevEpisode: true,
-                                                      episodesWatchedProvider:
-                                                          widget
-                                                              .episodesWatchedProvider,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                      ),
-                                    ),
-                                    Text(
-                                      currentPositionStr,
-                                    ),
-                                    Expanded(
-                                      child: Slider(
-                                        value: _controller
-                                            .value.position.inSeconds
-                                            .toDouble(),
-                                        activeColor:
-                                            Theme.of(context).accentColor,
-                                        inactiveColor: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.5),
-                                        min: 0,
-                                        max: _controller
-                                            .value.duration.inSeconds
-                                            .toDouble(),
-                                        label: TimeUtils.secondsToHumanReadable(
-                                            _controller
-                                                .value.position.inSeconds),
-                                        divisions: _controller
-                                            .value.duration.inSeconds,
-                                        onChanged: (pos) {
-                                          setState(
-                                            () {
-                                              _controller.seekTo(pos.seconds);
-                                            },
-                                          );
+                                        onTap: () {
+                                          togglePlay();
                                         },
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 5.0,
+                                      ChangeNotifierProvider.value(
+                                        value: LastWatchedProvider.provider,
+                                        builder: (context, child) =>
+                                            GestureDetector(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              right: 10.0,
+                                              left: 5.0,
+                                            ),
+                                            child: Icon(
+                                              Icons.skip_next_outlined,
+                                              size: 22.5,
+                                            ),
+                                          ),
+                                          onTap: widget.episodes.last ==
+                                                  widget.episodeModel
+                                              ? null
+                                              : () {
+                                                  Navigator.pop(context);
+                                                  Provider.of<LastWatchedProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .setData(
+                                                    episodeModel: widget
+                                                        .episodes
+                                                        .elementAt(widget
+                                                                .episodes
+                                                                .indexOf(widget
+                                                                    .episodeModel) +
+                                                            1),
+                                                    twistModel:
+                                                        widget.twistModel,
+                                                    kitsuModel:
+                                                        widget.kitsuModel,
+                                                  );
+                                                  Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      transitionDuration:
+                                                          0.seconds,
+                                                      pageBuilder: (context,
+                                                              anim, anime2) =>
+                                                          WatchPage(
+                                                        episodeModel: widget
+                                                            .episodes
+                                                            .elementAt(widget
+                                                                    .episodes
+                                                                    .indexOf(widget
+                                                                        .episodeModel) +
+                                                                1),
+                                                        episodes:
+                                                            widget.episodes,
+                                                        twistModel:
+                                                            widget.twistModel,
+                                                        kitsuModel:
+                                                            widget.kitsuModel,
+                                                        isFromPrevEpisode: true,
+                                                        episodesWatchedProvider:
+                                                            widget
+                                                                .episodesWatchedProvider,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                        ),
                                       ),
-                                      child: Text(_duration),
-                                    ),
-                                    GestureDetector(
-                                      child: Padding(
+                                      Text(
+                                        currentPositionStr,
+                                      ),
+                                      Expanded(
+                                        child: Slider(
+                                          value: _controller
+                                              .value.position.inSeconds
+                                              .toDouble(),
+                                          activeColor:
+                                              Theme.of(context).accentColor,
+                                          inactiveColor: Theme.of(context)
+                                              .accentColor
+                                              .withOpacity(0.5),
+                                          min: 0,
+                                          max: _controller
+                                              .value.duration.inSeconds
+                                              .toDouble(),
+                                          label:
+                                              TimeUtils.secondsToHumanReadable(
+                                                  _controller.value.position
+                                                      .inSeconds),
+                                          divisions: _controller
+                                              .value.duration.inSeconds,
+                                          onChanged: (pos) {
+                                            setState(
+                                              () {
+                                                _controller.seekTo(pos.seconds);
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
                                         padding: EdgeInsets.only(
-                                          bottom: 3.0,
-                                          right: 15.0,
-                                          left: 10.0,
+                                          right: 5.0,
                                         ),
-                                        child: Icon(
-                                          Icons.screen_rotation_rounded,
-                                          size: 19.0,
-                                        ),
+                                        child: Text(_duration),
                                       ),
-                                      onTap: () {
-                                        rotate();
-                                      },
-                                    ),
-                                  ],
+                                      GestureDetector(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: 3.0,
+                                            right: 15.0,
+                                            left: 10.0,
+                                          ),
+                                          child: Icon(
+                                            Icons.screen_rotation_rounded,
+                                            size: 19.0,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          rotate();
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
