@@ -13,17 +13,35 @@ class AboutIcon extends StatelessWidget {
         context: context,
         applicationName: "AnimeTwistFlut",
         children: <Widget>[
-          IconButton(
-            icon: Icon(
-              FontAwesomeIcons.github,
-            ),
-            iconSize: 50.0,
-            onPressed: () async {
-              String url = "https://github.com/simrat39/AnimeTwistFlut";
-              if (await canLaunch(url)) {
-                launch(url);
-              }
-            },
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(
+                  FontAwesomeIcons.github,
+                ),
+                iconSize: 50.0,
+                onPressed: () async {
+                  String url = "https://github.com/simrat39/AnimeTwistFlut";
+                  if (await canLaunch(url)) {
+                    launch(url);
+                  }
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  FontAwesomeIcons.discord,
+                ),
+                iconSize: 50.0,
+                onPressed: () async {
+                  String url = "https://discord.gg/Ea3Mq9n";
+                  if (await canLaunch(url)) {
+                    launch(url);
+                  }
+                },
+              ),
+            ],
           ),
         ],
       ),
