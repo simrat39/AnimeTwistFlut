@@ -3,19 +3,15 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:supercharged/supercharged.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
 
 class EpisodesButton extends StatelessWidget {
   final List<EpisodeModel> episodes;
-  final ScrollController controller;
 
   EpisodesButton({
     @required this.episodes,
-    @required this.controller,
   });
 
   @override
@@ -40,35 +36,17 @@ class EpisodesButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             vertical: 10.0,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: AutoSizeText(
-                  episodes.length.toString() + " Episodes",
-                  maxLines: 1,
-                  minFontSize: 5.0,
-                  maxFontSize: 20.0,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              Icon(
-                FontAwesomeIcons.chevronDown,
-                size: 15.0,
-              ),
-            ],
+          child: AutoSizeText(
+            episodes.length.toString() + " Episodes",
+            maxLines: 1,
+            minFontSize: 5.0,
+            maxFontSize: 20.0,
+            style: TextStyle(
+              fontSize: 20.0,
+            ),
           ),
         ),
-        onPressed: () {
-          controller.animateTo(
-            controller.position.maxScrollExtent,
-            duration: 500.milliseconds,
-            curve: Curves.ease,
-          );
-        },
+        onPressed: () {},
       ),
     );
   }

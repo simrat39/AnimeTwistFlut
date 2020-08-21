@@ -1,5 +1,4 @@
 // Dart imports:
-import '../../utils/TimeUtils.dart';
 import 'dart:convert';
 
 // Flutter imports:
@@ -10,6 +9,7 @@ import 'package:web_socket_channel/io.dart';
 
 // Project imports:
 import '../../models/chat/MessageModel.dart';
+import '../../utils/TimeUtils.dart';
 
 class ChatPage extends StatefulWidget {
   static List<MessageModel> messages = [];

@@ -1,9 +1,9 @@
 // Flutter imports:
-import '../../animations/Transitions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
+import '../../animations/Transitions.dart';
 import '../../pages/all_anime_page/AllAnimePage.dart';
 
 class ViewAllAnimeCard extends StatelessWidget {

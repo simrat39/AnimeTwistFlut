@@ -1,8 +1,8 @@
 // Flutter imports:
-import '../../animations/Transitions.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
+import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
 import '../../utils/TwistUtils.dart';
 import '../anime_info_page/AnimeInfoPage.dart';

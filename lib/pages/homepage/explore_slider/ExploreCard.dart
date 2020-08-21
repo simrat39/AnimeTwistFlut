@@ -1,11 +1,11 @@
 // Flutter imports:
-import '../../../animations/Transitions.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
+import '../../../animations/Transitions.dart';
 import '../../../models/KitsuModel.dart';
 import '../../../models/TwistModel.dart';
 import '../../anime_info_page/AnimeInfoPage.dart';

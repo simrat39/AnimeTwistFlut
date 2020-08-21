@@ -28,9 +28,7 @@ class InfoCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Card(
-      margin: EdgeInsets.symmetric(
-        horizontal: 15.0,
-      ),
+      margin: EdgeInsets.zero,
       child: Container(
         width: double.infinity,
         height:
@@ -75,7 +73,6 @@ class InfoCard extends StatelessWidget {
                     ),
                     EpisodesButton(
                       episodes: episodes,
-                      controller: controller,
                     ),
                   ],
                 ),
@@ -95,7 +92,6 @@ class InfoCard extends StatelessWidget {
                         ),
                         EpisodesButton(
                           episodes: episodes,
-                          controller: controller,
                         ),
                       ],
                     ),
