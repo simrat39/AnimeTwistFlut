@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:supercharged/supercharged.dart';
 import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
 
@@ -14,6 +15,9 @@ class CachedHttpGet {
         req.url,
         headers: req.header,
       ),
+      maxAttempts: 100,
+      maxDelay: 1000.milliseconds,
+      delayFactor: 100.milliseconds,
     );
 
     cache[req.url] = response.body;
