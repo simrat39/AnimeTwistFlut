@@ -1,7 +1,7 @@
 // Package imports:
-import 'package:supercharged/supercharged.dart';
 import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
+import 'package:supercharged/supercharged.dart';
 
 // A shitty cacher for http requests, works perfect for this project
 class CachedHttpGet {
