@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,6 +47,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   VideoPlayerController _controller;
   String _duration;
   bool isUIvisible = false;
+  bool isWaiting = false;
   double currentPosition;
   String currentPositionStr;
   bool isPictureInPicture = false;
@@ -137,6 +139,16 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       SystemChrome.setEnabledSystemUIOverlays([]);
       isUIvisible = !isUIvisible;
     });
+
+    if (!isWaiting) {
+      isWaiting = true;
+      Timer(3.seconds, () {
+        setState(() {
+          isUIvisible = false;
+        });
+        isWaiting = false;
+      });
+    }
   }
 
   void rotate() {
