@@ -136,8 +136,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                           minFontSize: 25.0,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            fontSize: 32.5,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w800,
                                           ),
                                         ),
                                       ),
@@ -213,8 +213,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     minFontSize: 10.0,
                                     maxLines: 1,
                                     style: TextStyle(
-                                      fontSize: 32.5,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                 ),
