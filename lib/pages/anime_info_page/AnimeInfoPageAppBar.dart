@@ -45,7 +45,7 @@ class AnimeInfoPageAppBar {
         twistModel.malId != null
             ? IconButton(
                 icon: Icon(
-                  Icons.info,
+                  Icons.info_outline_rounded,
                 ),
                 onPressed: () {
                   MALUtils.launchMalLink(twistModel.malId);
