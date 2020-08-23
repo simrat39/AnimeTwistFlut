@@ -24,27 +24,19 @@ class RootWindow extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color bgColor = Color(0xff1d1f3e);
+    Color cardColor = Color(0xff262845);
+    Color accentColor = Colors.greenAccent;
+
     return MaterialApp(
       home: HomePage(),
-      theme: ThemeData.light().copyWith(
-        accentColor: Color(0xff69f0ae),
-        cardTheme: CardTheme(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        appBarTheme: AppBarTheme(
-          color: Color(0xffffffff),
-          elevation: 0.0,
-        ),
-      ),
       darkTheme: ThemeData.dark().copyWith(
-        cardColor: Color(0xff262845),
-        scaffoldBackgroundColor: Color(0xff1d1f3e),
-        dialogBackgroundColor: Color(0xff1d1f3e),
-        accentColor: Color(0xff69f0ae),
+        cardColor: cardColor,
+        scaffoldBackgroundColor: bgColor,
+        dialogBackgroundColor: bgColor,
+        accentColor: accentColor,
         appBarTheme: AppBarTheme(
-          color: Color(0xff1d1f3e),
+          color: bgColor,
           elevation: 0.0,
         ),
         cardTheme: CardTheme(
@@ -57,15 +49,15 @@ class RootWindow extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
             foregroundColor: ButtonStyleButton.allOrNull<Color>(
-              Color(0xff69f0ae),
+              accentColor,
             ),
             overlayColor: ButtonStyleButton.allOrNull<Color>(
-              Color(0xff69f0ae).withOpacity(0.2),
+              accentColor.withOpacity(0.2),
             ),
           ),
         ),
         bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: Color(0xff1d1f3e),
+          backgroundColor: bgColor,
         ),
       ),
       themeMode: ThemeMode.dark,
