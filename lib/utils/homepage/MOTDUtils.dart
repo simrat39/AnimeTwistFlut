@@ -5,7 +5,7 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:http/http.dart' as http;
-import 'package:retry/retry.dart' as retry;
+import '../../infinity_retry/InfinityRetry.dart';
 
 // Project imports:
 import '../../secrets.dart';
@@ -13,8 +13,8 @@ import '../../secrets.dart';
 class MOTDUtils {
   static Future<List<String>> getMOTD() async {
     List<String> data = [];
-    var response = await retry.retry(
-      () => http.get(
+    var response = await infinityRetry(
+      future: () => http.get(
         'https://twist.moe/api/motd',
         headers: {
           'x-access-token': x_access_token,
