@@ -25,4 +25,15 @@ class MessageModel {
       time: DateTime.parse(data["timestamp"]).toLocal() - 5.minutes,
     );
   }
+
+  @override
+  bool operator ==(covariant MessageModel messageModel) {
+    if (identical(this, messageModel)) return true;
+    return (messageModel.message == this.message &&
+        messageModel.userModel == this.userModel &&
+        messageModel.time == this.time);
+  }
+
+  @override
+  int get hashCode => message.hashCode ^ userModel.hashCode ^ time.hashCode;
 }

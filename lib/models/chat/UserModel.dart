@@ -16,4 +16,14 @@ class UserModel {
       username: data['username'],
     );
   }
+
+  @override
+  bool operator ==(covariant UserModel userModel) {
+    if (identical(this, userModel)) return true;
+
+    return (userModel.username == this.username && userModel.id == this.id);
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ username.hashCode;
 }
