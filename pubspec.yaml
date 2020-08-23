@@ -30,7 +30,6 @@ dependencies:
   tuple:
   encrypt:
   simple_animations:
-  scrollable_positioned_list:
   video_player_header:
     git:
       url: https://github.com/simrat39/videoPlayerWithHeader
@@ -45,6 +44,8 @@ dependencies:
   shared_preferences:
   font_awesome_flutter:
   flutter_android_pip:
+    git:
+      url: https://github.com/simrat39/flutter_android_pip
 
 dev_dependencies:
   flutter_test:
