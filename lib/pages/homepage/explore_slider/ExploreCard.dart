@@ -111,9 +111,9 @@ class _ExploreCardState extends State<ExploreCard> {
                         minFontSize: 15.0,
                         maxFontSize: 30.0,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25.0,
-                          fontFamily: "ProductSans",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 26,
+                          height: 1.25,
                         ),
                       ),
                       WatchTrailerButton(
