@@ -140,7 +140,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       isUIvisible = !isUIvisible;
     });
 
-    if (!isWaiting) {
+    if (!isWaiting && isUIvisible) {
       isWaiting = true;
       Timer(3.seconds, () {
         setState(() {
