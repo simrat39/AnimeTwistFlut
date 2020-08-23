@@ -131,9 +131,9 @@ class _LastWatchedWidgetState extends State<LastWatchedWidget> {
                                     overflow: TextOverflow.ellipsis,
                                     minFontSize: 15.0,
                                     style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 27.5,
-                                      fontFamily: "ProductSans",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 26,
+                                      height: 1.25,
                                     ),
                                   ),
                                   Padding(
