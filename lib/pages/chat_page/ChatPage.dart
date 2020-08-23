@@ -12,8 +12,6 @@ import '../../models/chat/MessageModel.dart';
 import '../../utils/TimeUtils.dart';
 
 class ChatPage extends StatefulWidget {
-  static List<MessageModel> messages = [];
-
   @override
   State<StatefulWidget> createState() {
     return _ChatPageState();
@@ -23,6 +21,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   IOWebSocketChannel _channel;
   ScrollController _controller;
+  List<MessageModel> _messages = [];
 
   void connect() async {
     _channel = IOWebSocketChannel.connect("wss://ws.twist.moe/");
@@ -117,7 +116,9 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             var jsonData = jsonDecode(snapshot.data);
             if (jsonData["type"] == "msg") {
               var message = MessageModel.fromJson(jsonData);
-              ChatPage.messages.add(message);
+              if (!_messages.contains(message)) {
+                _messages.add(message);
+              }
               if (_controller.hasClients) {
                 if (_controller.position.pixels ==
                     _controller.position.maxScrollExtent)
@@ -134,16 +135,14 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             controller: _controller,
             child: ListView.builder(
               controller: _controller,
-              itemCount: ChatPage.messages.length,
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(
-                      ChatPage.messages.elementAt(index).userModel.username),
-                  subtitle: SelectableText(
-                      ChatPage.messages.elementAt(index).message),
+                  title: Text(_messages.elementAt(index).userModel.username),
+                  subtitle: SelectableText(_messages.elementAt(index).message),
                   trailing: Text(
                     TimeUtils.dateTimetoHumanReadable(
-                      ChatPage.messages.elementAt(index).time,
+                      _messages.elementAt(index).time,
                     ),
                   ),
                 );
