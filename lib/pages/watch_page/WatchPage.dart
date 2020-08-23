@@ -200,104 +200,40 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Visibility(
-                              visible: !isPictureInPicture,
-                              child: Container(
-                                height: containerHeight,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: <Color>[
-                                      Colors.transparent,
-                                      Colors.black38,
-                                      Colors.black87,
-                                    ],
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.navigate_before,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        AutoSizeText(
-                                          widget.twistModel.title,
-                                          maxLines: 1,
-                                          minFontSize: 5.0,
-                                          maxFontSize: 25.0,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                            IgnorePointer(
+                              ignoring: !isUIvisible,
+                              child: Visibility(
+                                visible: !isPictureInPicture,
+                                child: Container(
+                                  height: containerHeight,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Colors.transparent,
+                                        Colors.black38,
+                                        Colors.black87,
                                       ],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
                                     ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            right: 5.0,
-                                          ),
-                                          child: GestureDetector(
-                                            child: Icon(
-                                              Icons.picture_in_picture_rounded,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.navigate_before,
                                             ),
-                                            onTap: () {
-                                              print(isPictureInPicture
-                                                  .toString());
-                                              setState(() {
-                                                isPictureInPicture = true;
-                                                FlutterAndroidPip
-                                                    .enterPictureInPictureMode;
-                                              });
-                                              print(isPictureInPicture
-                                                  .toString());
+                                            onPressed: () {
+                                              Navigator.pop(context);
                                             },
                                           ),
-                                        ),
-                                        ChangeNotifierProvider<
-                                            EpisodesWatchedProvider>.value(
-                                          value: widget.episodesWatchedProvider,
-                                          child:
-                                              Consumer<EpisodesWatchedProvider>(
-                                            builder: (context, prov, child) =>
-                                                Checkbox(
-                                              value: prov.isWatched(
-                                                widget.episodeModel.number,
-                                              ),
-                                              checkColor: Theme.of(context)
-                                                  .scaffoldBackgroundColor,
-                                              onChanged: (val) {
-                                                setState(() {
-                                                  prov.toggleWatched(
-                                                    widget.episodeModel.number,
-                                                  );
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            right: 15.0,
-                                          ),
-                                          child: AutoSizeText(
-                                            "S" +
-                                                widget.twistModel.season
-                                                    .toString() +
-                                                " | E" +
-                                                widget.episodeModel.number
-                                                    .toString(),
+                                          AutoSizeText(
+                                            widget.twistModel.title,
                                             maxLines: 1,
                                             minFontSize: 5.0,
                                             maxFontSize: 25.0,
@@ -306,10 +242,80 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              right: 5.0,
+                                            ),
+                                            child: GestureDetector(
+                                              child: Icon(
+                                                Icons
+                                                    .picture_in_picture_rounded,
+                                              ),
+                                              onTap: () {
+                                                print(isPictureInPicture
+                                                    .toString());
+                                                setState(() {
+                                                  isPictureInPicture = true;
+                                                  FlutterAndroidPip
+                                                      .enterPictureInPictureMode;
+                                                });
+                                                print(isPictureInPicture
+                                                    .toString());
+                                              },
+                                            ),
+                                          ),
+                                          ChangeNotifierProvider<
+                                              EpisodesWatchedProvider>.value(
+                                            value:
+                                                widget.episodesWatchedProvider,
+                                            child: Consumer<
+                                                EpisodesWatchedProvider>(
+                                              builder: (context, prov, child) =>
+                                                  Checkbox(
+                                                value: prov.isWatched(
+                                                  widget.episodeModel.number,
+                                                ),
+                                                checkColor: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    prov.toggleWatched(
+                                                      widget
+                                                          .episodeModel.number,
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              right: 15.0,
+                                            ),
+                                            child: AutoSizeText(
+                                              "S" +
+                                                  widget.twistModel.season
+                                                      .toString() +
+                                                  " | E" +
+                                                  widget.episodeModel.number
+                                                      .toString(),
+                                              maxLines: 1,
+                                              minFontSize: 5.0,
+                                              maxFontSize: 25.0,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
