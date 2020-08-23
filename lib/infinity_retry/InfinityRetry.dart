@@ -17,3 +17,23 @@ Future infinityRetry({
     }
   }
 }
+
+/// Infinitely retry a future till we get a response, but do it linearly
+///
+/// Infinitely retries [future] till a response is recieved. If there is an
+/// exception, a delay of [delayFactor * number of attempt] milliseconds takes place after which the
+/// future is ran again.
+Future linearInfiniteRetry({
+  Future Function() future,
+  int delayFactor = 100,
+}) async {
+  int attempt = 0;
+  while (true) {
+    attempt++;
+    try {
+      return await future();
+    } catch (e) {
+      Future.delayed((delayFactor * attempt).milliseconds);
+    }
+  }
+}
