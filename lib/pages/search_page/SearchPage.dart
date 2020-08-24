@@ -81,20 +81,27 @@ class _SearchPageState extends State<SearchPage> {
                   child: Builder(
                     builder: (context) {
                       List<Widget> results = [];
-                      SearchUtils.getSearchResults(
-                              text: _textEditingController.text)
-                          .forEach((model) {
-                        results.add(
-                          SearchListTile(
-                            twistModel: model,
-                            node: _focusNode,
-                          ),
-                        );
-                      });
+                      for (int i = 0;
+                          i < TwistUtils.allTwistModel.length;
+                          i++) {
+                        var elem = TwistUtils.allTwistModel.elementAt(i);
+                        if (SearchUtils.isTextInAnimeModel(
+                          text: _textEditingController.text,
+                          twistModel: elem,
+                        )) {
+                          results.add(
+                            SearchListTile(
+                              twistModel: elem,
+                              node: _focusNode,
+                            ),
+                          );
+                        }
+                      }
                       return CupertinoScrollbar(
                         child: ListView.builder(
                           controller: _scrollController,
                           shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
                           itemBuilder: (context, index) => results[index],
                           itemCount: results.length,
                         ),

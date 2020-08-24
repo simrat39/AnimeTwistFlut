@@ -8,13 +8,15 @@ import '../../utils/TwistUtils.dart';
 
 // Project imports:
 
-
 class SearchUtils {
   static bool isTextInAnimeModel({String text, TwistModel twistModel}) {
-    final fuse =
-        Fuzzy([twistModel.title, twistModel.altTitle ?? twistModel.title]);
-    List<Result<String>> res = fuse.search(text);
-    if (text.isEmpty || res.isNotEmpty && res[0].score < 0.3) {
+    String _text = text.toLowerCase().removeWhitespace();
+    if (_text.isEmpty ||
+        twistModel.title.removeWhitespace().toLowerCase().contains(_text) ||
+        (twistModel.altTitle?.removeWhitespace() ??
+                twistModel.title.removeWhitespace())
+            .toLowerCase()
+            .contains(_text)) {
       return true;
     }
     return false;
@@ -40,5 +42,11 @@ class SearchUtils {
       }
     }
     return ret;
+  }
+}
+
+extension StringExtensions on String {
+  String removeWhitespace() {
+    return this.replaceAll(' ', '');
   }
 }
