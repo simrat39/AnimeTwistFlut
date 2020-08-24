@@ -5,9 +5,9 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:http/http.dart' as http;
-import '../../infinity_retry/InfinityRetry.dart';
 
 // Project imports:
+import '../../infinity_retry/InfinityRetry.dart';
 import '../../secrets.dart';
 
 class MOTDUtils {

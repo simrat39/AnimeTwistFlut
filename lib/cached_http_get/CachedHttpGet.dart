@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:http/http.dart' as http;
+
+// Project imports:
 import '../infinity_retry/InfinityRetry.dart';
 
 // A shitty cacher for http requests, works perfect for this project
