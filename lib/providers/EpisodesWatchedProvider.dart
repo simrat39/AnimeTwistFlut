@@ -39,4 +39,14 @@ class EpisodesWatchedProvider with ChangeNotifier {
   Future setWatchedPref() async {
     pref.setStringList(slug, eps);
   }
+
+  Future setWatchedTill(int n) async {
+    for (int i = 0; i <= n; i++) {
+      if (!eps.contains(i.toString())) {
+        eps.add(i.toString());
+      }
+    }
+    await setWatchedPref();
+    notifyListeners();
+  }
 }

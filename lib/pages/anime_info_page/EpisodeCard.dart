@@ -12,6 +12,7 @@ import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../providers/LastWatchedProvider.dart';
+import 'package:flutter/cupertino.dart';
 import '../watch_page/WatchPage.dart';
 
 class EpisodeCard extends StatelessWidget {
@@ -32,57 +33,102 @@ class EpisodeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<EpisodesWatchedProvider>(
-      builder: (context, prov, child) => Container(
-        width: MediaQuery.of(context).size.height * 0.16,
-        child: Card(
-          child: InkWell(
-            onTap: () {
-              Provider.of<LastWatchedProvider>(context, listen: false).setData(
-                twistModel: twistModel,
-                kitsuModel: kitsuModel,
-                episodeModel: episodeModel,
-              );
-              Transitions.slideTransition(
-                context: context,
-                pageBuilder: () => WatchPage(
-                  episodeModel: episodeModel,
-                  episodes: episodes,
+      builder: (context, prov, child) => CupertinoContextMenu(
+        actions: [
+          RaisedButton(
+            padding: EdgeInsets.symmetric(
+              vertical: 20.0,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                12.0,
+              ),
+            ),
+            child: Text(prov.isWatched(episodeModel.number)
+                ? "Remove from watched"
+                : "Add to watched"),
+            onPressed: () {
+              prov.toggleWatched(episodeModel.number);
+              Navigator.of(context).pop();
+            },
+            elevation: 0,
+            color: Theme.of(context).dialogBackgroundColor,
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          RaisedButton(
+            padding: EdgeInsets.symmetric(
+              vertical: 20.0,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                12.0,
+              ),
+            ),
+            child: Text("Set watched till here"),
+            onPressed: () {
+              prov.setWatchedTill(episodeModel.number);
+              Navigator.of(context).pop();
+            },
+            elevation: 0,
+            color: Theme.of(context).dialogBackgroundColor,
+          ),
+        ],
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.5,
+          height: MediaQuery.of(context).size.height * 0.07,
+          child: Card(
+            child: InkWell(
+              onTap: () {
+                Provider.of<LastWatchedProvider>(context, listen: false)
+                    .setData(
                   twistModel: twistModel,
                   kitsuModel: kitsuModel,
-                  episodesWatchedProvider: episodesWatchedProvider,
-                ),
-              );
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AutoSizeText(
-                    "Episode " + episodeModel.number.toString(),
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .color
-                          .withOpacity(
-                            0.9,
-                          ),
-                    ),
+                  episodeModel: episodeModel,
+                );
+                Transitions.slideTransition(
+                  context: context,
+                  pageBuilder: () => WatchPage(
+                    episodeModel: episodeModel,
+                    episodes: episodes,
+                    twistModel: twistModel,
+                    kitsuModel: kitsuModel,
+                    episodesWatchedProvider: episodesWatchedProvider,
                   ),
-                  prov.isWatched(episodeModel.number)
-                      ? Icon(
-                          Icons.check,
-                          color: Theme.of(context).accentColor,
-                        )
-                      : Icon(
-                          Icons.navigate_next,
-                        ),
-                ],
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AutoSizeText(
+                      "Episode " + episodeModel.number.toString(),
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .color
+                            .withOpacity(
+                              0.9,
+                            ),
+                      ),
+                    ),
+                    prov.isWatched(episodeModel.number)
+                        ? Icon(
+                            Icons.check,
+                            color: Theme.of(context).accentColor,
+                          )
+                        : Icon(
+                            Icons.navigate_next,
+                          ),
+                  ],
+                ),
               ),
             ),
           ),
