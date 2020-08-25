@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:edit_distance/edit_distance.dart';
 import 'package:fuzzy/data/result.dart';
 import 'package:fuzzy/fuzzy.dart';
 
@@ -10,15 +11,23 @@ import '../../utils/TwistUtils.dart';
 
 class SearchUtils {
   static bool isTextInAnimeModel({String text, TwistModel twistModel}) {
-    String _text = text.toLowerCase().removeWhitespace();
+    String _text = text.toLowerCase();
+    // if (_text.isEmpty ||
+    //     twistModel.title.removeWhitespace().toLowerCase().contains(_text) ||
+    //     (twistModel.altTitle?.removeWhitespace() ??
+    //             twistModel.title.removeWhitespace())
+    //         .toLowerCase()
+    //         .contains(_text)) {
+    //   return true;
+    // }
+    JaroWinkler l = new JaroWinkler();
     if (_text.isEmpty ||
-        twistModel.title.removeWhitespace().toLowerCase().contains(_text) ||
-        (twistModel.altTitle?.removeWhitespace() ??
-                twistModel.title.removeWhitespace())
-            .toLowerCase()
-            .contains(_text)) {
-      return true;
-    }
+        l.normalizedDistance(twistModel.title.toLowerCase(), _text) < 0.3 ||
+        l.normalizedDistance(
+                twistModel.altTitle?.toLowerCase() ??
+                    twistModel.title.toLowerCase(),
+                _text) <
+            0.3) return true;
     return false;
   }
 

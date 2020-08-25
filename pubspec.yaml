@@ -47,6 +47,7 @@ dependencies:
     git:
       url: https://github.com/simrat39/flutter_android_pip
   fuzzy:
+  edit_distance:
 
 dev_dependencies:
   flutter_test:
