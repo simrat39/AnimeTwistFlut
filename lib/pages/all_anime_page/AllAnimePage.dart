@@ -6,6 +6,7 @@ import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
 import '../../utils/TwistUtils.dart';
 import '../anime_info_page/AnimeInfoPage.dart';
+import '../search_page/SearchListTile.dart';
 import '../search_page/SearchPage.dart';
 
 class AllAnimePage extends StatefulWidget {
@@ -104,28 +105,8 @@ class _AllAnimePageState extends State<AllAnimePage> {
           controller: _controller,
           itemBuilder: (context, index) {
             TwistModel model = TwistUtils.allTwistModel.elementAt(index);
-            return ListTile(
-              title: Text(
-                model.title.toString(),
-                maxLines: 1,
-              ),
-              subtitle: Text(
-                model.ongoing
-                    ? "Season " + model.season.toString() + "  |  Ongoing"
-                    : "Season " + model.season.toString() + "  |  Completed",
-                maxLines: 1,
-              ),
-              trailing: Icon(
-                Icons.navigate_next,
-              ),
-              onTap: () {
-                Transitions.slideTransition(
-                  context: context,
-                  pageBuilder: () => AnimeInfoPage(
-                    twistModel: TwistUtils.allTwistModel.elementAt(index),
-                  ),
-                );
-              },
+            return SearchListTile(
+              twistModel: model,
             );
           },
           itemCount: TwistUtils.allTwistModel.length,

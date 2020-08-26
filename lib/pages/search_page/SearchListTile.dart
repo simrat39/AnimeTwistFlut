@@ -12,7 +12,7 @@ class SearchListTile extends StatelessWidget {
 
   SearchListTile({
     @required this.twistModel,
-    @required this.node,
+    this.node,
   });
 
   @override
