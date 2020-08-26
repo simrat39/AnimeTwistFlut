@@ -241,27 +241,37 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.navigate_before,
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.navigate_before,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
                                             ),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          AutoSizeText(
-                                            widget.twistModel.title,
-                                            maxLines: 1,
-                                            minFontSize: 5.0,
-                                            maxFontSize: 25.0,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  right: 20.0,
+                                                ),
+                                                child: AutoSizeText(
+                                                  widget.twistModel.title,
+                                                  maxLines: 2,
+                                                  minFontSize: 5.0,
+                                                  maxFontSize: 25.0,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                       Row(
                                         children: [
