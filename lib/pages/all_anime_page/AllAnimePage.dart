@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
 import '../../utils/TwistUtils.dart';
-import '../anime_info_page/AnimeInfoPage.dart';
 import '../search_page/SearchListTile.dart';
 import '../search_page/SearchPage.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AllAnimePage extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _AllAnimePageState extends State<AllAnimePage> {
           actions: [
             IconButton(
               icon: Icon(
-                Icons.arrow_upward,
+                FontAwesomeIcons.chevronUp,
               ),
               onPressed: () {
                 _controller.animateTo(
@@ -70,7 +71,7 @@ class _AllAnimePageState extends State<AllAnimePage> {
             ),
             IconButton(
               icon: Icon(
-                Icons.arrow_downward,
+                FontAwesomeIcons.chevronDown,
               ),
               onPressed: () {
                 _controller.animateTo(
