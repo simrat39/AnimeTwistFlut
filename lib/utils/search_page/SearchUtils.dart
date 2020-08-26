@@ -12,22 +12,15 @@ import '../../utils/TwistUtils.dart';
 class SearchUtils {
   static bool isTextInAnimeModel({String text, TwistModel twistModel}) {
     String _text = text.toLowerCase();
-    // if (_text.isEmpty ||
-    //     twistModel.title.removeWhitespace().toLowerCase().contains(_text) ||
-    //     (twistModel.altTitle?.removeWhitespace() ??
-    //             twistModel.title.removeWhitespace())
-    //         .toLowerCase()
-    //         .contains(_text)) {
-    //   return true;
-    // }
+    String _title = twistModel.title.toLowerCase();
+    String _altTitle = twistModel.altTitle?.toLowerCase() ?? _title;
+
     JaroWinkler l = new JaroWinkler();
     if (_text.isEmpty ||
-        l.normalizedDistance(twistModel.title.toLowerCase(), _text) < 0.3 ||
-        l.normalizedDistance(
-                twistModel.altTitle?.toLowerCase() ??
-                    twistModel.title.toLowerCase(),
-                _text) <
-            0.3) return true;
+        _title.contains(_text) ||
+        _altTitle.contains(_text) ||
+        l.normalizedDistance(_title, _text) < 0.3 ||
+        l.normalizedDistance(_altTitle, _text) < 0.3) return true;
     return false;
   }
 
