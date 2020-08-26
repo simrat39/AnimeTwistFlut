@@ -97,6 +97,12 @@ class _SearchPageState extends State<SearchPage> {
                           );
                         }
                       }
+                      if (results.isEmpty)
+                        return ListTile(
+                          title: Center(
+                            child: Text("No results found :("),
+                          ),
+                        );
                       return CupertinoScrollbar(
                         child: ListView.builder(
                           controller: _scrollController,
