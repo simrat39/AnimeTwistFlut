@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 // Project imports:
-import '../../utils/TwistUtils.dart';
+import '../../services/twist_service/TwistApiService.dart';
 import '../../utils/search_page/SearchUtils.dart';
 import 'SearchListTile.dart';
 import 'SearchPageInputBox.dart';
@@ -82,9 +82,9 @@ class _SearchPageState extends State<SearchPage> {
                     builder: (context) {
                       List<Widget> results = [];
                       for (int i = 0;
-                          i < TwistUtils.allTwistModel.length;
+                          i < TwistApiService.allTwistModel.length;
                           i++) {
-                        var elem = TwistUtils.allTwistModel.elementAt(i);
+                        var elem = TwistApiService.allTwistModel.elementAt(i);
                         if (SearchUtils.isTextInAnimeModel(
                           text: _textEditingController.text,
                           twistModel: elem,

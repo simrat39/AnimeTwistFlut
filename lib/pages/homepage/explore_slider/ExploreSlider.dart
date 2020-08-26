@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../../models/KitsuModel.dart';
-import '../../../utils/KitsuUtils.dart';
-import '../../../utils/TwistUtils.dart';
+import '../../../services/KitsuApiService.dart';
+import '../../../services/twist_service/TwistApiService.dart';
 import 'ExploreCard.dart';
 
 class ExploreSlider extends StatefulWidget {
@@ -30,13 +30,14 @@ class _ExploreSliderState extends State<ExploreSlider> {
   }
 
   Future makeRandomCards() async {
-    var data = TwistUtils.allTwistModel;
+    var data = TwistApiService.allTwistModel;
     Random r = Random();
+    KitsuApiService kitsuApiService = KitsuApiService();
 
     for (int i = 0; i < 10; i++) {
       int rand = r.nextInt(data.length);
       KitsuModel kitsuModel =
-          await KitsuUtils.getKitsuModel(data[rand].kitsuId);
+          await kitsuApiService.getKitsuModel(data[rand].kitsuId);
       _randomCards.add(
         ExploreCard(
           twistModel: data[rand],

@@ -10,8 +10,8 @@ import 'package:http/http.dart' as http;
 import '../../infinity_retry/InfinityRetry.dart';
 import '../../secrets.dart';
 
-class MOTDUtils {
-  static Future<List<String>> getMOTD() async {
+class MOTDApiService {
+  Future<List<String>> getMOTD() async {
     List<String> data = [];
     var response = await infinityRetry(
       future: () => http.get(
@@ -29,7 +29,7 @@ class MOTDUtils {
     return data;
   }
 
-  static String _parseMOTD(String motd) {
+  String _parseMOTD(String motd) {
     RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 
     return motd.replaceAll(exp, '');

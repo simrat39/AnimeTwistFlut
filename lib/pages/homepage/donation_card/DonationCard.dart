@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../../utils/homepage/DonationUtils.dart';
 import 'BitcoinDonationSheet.dart';
 import 'EthereumDonationSheet.dart';
+import 'package:get/get.dart';
 
 class DonationCard extends StatefulWidget {
   @override
@@ -18,7 +20,8 @@ class _DonationCardState extends State<DonationCard> {
 
   @override
   void initState() {
-    _dataInit = DonationUtils.getDonations();
+    TwistApiService twistApiService = Get.find();
+    _dataInit = twistApiService.getDonationsData();
     super.initState();
   }
 

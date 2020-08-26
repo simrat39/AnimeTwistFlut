@@ -7,8 +7,8 @@ import '../../models/EpisodeModel.dart';
 import '../../models/TwistModel.dart';
 import '../../secrets.dart';
 
-class EpisodeUtils {
-  static Future<List<EpisodeModel>> getEpisodes(TwistModel twistModel) async {
+class EpisodeApiService {
+  Future<List<EpisodeModel>> getEpisodes(TwistModel twistModel) async {
     List<EpisodeModel> ret = [];
     String response = await CachedHttpGet.get(
       Request(

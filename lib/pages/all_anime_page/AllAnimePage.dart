@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
-import '../../utils/TwistUtils.dart';
+import '../../services/twist_service/TwistApiService.dart';
 import '../search_page/SearchListTile.dart';
 import '../search_page/SearchPage.dart';
 
@@ -105,12 +105,12 @@ class _AllAnimePageState extends State<AllAnimePage> {
         body: ListView.builder(
           controller: _controller,
           itemBuilder: (context, index) {
-            TwistModel model = TwistUtils.allTwistModel.elementAt(index);
+            TwistModel model = TwistApiService.allTwistModel.elementAt(index);
             return SearchListTile(
               twistModel: model,
             );
           },
-          itemCount: TwistUtils.allTwistModel.length,
+          itemCount: TwistApiService.allTwistModel.length,
         ),
       ),
     );

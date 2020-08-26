@@ -49,6 +49,7 @@ dependencies:
   fuzzy:
   edit_distance:
   shared_preferences_web:
+  get:
 
 dev_dependencies:
   flutter_test:

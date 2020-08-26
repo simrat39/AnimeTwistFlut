@@ -5,7 +5,7 @@ import 'package:fuzzy/fuzzy.dart';
 
 // Project imports:
 import '../../models/TwistModel.dart';
-import '../../utils/TwistUtils.dart';
+import '../../services/twist_service/TwistApiService.dart';
 
 // Project imports:
 
@@ -25,7 +25,7 @@ class SearchUtils {
   }
 
   static List<TwistModel> getSearchResults({String text}) {
-    final fuse = Fuzzy(TwistUtils.allTwistModel.map((model) {
+    final fuse = Fuzzy(TwistApiService.allTwistModel.map((model) {
       return model.title;
     }).toList());
 
@@ -34,8 +34,8 @@ class SearchUtils {
     List<TwistModel> ret = [];
     for (int i = 0; i < res.length; i++) {
       if (res.elementAt(i).score < 0.5) {
-        for (int j = 0; j < TwistUtils.allTwistModel.length; j++) {
-          TwistModel twistModel = TwistUtils.allTwistModel[j];
+        for (int j = 0; j < TwistApiService.allTwistModel.length; j++) {
+          TwistModel twistModel = TwistApiService.allTwistModel[j];
           if (twistModel.title == res.elementAt(i).item) {
             ret.add(twistModel);
             break;

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:supercharged/supercharged.dart';
 
-// Project imports:
-import '../../utils/homepage/MOTDUtils.dart';
+import 'package:get/get.dart';
+import '../../services/twist_service/TwistApiService.dart';
 
 class MOTDCard extends StatefulWidget {
   @override
@@ -20,7 +20,8 @@ class _MOTDCardState extends State<MOTDCard> {
 
   @override
   void initState() {
-    _dataInit = MOTDUtils.getMOTD();
+    TwistApiService twistApiService = Get.find();
+    _dataInit = twistApiService.getMOTD();
     super.initState();
   }
 

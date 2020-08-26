@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,8 @@ import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../providers/LastWatchedProvider.dart';
-import '../../utils/KitsuUtils.dart';
-import '../../utils/anime_info_page/EpisodeUtils.dart';
+import '../../services/KitsuApiService.dart';
+import '../../services/twist_service/TwistApiService.dart';
 import 'AnimeInfoPageAppBar.dart';
 import 'DescriptionBox.dart';
 import 'EpisodeCard.dart';
@@ -59,9 +60,16 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   List<EpisodeModel> episodes;
 
   Future initData() async {
-    episodes = await EpisodeUtils.getEpisodes(widget.twistModel);
+    KitsuApiService kitsuApiService = KitsuApiService();
+    TwistApiService twistApiService = Get.find();
+
+    episodes = await twistApiService.getEpisodesForSource(
+      twistModel: widget.twistModel,
+    );
+
     if (widget.kitsuModel == null)
-      kitsuModel = await KitsuUtils.getKitsuModel(widget.twistModel.kitsuId);
+      kitsuModel =
+          await kitsuApiService.getKitsuModel(widget.twistModel.kitsuId);
     else {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
