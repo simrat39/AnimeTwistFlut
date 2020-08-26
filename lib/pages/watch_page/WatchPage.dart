@@ -71,6 +71,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   }
 
   @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
