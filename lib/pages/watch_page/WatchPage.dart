@@ -53,6 +53,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   double currentPosition;
   String currentPositionStr;
   bool isPictureInPicture = false;
+  bool isTouchingSlider = false;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -136,21 +137,25 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     });
   }
 
+  void hideUIAfterWait() async {
+    if (!isWaiting && isUIvisible) {
+      isWaiting = true;
+      Timer(3.seconds, () {
+        if (!isTouchingSlider)
+          setState(() {
+            isUIvisible = false;
+          });
+        isWaiting = false;
+      });
+    }
+  }
+
   void toggleUI() async {
     setState(() {
       SystemChrome.setEnabledSystemUIOverlays([]);
       isUIvisible = !isUIvisible;
     });
-
-    if (!isWaiting && isUIvisible) {
-      isWaiting = true;
-      Timer(3.seconds, () {
-        setState(() {
-          isUIvisible = false;
-        });
-        isWaiting = false;
-      });
-    }
+    hideUIAfterWait();
   }
 
   void rotate() {
@@ -467,6 +472,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                               },
                                             );
                                           },
+                                          onChangeStart: (val) => setState(
+                                              () => isTouchingSlider = true),
+                                          onChangeEnd: (val) => setState(() {
+                                            isTouchingSlider = false;
+                                            hideUIAfterWait();
+                                          }),
                                         ),
                                       ),
                                       Padding(
