@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../animations/Transitions.dart';
 import '../../providers/LastWatchedProvider.dart';
+import '../../services/twist_service/TwistApiService.dart';
 import '../chat_page/ChatPage.dart';
 import '../search_page/SearchPage.dart';
 import 'AboutIcon.dart';
@@ -15,8 +17,6 @@ import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
 import 'explore_slider/ExploreSlider.dart';
-import '../../services/twist_service/TwistApiService.dart';
-import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   @override

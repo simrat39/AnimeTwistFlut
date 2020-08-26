@@ -1,6 +1,9 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
-import 'package:flutter/material.dart';
 
 class AnimeCacheService {
   Future<SharedPreferences> getSharedPrefInstance() async {

@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:get/get.dart';
 import 'package:supercharged/supercharged.dart';
 
-import 'package:get/get.dart';
+// Project imports:
 import '../../services/twist_service/TwistApiService.dart';
 
 class MOTDCard extends StatefulWidget {

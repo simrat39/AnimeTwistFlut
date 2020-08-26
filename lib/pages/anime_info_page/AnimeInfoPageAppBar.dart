@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:get/get.dart';
+
 // Project imports:
 import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
@@ -9,11 +12,10 @@ import '../search_page/SearchPage.dart';
 
 class AnimeInfoPageAppBar {
   final bool isFromSearchPage;
-  final TwistModel twistModel;
+  final TwistModel twistModel = Get.find();
 
   AnimeInfoPageAppBar({
     @required this.isFromSearchPage,
-    @required this.twistModel,
   });
 
   Widget build(BuildContext context) {

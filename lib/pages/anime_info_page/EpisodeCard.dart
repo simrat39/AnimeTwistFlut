@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -17,15 +18,14 @@ import '../watch_page/WatchPage.dart';
 
 class EpisodeCard extends StatelessWidget {
   final List<EpisodeModel> episodes;
-  final TwistModel twistModel;
-  final KitsuModel kitsuModel;
   final EpisodeModel episodeModel;
   final EpisodesWatchedProvider episodesWatchedProvider;
 
+  final TwistModel twistModel = Get.find();
+  final KitsuModel kitsuModel = Get.find();
+
   EpisodeCard({
     @required this.episodes,
-    @required this.twistModel,
-    @required this.kitsuModel,
     @required this.episodeModel,
     @required this.episodesWatchedProvider,
   });
@@ -92,8 +92,6 @@ class EpisodeCard extends StatelessWidget {
                   pageBuilder: () => WatchPage(
                     episodeModel: episodeModel,
                     episodes: episodes,
-                    twistModel: twistModel,
-                    kitsuModel: kitsuModel,
                     episodesWatchedProvider: episodesWatchedProvider,
                   ),
                 );

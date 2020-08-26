@@ -1,12 +1,14 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:get/get.dart';
+
 // Project imports:
+import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
 import '../../../utils/homepage/DonationUtils.dart';
 import 'BitcoinDonationSheet.dart';
 import 'EthereumDonationSheet.dart';
-import 'package:get/get.dart';
 
 class DonationCard extends StatefulWidget {
   @override

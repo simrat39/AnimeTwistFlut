@@ -1,14 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // Project imports:
 import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import '../search_page/SearchListTile.dart';
 import '../search_page/SearchPage.dart';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AllAnimePage extends StatefulWidget {
   @override

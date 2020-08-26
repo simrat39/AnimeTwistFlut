@@ -1,11 +1,11 @@
 // Flutter imports:
-import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -53,7 +53,15 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _scrollController = ScrollController();
     _episodesWatchedProvider =
         EpisodesWatchedProvider(slug: widget.twistModel.slug);
+    Get.put(widget.twistModel);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<TwistModel>();
+    Get.delete<KitsuModel>();
+    super.dispose();
   }
 
   KitsuModel kitsuModel;
@@ -74,6 +82,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
     }
+    Get.put(kitsuModel);
     await precacheImage(
         NetworkImage(kitsuModel?.imageURL ??
             "https://designshack.net/wp-content/uploads/placeholder-image.png"),
@@ -92,7 +101,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       child: Scaffold(
         appBar: AnimeInfoPageAppBar(
           isFromSearchPage: widget.isFromSearchPage ?? false,
-          twistModel: widget.twistModel,
         ).build(context),
         body: FutureBuilder(
           future: _initData,
@@ -280,8 +288,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 child: EpisodeCard(
                                   episodeModel: episodes.elementAt(index),
                                   episodes: episodes,
-                                  twistModel: widget.twistModel,
-                                  kitsuModel: kitsuModel,
                                   episodesWatchedProvider:
                                       _episodesWatchedProvider,
                                 ),
