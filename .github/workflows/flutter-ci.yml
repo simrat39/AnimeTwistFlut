@@ -1,0 +1,32 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Setup Java environment in order to build the Android app.
+    - uses: actions/checkout@v1
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    # Setup the flutter environment.
+    - uses: takuyaohashi/setup-flutter@v1
+      with:
+        flutter-version: 'latest'
+        channel: 'dev'
+
+    - run: flutter pub get
+    - run: flutter format --set-exit-if-changed .
+    - run: flutter analyze .
+    # - run: flutter test
+    - run: flutter build apk --dart-define=KEY='${{ secrets.KEY }}' --release
+
+    # Upload generated apk to the artifacts.
+    - uses: actions/upload-artifact@v1
+      with:
+        name: release-apk
+        path: build/app/outputs/apk/release/app-release.apk
