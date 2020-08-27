@@ -19,13 +19,14 @@ class AnimeCacheService {
   Future<String> getCachedAnimeData() async {
     SharedPreferences pref = await getSharedPrefInstance();
     List<String> cachedData = pref.getStringList('anime_cache');
+    if (cachedData == null || cachedData[1] == null) return null;
     return cachedData[1];
   }
 
   Future<DateTime> getCachedDateTime() async {
     SharedPreferences pref = await getSharedPrefInstance();
     List<String> cachedData = pref.getStringList('anime_cache');
-    if (cachedData[0] == null) return null;
+    if (cachedData == null || cachedData[0] == null) return null;
     return DateTime.parse(cachedData[0]);
   }
 

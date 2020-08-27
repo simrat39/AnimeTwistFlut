@@ -7,9 +7,6 @@ import '../../models/TwistModel.dart';
 import '../../secrets.dart';
 import '../AnimeCacheService.dart';
 
-// Project imports:
-
-
 class AnimeApiService {
   static const String baseUrl = 'https://twist.moe/api/anime';
 
