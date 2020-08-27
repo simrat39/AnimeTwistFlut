@@ -25,6 +25,7 @@ class AnimeCacheService {
   Future<DateTime> getCachedDateTime() async {
     SharedPreferences pref = await getSharedPrefInstance();
     List<String> cachedData = pref.getStringList('anime_cache');
+    if (cachedData[0] == null) return null;
     return DateTime.parse(cachedData[0]);
   }
 
@@ -33,6 +34,7 @@ class AnimeCacheService {
     DateTime now = DateTime.now();
     return (cachedAnimeData == null ||
         cachedAnimeData.isEmpty ||
+        dateTime == null ||
         now.difference(dateTime).abs() > 7.days);
   }
 }
