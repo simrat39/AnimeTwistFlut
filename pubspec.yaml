@@ -50,6 +50,8 @@ dependencies:
   edit_distance:
   shared_preferences_web:
   get:
+    git:
+      url: https://github.com/simrat39/getx
 
 dev_dependencies:
   flutter_test:
