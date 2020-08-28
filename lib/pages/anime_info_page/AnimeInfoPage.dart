@@ -53,7 +53,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _scrollController = ScrollController();
     _episodesWatchedProvider =
         EpisodesWatchedProvider(slug: widget.twistModel.slug);
-    Get.put(widget.twistModel);
+    Get.put<TwistModel>(widget.twistModel);
     super.initState();
   }
 
@@ -82,7 +82,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
     }
-    Get.put(kitsuModel);
+    Get.put<KitsuModel>(kitsuModel);
     await precacheImage(
         NetworkImage(kitsuModel?.imageURL ??
             "https://designshack.net/wp-content/uploads/placeholder-image.png"),
