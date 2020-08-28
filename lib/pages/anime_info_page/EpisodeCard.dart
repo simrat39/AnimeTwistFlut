@@ -16,37 +16,19 @@ import '../../providers/EpisodesWatchedProvider.dart';
 import '../../providers/LastWatchedProvider.dart';
 import '../watch_page/WatchPage.dart';
 
-class EpisodeCard extends StatefulWidget {
+class EpisodeCard extends StatelessWidget {
   final List<EpisodeModel> episodes;
   final EpisodeModel episodeModel;
   final EpisodesWatchedProvider episodesWatchedProvider;
 
   final TwistModel twistModel = Get.find();
+  final KitsuModel kitsuModel = Get.find();
 
   EpisodeCard({
     @required this.episodes,
     @required this.episodeModel,
     @required this.episodesWatchedProvider,
   });
-
-  @override
-  State<StatefulWidget> createState() {
-    return _EpisodeCardState();
-  }
-}
-
-class _EpisodeCardState extends State<EpisodeCard> {
-  KitsuModel _kitsuModel;
-
-  @override
-  void initState() {
-    try {
-      _kitsuModel = Get.find();
-    } catch (e) {
-      _kitsuModel = null;
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +44,11 @@ class _EpisodeCardState extends State<EpisodeCard> {
                 12.0,
               ),
             ),
-            child: Text(prov.isWatched(widget.episodeModel.number)
+            child: Text(prov.isWatched(episodeModel.number)
                 ? "Remove from watched"
                 : "Add to watched"),
             onPressed: () {
-              prov.toggleWatched(widget.episodeModel.number);
+              prov.toggleWatched(episodeModel.number);
               Navigator.of(context).pop();
             },
             elevation: 0,
@@ -86,7 +68,7 @@ class _EpisodeCardState extends State<EpisodeCard> {
             ),
             child: Text("Set watched till here"),
             onPressed: () {
-              prov.setWatchedTill(widget.episodeModel.number);
+              prov.setWatchedTill(episodeModel.number);
               Navigator.of(context).pop();
             },
             elevation: 0,
@@ -101,16 +83,16 @@ class _EpisodeCardState extends State<EpisodeCard> {
               onTap: () {
                 Provider.of<LastWatchedProvider>(context, listen: false)
                     .setData(
-                  twistModel: widget.twistModel,
-                  kitsuModel: _kitsuModel,
-                  episodeModel: widget.episodeModel,
+                  twistModel: twistModel,
+                  kitsuModel: kitsuModel,
+                  episodeModel: episodeModel,
                 );
                 Transitions.slideTransition(
                   context: context,
                   pageBuilder: () => WatchPage(
-                    episodeModel: widget.episodeModel,
-                    episodes: widget.episodes,
-                    episodesWatchedProvider: widget.episodesWatchedProvider,
+                    episodeModel: episodeModel,
+                    episodes: episodes,
+                    episodesWatchedProvider: episodesWatchedProvider,
                   ),
                 );
               },
@@ -123,7 +105,7 @@ class _EpisodeCardState extends State<EpisodeCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     AutoSizeText(
-                      "Episode " + widget.episodeModel.number.toString(),
+                      "Episode " + episodeModel.number.toString(),
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Theme.of(context)
@@ -135,7 +117,7 @@ class _EpisodeCardState extends State<EpisodeCard> {
                             ),
                       ),
                     ),
-                    prov.isWatched(widget.episodeModel.number)
+                    prov.isWatched(episodeModel.number)
                         ? Icon(
                             Icons.check,
                             color: Theme.of(context).accentColor,

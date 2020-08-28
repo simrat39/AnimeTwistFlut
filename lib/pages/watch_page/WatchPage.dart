@@ -32,6 +32,7 @@ class WatchPage extends StatefulWidget {
   final EpisodesWatchedProvider episodesWatchedProvider;
 
   final TwistModel twistModel = Get.find();
+  final KitsuModel kitsuModel = Get.find();
 
   WatchPage({
     @required this.episodeModel,
@@ -45,8 +46,6 @@ class WatchPage extends StatefulWidget {
 }
 
 class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
-  KitsuModel _kitsuModel;
-
   VideoPlayerController _controller;
   String _duration;
   bool isUIvisible = false;
@@ -76,18 +75,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     if (mounted) super.setState(fn);
   }
 
-  void setKitsuModel() {
-    try {
-      _kitsuModel = Get.find();
-    } catch (e) {
-      _kitsuModel = null;
-    }
-  }
-
   @override
   void initState() {
-    setKitsuModel();
-
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     WidgetsBinding.instance.addObserver(this);
@@ -434,7 +423,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                             1),
                                                     twistModel:
                                                         widget.twistModel,
-                                                    kitsuModel: _kitsuModel,
+                                                    kitsuModel:
+                                                        widget.kitsuModel,
                                                   );
                                                   Navigator.push(
                                                     context,
