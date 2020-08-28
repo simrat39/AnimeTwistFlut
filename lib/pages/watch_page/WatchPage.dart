@@ -145,7 +145,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   void hideUIAfterWait() async {
     if (!isWaiting && isUIvisible) {
       isWaiting = true;
-      Timer(3.seconds, () {
+      Timer(5.seconds, () {
         if (!isTouchingSlider)
           setState(() {
             isUIvisible = false;
