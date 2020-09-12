@@ -12,7 +12,7 @@ import '../../services/twist_service/TwistApiService.dart';
 import '../chat_page/ChatPage.dart';
 import '../search_page/SearchPage.dart';
 import 'AboutIcon.dart';
-import 'LastWatchedWidget.dart';
+import 'last_watched_slider/LastWatchedSlider.dart';
 import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.zero,
                     child: ChangeNotifierProvider<LastWatchedProvider>.value(
                       value: LastWatchedProvider.provider,
-                      child: LastWatchedWidget(),
+                      child: LastWatchedSliderSlider(),
                     ),
                   ),
                   // Donation Card

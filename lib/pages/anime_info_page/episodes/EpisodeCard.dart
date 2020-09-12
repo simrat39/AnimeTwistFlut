@@ -87,7 +87,7 @@ class EpisodeCard extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Provider.of<LastWatchedProvider>(context, listen: false)
-                    .setData(
+                    .addToLastWatched(
                   twistModel: twistModel,
                   kitsuModel: kitsuModel,
                   episodeModel: episodeModel,

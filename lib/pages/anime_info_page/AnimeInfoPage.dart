@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodesSliver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,20 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
+import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodesSliver.dart';
 import '../../models/EpisodeModel.dart';
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
-import '../../providers/LastWatchedProvider.dart';
 import '../../services/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import 'AnimeInfoPageAppBar.dart';
 import 'DescriptionBox.dart';
-import 'episodes/EpisodeCard.dart';
 import 'InfoCard.dart';
 import 'InfoChip.dart';
 

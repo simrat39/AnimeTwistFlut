@@ -1,8 +1,10 @@
-import 'package:AnimeTwistFlut/models/EpisodeModel.dart';
-import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
-
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Project imports:
+import 'package:AnimeTwistFlut/models/EpisodeModel.dart';
+import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
 
 void main() {
   group('Twist API Service Tests\n', () {

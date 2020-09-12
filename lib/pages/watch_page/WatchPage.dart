@@ -408,7 +408,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                   Provider.of<LastWatchedProvider>(
                                                           context,
                                                           listen: false)
-                                                      .setData(
+                                                      .addToLastWatched(
                                                     episodeModel: widget
                                                         .episodes
                                                         .elementAt(widget
