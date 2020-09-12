@@ -81,15 +81,16 @@ class _ExploreSliderState extends State<ExploreSlider> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            bottom: 10.0,
+            bottom: 15.0,
             left: 15.0,
           ),
           child: Text(
-            "Explore!",
+            "Discover new anime".toUpperCase(),
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
-              fontSize: 30.0,
+              letterSpacing: 0.5,
+              fontSize: 17.0,
             ),
           ),
         ),
