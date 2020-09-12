@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodesSliver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ import '../../services/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import 'AnimeInfoPageAppBar.dart';
 import 'DescriptionBox.dart';
-import 'EpisodeCard.dart';
+import 'episodes/EpisodeCard.dart';
 import 'InfoCard.dart';
 import 'InfoChip.dart';
 
@@ -91,10 +92,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     Orientation orientation = MediaQuery.of(context).orientation;
-    bool isPortrait = orientation == Orientation.portrait;
 
     return WillPopScope(
       onWillPop: () async {
@@ -266,41 +264,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                           ),
                         ),
                       ),
-                      SliverGrid(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 5.0,
-                          crossAxisSpacing: 5.0,
-                          childAspectRatio: isPortrait ? 3.5 : 5.5,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider<
-                                    EpisodesWatchedProvider>.value(
-                                  value: _episodesWatchedProvider,
-                                ),
-                                ChangeNotifierProvider<
-                                    LastWatchedProvider>.value(
-                                  value: LastWatchedProvider.provider,
-                                ),
-                              ],
-                              child: Padding(
-                                padding: EdgeInsets.all(
-                                  1.0,
-                                ),
-                                child: EpisodeCard(
-                                  episodeModel: episodes.elementAt(index),
-                                  episodes: episodes,
-                                  episodesWatchedProvider:
-                                      _episodesWatchedProvider,
-                                ),
-                              ),
-                            );
-                          },
-                          childCount: episodes.length,
-                        ),
+                      EpisodesSliver(
+                        episodes: episodes,
+                        episodesWatchedProvider: _episodesWatchedProvider,
                       ),
                       SliverToBoxAdapter(
                         child: SizedBox(

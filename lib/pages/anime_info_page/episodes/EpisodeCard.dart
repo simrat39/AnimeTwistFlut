@@ -8,13 +8,13 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../animations/Transitions.dart';
-import '../../models/EpisodeModel.dart';
-import '../../models/KitsuModel.dart';
-import '../../models/TwistModel.dart';
-import '../../providers/EpisodesWatchedProvider.dart';
-import '../../providers/LastWatchedProvider.dart';
-import '../watch_page/WatchPage.dart';
+import '../../../animations/Transitions.dart';
+import '../../../models/EpisodeModel.dart';
+import '../../../models/KitsuModel.dart';
+import '../../../models/TwistModel.dart';
+import '../../../providers/EpisodesWatchedProvider.dart';
+import '../../../providers/LastWatchedProvider.dart';
+import '../../watch_page/WatchPage.dart';
 
 class EpisodeCard extends StatelessWidget {
   final List<EpisodeModel> episodes;
