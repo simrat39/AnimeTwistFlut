@@ -48,14 +48,12 @@ class LastWatchedProvider extends ChangeNotifier {
     }
 
     // If lastWatchedAnimes has more than MAX_LEN anime, then remove the oldest
-    // anime and add the anime we are trying to add to index 0 by making a new
-    // list and making it the first element.
-    // Else add anime to lastWatchedModel
+    // anime (at index 0) and add the anime we are trying to add by
+    // making a new list and making it the last element. Else add anime to
+    // lastWatchedModel
     if (lastWatchedAnimes.length >= MAX_LEN) {
       lastWatchedAnimes.removeAt(0);
-      List<LastWatchedModel> lis = [lastWatchedModel];
-      lis.addAll(lastWatchedAnimes.getRange(0, 4));
-      lastWatchedAnimes = lis;
+      lastWatchedAnimes.add(lastWatchedModel);
     } else {
       lastWatchedAnimes.add(lastWatchedModel);
     }
