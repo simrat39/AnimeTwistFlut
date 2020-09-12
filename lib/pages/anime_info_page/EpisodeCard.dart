@@ -32,6 +32,9 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Consumer<EpisodesWatchedProvider>(
       builder: (context, prov, child) => CupertinoContextMenu(
         actions: [
@@ -76,8 +79,10 @@ class EpisodeCard extends StatelessWidget {
           ),
         ],
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          height: MediaQuery.of(context).size.height * 0.07,
+          width: width * 0.5,
+          height: orientation == Orientation.portrait
+              ? height * 0.07
+              : height * 0.175,
           child: Card(
             child: InkWell(
               onTap: () {

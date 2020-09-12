@@ -91,6 +91,11 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    bool isPortrait = orientation == Orientation.portrait;
+
     return WillPopScope(
       onWillPop: () async {
         if (widget.isFromSearchPage ?? false) {
@@ -266,7 +271,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 5.0,
                           crossAxisSpacing: 5.0,
-                          childAspectRatio: 3.5,
+                          childAspectRatio: isPortrait ? 3.5 : 5.5,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
