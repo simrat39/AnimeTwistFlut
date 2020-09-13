@@ -130,6 +130,12 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       lengthToScroll +=
           episodeCardHeight * widget.lastWatchedEpisodeNum / episodeCountInRow;
 
+      // If the lengthToScroll is greater than the actual maxScrollExtent, then
+      // prevent overscrolls and weird glitches and set the lengthToScroll to
+      // the maxScrollExtent.
+      if (lengthToScroll > _scrollController.position.maxScrollExtent)
+        lengthToScroll = _scrollController.position.maxScrollExtent;
+
       // Animate to the desired episode.
       // TODO: Dynamically find an appropriate duration on 13 Sep 20
       _scrollController.animateTo(
