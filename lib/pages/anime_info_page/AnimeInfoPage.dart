@@ -89,8 +89,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-
     return WillPopScope(
       onWillPop: () async {
         if (widget.isFromSearchPage ?? false) {
