@@ -26,12 +26,16 @@ class AnimeInfoPage extends StatefulWidget {
   final KitsuModel kitsuModel;
   final bool isFromSearchPage;
   final FocusNode focusNode;
+  final bool isFromRecentlyWatched;
+  final int lastWatchedEpisodeNum;
 
   AnimeInfoPage({
     this.twistModel,
     this.kitsuModel,
     this.isFromSearchPage,
     this.focusNode,
+    this.isFromRecentlyWatched = false,
+    this.lastWatchedEpisodeNum = 0,
   });
 
   @override
@@ -44,6 +48,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _initData;
   ScrollController _scrollController;
   EpisodesWatchedProvider _episodesWatchedProvider;
+  GlobalKey topListKey;
+  bool hasScrolled = false;
 
   @override
   void initState() {
@@ -52,6 +58,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _episodesWatchedProvider =
         EpisodesWatchedProvider(slug: widget.twistModel.slug);
     Get.put<TwistModel>(widget.twistModel);
+    topListKey = GlobalKey();
     super.initState();
   }
 
@@ -87,6 +94,56 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
         context);
   }
 
+  void scrollToEpisode(BuildContext context) {
+    // Check if widget is from recently scrolled as we only want to scroll to
+    // the episode if we come from a recently watched card.
+    // Also check if we have already scrolled as this function may be called
+    // multiple times and we dont want the user to be stuck in an animation
+    // loop.
+    if (widget.isFromRecentlyWatched && !hasScrolled) {
+      Orientation orientation = MediaQuery.of(context).orientation;
+
+      // Find the height of all of the items aboce the gridview and divide it by
+      // 2 in portrait and 0.75 in landscape because for whatever dividing by
+      // that gives better results. We get the height by adding a GlobalKey to
+      // the SliverList containing everything but the episodes.
+      double scrollDivideFactor =
+          orientation == Orientation.portrait ? 2 : 0.75;
+      double lengthToScroll =
+          (topListKey.currentContext.findRenderObject() as RenderBox)
+                  .size
+                  .height /
+              scrollDivideFactor;
+
+      double screenHeight = MediaQuery.of(context).size.height;
+      // One episode card has height of screenHeight * 0.07 in portrait /
+      // screenHeight * 0.2 (a little higher than actual since its a ratio) in
+      // landscape and since episodes are laid out in a grid, each row has 2
+      // episode cards.
+      double episodeCardHeight = orientation == Orientation.portrait
+          ? screenHeight * 0.07
+          : screenHeight * 0.2;
+      int episodeCountInRow = 2;
+
+      // Calculate the height of all the episodes till lastWatchedEpisodeNum and
+      // add it to lengthToScroll.
+      lengthToScroll +=
+          episodeCardHeight * widget.lastWatchedEpisodeNum / episodeCountInRow;
+
+      // Animate to the desired episode.
+      // TODO: Dynamically find an appropriate duration on 13 Sep 20
+      _scrollController.animateTo(
+        lengthToScroll,
+        duration: 1.seconds,
+        curve: Curves.ease,
+      );
+      // Set hasScrolled to true to make sure that we dont auto scroll again in
+      // the same page.
+      hasScrolled = true;
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -104,6 +161,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _initData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                scrollToEpisode(context);
+              });
               return CupertinoScrollbar(
                 isAlwaysShown: true,
                 controller: _scrollController,
@@ -113,6 +173,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                     right: 15.0,
                   ),
                   child: CustomScrollView(
+                    key: topListKey,
                     physics: BouncingScrollPhysics(),
                     controller: _scrollController,
                     slivers: [
