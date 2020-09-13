@@ -173,6 +173,32 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     });
   }
 
+  void addEpisodeToRecentlyWatched() {
+    Provider.of<RecentlyWatchedProvider>(context, listen: false)
+        .addToLastWatched(
+      episodeModel: widget.episodes
+          .elementAt(widget.episodes.indexOf(widget.episodeModel) + 1),
+      twistModel: widget.twistModel,
+      kitsuModel: widget.kitsuModel,
+    );
+  }
+
+  void goToNextEpisode() {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: 0.seconds,
+        pageBuilder: (context, anim, anime2) => WatchPage(
+          episodeModel: widget.episodes
+              .elementAt(widget.episodes.indexOf(widget.episodeModel) + 1),
+          episodes: widget.episodes,
+          isFromPrevEpisode: true,
+          episodesWatchedProvider: widget.episodesWatchedProvider,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double containerHeight =
@@ -404,47 +430,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                   widget.episodeModel
                                               ? null
                                               : () {
-                                                  Navigator.pop(context);
-                                                  Provider.of<RecentlyWatchedProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .addToLastWatched(
-                                                    episodeModel: widget
-                                                        .episodes
-                                                        .elementAt(widget
-                                                                .episodes
-                                                                .indexOf(widget
-                                                                    .episodeModel) +
-                                                            1),
-                                                    twistModel:
-                                                        widget.twistModel,
-                                                    kitsuModel:
-                                                        widget.kitsuModel,
-                                                  );
-                                                  Navigator.push(
-                                                    context,
-                                                    PageRouteBuilder(
-                                                      transitionDuration:
-                                                          0.seconds,
-                                                      pageBuilder: (context,
-                                                              anim, anime2) =>
-                                                          WatchPage(
-                                                        episodeModel: widget
-                                                            .episodes
-                                                            .elementAt(widget
-                                                                    .episodes
-                                                                    .indexOf(widget
-                                                                        .episodeModel) +
-                                                                1),
-                                                        episodes:
-                                                            widget.episodes,
-                                                        isFromPrevEpisode: true,
-                                                        episodesWatchedProvider:
-                                                            widget
-                                                                .episodesWatchedProvider,
-                                                      ),
-                                                    ),
-                                                  );
+                                                  addEpisodeToRecentlyWatched();
+                                                  goToNextEpisode();
                                                 },
                                         ),
                                       ),
