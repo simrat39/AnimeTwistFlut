@@ -13,8 +13,10 @@ import '../models/KitsuModel.dart';
 import '../models/TwistModel.dart';
 
 class LastWatchedProvider extends ChangeNotifier {
-  List<LastWatchedModel> lastWatchedAnimes;
+  List<LastWatchedModel> lastWatchedAnimes = [];
   static const int MAX_LEN = 5;
+  static const String BOX_NAME = 'lastWatched';
+  static const String KEY_NAME = 'list';
 
   Future initData() async {
     await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
@@ -22,8 +24,15 @@ class LastWatchedProvider extends ChangeNotifier {
     Hive.registerAdapter<KitsuModel>(KitsuModelAdapter());
     Hive.registerAdapter<EpisodeModel>(EpisodeModelAdapter());
     Hive.registerAdapter<LastWatchedModel>(LastWatchedModelAdapter());
-    var box = await Hive.openBox('lastWatched');
-    lastWatchedAnimes = box.get('list');
+    var box = await Hive.openBox(BOX_NAME);
+
+    // For whatever reason, directly assigning lastWatchedAnimes to
+    // box.get(KEY_NAME) does not work, so loop through all the elements and add
+    // it to the list one by one.
+    dynamic contents = box.get(KEY_NAME);
+    for (int i = 0; i < contents?.length ?? 0; i++) {
+      lastWatchedAnimes.add(contents[i]);
+    }
   }
 
   // TODO: Cleanup on 12 Sep 20
@@ -32,7 +41,7 @@ class LastWatchedProvider extends ChangeNotifier {
     KitsuModel kitsuModel,
     EpisodeModel episodeModel,
   }) {
-    var box = Hive.box('lastWatched');
+    var box = Hive.box(BOX_NAME);
     LastWatchedModel lastWatchedModel = LastWatchedModel(
       twistModel,
       kitsuModel,
@@ -59,7 +68,7 @@ class LastWatchedProvider extends ChangeNotifier {
     }
 
     // Write to the box and notifyListeners that data has been updated
-    box.put('list', lastWatchedAnimes);
+    box.put(KEY_NAME, lastWatchedAnimes);
     notifyListeners();
   }
 
