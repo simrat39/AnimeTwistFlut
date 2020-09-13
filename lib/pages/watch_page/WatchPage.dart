@@ -173,7 +173,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     });
   }
 
-  void addEpisodeToRecentlyWatched() {
+  void addEpisodeToRecentlyWatched(BuildContext context) {
     Provider.of<RecentlyWatchedProvider>(context, listen: false)
         .addToLastWatched(
       episodeModel: widget.episodes
@@ -183,7 +183,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     );
   }
 
-  void goToNextEpisode() {
+  void goToNextEpisode(BuildContext context) {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -430,8 +430,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                   widget.episodeModel
                                               ? null
                                               : () {
-                                                  addEpisodeToRecentlyWatched();
-                                                  goToNextEpisode();
+                                                  addEpisodeToRecentlyWatched(
+                                                      context);
+                                                  goToNextEpisode(context);
                                                 },
                                         ),
                                       ),
