@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/models/LastWatchedModel.dart';
+import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,8 +12,8 @@ import '../models/EpisodeModel.dart';
 import '../models/KitsuModel.dart';
 import '../models/TwistModel.dart';
 
-class LastWatchedProvider extends ChangeNotifier {
-  List<LastWatchedModel> lastWatchedAnimes = [];
+class RecentlyWatchedProvider extends ChangeNotifier {
+  List<RecentlyWatchedModel> recentlyWatchedAnimes = [];
   static const int MAX_LEN = 5;
   static const String BOX_NAME = 'lastWatched';
   static const String KEY_NAME = 'list';
@@ -23,7 +23,7 @@ class LastWatchedProvider extends ChangeNotifier {
     Hive.registerAdapter<TwistModel>(TwistModelAdapter());
     Hive.registerAdapter<KitsuModel>(KitsuModelAdapter());
     Hive.registerAdapter<EpisodeModel>(EpisodeModelAdapter());
-    Hive.registerAdapter<LastWatchedModel>(LastWatchedModelAdapter());
+    Hive.registerAdapter<RecentlyWatchedModel>(LastWatchedModelAdapter());
     var box = await Hive.openBox(BOX_NAME);
 
     // For whatever reason, directly assigning lastWatchedAnimes to
@@ -31,7 +31,7 @@ class LastWatchedProvider extends ChangeNotifier {
     // it to the list one by one.
     dynamic contents = box.get(KEY_NAME);
     for (int i = 0; i < contents?.length ?? 0; i++) {
-      lastWatchedAnimes.add(contents[i]);
+      recentlyWatchedAnimes.add(contents[i]);
     }
   }
 
@@ -42,43 +42,43 @@ class LastWatchedProvider extends ChangeNotifier {
     EpisodeModel episodeModel,
   }) {
     var box = Hive.box(BOX_NAME);
-    LastWatchedModel lastWatchedModel = LastWatchedModel(
+    RecentlyWatchedModel lastWatchedModel = RecentlyWatchedModel(
       twistModel,
       kitsuModel,
       episodeModel,
     );
-    if (lastWatchedAnimes == null) lastWatchedAnimes = [];
+    if (recentlyWatchedAnimes == null) recentlyWatchedAnimes = [];
 
     // If lastWatchedAnimes already contains the anime we are trying to add,
     // then remove that anime from the list and proceed.
     int index = isAlreadyInWatching(lastWatchedModel);
     if (index != -1) {
-      lastWatchedAnimes.removeAt(index);
+      recentlyWatchedAnimes.removeAt(index);
     }
 
     // If lastWatchedAnimes has more than MAX_LEN anime, then remove the oldest
     // anime (at index 0) and add the anime we are trying to add by
     // making a new list and making it the last element. Else add anime to
     // lastWatchedModel
-    if (lastWatchedAnimes.length >= MAX_LEN) {
-      lastWatchedAnimes.removeAt(0);
-      lastWatchedAnimes.add(lastWatchedModel);
+    if (recentlyWatchedAnimes.length >= MAX_LEN) {
+      recentlyWatchedAnimes.removeAt(0);
+      recentlyWatchedAnimes.add(lastWatchedModel);
     } else {
-      lastWatchedAnimes.add(lastWatchedModel);
+      recentlyWatchedAnimes.add(lastWatchedModel);
     }
 
     // Write to the box and notifyListeners that data has been updated
-    box.put(KEY_NAME, lastWatchedAnimes);
+    box.put(KEY_NAME, recentlyWatchedAnimes);
     notifyListeners();
   }
 
-  /// Checks if [lastWatchedAnimes] contains [lastWatchedModel] and returns its
+  /// Checks if [recentlyWatchedAnimes] contains [lastWatchedModel] and returns its
   /// index, else returns -1
-  int isAlreadyInWatching(LastWatchedModel lastWatchedModel) {
+  int isAlreadyInWatching(RecentlyWatchedModel lastWatchedModel) {
     int index = -1;
-    for (int i = 0; i < lastWatchedAnimes.length; i++) {
+    for (int i = 0; i < recentlyWatchedAnimes.length; i++) {
       index++;
-      if (lastWatchedAnimes[i].twistModel == lastWatchedModel.twistModel) {
+      if (recentlyWatchedAnimes[i].twistModel == lastWatchedModel.twistModel) {
         return index;
       }
     }
@@ -86,8 +86,8 @@ class LastWatchedProvider extends ChangeNotifier {
   }
 
   bool hasData() {
-    return lastWatchedAnimes != null && lastWatchedAnimes.isNotEmpty;
+    return recentlyWatchedAnimes != null && recentlyWatchedAnimes.isNotEmpty;
   }
 
-  static LastWatchedProvider provider = LastWatchedProvider();
+  static RecentlyWatchedProvider provider = RecentlyWatchedProvider();
 }

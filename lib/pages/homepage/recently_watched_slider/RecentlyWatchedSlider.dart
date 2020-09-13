@@ -1,21 +1,21 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/models/LastWatchedModel.dart';
-import 'package:AnimeTwistFlut/providers/LastWatchedProvider.dart';
+import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
+import 'package:AnimeTwistFlut/providers/RecentlyWatchedProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:page_view_indicators/page_view_indicators.dart';
 
 // Project imports:
-import 'LastWatchedCard.dart';
+import 'RecentlyWatchedCard.dart';
 
-class LastWatchedSliderSlider extends StatefulWidget {
+class RecentlyWatchedSlider extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _LastWatchedSliderSliderState();
+    return _RecentlyWatchedSliderState();
   }
 }
 
-class _LastWatchedSliderSliderState extends State<LastWatchedSliderSlider> {
+class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
   PageController _controller;
   final _currentPageNotifier = ValueNotifier<int>(0);
 
@@ -28,7 +28,7 @@ class _LastWatchedSliderSliderState extends State<LastWatchedSliderSlider> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     Orientation orientation = MediaQuery.of(context).orientation;
-    return Consumer<LastWatchedProvider>(
+    return Consumer<RecentlyWatchedProvider>(
       builder: (context, provider, child) {
         if (!provider.hasData()) return Container();
         return Column(
@@ -53,7 +53,7 @@ class _LastWatchedSliderSliderState extends State<LastWatchedSliderSlider> {
                     ),
                   ),
                   CirclePageIndicator(
-                    itemCount: provider.lastWatchedAnimes.length,
+                    itemCount: provider.recentlyWatchedAnimes.length,
                     currentPageNotifier: _currentPageNotifier,
                   ),
                 ],
@@ -71,16 +71,16 @@ class _LastWatchedSliderSliderState extends State<LastWatchedSliderSlider> {
                   // newest last, reverse the list so that the latest watched
                   // anime is shown first. Maybe do this in the service itself
                   // but fine here for now.
-                  List<LastWatchedModel> lastWatchedAnimes =
-                      provider.lastWatchedAnimes.reversed.toList();
+                  List<RecentlyWatchedModel> lastWatchedAnimes =
+                      provider.recentlyWatchedAnimes.reversed.toList();
 
-                  return LastWatchedCard(
+                  return RecentlyWatchedCard(
                       lastWatchedModel: lastWatchedAnimes[index]);
                 },
                 onPageChanged: (index) {
                   _currentPageNotifier.value = index;
                 },
-                itemCount: provider.lastWatchedAnimes.length,
+                itemCount: provider.recentlyWatchedAnimes.length,
               ),
             ),
           ],

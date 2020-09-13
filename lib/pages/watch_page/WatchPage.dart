@@ -20,7 +20,7 @@ import '../../models/EpisodeModel.dart';
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
-import '../../providers/LastWatchedProvider.dart';
+import '../../providers/RecentlyWatchedProvider.dart';
 import '../../secrets.dart';
 import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
@@ -394,7 +394,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         ),
                                       ),
                                       ChangeNotifierProvider.value(
-                                        value: LastWatchedProvider.provider,
+                                        value: RecentlyWatchedProvider.provider,
                                         builder: (context, child) => IconButton(
                                           icon: Icon(
                                             Icons.skip_next_outlined,
@@ -405,7 +405,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                               ? null
                                               : () {
                                                   Navigator.pop(context);
-                                                  Provider.of<LastWatchedProvider>(
+                                                  Provider.of<RecentlyWatchedProvider>(
                                                           context,
                                                           listen: false)
                                                       .addToLastWatched(

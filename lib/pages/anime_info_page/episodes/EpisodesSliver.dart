@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:AnimeTwistFlut/models/EpisodeModel.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodeCard.dart';
 import 'package:AnimeTwistFlut/providers/EpisodesWatchedProvider.dart';
-import 'package:AnimeTwistFlut/providers/LastWatchedProvider.dart';
+import 'package:AnimeTwistFlut/providers/RecentlyWatchedProvider.dart';
 
 class EpisodesSliver extends StatelessWidget {
   final List<EpisodeModel> episodes;
@@ -35,8 +35,8 @@ class EpisodesSliver extends StatelessWidget {
               ChangeNotifierProvider<EpisodesWatchedProvider>.value(
                 value: episodesWatchedProvider,
               ),
-              ChangeNotifierProvider<LastWatchedProvider>.value(
-                value: LastWatchedProvider.provider,
+              ChangeNotifierProvider<RecentlyWatchedProvider>.value(
+                value: RecentlyWatchedProvider.provider,
               ),
             ],
             child: Padding(

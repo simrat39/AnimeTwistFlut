@@ -4,10 +4,10 @@ import 'package:AnimeTwistFlut/models/KitsuModel.dart';
 import 'package:AnimeTwistFlut/models/TwistModel.dart';
 import 'package:hive/hive.dart';
 
-part 'LastWatchedModel.g.dart';
+part 'RecentlyWatchedModel.g.dart';
 
 @HiveType(typeId: 3)
-class LastWatchedModel extends HiveObject {
+class RecentlyWatchedModel extends HiveObject {
   @HiveField(0)
   final TwistModel twistModel;
   @HiveField(1)
@@ -15,5 +15,5 @@ class LastWatchedModel extends HiveObject {
   @HiveField(2)
   final EpisodeModel episodeModel;
 
-  LastWatchedModel(this.twistModel, this.kitsuModel, this.episodeModel);
+  RecentlyWatchedModel(this.twistModel, this.kitsuModel, this.episodeModel);
 }

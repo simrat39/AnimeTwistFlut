@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'LastWatchedModel.dart';
+part of 'RecentlyWatchedModel.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LastWatchedModelAdapter extends TypeAdapter<LastWatchedModel> {
+class LastWatchedModelAdapter extends TypeAdapter<RecentlyWatchedModel> {
   @override
   final int typeId = 3;
 
   @override
-  LastWatchedModel read(BinaryReader reader) {
+  RecentlyWatchedModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LastWatchedModel(
+    return RecentlyWatchedModel(
       fields[0] as TwistModel,
       fields[1] as KitsuModel,
       fields[2] as EpisodeModel,
@@ -24,7 +24,7 @@ class LastWatchedModelAdapter extends TypeAdapter<LastWatchedModel> {
   }
 
   @override
-  void write(BinaryWriter writer, LastWatchedModel obj) {
+  void write(BinaryWriter writer, RecentlyWatchedModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)

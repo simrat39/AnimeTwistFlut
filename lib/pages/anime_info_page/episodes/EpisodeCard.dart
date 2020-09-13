@@ -13,7 +13,7 @@ import '../../../models/EpisodeModel.dart';
 import '../../../models/KitsuModel.dart';
 import '../../../models/TwistModel.dart';
 import '../../../providers/EpisodesWatchedProvider.dart';
-import '../../../providers/LastWatchedProvider.dart';
+import '../../../providers/RecentlyWatchedProvider.dart';
 import '../../watch_page/WatchPage.dart';
 
 class EpisodeCard extends StatelessWidget {
@@ -86,7 +86,7 @@ class EpisodeCard extends StatelessWidget {
           child: Card(
             child: InkWell(
               onTap: () {
-                Provider.of<LastWatchedProvider>(context, listen: false)
+                Provider.of<RecentlyWatchedProvider>(context, listen: false)
                     .addToLastWatched(
                   twistModel: twistModel,
                   kitsuModel: kitsuModel,

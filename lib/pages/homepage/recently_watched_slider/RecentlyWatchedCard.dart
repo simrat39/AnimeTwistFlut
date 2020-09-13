@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/models/LastWatchedModel.dart';
+import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,18 +10,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../../../animations/Transitions.dart';
 import '../../anime_info_page/AnimeInfoPage.dart';
 
-class LastWatchedCard extends StatefulWidget {
-  final LastWatchedModel lastWatchedModel;
+class RecentlyWatchedCard extends StatefulWidget {
+  final RecentlyWatchedModel lastWatchedModel;
 
-  const LastWatchedCard({@required this.lastWatchedModel});
+  const RecentlyWatchedCard({@required this.lastWatchedModel});
 
   @override
   State<StatefulWidget> createState() {
-    return _LastWatchedCardState();
+    return _RecentlyWatchedCardState();
   }
 }
 
-class _LastWatchedCardState extends State<LastWatchedCard> {
+class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
   @override
   void initState() {
     super.initState();
