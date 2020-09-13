@@ -72,7 +72,7 @@ class _LastWatchedCardState extends State<LastWatchedCard> {
                       return Container(
                         width: width * 0.35,
                         height: orientation == Orientation.portrait
-                            ? height * 0.25
+                            ? height * 0.275
                             : height * 0.4,
                         color: Theme.of(context).cardColor,
                         child: child,
@@ -83,7 +83,7 @@ class _LastWatchedCardState extends State<LastWatchedCard> {
                       return Container(
                         width: width * 0.35,
                         height: orientation == Orientation.portrait
-                            ? height * 0.25
+                            ? height * 0.275
                             : height * 0.4,
                         color: Theme.of(context).cardColor,
                         child: Center(

@@ -61,7 +61,7 @@ class _LastWatchedSliderSliderState extends State<LastWatchedSliderSlider> {
             ),
             Container(
               height: orientation == Orientation.portrait
-                  ? height * 0.25
+                  ? height * 0.275
                   : height * 0.4,
               child: PageView.builder(
                 controller: _controller,
