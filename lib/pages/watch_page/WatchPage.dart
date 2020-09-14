@@ -24,6 +24,7 @@ import '../../providers/RecentlyWatchedProvider.dart';
 import '../../secrets.dart';
 import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
+import 'package:wakelock/wakelock.dart';
 
 class WatchPage extends StatefulWidget {
   final EpisodeModel episodeModel;
@@ -78,8 +79,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
-
     WidgetsBinding.instance.addObserver(this);
+    Wakelock.toggle(on: true);
 
     var headers = {
       'Referer':
@@ -124,6 +125,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     AutoOrientation.fullAutoMode();
     WidgetsBinding.instance.removeObserver(this);
+    Wakelock.toggle(on: false);
     _controller.dispose();
     super.dispose();
   }
