@@ -1,6 +1,9 @@
-import '../../lib/services/KitsuApiService.dart';
-import '../../lib/models/KitsuModel.dart';
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
+import '../../lib/models/KitsuModel.dart';
+import '../../lib/services/KitsuApiService.dart';
 
 void main() {
   test('Kitsu API service test', () async {

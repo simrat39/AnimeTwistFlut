@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../animations/Transitions.dart';
-import '../../providers/LastWatchedProvider.dart';
+import '../../providers/RecentlyWatchedProvider.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import '../chat_page/ChatPage.dart';
 import '../search_page/SearchPage.dart';
 import 'AboutIcon.dart';
-import 'LastWatchedWidget.dart';
+import 'recently_watched_slider/RecentlyWatchedSlider.dart';
 import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   Future initData() async {
     TwistApiService twistApiService = Get.put(TwistApiService());
     await twistApiService.setTwistModels();
-    await LastWatchedProvider.provider.initData();
+    await RecentlyWatchedProvider.provider.initData();
   }
 
   @override
@@ -139,9 +139,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: EdgeInsets.zero,
-                    child: ChangeNotifierProvider<LastWatchedProvider>.value(
-                      value: LastWatchedProvider.provider,
-                      child: LastWatchedWidget(),
+                    child:
+                        ChangeNotifierProvider<RecentlyWatchedProvider>.value(
+                      value: RecentlyWatchedProvider.provider,
+                      child: RecentlyWatchedSlider(),
                     ),
                   ),
                   // Donation Card

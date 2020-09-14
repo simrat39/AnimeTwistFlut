@@ -51,4 +51,12 @@ class TwistModel extends HiveObject {
       malId: data["mal_id"],
     );
   }
+  @override
+  bool operator ==(covariant TwistModel twistModel) {
+    if (identical(this, twistModel)) return true;
+    return (twistModel.id == this.id && twistModel.title == this.title);
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ title.hashCode;
 }
