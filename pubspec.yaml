@@ -54,6 +54,7 @@ dependencies:
       url: https://github.com/simrat39/getx
   page_view_indicators:
   wakelock:
+  uni_links:
 
 dev_dependencies:
   flutter_test:
