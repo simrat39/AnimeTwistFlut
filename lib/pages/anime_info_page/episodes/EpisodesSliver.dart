@@ -21,37 +21,42 @@ class EpisodesSliver extends StatelessWidget {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     bool isPortrait = orientation == Orientation.portrait;
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 5.0,
-        crossAxisSpacing: 5.0,
-        childAspectRatio: isPortrait ? 3.5 : 5.5,
+    return SliverPadding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 14.0,
       ),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider<EpisodesWatchedProvider>.value(
-                value: episodesWatchedProvider,
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 5.0,
+          crossAxisSpacing: 5.0,
+          childAspectRatio: isPortrait ? 3.5 : 5.5,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider<EpisodesWatchedProvider>.value(
+                  value: episodesWatchedProvider,
+                ),
+                ChangeNotifierProvider<RecentlyWatchedProvider>.value(
+                  value: RecentlyWatchedProvider.provider,
+                ),
+              ],
+              child: Padding(
+                padding: EdgeInsets.all(
+                  1.0,
+                ),
+                child: EpisodeCard(
+                  episodeModel: episodes.elementAt(index),
+                  episodes: episodes,
+                  episodesWatchedProvider: episodesWatchedProvider,
+                ),
               ),
-              ChangeNotifierProvider<RecentlyWatchedProvider>.value(
-                value: RecentlyWatchedProvider.provider,
-              ),
-            ],
-            child: Padding(
-              padding: EdgeInsets.all(
-                1.0,
-              ),
-              child: EpisodeCard(
-                episodeModel: episodes.elementAt(index),
-                episodes: episodes,
-                episodesWatchedProvider: episodesWatchedProvider,
-              ),
-            ),
-          );
-        },
-        childCount: episodes.length,
+            );
+          },
+          childCount: episodes.length,
+        ),
       ),
     );
   }

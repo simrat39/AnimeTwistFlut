@@ -9,7 +9,6 @@ import '../../../animations/Transitions.dart';
 import '../../../models/KitsuModel.dart';
 import '../../../models/TwistModel.dart';
 import '../../anime_info_page/AnimeInfoPage.dart';
-import '../../anime_info_page/WatchTrailerButton.dart';
 
 class ExploreCard extends StatefulWidget {
   final TwistModel twistModel;
@@ -116,9 +115,6 @@ class _ExploreCardState extends State<ExploreCard> {
                           fontSize: 26,
                           height: 1.25,
                         ),
-                      ),
-                      WatchTrailerButton(
-                        kitsuModel: widget.kitsuModel,
                       ),
                     ],
                   ),

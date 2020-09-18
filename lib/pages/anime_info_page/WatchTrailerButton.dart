@@ -1,65 +1,61 @@
-// Flutter imports:
+import 'package:AnimeTwistFlut/models/KitsuModel.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-// Project imports:
-import '../../models/KitsuModel.dart';
 
 class WatchTrailerButton extends StatelessWidget {
   final KitsuModel kitsuModel;
 
-  WatchTrailerButton({this.kitsuModel});
+  WatchTrailerButton({
+    this.kitsuModel,
+  });
+
+  Future launchTrailer(String link) async {
+    if (link != null) await launch('https://youtu.be/$link');
+  }
 
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Container(
-      width: orientation == Orientation.portrait
-          ? MediaQuery.of(context).size.height * 0.16
-          : MediaQuery.of(context).size.width * 0.18,
-      child: OutlineButton(
+      margin: EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        top: 25.0,
+        bottom: 20.0,
+      ),
+      height:
+          orientation == Orientation.portrait ? height * 0.06 : width * 0.06,
+      child: RaisedButton(
+        onPressed: () {
+          launchTrailer(kitsuModel.trailerURL);
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             8.0,
           ),
         ),
-        highlightedBorderColor: Colors.redAccent,
-        borderSide: BorderSide(
-          color: Colors.redAccent,
-          width: 2.0,
-        ),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 10.0,
+        color: Theme.of(context).accentColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.play_arrow,
+              size: 30.0,
             ),
-            child: AutoSizeText(
-              "Watch Trailer",
-              maxLines: 1,
-              minFontSize: 10.0,
-              maxFontSize: 20.0,
+            SizedBox(
+              width: 5.0,
+            ),
+            Text(
+              "Watch Trailer".toUpperCase(),
               style: TextStyle(
-                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0,
               ),
             ),
-          ),
+          ],
         ),
-        onPressed: () async {
-          kitsuModel != null &&
-                  (kitsuModel.trailerURL != null ||
-                      kitsuModel.trailerURL.isNotEmpty)
-              ? launch(
-                  "https://youtu.be/" + kitsuModel.trailerURL,
-                )
-              : Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Trailer not found!"),
-                  ),
-                );
-        },
       ),
     );
   }

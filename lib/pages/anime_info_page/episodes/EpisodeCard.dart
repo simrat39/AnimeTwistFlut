@@ -110,9 +110,9 @@ class EpisodeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     AutoSizeText(
-                      "Episode " + episodeModel.number.toString(),
+                      "EP " + episodeModel.number.toString(),
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 14.0,
                         color: Theme.of(context)
                             .textTheme
                             .headline6
