@@ -1,14 +1,12 @@
 // Flutter imports:
 import 'dart:ui';
 
-import 'package:AnimeTwistFlut/models/KitsuModel.dart';
 import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:get/get.dart';
 
 // Project imports:
 import '../../../animations/Transitions.dart';
