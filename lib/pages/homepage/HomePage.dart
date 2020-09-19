@@ -197,6 +197,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: ExploreRow(),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      bottom: 15.0,
+                    ),
+                    child: DonationCard(),
+                  ),
                   // Message Of The Day Card
                   MOTDCard(),
                   // Explore anime slider
@@ -210,14 +218,6 @@ class _HomePageState extends State<HomePage> {
                     child: ViewAllAnimeCard(),
                   ),
                   // Donation Card
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 15.0,
-                      right: 15.0,
-                      bottom: 15.0,
-                    ),
-                    child: DonationCard(),
-                  ),
                 ],
               ),
             );
