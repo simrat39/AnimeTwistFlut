@@ -21,7 +21,6 @@ class ExploreRow extends StatefulWidget {
 class _ExploreRowState extends State<ExploreRow> {
   List<Widget> _randomCards = [];
   Future _makeCards;
-  // PageController _controller;
 
   @override
   void initState() {
