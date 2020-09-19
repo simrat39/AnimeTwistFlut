@@ -202,13 +202,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   margin: EdgeInsets.only(right: 5),
                                   child: Icon(
                                     Icons.star,
-                                    color: Theme.of(context).accentColor,
+                                    color: Colors.pink,
                                   ),
                                 ),
                                 Text(
                                   kitsuModel.rating.toString() + " / 100",
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+                                    color: Colors.pink,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

@@ -95,7 +95,7 @@ class _DonationCardState extends State<DonationCard> {
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontSize: 20.0,
-                              color: Theme.of(context).accentColor,
+                              // color: Theme.of(context).accentColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -182,6 +182,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   ChangeNotifierProvider<RecentlyWatchedProvider>.value(
@@ -201,23 +202,21 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(
                       left: 15.0,
                       right: 15.0,
-                      bottom: 15.0,
+                      bottom: 8.0,
                     ),
                     child: DonationCard(),
                   ),
-                  // Message Of The Day Card
-                  MOTDCard(),
-                  // Explore anime slider
                   // View all anime card
                   Padding(
                     padding: EdgeInsets.only(
                       left: 15.0,
                       right: 15.0,
-                      bottom: 15.0,
+                      bottom: 8.0,
                     ),
                     child: ViewAllAnimeCard(),
                   ),
-                  // Donation Card
+                  // Message Of The Day Card
+                  MOTDCard(),
                 ],
               ),
             );

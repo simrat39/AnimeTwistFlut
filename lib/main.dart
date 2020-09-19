@@ -24,9 +24,9 @@ class RootWindow extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Color bgColor = Color(0xff121217);
-    Color cardColor = Color(0xff121217).withOpacity(0.3);
-    Color accentColor = Color(0xffe50050);
+    Color bgColor = Color(0xff121212);
+    Color cardColor = Color(0xff11D1D1D);
+    Color accentColor = Color(0xffBB86FC);
 
     return MaterialApp(
       home: HomePage(),
@@ -39,6 +39,7 @@ class RootWindow extends StatelessWidget {
           color: bgColor,
           elevation: 0.0,
         ),
+        hintColor: Color(0xffA7A7A7),
         cardTheme: CardTheme(
           margin: EdgeInsets.zero,
           clipBehavior: Clip.antiAlias,
