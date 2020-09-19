@@ -80,7 +80,7 @@ class _ExploreRowState extends State<ExploreRow> {
                   right: 15.0,
                 ),
                 height: orientation == Orientation.portrait
-                    ? height * 0.25
+                    ? height * 0.275
                     : height * 0.4,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -102,7 +102,7 @@ class _ExploreRowState extends State<ExploreRow> {
               );
             return Container(
               height: orientation == Orientation.portrait
-                  ? height * 0.25
+                  ? height * 0.275
                   : height * 0.4,
               margin: EdgeInsets.symmetric(
                 horizontal: 8.0,
