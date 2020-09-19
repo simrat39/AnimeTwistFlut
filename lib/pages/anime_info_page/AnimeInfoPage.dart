@@ -181,7 +181,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                     SliverAppBar(
                       expandedHeight: orientation == Orientation.portrait
                           ? height * 0.3
-                          : width * 0.25,
+                          : width * 0.28,
                       actions: [
                         Center(
                           child: Container(
