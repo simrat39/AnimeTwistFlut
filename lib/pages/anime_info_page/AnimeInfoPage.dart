@@ -232,27 +232,21 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 ),
                               ),
                               Positioned.fill(
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                    sigmaX: 2.0,
-                                    sigmaY: 2.0,
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Theme.of(context)
-                                              .accentColor
-                                              .withOpacity(0.6),
-                                          Theme.of(context)
-                                              .bottomAppBarColor
-                                              .withOpacity(0.75),
-                                        ],
-                                        begin: Alignment.centerRight,
-                                        end: Alignment.centerLeft,
-                                      ),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.6),
+                                        Theme.of(context)
+                                            .bottomAppBarColor
+                                            .withOpacity(0.75),
+                                      ],
+                                      begin: Alignment.centerRight,
+                                      end: Alignment.centerLeft,
                                     ),
                                   ),
                                 ),
