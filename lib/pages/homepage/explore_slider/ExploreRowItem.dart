@@ -27,9 +27,7 @@ class _ExploreRowItemState extends State<ExploreRowItem> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return Container(
-      height: height * 0.4,
       margin: EdgeInsets.symmetric(
         horizontal: 8.0,
       ),
