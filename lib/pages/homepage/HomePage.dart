@@ -189,17 +189,17 @@ class _HomePageState extends State<HomePage> {
                     child: RecentlyWatchedSlider(),
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
-                  // Message Of The Day Card
-                  MOTDCard(),
-                  // Explore anime slider
                   Padding(
                     padding: EdgeInsets.only(
                       bottom: 15.0,
                     ),
-                    child: ExploreSlider(),
+                    child: ExploreRow(),
                   ),
+                  // Message Of The Day Card
+                  MOTDCard(),
+                  // Explore anime slider
                   // View all anime card
                   Padding(
                     padding: EdgeInsets.only(

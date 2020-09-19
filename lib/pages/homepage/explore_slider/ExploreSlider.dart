@@ -9,19 +9,19 @@ import 'package:flutter/material.dart';
 import '../../../models/KitsuModel.dart';
 import '../../../services/KitsuApiService.dart';
 import '../../../services/twist_service/TwistApiService.dart';
-import 'ExploreCard.dart';
+import 'ExploreRowItem.dart';
 
-class ExploreSlider extends StatefulWidget {
+class ExploreRow extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _ExploreSliderState();
+    return _ExploreRowState();
   }
 }
 
-class _ExploreSliderState extends State<ExploreSlider> {
+class _ExploreRowState extends State<ExploreRow> {
   List<Widget> _randomCards = [];
   Future _makeCards;
-  PageController _controller;
+  // PageController _controller;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _ExploreSliderState extends State<ExploreSlider> {
       KitsuModel kitsuModel =
           await kitsuApiService.getKitsuModel(data[rand].kitsuId);
       _randomCards.add(
-        ExploreCard(
+        ExploreRowItem(
           twistModel: data[rand],
           kitsuModel: kitsuModel,
         ),
@@ -47,29 +47,6 @@ class _ExploreSliderState extends State<ExploreSlider> {
       precacheImage(NetworkImage(kitsuModel.imageURL), context,
           size: Size(480, 640));
     }
-    _controller = PageController(
-      initialPage: 1000 * _randomCards.length,
-    );
-
-    Timer.periodic(
-      Duration(seconds: 5),
-      (Timer timer) {
-        if (ModalRoute.of(context).isCurrent) {
-          int _currentPage = _controller.page == 0 ? 1 : _controller.page ~/ 1;
-          _currentPage++;
-
-          try {
-            _controller.animateToPage(
-              _currentPage,
-              duration: Duration(milliseconds: 1000),
-              curve: Curves.ease,
-            );
-          } catch (e) {
-            print("Caught Exception!");
-          }
-        }
-      },
-    );
   }
 
   @override
@@ -87,7 +64,6 @@ class _ExploreSliderState extends State<ExploreSlider> {
           child: Text(
             "Discover new anime".toUpperCase(),
             style: TextStyle(
-              color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
               fontSize: 17.0,
@@ -129,12 +105,16 @@ class _ExploreSliderState extends State<ExploreSlider> {
               height: orientation == Orientation.portrait
                   ? height * 0.25
                   : height * 0.4,
-              child: PageView.builder(
-                controller: _controller,
+              margin: EdgeInsets.symmetric(
+                horizontal: 8.0,
+              ),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return _randomCards[index % _randomCards.length];
+                  return _randomCards[index];
                 },
-                itemCount: null,
+                itemCount: _randomCards.length,
               ),
             );
           },
