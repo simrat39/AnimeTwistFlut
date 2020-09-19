@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:ui';
+
 import 'package:AnimeTwistFlut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/WatchTrailerButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -223,10 +225,16 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                             fit: StackFit.expand,
                             children: [
                               Positioned.fill(
-                                child: Image.network(
-                                  kitsuModel.coverImage ??
-                                      kitsuModel.posterImage,
-                                  fit: BoxFit.cover,
+                                child: ImageFiltered(
+                                  imageFilter: ImageFilter.blur(
+                                    sigmaX: 2.0,
+                                    sigmaY: 2.0,
+                                  ),
+                                  child: Image.network(
+                                    kitsuModel.coverImage ??
+                                        kitsuModel.posterImage,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               Positioned.fill(
