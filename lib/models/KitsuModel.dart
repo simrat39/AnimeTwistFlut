@@ -33,13 +33,15 @@ class KitsuModel extends HiveObject {
   });
 
   factory KitsuModel.fromJson(Map<String, dynamic> data) {
+    var coverData = data["data"]["attributes"]["coverImage"];
+    var posterData = data["data"]["attributes"]["posterImage"];
     return KitsuModel(
       id: data["data"]["id"],
       rating: data["data"]["attributes"]["averageRating"],
-      posterImage: data["data"]["attributes"]["posterImage"]["large"],
+      posterImage: posterData != null ? posterData["large"] : null,
       description: data["data"]["attributes"]["synopsis"],
       trailerURL: data["data"]["attributes"]["youtubeVideoId"],
-      coverImage: data["data"]["attributes"]["coverImage"]["large"],
+      coverImage: coverData != null ? coverData["large"] : null,
     );
   }
 }
