@@ -43,7 +43,7 @@ class _ExploreRowState extends State<ExploreRow> {
           kitsuModel: kitsuModel,
         ),
       );
-      precacheImage(NetworkImage(kitsuModel.imageURL), context,
+      precacheImage(NetworkImage(kitsuModel.posterImage), context,
           size: Size(480, 640));
     }
   }

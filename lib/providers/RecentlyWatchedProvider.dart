@@ -23,7 +23,7 @@ class RecentlyWatchedProvider extends ChangeNotifier {
     Hive.registerAdapter<TwistModel>(TwistModelAdapter());
     Hive.registerAdapter<KitsuModel>(KitsuModelAdapter());
     Hive.registerAdapter<EpisodeModel>(EpisodeModelAdapter());
-    Hive.registerAdapter<RecentlyWatchedModel>(LastWatchedModelAdapter());
+    Hive.registerAdapter<RecentlyWatchedModel>(RecentlyWatchedModelAdapter());
     var box = await Hive.openBox(BOX_NAME);
 
     // For whatever reason, directly assigning lastWatchedAnimes to

@@ -86,8 +86,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     }
     Get.put<KitsuModel>(kitsuModel);
     await precacheImage(
-        NetworkImage(kitsuModel?.imageURL ??
-            "https://designshack.net/wp-content/uploads/placeholder-image.png"),
+        NetworkImage(kitsuModel?.coverImage ??
+            (kitsuModel?.posterImage ??
+                "https://designshack.net/wp-content/uploads/placeholder-image.png")),
         context);
   }
 
@@ -223,7 +224,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                           children: [
                             Positioned.fill(
                               child: Image.network(
-                                kitsuModel.imageURL,
+                                kitsuModel.coverImage ?? kitsuModel.posterImage,
                                 fit: BoxFit.cover,
                               ),
                             ),

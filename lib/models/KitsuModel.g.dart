@@ -20,15 +20,16 @@ class KitsuModelAdapter extends TypeAdapter<KitsuModel> {
       id: fields[0] as String,
       rating: fields[1] as String,
       description: fields[2] as String,
-      imageURL: fields[3] as String,
+      posterImage: fields[3] as String,
       trailerURL: fields[4] as String,
+      coverImage: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, KitsuModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -36,9 +37,11 @@ class KitsuModelAdapter extends TypeAdapter<KitsuModel> {
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.imageURL)
+      ..write(obj.posterImage)
       ..writeByte(4)
-      ..write(obj.trailerURL);
+      ..write(obj.trailerURL)
+      ..writeByte(5)
+      ..write(obj.coverImage);
   }
 
   @override

@@ -39,7 +39,6 @@ class RootWindow extends StatelessWidget {
           color: bgColor,
           elevation: 0.0,
         ),
-        hintColor: Color(0xffA7A7A7),
         cardTheme: CardTheme(
           margin: EdgeInsets.zero,
           clipBehavior: Clip.antiAlias,

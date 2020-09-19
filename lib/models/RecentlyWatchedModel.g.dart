@@ -6,7 +6,7 @@ part of 'RecentlyWatchedModel.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LastWatchedModelAdapter extends TypeAdapter<RecentlyWatchedModel> {
+class RecentlyWatchedModelAdapter extends TypeAdapter<RecentlyWatchedModel> {
   @override
   final int typeId = 3;
 
@@ -41,7 +41,7 @@ class LastWatchedModelAdapter extends TypeAdapter<RecentlyWatchedModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LastWatchedModelAdapter &&
+      other is RecentlyWatchedModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

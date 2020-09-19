@@ -38,7 +38,7 @@ class _ExploreRowItemState extends State<ExploreRowItem> {
         child: Stack(
           children: [
             Image.network(
-              widget.kitsuModel.imageURL,
+              widget.kitsuModel.posterImage,
             ),
             Positioned.fill(
               child: Material(
