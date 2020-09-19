@@ -32,7 +32,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
     double width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
     var containerHeight =
-        orientation == Orientation.portrait ? height * 0.35 : height * 0.4;
+        orientation == Orientation.portrait ? height * 0.38 : height * 0.4;
     return Consumer<RecentlyWatchedProvider>(
       builder: (context, provider, child) {
         if (!provider.hasData())
@@ -68,7 +68,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                 ),
                 Positioned(
                   bottom: orientation == Orientation.portrait
-                      ? height * 0.27
+                      ? height * 0.3
                       : width * 0.225,
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -187,7 +187,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                   ),
                   Positioned(
                     bottom: orientation == Orientation.portrait
-                        ? height * 0.26
+                        ? height * 0.3
                         : width * 0.225,
                     child: Container(
                       padding: EdgeInsets.symmetric(

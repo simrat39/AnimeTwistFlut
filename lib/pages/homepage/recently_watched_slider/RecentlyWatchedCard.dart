@@ -40,7 +40,7 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
         children: [
           Positioned.fill(
             child: Image.network(
-              widget.lastWatchedModel.kitsuModel.posterImage,
+              widget.lastWatchedModel.kitsuModel.coverImage,
               fit: BoxFit.cover,
             ),
           ),
