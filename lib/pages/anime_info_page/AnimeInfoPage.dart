@@ -179,7 +179,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                   slivers: [
                     SliverAppBar(
                       expandedHeight: orientation == Orientation.portrait
-                          ? height * 0.25
+                          ? height * 0.3
                           : width * 0.25,
                       actions: [
                         Center(
@@ -219,90 +219,94 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                         ),
                       ],
                       flexibleSpace: FlexibleSpaceBar(
-                        background: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Positioned.fill(
-                              child: Image.network(
-                                kitsuModel.coverImage ?? kitsuModel.posterImage,
-                                fit: BoxFit.cover,
+                        background: Container(
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Positioned.fill(
+                                child: Image.network(
+                                  kitsuModel.coverImage ??
+                                      kitsuModel.posterImage,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            Positioned.fill(
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.6),
-                                      Theme.of(context)
-                                          .bottomAppBarColor
-                                          .withOpacity(0.75),
-                                    ],
-                                    begin: Alignment.centerRight,
-                                    end: Alignment.centerLeft,
+                              Positioned.fill(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.6),
+                                        Theme.of(context)
+                                            .bottomAppBarColor
+                                            .withOpacity(0.75),
+                                      ],
+                                      begin: Alignment.centerRight,
+                                      end: Alignment.centerLeft,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Positioned.fill(
-                              bottom: 20,
-                              child: Container(
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Flexible(
-                                      fit: FlexFit.loose,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: AutoSizeText(
-                                              widget.twistModel.title
-                                                  .toUpperCase(),
-                                              textAlign: TextAlign.left,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
-                                              minFontSize: 20.0,
-                                              style: TextStyle(
-                                                letterSpacing: 1.0,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 30.0,
+                              Positioned.fill(
+                                bottom: 20,
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: 20.0,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Flexible(
+                                        fit: FlexFit.loose,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: AutoSizeText(
+                                                widget.twistModel.title
+                                                    .toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                                minFontSize: 20.0,
+                                                style: TextStyle(
+                                                  letterSpacing: 1.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 30.0,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      (episodes?.length?.toString() ?? '0') +
-                                          " Episodes | " +
-                                          (widget.twistModel.ongoing
-                                              ? "Ongoing"
-                                              : "Finished"),
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Theme.of(context).hintColor,
+                                      SizedBox(
+                                        height: 5.0,
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        (episodes?.length?.toString() ?? '0') +
+                                            " Episodes | " +
+                                            (widget.twistModel.ongoing
+                                                ? "Ongoing"
+                                                : "Finished"),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Theme.of(context).hintColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
