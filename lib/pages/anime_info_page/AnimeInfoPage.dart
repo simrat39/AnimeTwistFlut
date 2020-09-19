@@ -170,7 +170,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                 scrollToEpisode(context);
               });
               return CupertinoScrollbar(
-                isAlwaysShown: true,
                 controller: _scrollController,
                 child: CustomScrollView(
                   key: topListKey,
