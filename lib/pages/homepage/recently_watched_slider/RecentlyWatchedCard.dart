@@ -41,6 +41,7 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
           Positioned.fill(
             child: Image.network(
               widget.lastWatchedModel.kitsuModel?.coverImage ??
+                  widget.lastWatchedModel.kitsuModel?.posterImage ??
                   "https://designshack.net/wp-content/uploads/placeholder-image.png",
               fit: BoxFit.cover,
             ),
