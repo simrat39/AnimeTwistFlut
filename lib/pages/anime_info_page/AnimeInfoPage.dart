@@ -248,7 +248,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                             .withOpacity(0.75),
                                       ],
                                       begin: Alignment.topRight,
-                                      end: Alignment.topLeft,
+                                      end: Alignment.bottomLeft,
                                     ),
                                   ),
                                 ),
