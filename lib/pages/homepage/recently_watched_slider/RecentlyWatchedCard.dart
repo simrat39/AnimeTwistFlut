@@ -48,16 +48,7 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).accentColor.withOpacity(0.6),
-                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.85),
-                  ],
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                ),
-              ),
+              color: Color(0xff070E30).withOpacity(0.7),
             ),
           ),
           Positioned(
