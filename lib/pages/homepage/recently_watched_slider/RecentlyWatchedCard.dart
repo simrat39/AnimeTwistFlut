@@ -31,10 +31,7 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-
     return Container(
-      height: height * 0.5,
       child: Stack(
         alignment: Alignment.center,
         children: [
