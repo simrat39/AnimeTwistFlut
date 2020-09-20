@@ -77,7 +77,11 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.kitsuModel == null) return Container();
     return Container(
+      margin: EdgeInsets.only(
+        bottom: 16.0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

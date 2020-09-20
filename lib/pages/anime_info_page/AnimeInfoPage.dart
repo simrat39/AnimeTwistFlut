@@ -208,7 +208,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   ),
                                 ),
                                 Text(
-                                  kitsuModel.rating.toString() + " / 100",
+                                  kitsuModel?.rating?.toString() ??
+                                      "??" + " / 100",
                                   style: TextStyle(
                                     color: Colors.pink,
                                     fontWeight: FontWeight.bold,
@@ -226,8 +227,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                             children: [
                               Positioned.fill(
                                 child: Image.network(
-                                  kitsuModel.coverImage ??
-                                      kitsuModel.posterImage,
+                                  kitsuModel?.coverImage ??
+                                      kitsuModel?.posterImage ??
+                                      "https://designshack.net/wp-content/uploads/placeholder-image.png",
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -325,7 +327,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                             margin: EdgeInsets.only(
                               left: 16.0,
                               right: 16.0,
-                              top: 16.0,
                               bottom: 8.0,
                             ),
                             child: Text(
