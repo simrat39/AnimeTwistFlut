@@ -242,13 +242,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                       colors: [
                                         Theme.of(context)
                                             .accentColor
-                                            .withOpacity(0.6),
+                                            .withOpacity(0.7),
                                         Theme.of(context)
-                                            .bottomAppBarColor
+                                            .scaffoldBackgroundColor
                                             .withOpacity(0.75),
                                       ],
-                                      begin: Alignment.centerRight,
-                                      end: Alignment.centerLeft,
+                                      begin: Alignment.topRight,
+                                      end: Alignment.topLeft,
                                     ),
                                   ),
                                 ),
