@@ -28,6 +28,7 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
   RenderBox _renderBox;
 
   void _afterLayout(_) async {
+    if (widget.kitsuModel == null) return;
     _renderBox = _keyFoldChild.currentContext.findRenderObject();
     _sizeAnimation = Tween<double>(
       end: _renderBox.size.height,
