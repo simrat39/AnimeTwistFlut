@@ -26,7 +26,7 @@ class RootWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     Color bgColor = Color(0xff121212);
     Color cardColor = Color(0xff11D1D1D);
-    Color accentColor = Color(0xffBB86FC);
+    Color accentColor = Colors.blueAccent;
 
     return MaterialApp(
       home: HomePage(),
