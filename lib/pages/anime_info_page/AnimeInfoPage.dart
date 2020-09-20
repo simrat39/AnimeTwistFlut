@@ -208,8 +208,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   ),
                                 ),
                                 Text(
-                                  kitsuModel?.rating?.toString() ??
-                                      "??" + " / 100",
+                                  (kitsuModel?.rating?.toString() ?? "??") +
+                                      " / 100",
                                   style: TextStyle(
                                     color: Colors.pink,
                                     fontWeight: FontWeight.bold,
