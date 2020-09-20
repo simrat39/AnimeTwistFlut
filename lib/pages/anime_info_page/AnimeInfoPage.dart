@@ -19,6 +19,7 @@ import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../services/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
+import 'package:AnimeTwistFlut/constants.dart';
 
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;
@@ -89,8 +90,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     Get.put<KitsuModel>(kitsuModel);
     await precacheImage(
         NetworkImage(kitsuModel?.coverImage ??
-            (kitsuModel?.posterImage ??
-                "https://designshack.net/wp-content/uploads/placeholder-image.png")),
+            (kitsuModel?.posterImage ?? DEFAULT_IMAGE_URL)),
         context);
   }
 
@@ -229,7 +229,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 child: Image.network(
                                   kitsuModel?.coverImage ??
                                       kitsuModel?.posterImage ??
-                                      "https://designshack.net/wp-content/uploads/placeholder-image.png",
+                                      DEFAULT_IMAGE_URL,
                                   fit: BoxFit.cover,
                                 ),
                               ),

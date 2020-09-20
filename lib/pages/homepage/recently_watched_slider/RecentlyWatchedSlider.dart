@@ -6,6 +6,7 @@ import 'package:AnimeTwistFlut/providers/RecentlyWatchedProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:AnimeTwistFlut/constants.dart';
 
 // Project imports:
 import 'RecentlyWatchedCard.dart';
@@ -44,7 +45,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
               children: [
                 Positioned.fill(
                   child: Image.network(
-                    'https://wallpaperset.com/w/full/9/1/1/470069.jpg',
+                    DEFAULT_IMAGE_URL,
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'dart:ui';
 
+import 'package:AnimeTwistFlut/constants.dart';
 import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
             child: Image.network(
               widget.lastWatchedModel.kitsuModel?.coverImage ??
                   widget.lastWatchedModel.kitsuModel?.posterImage ??
-                  "https://designshack.net/wp-content/uploads/placeholder-image.png",
+                  DEFAULT_IMAGE_URL,
               fit: BoxFit.cover,
             ),
           ),
