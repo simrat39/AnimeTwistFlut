@@ -3,13 +3,16 @@ import 'dart:ui';
 
 import 'package:AnimeTwistFlut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/WatchTrailerButton.dart';
+import 'package:AnimeTwistFlut/providers/ToWatchProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodesSliver.dart';
@@ -284,6 +287,35 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 30.0,
                                                 ),
+                                              ),
+                                            ),
+                                            ChangeNotifierProvider.value(
+                                              value: ToWatchProvider.provider,
+                                              child: Consumer<ToWatchProvider>(
+                                                builder:
+                                                    (context, provider, child) {
+                                                  return IconButton(
+                                                    icon: Icon(
+                                                      provider.isAlreadyInToWatch(
+                                                                  widget
+                                                                      .twistModel) >=
+                                                              0
+                                                          ? FontAwesomeIcons
+                                                              .minus
+                                                          : FontAwesomeIcons
+                                                              .plus,
+                                                    ),
+                                                    onPressed: () {
+                                                      provider
+                                                          .toggleFromToWatched(
+                                                        episodeModel: null,
+                                                        kitsuModel: kitsuModel,
+                                                        twistModel:
+                                                            widget.twistModel,
+                                                      );
+                                                    },
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ],

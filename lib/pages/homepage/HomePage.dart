@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:AnimeTwistFlut/models/TwistModel.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:AnimeTwistFlut/pages/homepage/to_watch_row/ToWatchRow.dart';
+import 'package:AnimeTwistFlut/providers/ToWatchProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -103,6 +105,7 @@ class _HomePageState extends State<HomePage> {
     TwistApiService twistApiService = Get.put(TwistApiService());
     await twistApiService.setTwistModels();
     await RecentlyWatchedProvider.provider.initData();
+    await ToWatchProvider.provider.initData();
   }
 
   @override
@@ -192,6 +195,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 15.0,
                   ),
+                  ToWatchRow(),
                   Padding(
                     padding: EdgeInsets.only(
                       bottom: 15.0,
