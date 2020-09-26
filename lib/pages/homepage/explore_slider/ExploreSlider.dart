@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
+import 'package:AnimeTwistFlut/constants.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -43,7 +44,8 @@ class _ExploreRowState extends State<ExploreRow> {
           kitsuModel: kitsuModel,
         ),
       );
-      precacheImage(NetworkImage(kitsuModel.posterImage), context,
+      precacheImage(
+          NetworkImage(kitsuModel.posterImage ?? DEFAULT_IMAGE_URL), context,
           size: Size(480, 640));
     }
   }

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:AnimeTwistFlut/constants.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _ExploreRowItemState extends State<ExploreRowItem> {
         child: Stack(
           children: [
             Image.network(
-              widget.kitsuModel.posterImage,
+              widget.kitsuModel.posterImage ?? DEFAULT_IMAGE_URL,
             ),
             Positioned.fill(
               child: Material(
