@@ -288,7 +288,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
                                         fit: FlexFit.loose,
@@ -342,9 +341,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 5.0,
                                       ),
                                       Text(
                                         (episodes?.length?.toString() ?? '0') +
