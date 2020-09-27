@@ -51,8 +51,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _initData;
   ScrollController _scrollController;
   EpisodesWatchedProvider _episodesWatchedProvider;
-  GlobalKey topListKey;
   bool hasScrolled = false;
+
+  // Global Keys
+  // GlobalKey descriptionKey;
+  // GlobalKey trailerKey;
+  // GlobalKey miscItemsKey;
+  // GlobalKey episodesKey;
 
   @override
   void initState() {
@@ -61,7 +66,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _episodesWatchedProvider =
         EpisodesWatchedProvider(slug: widget.twistModel.slug);
     Get.put<TwistModel>(widget.twistModel);
-    topListKey = GlobalKey();
+    // descriptionKey = GlobalKey();
+    // trailerKey = GlobalKey();
+    // miscItemsKey = GlobalKey();
     super.initState();
   }
 
@@ -97,61 +104,77 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
         context);
   }
 
-  void scrollToEpisode(BuildContext context) {
-    // Check if widget is from recently scrolled as we only want to scroll to
-    // the episode if we come from a recently watched card.
-    // Also check if we have already scrolled as this function may be called
-    // multiple times and we dont want the user to be stuck in an animation
-    // loop.
-    if (widget.isFromRecentlyWatched && !hasScrolled) {
-      Orientation orientation = MediaQuery.of(context).orientation;
+  // void scrollToEpisode(BuildContext context) {
+  //   // Check if widget is from recently scrolled as we only want to scroll to
+  //   // the episode if we come from a recently watched card.
+  //   // Also check if we have already scrolled as this function may be called
+  //   // multiple times and we dont want the user to be stuck in an animation
+  //   // loop.
+  //   if (widget.isFromRecentlyWatched && !hasScrolled) {
+  //     Orientation orientation = MediaQuery.of(context).orientation;
 
-      // Find the height of all of the items aboce the gridview and divide it by
-      // 2 in portrait and 0.75 in landscape because for whatever dividing by
-      // that gives better results. We get the height by adding a GlobalKey to
-      // the SliverList containing everything but the episodes.
-      double scrollDivideFactor =
-          orientation == Orientation.portrait ? 2 : 0.75;
-      double lengthToScroll =
-          (topListKey.currentContext.findRenderObject() as RenderBox)
-                  .size
-                  .height /
-              scrollDivideFactor;
+  //     // Find the height of all of the items aboce the gridview and divide it by
+  //     // 2 in portrait and 0.75 in landscape because for whatever dividing by
+  //     // that gives better results. We get the height by adding a GlobalKey to
+  //     // the SliverList containing everything but the episodes.
+  //     double scrollDivideFactor =
+  //         orientation == Orientation.portrait ? 0.65 : 0.75;
 
-      double screenHeight = MediaQuery.of(context).size.height;
-      // One episode card has height of screenHeight * 0.07 in portrait /
-      // screenHeight * 0.2 (a little higher than actual since its a ratio) in
-      // landscape and since episodes are laid out in a grid, each row has 2
-      // episode cards.
-      double episodeCardHeight = orientation == Orientation.portrait
-          ? screenHeight * 0.07
-          : screenHeight * 0.2;
-      int episodeCountInRow = 2;
+  //     double trailerHeight =
+  //         (trailerKey.currentContext.findRenderObject() as RenderBox)
+  //             .size
+  //             .height;
 
-      // Calculate the height of all the episodes till lastWatchedEpisodeNum and
-      // add it to lengthToScroll.
-      lengthToScroll +=
-          episodeCardHeight * widget.lastWatchedEpisodeNum / episodeCountInRow;
+  //     double descriptionHeight =
+  //         (descriptionKey.currentContext.findRenderObject() as RenderBox)
+  //             .size
+  //             .height;
 
-      // If the lengthToScroll is greater than the actual maxScrollExtent, then
-      // prevent overscrolls and weird glitches and set the lengthToScroll to
-      // the maxScrollExtent.
-      if (lengthToScroll > _scrollController.position.maxScrollExtent)
-        lengthToScroll = _scrollController.position.maxScrollExtent;
+  //     double miscHeight =
+  //         (miscItemsKey.currentContext.findRenderObject() as RenderBox)
+  //             .size
+  //             .height;
 
-      // Animate to the desired episode.
-      // TODO: Dynamically find an appropriate duration on 13 Sep 20
-      _scrollController.animateTo(
-        lengthToScroll,
-        duration: 1.seconds,
-        curve: Curves.ease,
-      );
-      // Set hasScrolled to true to make sure that we dont auto scroll again in
-      // the same page.
-      hasScrolled = true;
-      setState(() {});
-    }
-  }
+  //     double lengthToScroll =
+  //         (trailerHeight + descriptionHeight + miscHeight) / scrollDivideFactor;
+
+  //     double screenHeight = MediaQuery.of(context).size.height;
+  //     // One episode card has height of screenHeight * 0.07 in portrait /
+  //     // screenHeight * 0.2 (a little higher than actual since its a ratio) in
+  //     // landscape and since episodes are laid out in a grid, each row has 2
+  //     // episode cards.
+  //     double episodeCardHeight = orientation == Orientation.portrait
+  //         ? screenHeight * 0.07
+  //         : screenHeight * 0.2;
+  //     int episodeCountInRow = 2;
+
+  //     // Calculate the height of all the episodes till lastWatchedEpisodeNum and
+  //     // add it to lengthToScroll.
+  //     lengthToScroll +=
+  //         episodeCardHeight * widget.lastWatchedEpisodeNum / episodeCountInRow;
+
+  //     double hundredFactor =
+  //         (widget.lastWatchedEpisodeNum / 100).floorToDouble() * 200;
+  //     lengthToScroll += hundredFactor;
+  //     // If the lengthToScroll is greater than the actual maxScrollExtent, then
+  //     // prevent overscrolls and weird glitches and set the lengthToScroll to
+  //     // the maxScrollExtent.
+  //     if (lengthToScroll > _scrollController.position.maxScrollExtent)
+  //       lengthToScroll = _scrollController.position.maxScrollExtent;
+
+  //     // Animate to the desired episode.
+  //     // TODO: Dynamically find an appropriate duration on 13 Sep 20
+  //     _scrollController.animateTo(
+  //       lengthToScroll,
+  //       duration: 1.seconds,
+  //       curve: Curves.ease,
+  //     );
+  //     // Set hasScrolled to true to make sure that we dont auto scroll again in
+  //     // the same page.
+  //     hasScrolled = true;
+  //     setState(() {});
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -171,13 +194,12 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _initData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                scrollToEpisode(context);
-              });
+              // WidgetsBinding.instance.addPostFrameCallback((_) {
+              //   scrollToEpisode(context);
+              // });
               return CupertinoScrollbar(
                 controller: _scrollController,
                 child: CustomScrollView(
-                  key: topListKey,
                   physics: BouncingScrollPhysics(),
                   controller: _scrollController,
                   slivers: [
@@ -349,14 +371,17 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                       delegate: SliverChildListDelegate(
                         [
                           WatchTrailerButton(
+                            // key: trailerKey,
                             kitsuModel: kitsuModel,
                           ),
                           DescriptionWidget(
+                            // key: descriptionKey,
                             twistModel: widget.twistModel,
                             kitsuModel: kitsuModel,
                           ),
                           Container(
-                            margin: EdgeInsets.only(
+                            // key: miscItemsKey,
+                            padding: EdgeInsets.only(
                               left: 16.0,
                               right: 16.0,
                               bottom: 8.0,
@@ -373,6 +398,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                       ),
                     ),
                     EpisodesSliver(
+                      // key: episodesKey,
                       episodes: episodes,
                       episodesWatchedProvider: _episodesWatchedProvider,
                     ),

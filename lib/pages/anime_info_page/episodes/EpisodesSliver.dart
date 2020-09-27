@@ -11,11 +11,15 @@ import 'package:AnimeTwistFlut/providers/EpisodesWatchedProvider.dart';
 import 'package:AnimeTwistFlut/providers/RecentlyWatchedProvider.dart';
 
 class EpisodesSliver extends StatelessWidget {
+  final Key key;
   final List<EpisodeModel> episodes;
   final EpisodesWatchedProvider episodesWatchedProvider;
 
   EpisodesSliver(
-      {@required this.episodes, @required this.episodesWatchedProvider});
+      {this.key,
+      @required this.episodes,
+      @required this.episodesWatchedProvider})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

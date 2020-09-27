@@ -6,11 +6,13 @@ import 'package:supercharged/supercharged.dart';
 class DescriptionWidget extends StatefulWidget {
   final TwistModel twistModel;
   final KitsuModel kitsuModel;
+  final Key key;
 
   DescriptionWidget({
+    this.key,
     this.twistModel,
     this.kitsuModel,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
