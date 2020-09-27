@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:AnimeTwistFlut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -249,6 +250,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                               _controller,
                             ),
                           ),
+                        ),
+                      ),
+                      Positioned.fill(
+                        child: DoubleTapLayer(
+                          videoPlayerController: _controller,
+                          toggleUI: toggleUI,
                         ),
                       ),
                       AnimatedOpacity(
