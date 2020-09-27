@@ -535,6 +535,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                         Builder(
                           builder: (context) {
                             SystemChrome.setEnabledSystemUIOverlays([]);
+                            Wakelock.toggle(on: true);
                             return CircularProgressIndicator();
                           },
                         ),
