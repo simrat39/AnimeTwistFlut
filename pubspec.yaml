@@ -35,7 +35,7 @@ dependencies:
       url: https://github.com/simrat39/videoPlayerWithHeader
   import_sorter:
   responsive_builder:
-  provider:
+  flutter_riverpod:
   hive:
   hive_flutter:
   path_provider:

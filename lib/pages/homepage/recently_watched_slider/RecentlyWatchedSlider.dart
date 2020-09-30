@@ -2,9 +2,9 @@
 import 'package:AnimeTwistFlut/animations/Transitions.dart';
 import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
 import 'package:AnimeTwistFlut/pages/all_anime_page/AllAnimePage.dart';
-import 'package:AnimeTwistFlut/providers/RecentlyWatchedProvider.dart';
+import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:AnimeTwistFlut/constants.dart';
 
@@ -32,11 +32,13 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
+
     var containerHeight =
         orientation == Orientation.portrait ? height * 0.4 : width * 0.3;
-    return Consumer<RecentlyWatchedProvider>(
-      builder: (context, provider, child) {
-        if (!provider.hasData())
+    return Consumer(
+      builder: (context, watch, child) {
+        final provider = watch(recentlyWatchedProvider);
+        if (!provider.hasData()) {
           return Container(
             width: double.infinity,
             height: containerHeight,
@@ -147,6 +149,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
               ],
             ),
           );
+        }
         return Stack(
           children: [
             Container(

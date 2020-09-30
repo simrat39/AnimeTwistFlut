@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
 import 'pages/homepage/HomePage.dart';
@@ -17,7 +18,7 @@ class CustomImageCache extends WidgetsFlutterBinding {
 
 void main() {
   CustomImageCache();
-  runApp(RootWindow());
+  runApp(ProviderScope(child: RootWindow()));
 }
 
 class RootWindow extends StatelessWidget {

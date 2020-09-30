@@ -9,9 +9,7 @@ class EpisodesWatchedProvider with ChangeNotifier {
   final String slug;
   SharedPreferences pref;
 
-  EpisodesWatchedProvider({@required this.slug}) {
-    getWatchedPref();
-  }
+  EpisodesWatchedProvider({@required this.slug});
 
   void addWatched(int ep) {
     eps.add(ep.toString());

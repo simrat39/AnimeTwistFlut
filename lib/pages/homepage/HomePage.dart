@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
@@ -26,6 +25,7 @@ import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
 import 'explore_slider/ExploreSlider.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:flutter_riverpod/all.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,13 +34,22 @@ class HomePage extends StatefulWidget {
   }
 }
 
+final recentlyWatchedProvider =
+    ChangeNotifierProvider<RecentlyWatchedProvider>((ref) {
+  return RecentlyWatchedProvider();
+});
+
+final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
+  return ToWatchProvider();
+});
+
 class _HomePageState extends State<HomePage> {
   Future _initData;
   StreamSubscription _uriSub;
 
   @override
   void initState() {
-    _initData = initData();
+    _initData = initData(context);
     // Check and launch an anime page on initial app launch, this is needed when
     // the app is not running in the background and the user clicks a relevant
     // link.
@@ -101,11 +110,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future initData() async {
+  Future initData(BuildContext context) async {
     TwistApiService twistApiService = Get.put(TwistApiService());
     await twistApiService.setTwistModels();
-    await RecentlyWatchedProvider.provider.initData();
-    await ToWatchProvider.provider.initData();
+    await context.read(recentlyWatchedProvider).initData();
+    await context.read(toWatchProvider).initData();
   }
 
   @override
@@ -188,10 +197,7 @@ class _HomePageState extends State<HomePage> {
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  ChangeNotifierProvider<RecentlyWatchedProvider>.value(
-                    value: RecentlyWatchedProvider.provider,
-                    child: RecentlyWatchedSlider(),
-                  ),
+                  RecentlyWatchedSlider(),
                   SizedBox(
                     height: 15.0,
                   ),

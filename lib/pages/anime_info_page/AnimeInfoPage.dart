@@ -3,14 +3,14 @@ import 'dart:ui';
 
 import 'package:AnimeTwistFlut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/WatchTrailerButton.dart';
-import 'package:AnimeTwistFlut/providers/ToWatchProvider.dart';
+import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -50,25 +50,14 @@ class AnimeInfoPage extends StatefulWidget {
 class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _initData;
   ScrollController _scrollController;
-  EpisodesWatchedProvider _episodesWatchedProvider;
+  ChangeNotifierProvider<EpisodesWatchedProvider> _episodesWatchedProvider;
   bool hasScrolled = false;
-
-  // Global Keys
-  // GlobalKey descriptionKey;
-  // GlobalKey trailerKey;
-  // GlobalKey miscItemsKey;
-  // GlobalKey episodesKey;
 
   @override
   void initState() {
     _initData = initData();
     _scrollController = ScrollController();
-    _episodesWatchedProvider =
-        EpisodesWatchedProvider(slug: widget.twistModel.slug);
     Get.put<TwistModel>(widget.twistModel);
-    // descriptionKey = GlobalKey();
-    // trailerKey = GlobalKey();
-    // miscItemsKey = GlobalKey();
     super.initState();
   }
 
@@ -76,6 +65,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   void dispose() {
     Get.delete<TwistModel>();
     Get.delete<KitsuModel>();
+    Get.delete<ChangeNotifierProvider<EpisodesWatchedProvider>>();
     super.dispose();
   }
 
@@ -97,84 +87,24 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;
     }
+
     Get.put<KitsuModel>(kitsuModel);
+
     await precacheImage(
         NetworkImage(kitsuModel?.coverImage ??
             (kitsuModel?.posterImage ?? DEFAULT_IMAGE_URL)),
         context);
+
+    _episodesWatchedProvider = Get.put(
+      ChangeNotifierProvider<EpisodesWatchedProvider>(
+        (ref) {
+          return EpisodesWatchedProvider(slug: widget.twistModel.slug);
+        },
+      ),
+    );
+
+    await context.read(_episodesWatchedProvider).getWatchedPref();
   }
-
-  // void scrollToEpisode(BuildContext context) {
-  //   // Check if widget is from recently scrolled as we only want to scroll to
-  //   // the episode if we come from a recently watched card.
-  //   // Also check if we have already scrolled as this function may be called
-  //   // multiple times and we dont want the user to be stuck in an animation
-  //   // loop.
-  //   if (widget.isFromRecentlyWatched && !hasScrolled) {
-  //     Orientation orientation = MediaQuery.of(context).orientation;
-
-  //     // Find the height of all of the items aboce the gridview and divide it by
-  //     // 2 in portrait and 0.75 in landscape because for whatever dividing by
-  //     // that gives better results. We get the height by adding a GlobalKey to
-  //     // the SliverList containing everything but the episodes.
-  //     double scrollDivideFactor =
-  //         orientation == Orientation.portrait ? 0.65 : 0.75;
-
-  //     double trailerHeight =
-  //         (trailerKey.currentContext.findRenderObject() as RenderBox)
-  //             .size
-  //             .height;
-
-  //     double descriptionHeight =
-  //         (descriptionKey.currentContext.findRenderObject() as RenderBox)
-  //             .size
-  //             .height;
-
-  //     double miscHeight =
-  //         (miscItemsKey.currentContext.findRenderObject() as RenderBox)
-  //             .size
-  //             .height;
-
-  //     double lengthToScroll =
-  //         (trailerHeight + descriptionHeight + miscHeight) / scrollDivideFactor;
-
-  //     double screenHeight = MediaQuery.of(context).size.height;
-  //     // One episode card has height of screenHeight * 0.07 in portrait /
-  //     // screenHeight * 0.2 (a little higher than actual since its a ratio) in
-  //     // landscape and since episodes are laid out in a grid, each row has 2
-  //     // episode cards.
-  //     double episodeCardHeight = orientation == Orientation.portrait
-  //         ? screenHeight * 0.07
-  //         : screenHeight * 0.2;
-  //     int episodeCountInRow = 2;
-
-  //     // Calculate the height of all the episodes till lastWatchedEpisodeNum and
-  //     // add it to lengthToScroll.
-  //     lengthToScroll +=
-  //         episodeCardHeight * widget.lastWatchedEpisodeNum / episodeCountInRow;
-
-  //     double hundredFactor =
-  //         (widget.lastWatchedEpisodeNum / 100).floorToDouble() * 200;
-  //     lengthToScroll += hundredFactor;
-  //     // If the lengthToScroll is greater than the actual maxScrollExtent, then
-  //     // prevent overscrolls and weird glitches and set the lengthToScroll to
-  //     // the maxScrollExtent.
-  //     if (lengthToScroll > _scrollController.position.maxScrollExtent)
-  //       lengthToScroll = _scrollController.position.maxScrollExtent;
-
-  //     // Animate to the desired episode.
-  //     // TODO: Dynamically find an appropriate duration on 13 Sep 20
-  //     _scrollController.animateTo(
-  //       lengthToScroll,
-  //       duration: 1.seconds,
-  //       curve: Curves.ease,
-  //     );
-  //     // Set hasScrolled to true to make sure that we dont auto scroll again in
-  //     // the same page.
-  //     hasScrolled = true;
-  //     setState(() {});
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -194,9 +124,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _initData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              // WidgetsBinding.instance.addPostFrameCallback((_) {
-              //   scrollToEpisode(context);
-              // });
               return CupertinoScrollbar(
                 controller: _scrollController,
                 child: CustomScrollView(
@@ -310,34 +237,30 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                                 ),
                                               ),
                                             ),
-                                            ChangeNotifierProvider.value(
-                                              value: ToWatchProvider.provider,
-                                              child: Consumer<ToWatchProvider>(
-                                                builder:
-                                                    (context, provider, child) {
-                                                  return IconButton(
-                                                    icon: Icon(
-                                                      provider.isAlreadyInToWatch(
-                                                                  widget
-                                                                      .twistModel) >=
-                                                              0
-                                                          ? FontAwesomeIcons
-                                                              .minus
-                                                          : FontAwesomeIcons
-                                                              .plus,
-                                                    ),
-                                                    onPressed: () {
-                                                      provider
-                                                          .toggleFromToWatched(
-                                                        episodeModel: null,
-                                                        kitsuModel: kitsuModel,
-                                                        twistModel:
-                                                            widget.twistModel,
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
+                                            Consumer(
+                                              builder: (context, watch, child) {
+                                                final provider =
+                                                    watch(toWatchProvider);
+                                                return IconButton(
+                                                  icon: Icon(
+                                                    provider.isAlreadyInToWatch(
+                                                                widget
+                                                                    .twistModel) >=
+                                                            0
+                                                        ? FontAwesomeIcons.minus
+                                                        : FontAwesomeIcons.plus,
+                                                  ),
+                                                  onPressed: () {
+                                                    provider
+                                                        .toggleFromToWatched(
+                                                      episodeModel: null,
+                                                      kitsuModel: kitsuModel,
+                                                      twistModel:
+                                                          widget.twistModel,
+                                                    );
+                                                  },
+                                                );
+                                              },
                                             ),
                                           ],
                                         ),
@@ -367,16 +290,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                       delegate: SliverChildListDelegate(
                         [
                           WatchTrailerButton(
-                            // key: trailerKey,
                             kitsuModel: kitsuModel,
                           ),
                           DescriptionWidget(
-                            // key: descriptionKey,
                             twistModel: widget.twistModel,
                             kitsuModel: kitsuModel,
                           ),
                           Container(
-                            // key: miscItemsKey,
                             padding: EdgeInsets.only(
                               left: 16.0,
                               right: 16.0,
@@ -394,9 +314,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                       ),
                     ),
                     EpisodesSliver(
-                      // key: episodesKey,
                       episodes: episodes,
-                      episodesWatchedProvider: _episodesWatchedProvider,
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(

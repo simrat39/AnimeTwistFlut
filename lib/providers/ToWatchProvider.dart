@@ -20,7 +20,6 @@ class ToWatchProvider extends ChangeNotifier {
 
   Future initData() async {
     var box = await Hive.openBox(BOX_NAME);
-
     // For whatever reason, directly assigning toWatchAnimes to
     // box.get(KEY_NAME) does not work, so loop through all the elements and
     // add it to the list one by one.
@@ -73,6 +72,4 @@ class ToWatchProvider extends ChangeNotifier {
   bool hasData() {
     return toWatchAnimes != null && toWatchAnimes.isNotEmpty;
   }
-
-  static ToWatchProvider provider = ToWatchProvider();
 }

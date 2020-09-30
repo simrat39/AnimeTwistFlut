@@ -88,6 +88,4 @@ class RecentlyWatchedProvider extends ChangeNotifier {
   bool hasData() {
     return recentlyWatchedAnimes != null && recentlyWatchedAnimes.isNotEmpty;
   }
-
-  static RecentlyWatchedProvider provider = RecentlyWatchedProvider();
 }
