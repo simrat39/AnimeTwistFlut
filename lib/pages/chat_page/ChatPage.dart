@@ -37,8 +37,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    _channel.sink.close();
     WidgetsBinding.instance.removeObserver(this);
+    _channel.sink.close();
     super.dispose();
   }
 
