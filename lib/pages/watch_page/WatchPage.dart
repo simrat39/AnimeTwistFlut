@@ -287,10 +287,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                   duration: 300.milliseconds,
                   opacity: _controller.value.isBuffering ? 1.0 : 0.0,
                   child: Center(
-                    child: Transform.scale(
-                      scale: 0.5,
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: CircularProgressIndicator(),
                   ),
                 ),
                 AnimatedOpacity(
