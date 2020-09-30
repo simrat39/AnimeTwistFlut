@@ -131,7 +131,6 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             }
           }
           return Scrollbar(
-            isAlwaysShown: true,
             controller: _controller,
             child: ListView.builder(
               controller: _controller,
