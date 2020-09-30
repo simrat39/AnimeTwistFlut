@@ -132,7 +132,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                   slivers: [
                     SliverAppBar(
                       expandedHeight: orientation == Orientation.portrait
-                          ? height * 0.3
+                          ? height * 0.275
                           : width * 0.28,
                       actions: [
                         Center(
@@ -192,9 +192,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.7),
+                                        Colors.purple.withOpacity(0.7),
                                         Theme.of(context)
                                             .scaffoldBackgroundColor
                                             .withOpacity(0.75),
@@ -215,6 +213,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
                                         fit: FlexFit.loose,
@@ -231,7 +230,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                                 maxLines: 2,
                                                 minFontSize: 20.0,
                                                 style: TextStyle(
-                                                  letterSpacing: 1.0,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 30.0,
                                                 ),
@@ -241,30 +239,39 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                               builder: (context, watch, child) {
                                                 final provider =
                                                     watch(toWatchProvider);
-                                                return IconButton(
-                                                  icon: Icon(
-                                                    provider.isAlreadyInToWatch(
-                                                                widget
-                                                                    .twistModel) >=
-                                                            0
-                                                        ? FontAwesomeIcons.minus
-                                                        : FontAwesomeIcons.plus,
+                                                return Container(
+                                                  height: 35.0,
+                                                  margin: EdgeInsets.only(
+                                                    left: 5.0,
                                                   ),
-                                                  onPressed: () {
-                                                    provider
-                                                        .toggleFromToWatched(
-                                                      episodeModel: null,
-                                                      kitsuModel: kitsuModel,
-                                                      twistModel:
-                                                          widget.twistModel,
-                                                    );
-                                                  },
+                                                  child: IconButton(
+                                                    icon: Icon(
+                                                      provider.isAlreadyInToWatch(
+                                                                  widget
+                                                                      .twistModel) >=
+                                                              0
+                                                          ? FontAwesomeIcons
+                                                              .minus
+                                                          : FontAwesomeIcons
+                                                              .plus,
+                                                    ),
+                                                    onPressed: () {
+                                                      provider
+                                                          .toggleFromToWatched(
+                                                        episodeModel: null,
+                                                        kitsuModel: kitsuModel,
+                                                        twistModel:
+                                                            widget.twistModel,
+                                                      );
+                                                    },
+                                                  ),
                                                 );
                                               },
                                             ),
                                           ],
                                         ),
                                       ),
+                                      SizedBox(height: 5.0),
                                       Text(
                                         (episodes?.length?.toString() ?? '0') +
                                             " Episodes | " +
