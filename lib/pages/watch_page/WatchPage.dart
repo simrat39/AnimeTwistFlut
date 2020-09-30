@@ -56,6 +56,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   String currentPositionStr;
   bool isPictureInPicture = false;
   bool isTouchingSlider = false;
+  Future _init;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -117,6 +118,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       });
     });
 
+    _init = init();
     super.initState();
   }
 
@@ -218,6 +220,14 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  Future init() async {
+    await SystemChrome.setEnabledSystemUIOverlays([]);
+    await Wakelock.toggle(on: true);
+    while (!(_controller?.value?.initialized ?? false)) {
+      await Future.delayed(100.milliseconds);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double containerHeight =
@@ -231,153 +241,109 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: _controller.value.initialized
-              ? Stack(
-                  alignment: Alignment.topCenter,
+        body: FutureBuilder(
+          future: _init,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        toggleUI();
-                      },
-                      child: Center(
-                        child: AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(
-                            _controller,
-                          ),
-                        ),
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    widget.isFromPrevEpisode
+                        ? Text("Loading Next Episode")
+                        : Text("Loading Episode"),
+                  ],
+                ),
+              );
+            }
+            return Center(
+                child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    toggleUI();
+                  },
+                  child: Center(
+                    child: AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(
+                        _controller,
                       ),
                     ),
-                    Positioned.fill(
-                      child: DoubleTapLayer(
-                        videoPlayerController: _controller,
-                        toggleUI: toggleUI,
-                      ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: DoubleTapLayer(
+                    videoPlayerController: _controller,
+                    toggleUI: toggleUI,
+                  ),
+                ),
+                AnimatedOpacity(
+                  duration: 300.milliseconds,
+                  opacity: _controller.value.isBuffering ? 1.0 : 0.0,
+                  child: Center(
+                    child: Transform.scale(
+                      scale: 0.5,
+                      child: CircularProgressIndicator(),
                     ),
-                    AnimatedOpacity(
-                      duration: 300.milliseconds,
-                      opacity: _controller.value.isBuffering ? 1.0 : 0.0,
-                      child: Center(
-                        child: Transform.scale(
-                          scale: 0.5,
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    ),
-                    AnimatedOpacity(
-                      duration: 300.milliseconds,
-                      opacity: isUIvisible ? 1.0 : 0.0,
-                      child: GestureDetector(
-                        onTap: () {
-                          if (!(isUIvisible)) toggleUI();
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IgnorePointer(
-                              ignoring: !isUIvisible,
-                              child: Visibility(
-                                visible: !isPictureInPicture,
-                                child: Container(
-                                  height: containerHeight,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: <Color>[
-                                        Colors.transparent,
-                                        Colors.black38,
-                                        Colors.black87,
-                                      ],
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.navigate_before,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  right: 20.0,
-                                                ),
-                                                child: AutoSizeText(
-                                                  widget.twistModel.title,
-                                                  maxLines: 2,
-                                                  minFontSize: 5.0,
-                                                  maxFontSize: 25.0,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                  ),
+                ),
+                AnimatedOpacity(
+                  duration: 300.milliseconds,
+                  opacity: isUIvisible ? 1.0 : 0.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (!(isUIvisible)) toggleUI();
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IgnorePointer(
+                          ignoring: !isUIvisible,
+                          child: Visibility(
+                            visible: !isPictureInPicture,
+                            child: Container(
+                              height: containerHeight,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Colors.transparent,
+                                    Colors.black38,
+                                    Colors.black87,
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.navigate_before,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
                                         ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
+                                        Expanded(
+                                          child: Padding(
                                             padding: EdgeInsets.only(
-                                              right: 5.0,
-                                            ),
-                                            child: GestureDetector(
-                                              child: Icon(
-                                                Icons
-                                                    .picture_in_picture_rounded,
-                                              ),
-                                              onTap: () {
-                                                setState(() {
-                                                  isPictureInPicture = true;
-                                                  FlutterAndroidPip
-                                                      .enterPictureInPictureMode;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          Consumer(
-                                            builder: (context, watch, child) {
-                                              final prov = watch(widget
-                                                  .episodesWatchedProvider);
-                                              return Checkbox(
-                                                value: prov.isWatched(
-                                                  widget.episodeModel.number,
-                                                ),
-                                                checkColor: Theme.of(context)
-                                                    .scaffoldBackgroundColor,
-                                                onChanged: (val) {
-                                                  setEpisodeAsCompleted(
-                                                      context, true);
-                                                },
-                                              );
-                                            },
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                              right: 15.0,
+                                              right: 20.0,
                                             ),
                                             child: AutoSizeText(
-                                              "S" +
-                                                  widget.twistModel.season
-                                                      .toString() +
-                                                  " | E" +
-                                                  widget.episodeModel.number
-                                                      .toString(),
-                                              maxLines: 1,
+                                              widget.twistModel.title,
+                                              maxLines: 2,
                                               minFontSize: 5.0,
                                               maxFontSize: 25.0,
                                               overflow: TextOverflow.ellipsis,
@@ -386,160 +352,201 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            IgnorePointer(
-                              ignoring: !isUIvisible,
-                              child: Visibility(
-                                visible: !isPictureInPicture,
-                                child: Container(
-                                  height: containerHeight,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: <Color>[
-                                        Colors.transparent,
-                                        Colors.black38,
-                                        Colors.black87,
+                                        ),
                                       ],
-                                      end: Alignment.bottomCenter,
-                                      begin: Alignment.topCenter,
                                     ),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                  Row(
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10.0,
-                                        ),
-                                        child: Container(
-                                          width: 30.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              _controller.value.isPlaying
-                                                  ? Icons.pause
-                                                  : Icons.play_arrow,
-                                            ),
-                                            onPressed: () {
-                                              togglePlay();
-                                            },
-                                            iconSize: 22.5,
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.skip_next_outlined,
-                                        ),
-                                        iconSize: 22.5,
-                                        onPressed: widget.episodes.last ==
-                                                widget.episodeModel
-                                            ? null
-                                            : () {
-                                                setEpisodeAsCompleted(
-                                                    context, false);
-                                                addEpisodeToRecentlyWatched(
-                                                    context);
-                                                goToNextEpisode(context);
-                                              },
-                                      ),
-                                      Text(
-                                        currentPositionStr,
-                                      ),
-                                      Expanded(
-                                        child: Slider(
-                                          value: _controller
-                                              .value.position.inSeconds
-                                              .toDouble(),
-                                          activeColor:
-                                              Theme.of(context).accentColor,
-                                          inactiveColor: Theme.of(context)
-                                              .accentColor
-                                              .withOpacity(0.5),
-                                          min: 0,
-                                          max: _controller
-                                              .value.duration.inSeconds
-                                              .toDouble(),
-                                          label:
-                                              TimeUtils.secondsToHumanReadable(
-                                                  _controller.value.position
-                                                      .inSeconds),
-                                          divisions: _controller
-                                              .value.duration.inSeconds,
-                                          onChanged: (pos) {
-                                            setState(
-                                              () {
-                                                _controller.seekTo(pos.seconds);
-                                              },
-                                            );
-                                          },
-                                          onChangeStart: (val) => setState(
-                                              () => isTouchingSlider = true),
-                                          onChangeEnd: (val) => setState(() {
-                                            isTouchingSlider = false;
-                                            hideUIAfterWait();
-                                          }),
-                                        ),
-                                      ),
                                       Padding(
                                         padding: EdgeInsets.only(
                                           right: 5.0,
                                         ),
-                                        child: Text(_duration),
-                                      ),
-                                      GestureDetector(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            bottom: 3.0,
-                                            right: 15.0,
-                                            left: 10.0,
-                                          ),
+                                        child: GestureDetector(
                                           child: Icon(
-                                            Icons.screen_rotation_rounded,
-                                            size: 19.0,
+                                            Icons.picture_in_picture_rounded,
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              isPictureInPicture = true;
+                                              FlutterAndroidPip
+                                                  .enterPictureInPictureMode;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Consumer(
+                                        builder: (context, watch, child) {
+                                          final prov = watch(
+                                              widget.episodesWatchedProvider);
+                                          return Checkbox(
+                                            value: prov.isWatched(
+                                              widget.episodeModel.number,
+                                            ),
+                                            checkColor: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            onChanged: (val) {
+                                              setEpisodeAsCompleted(
+                                                  context, true);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 15.0,
+                                        ),
+                                        child: AutoSizeText(
+                                          "S" +
+                                              widget.twistModel.season
+                                                  .toString() +
+                                              " | E" +
+                                              widget.episodeModel.number
+                                                  .toString(),
+                                          maxLines: 1,
+                                          minFontSize: 5.0,
+                                          maxFontSize: 25.0,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        onTap: () {
-                                          rotate();
-                                        },
                                       ),
                                     ],
                                   ),
-                                ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                        IgnorePointer(
+                          ignoring: !isUIvisible,
+                          child: Visibility(
+                            visible: !isPictureInPicture,
+                            child: Container(
+                              height: containerHeight,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Colors.transparent,
+                                    Colors.black38,
+                                    Colors.black87,
+                                  ],
+                                  end: Alignment.bottomCenter,
+                                  begin: Alignment.topCenter,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 10.0,
+                                    ),
+                                    child: Container(
+                                      width: 30.0,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          _controller.value.isPlaying
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                        ),
+                                        onPressed: () {
+                                          togglePlay();
+                                        },
+                                        iconSize: 22.5,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.skip_next_outlined,
+                                    ),
+                                    iconSize: 22.5,
+                                    onPressed: widget.episodes.last ==
+                                            widget.episodeModel
+                                        ? null
+                                        : () {
+                                            setEpisodeAsCompleted(
+                                                context, false);
+                                            addEpisodeToRecentlyWatched(
+                                                context);
+                                            goToNextEpisode(context);
+                                          },
+                                  ),
+                                  Text(
+                                    currentPositionStr,
+                                  ),
+                                  Expanded(
+                                    child: Slider(
+                                      value: _controller
+                                          .value.position.inSeconds
+                                          .toDouble(),
+                                      activeColor:
+                                          Theme.of(context).accentColor,
+                                      inactiveColor: Theme.of(context)
+                                          .accentColor
+                                          .withOpacity(0.5),
+                                      min: 0,
+                                      max: _controller.value.duration.inSeconds
+                                          .toDouble(),
+                                      label: TimeUtils.secondsToHumanReadable(
+                                          _controller.value.position.inSeconds),
+                                      divisions:
+                                          _controller.value.duration.inSeconds,
+                                      onChanged: (pos) {
+                                        setState(
+                                          () {
+                                            _controller.seekTo(pos.seconds);
+                                          },
+                                        );
+                                      },
+                                      onChangeStart: (val) => setState(
+                                          () => isTouchingSlider = true),
+                                      onChangeEnd: (val) => setState(() {
+                                        isTouchingSlider = false;
+                                        hideUIAfterWait();
+                                      }),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      right: 5.0,
+                                    ),
+                                    child: Text(_duration),
+                                  ),
+                                  GestureDetector(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: 3.0,
+                                        right: 15.0,
+                                        left: 10.0,
+                                      ),
+                                      child: Icon(
+                                        Icons.screen_rotation_rounded,
+                                        size: 19.0,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      rotate();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                )
-              : Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Builder(
-                        builder: (context) {
-                          SystemChrome.setEnabledSystemUIOverlays([]);
-                          Wakelock.toggle(on: true);
-                          return CircularProgressIndicator();
-                        },
-                      ),
-                      SizedBox(
-                        height: 24.0,
-                      ),
-                      widget.isFromPrevEpisode
-                          ? Text("Loading Next Episode")
-                          : Text("Loading Episode"),
-                    ],
                   ),
                 ),
+              ],
+            )
+                // : Center(
+                //   ),
+                );
+          },
         ),
       ),
     );
