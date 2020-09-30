@@ -24,7 +24,7 @@ class _ToWatchRowState extends State<ToWatchRow> {
     Orientation orientation = MediaQuery.of(context).orientation;
     return Consumer(
       builder: (context, watch, child) {
-        final provider = context.read(toWatchProvider);
+        final provider = watch(toWatchProvider);
         if (!provider.hasData()) return Container();
         return Container(
           margin: EdgeInsets.only(
