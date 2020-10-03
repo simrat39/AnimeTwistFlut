@@ -141,7 +141,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                   slivers: [
                     SliverAppBar(
                       expandedHeight: orientation == Orientation.portrait
-                          ? height * 0.275
+                          ? height * 0.4
                           : width * 0.28,
                       actions: [
                         Center(
@@ -205,18 +205,19 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 child: Container(
                                   width: double.infinity,
                                   height: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.purple.withOpacity(0.7),
-                                        Theme.of(context)
-                                            .scaffoldBackgroundColor
-                                            .withOpacity(0.75),
-                                      ],
-                                      begin: Alignment.topRight,
-                                      end: Alignment.bottomLeft,
-                                    ),
-                                  ),
+                                  color: Color(0xff070E30).withOpacity(0.7),
+                                  // decoration: BoxDecoration(
+                                  //   gradient: LinearGradient(
+                                  //     colors: [
+                                  //       Colors.purple.withOpacity(0.7),
+                                  //       Theme.of(context)
+                                  //           .scaffoldBackgroundColor
+                                  //           .withOpacity(0.75),
+                                  //     ],
+                                  //     begin: Alignment.topRight,
+                                  //     end: Alignment.bottomLeft,
+                                  //   ),
+                                  // ),
                                 ),
                               ),
                               Positioned.fill(
