@@ -15,13 +15,14 @@ import '../../../models/KitsuModel.dart';
 import '../../../models/TwistModel.dart';
 import '../../../providers/EpisodesWatchedProvider.dart';
 import '../../watch_page/WatchPage.dart';
+import '../../../utils/GetUtils.dart';
 
 class EpisodeCard extends StatelessWidget {
   final List<EpisodeModel> episodes;
   final EpisodeModel episodeModel;
 
   final TwistModel twistModel = Get.find();
-  final KitsuModel kitsuModel = Get.find();
+  final KitsuModel kitsuModel = getAllowNull<KitsuModel>();
   final ChangeNotifierProvider<EpisodesWatchedProvider>
       episodesWatchedProvider = Get.find();
 

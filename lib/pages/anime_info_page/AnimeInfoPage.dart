@@ -95,13 +95,13 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
             (kitsuModel?.posterImage ?? DEFAULT_IMAGE_URL)),
         context);
 
-    _episodesWatchedProvider = Get.put(
-      ChangeNotifierProvider<EpisodesWatchedProvider>(
-        (ref) {
-          return EpisodesWatchedProvider(slug: widget.twistModel.slug);
-        },
-      ),
+    _episodesWatchedProvider = ChangeNotifierProvider<EpisodesWatchedProvider>(
+      (ref) {
+        return EpisodesWatchedProvider(slug: widget.twistModel.slug);
+      },
     );
+    Get.put<ChangeNotifierProvider<EpisodesWatchedProvider>>(
+        _episodesWatchedProvider);
 
     await context.read(_episodesWatchedProvider).getWatchedPref();
   }

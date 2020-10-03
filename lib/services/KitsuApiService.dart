@@ -18,6 +18,10 @@ class KitsuApiService {
     );
 
     Map<dynamic, dynamic> jsonData = jsonDecode(response);
+    // Check if the kitsu id is invalid.
+    // A better solution would be to check for the status code but CachedHttpGet
+    // doesnt support this as of now.
+    if (jsonData["errors"] != null) return null;
 
     return KitsuModel.fromJson(jsonData);
   }

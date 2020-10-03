@@ -4,6 +4,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
 import 'package:AnimeTwistFlut/pages/watch_page/DoubleTapLayer.dart';
+import 'package:AnimeTwistFlut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +35,7 @@ class WatchPage extends StatefulWidget {
   final ChangeNotifierProvider<EpisodesWatchedProvider> episodesWatchedProvider;
 
   final TwistModel twistModel = Get.find();
-  final KitsuModel kitsuModel = Get.find();
+  final KitsuModel kitsuModel = getAllowNull<KitsuModel>();
 
   WatchPage({
     @required this.episodeModel,

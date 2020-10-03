@@ -50,8 +50,6 @@ dependencies:
   edit_distance:
   shared_preferences_web:
   get:
-    git:
-      url: https://github.com/simrat39/getx
   smooth_page_indicator:
   wakelock:
   uni_links:
