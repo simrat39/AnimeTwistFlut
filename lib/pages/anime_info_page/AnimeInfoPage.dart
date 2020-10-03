@@ -53,10 +53,19 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   ChangeNotifierProvider<EpisodesWatchedProvider> _episodesWatchedProvider;
   bool hasScrolled = false;
 
+  final offsetProvider = StateProvider<double>((ref) {
+    return 0.0;
+  });
+
   @override
   void initState() {
     _initData = initData();
     _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      double offset =
+          _scrollController.offset / MediaQuery.of(context).size.height * 5;
+      context.read(offsetProvider).state = offset;
+    });
     Get.put<TwistModel>(widget.twistModel);
     super.initState();
   }
@@ -178,11 +187,18 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                             fit: StackFit.expand,
                             children: [
                               Positioned.fill(
-                                child: Image.network(
-                                  kitsuModel?.posterImage ??
-                                      kitsuModel?.coverImage ??
-                                      DEFAULT_IMAGE_URL,
-                                  fit: BoxFit.cover,
+                                child: Consumer(
+                                  builder: (context, watch, child) {
+                                    final provider = watch(offsetProvider);
+                                    return Image.network(
+                                      kitsuModel?.posterImage ??
+                                          kitsuModel?.coverImage ??
+                                          DEFAULT_IMAGE_URL,
+                                      fit: BoxFit.cover,
+                                      alignment:
+                                          Alignment(0, -provider.state.abs()),
+                                    );
+                                  },
                                 ),
                               ),
                               Positioned.fill(
