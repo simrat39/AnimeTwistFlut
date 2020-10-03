@@ -179,8 +179,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                             children: [
                               Positioned.fill(
                                 child: Image.network(
-                                  kitsuModel?.coverImage ??
-                                      kitsuModel?.posterImage ??
+                                  kitsuModel?.posterImage ??
+                                      kitsuModel?.coverImage ??
                                       DEFAULT_IMAGE_URL,
                                   fit: BoxFit.cover,
                                 ),
