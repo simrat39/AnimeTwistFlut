@@ -18,12 +18,24 @@ class RecentlyWatchedSlider extends StatefulWidget {
   }
 }
 
+final offsetProvider = StateProvider<double>((ref) {
+  return 0.0;
+});
+
 class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
   PageController _controller;
   final _currentPageNotifier = ValueNotifier<int>(0);
 
   @override
   void initState() {
+    _controller = PageController();
+    _controller.addListener(() {
+      double offset = _controller.page - _controller.page.floor();
+      if (offset > 0.5) {
+        offset = 1 - offset;
+      }
+      context.read(offsetProvider).state = offset;
+    });
     super.initState();
   }
 
@@ -168,8 +180,15 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                       List<RecentlyWatchedModel> lastWatchedAnimes =
                           provider.recentlyWatchedAnimes.reversed.toList();
 
-                      return RecentlyWatchedCard(
-                          lastWatchedModel: lastWatchedAnimes[index]);
+                      return Consumer(
+                        builder: (context, watch, child) {
+                          double offset = watch(offsetProvider).state;
+                          return RecentlyWatchedCard(
+                            lastWatchedModel: lastWatchedAnimes[index],
+                            offset: offset,
+                          );
+                        },
+                      );
                     },
                     onPageChanged: (index) {
                       setState(() {

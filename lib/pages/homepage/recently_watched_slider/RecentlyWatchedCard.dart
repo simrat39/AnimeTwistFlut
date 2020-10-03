@@ -15,8 +15,9 @@ import '../../anime_info_page/AnimeInfoPage.dart';
 
 class RecentlyWatchedCard extends StatefulWidget {
   final RecentlyWatchedModel lastWatchedModel;
+  final double offset;
 
-  const RecentlyWatchedCard({@required this.lastWatchedModel});
+  const RecentlyWatchedCard({@required this.lastWatchedModel, this.offset});
 
   @override
   State<StatefulWidget> createState() {
@@ -42,6 +43,7 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
                   widget.lastWatchedModel.kitsuModel?.posterImage ??
                   DEFAULT_IMAGE_URL,
               fit: BoxFit.cover,
+              alignment: Alignment(-widget.offset.abs(), 0),
             ),
           ),
           Positioned.fill(
