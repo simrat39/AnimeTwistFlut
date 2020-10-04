@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:AnimeTwistFlut/pages/homepage/donation_card/GenericDonationSheet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,8 +8,6 @@ import 'package:get/get.dart';
 // Project imports:
 import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
 import '../../../utils/homepage/DonationUtils.dart';
-import 'BitcoinDonationSheet.dart';
-import 'EthereumDonationSheet.dart';
 
 class DonationCard extends StatefulWidget {
   @override
@@ -55,7 +54,13 @@ class _DonationCardState extends State<DonationCard> {
                                 showModalBottomSheet<dynamic>(
                                   context: context,
                                   isScrollControlled: true,
-                                  builder: (context) => BitcoinDonationSheet(),
+                                  builder: (context) => GenericDonationSheet(
+                                    name: "Bitcoin",
+                                    address:
+                                        '1ATvQNxFnyVBa4Pd5njdvjTXcECgptzcZo',
+                                    qrURL:
+                                        'https://twist.moe/public/img/bitcoin-qr.png',
+                                  ),
                                 );
                               },
                             ),
@@ -65,7 +70,13 @@ class _DonationCardState extends State<DonationCard> {
                                 showModalBottomSheet<dynamic>(
                                   context: context,
                                   isScrollControlled: true,
-                                  builder: (context) => EthereumDonationSheet(),
+                                  builder: (context) => GenericDonationSheet(
+                                    name: "Ethereum",
+                                    address:
+                                        "0x8337104096a3297a71ee16a9C922a5ff3818DF46",
+                                    qrURL:
+                                        'https://twist.moe/public/img/ethereum-qr.png',
+                                  ),
                                 );
                               },
                             ),

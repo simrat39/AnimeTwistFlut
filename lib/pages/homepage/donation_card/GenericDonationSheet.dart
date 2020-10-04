@@ -11,20 +11,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supercharged/supercharged.dart';
 
-class EthereumDonationSheet extends StatefulWidget {
+class GenericDonationSheet extends StatefulWidget {
+  final String name;
+  final String address;
+  final String qrURL;
+
+  const GenericDonationSheet({Key key, this.name, this.address, this.qrURL})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return _EthereumDonationSheetState();
+    return _GenericDonationSheetState();
   }
 }
 
-class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
+class _GenericDonationSheetState extends State<GenericDonationSheet> {
   final List<String> topTexts = [
     "Send your generous donation to the address below. Thanks!",
     "Copied!"
   ];
-
-  final String address = "0x8337104096a3297a71ee16a9C922a5ff3818DF46";
 
   bool isCopied = false;
 
@@ -71,7 +76,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
                     top: 5.0,
                   ),
                   child: AutoSizeText(
-                    "Ethereum",
+                    widget.name,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -97,7 +102,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
                       onTap: () {
                         Clipboard.setData(
                           ClipboardData(
-                            text: address,
+                            text: widget.address,
                           ),
                         );
                         onCopy();
@@ -107,13 +112,13 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
                           vertical: 20.0,
                         ),
                         child: Center(
-                          child: Text(address),
+                          child: Text(widget.address),
                         ),
                       ),
                     ),
                   ),
                   Image.network(
-                    'https://twist.moe/public/img/ethereum-qr.png',
+                    widget.qrURL,
                     fit: BoxFit.cover,
                     width: width * 0.75,
                     height: width * 0.75,
@@ -147,7 +152,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
                           top: 5.0,
                         ),
                         child: AutoSizeText(
-                          "Ethereum",
+                          widget.name,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -170,7 +175,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
                       onTap: () {
                         Clipboard.setData(
                           ClipboardData(
-                            text: address,
+                            text: widget.address,
                           ),
                         );
                         onCopy();
@@ -180,7 +185,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
                           vertical: 20.0,
                         ),
                         child: Center(
-                          child: Text(address),
+                          child: Text(widget.address),
                         ),
                       ),
                     ),
@@ -189,7 +194,7 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
               ),
             ),
             Image.network(
-              'https://twist.moe/public/img/ethereum-qr.png',
+              widget.address,
               fit: BoxFit.cover,
               width: height * 0.5,
               height: height * 0.5,
