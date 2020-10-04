@@ -9,7 +9,7 @@ class TimeUtils {
     if (minutes.length == 1) minutes = "0$minutes";
     if (sec > 1.hours.inSeconds) {
       String hours = (int.parse(minutes) ~/ 60).toString();
-      minutes = (int.parse(minutes) - 1.minutes.inSeconds.toInt()).toString();
+      minutes = (int.parse(minutes) - (int.parse(hours) * 60)).toString();
       if (hours.length == 1) hours = "0$hours";
       if (minutes.length == 1) minutes = "0$minutes";
       return "$hours:$minutes:$seconds";
