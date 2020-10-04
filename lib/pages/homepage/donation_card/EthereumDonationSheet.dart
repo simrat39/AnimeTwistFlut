@@ -33,9 +33,10 @@ class _EthereumDonationSheetState extends State<EthereumDonationSheet> {
       isCopied = true;
     });
     Timer(2.seconds, () {
-      setState(() {
-        isCopied = false;
-      });
+      if (mounted)
+        setState(() {
+          isCopied = false;
+        });
     });
   }
 

@@ -206,18 +206,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   width: double.infinity,
                                   height: double.infinity,
                                   color: Color(0xff070E30).withOpacity(0.7),
-                                  // decoration: BoxDecoration(
-                                  //   gradient: LinearGradient(
-                                  //     colors: [
-                                  //       Colors.purple.withOpacity(0.7),
-                                  //       Theme.of(context)
-                                  //           .scaffoldBackgroundColor
-                                  //           .withOpacity(0.75),
-                                  //     ],
-                                  //     begin: Alignment.topRight,
-                                  //     end: Alignment.bottomLeft,
-                                  //   ),
-                                  // ),
                                 ),
                               ),
                               Positioned.fill(

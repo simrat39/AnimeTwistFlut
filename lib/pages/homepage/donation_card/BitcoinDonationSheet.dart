@@ -33,9 +33,10 @@ class _BitcoinDonationSheetState extends State<BitcoinDonationSheet> {
       isCopied = true;
     });
     Timer(2.seconds, () {
-      setState(() {
-        isCopied = false;
-      });
+      if (mounted)
+        setState(() {
+          isCopied = false;
+        });
     });
   }
 
