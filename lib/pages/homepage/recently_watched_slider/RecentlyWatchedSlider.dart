@@ -180,14 +180,8 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                       List<RecentlyWatchedModel> lastWatchedAnimes =
                           provider.recentlyWatchedAnimes.reversed.toList();
 
-                      return Consumer(
-                        builder: (context, watch, child) {
-                          double offset = watch(offsetProvider).state;
-                          return RecentlyWatchedCard(
-                            lastWatchedModel: lastWatchedAnimes[index],
-                            offset: offset,
-                          );
-                        },
+                      return RecentlyWatchedCard(
+                        lastWatchedModel: lastWatchedAnimes[index],
                       );
                     },
                     onPageChanged: (index) {
