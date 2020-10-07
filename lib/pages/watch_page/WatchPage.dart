@@ -83,7 +83,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
     WidgetsBinding.instance.addObserver(this);
-    Wakelock.toggle(on: true);
+    Wakelock.toggle(enable: true);
 
     var headers = {
       'Referer':
@@ -129,7 +129,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     AutoOrientation.fullAutoMode();
     WidgetsBinding.instance.removeObserver(this);
-    Wakelock.toggle(on: false);
+    Wakelock.toggle(enable: false);
     _controller.dispose();
     super.dispose();
   }
@@ -223,7 +223,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   Future init() async {
     await SystemChrome.setEnabledSystemUIOverlays([]);
-    await Wakelock.toggle(on: true);
+    await Wakelock.toggle(enable: true);
     while (!(_controller?.value?.initialized ?? false)) {
       await Future.delayed(100.milliseconds);
     }
