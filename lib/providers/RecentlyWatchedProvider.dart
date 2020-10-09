@@ -41,7 +41,6 @@ class RecentlyWatchedProvider extends ChangeNotifier {
     KitsuModel kitsuModel,
     EpisodeModel episodeModel,
   }) {
-    var box = Hive.box(BOX_NAME);
     RecentlyWatchedModel lastWatchedModel = RecentlyWatchedModel(
       twistModel,
       kitsuModel,
@@ -66,10 +65,7 @@ class RecentlyWatchedProvider extends ChangeNotifier {
     } else {
       recentlyWatchedAnimes.add(lastWatchedModel);
     }
-
-    // Write to the box and notifyListeners that data has been updated
-    box.put(KEY_NAME, recentlyWatchedAnimes);
-    notifyListeners();
+    writeToBox();
   }
 
   /// Checks if [recentlyWatchedAnimes] contains [lastWatchedModel] and returns its
@@ -83,6 +79,19 @@ class RecentlyWatchedProvider extends ChangeNotifier {
       }
     }
     return -1;
+  }
+
+  void writeToBox() {
+    var box = Hive.box(BOX_NAME);
+
+    // Write to the box and notifyListeners that data has been updated
+    box.put(KEY_NAME, recentlyWatchedAnimes);
+    notifyListeners();
+  }
+
+  void clearData() {
+    recentlyWatchedAnimes.clear();
+    writeToBox();
   }
 
   bool hasData() {
