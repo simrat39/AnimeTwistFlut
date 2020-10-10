@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'dart:async';
 
+import 'package:AnimeTwistFlut/main.dart';
 import 'package:AnimeTwistFlut/models/TwistModel.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:AnimeTwistFlut/pages/homepage/to_watch_row/ToWatchRow.dart';
@@ -113,6 +114,7 @@ class _HomePageState extends State<HomePage> {
 
   Future initData(BuildContext context) async {
     TwistApiService twistApiService = Get.put(TwistApiService());
+    await context.read(accentProvider).initData();
     await twistApiService.setTwistModels();
     await context.read(recentlyWatchedProvider).initData();
     await context.read(toWatchProvider).initData();

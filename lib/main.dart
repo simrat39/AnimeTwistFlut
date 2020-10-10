@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:AnimeTwistFlut/providers/AccentColorProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 
@@ -21,47 +22,55 @@ void main() {
   runApp(ProviderScope(child: RootWindow()));
 }
 
+final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
+  return AccentColorProvider();
+});
+
 class RootWindow extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     Color bgColor = Color(0xff121212);
     Color cardColor = Color(0xff11D1D1D);
-    Color accentColor = Colors.blueAccent;
 
-    return MaterialApp(
-      home: HomePage(),
-      darkTheme: ThemeData.dark().copyWith(
-        cardColor: cardColor,
-        scaffoldBackgroundColor: bgColor,
-        dialogBackgroundColor: bgColor,
-        accentColor: accentColor,
-        appBarTheme: AppBarTheme(
-          color: bgColor,
-          elevation: 0.0,
-        ),
-        cardTheme: CardTheme(
-          margin: EdgeInsets.zero,
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: ButtonStyleButton.allOrNull<Color>(
-              accentColor,
+    return Consumer(
+      builder: (context, watch, child) {
+        var accentColor = watch(accentProvider).color;
+        return MaterialApp(
+          home: HomePage(),
+          darkTheme: ThemeData.dark().copyWith(
+            cardColor: cardColor,
+            scaffoldBackgroundColor: bgColor,
+            dialogBackgroundColor: bgColor,
+            accentColor: accentColor,
+            appBarTheme: AppBarTheme(
+              color: bgColor,
+              elevation: 0.0,
             ),
-            overlayColor: ButtonStyleButton.allOrNull<Color>(
-              accentColor.withOpacity(0.2),
+            cardTheme: CardTheme(
+              margin: EdgeInsets.zero,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: ButtonStyle(
+                foregroundColor: ButtonStyleButton.allOrNull<Color>(
+                  accentColor,
+                ),
+                overlayColor: ButtonStyleButton.allOrNull<Color>(
+                  accentColor.withOpacity(0.2),
+                ),
+              ),
+            ),
+            bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: bgColor,
             ),
           ),
-        ),
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: bgColor,
-        ),
-      ),
-      themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.dark,
+        );
+      },
     );
   }
 }

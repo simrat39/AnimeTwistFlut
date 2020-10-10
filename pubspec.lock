@@ -154,7 +154,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.4.1"
+    version: "3.5.0"
   collection:
     dependency: transitive
     description:
@@ -283,7 +283,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.9.0"
+    version: "8.10.0"
   freezed_annotation:
     dependency: transitive
     description:
@@ -304,49 +304,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.12.1"
-  get_core:
-    dependency: transitive
-    description:
-      name: get_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.12.0"
-  get_instance:
-    dependency: transitive
-    description:
-      name: get_instance
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.12.0"
-  get_navigation:
-    dependency: transitive
-    description:
-      name: get_navigation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.12.0"
-  get_rx:
-    dependency: transitive
-    description:
-      name: get_rx
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.12.0"
-  get_state_manager:
-    dependency: transitive
-    description:
-      name: get_state_manager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.12.0"
-  get_utils:
-    dependency: transitive
-    description:
-      name: get_utils
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.12.0"
+    version: "3.13.2"
   glob:
     dependency: transitive
     description:
@@ -725,6 +683,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.2"
+  simple_color_picker:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "9449f4d4b92d20b27f72bcacf1974135069e9524"
+      url: "https://github.com/simrat39/simple_color_picker"
+    source: git
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
