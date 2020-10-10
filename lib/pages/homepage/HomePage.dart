@@ -20,7 +20,6 @@ import '../../providers/RecentlyWatchedProvider.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import '../chat_page/ChatPage.dart';
 import '../search_page/SearchPage.dart';
-import 'AboutIcon.dart';
 import 'recently_watched_slider/RecentlyWatchedSlider.dart';
 import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';

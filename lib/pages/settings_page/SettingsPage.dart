@@ -1,3 +1,4 @@
+import 'package:AnimeTwistFlut/pages/settings_page/AboutAppSetting.dart';
 import 'package:AnimeTwistFlut/pages/settings_page/AccentPickerSetting.dart';
 import 'package:AnimeTwistFlut/pages/settings_page/ResetRecentlyWatchedSetting.dart';
 import 'package:AnimeTwistFlut/pages/settings_page/ResetToWatchSetting.dart';
@@ -44,6 +45,8 @@ class SettingsPage extends StatelessWidget {
           ResetToWatchSetting(),
           SettingsCategory(title: "Themeing"),
           AccentPickerSetting(),
+          SettingsCategory(title: "Info"),
+          AboutAppSetting(),
         ],
       ),
     );
