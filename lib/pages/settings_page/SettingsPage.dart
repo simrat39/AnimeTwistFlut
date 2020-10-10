@@ -1,6 +1,7 @@
 import 'package:AnimeTwistFlut/pages/settings_page/AccentPickerSetting.dart';
 import 'package:AnimeTwistFlut/pages/settings_page/ResetRecentlyWatchedSetting.dart';
 import 'package:AnimeTwistFlut/pages/settings_page/ResetToWatchSetting.dart';
+import 'package:AnimeTwistFlut/pages/settings_page/SettingsCategory.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -35,9 +36,13 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 8.0),
+          SettingsCategory(title: "Data"),
           ResetRecentlyWatchedSetting(),
           ResetToWatchSetting(),
+          SettingsCategory(title: "Themeing"),
           AccentPickerSetting(),
         ],
       ),
