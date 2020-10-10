@@ -34,7 +34,6 @@ class ToWatchProvider extends ChangeNotifier {
     KitsuModel kitsuModel,
     EpisodeModel episodeModel,
   }) {
-    var box = Hive.box(BOX_NAME);
     RecentlyWatchedModel lastWatchedModel = RecentlyWatchedModel(
       twistModel,
       kitsuModel,
