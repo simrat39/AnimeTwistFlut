@@ -23,13 +23,13 @@ jobs:
       - run: flutter format --set-exit-if-changed .
       - run: flutter analyze .
       # - run: flutter test
-      - run: flutter build apk --dart-define=KEY='${{ secrets.KEY }}' --release
+      - run: flutter build apk --split-per-abi --dart-define=KEY='${{ secrets.KEY }}' --release
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
+          path: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -37,4 +37,4 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            build/app/outputs/apk/release/app-release.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
