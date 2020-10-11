@@ -39,7 +39,7 @@ class SettingsPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 8.0),
+          SizedBox(height: 4.0),
           SettingsCategory(title: "Data"),
           ResetRecentlyWatchedSetting(),
           ResetToWatchSetting(),
