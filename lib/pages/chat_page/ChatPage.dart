@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:AnimeTwistFlut/pages/homepage/AppbarText.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -65,28 +66,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     });
     return Scaffold(
       appBar: AppBar(
-        title: RichText(
-          text: TextSpan(
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: "chat.",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Theme.of(context).textTheme.headline6.color,
-                ),
-              ),
-              TextSpan(
-                text: "moe",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Theme.of(context).accentColor,
-                ),
-              ),
-            ],
-          ),
+        title: AppbarText(
+          custom: "chat",
         ),
         actions: [
           IconButton(

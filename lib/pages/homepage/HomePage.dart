@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:AnimeTwistFlut/main.dart';
 import 'package:AnimeTwistFlut/models/TwistModel.dart';
 import 'package:AnimeTwistFlut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:AnimeTwistFlut/pages/homepage/AppbarText.dart';
 import 'package:AnimeTwistFlut/pages/homepage/to_watch_row/ToWatchRow.dart';
 import 'package:AnimeTwistFlut/pages/settings_page/SettingsPage.dart';
 import 'package:AnimeTwistFlut/providers/ToWatchProvider.dart';
@@ -123,29 +124,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: RichText(
-          text: TextSpan(
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: "twist.",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Theme.of(context).textTheme.headline6.color,
-                ),
-              ),
-              TextSpan(
-                text: "moe",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Theme.of(context).accentColor,
-                ),
-              ),
-            ],
-          ),
-        ),
+        title: AppbarText(),
         actions: [
           IconButton(
             icon: Icon(
