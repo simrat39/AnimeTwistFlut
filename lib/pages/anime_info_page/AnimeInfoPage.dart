@@ -100,8 +100,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     Get.put<KitsuModel>(kitsuModel);
 
     await precacheImage(
-        NetworkImage(kitsuModel?.coverImage ??
-            (kitsuModel?.posterImage ?? DEFAULT_IMAGE_URL)),
+        NetworkImage(kitsuModel?.posterImage ??
+            (kitsuModel?.coverImage ?? DEFAULT_IMAGE_URL)),
         context);
 
     _episodesWatchedProvider = ChangeNotifierProvider<EpisodesWatchedProvider>(
