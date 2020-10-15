@@ -15,6 +15,7 @@ class _ResetRecentlyWatchedSettingState
   void showConfirmationSnackbar() {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text("Recently watched animes cleared!"),
+      behavior: SnackBarBehavior.floating,
     ));
   }
 

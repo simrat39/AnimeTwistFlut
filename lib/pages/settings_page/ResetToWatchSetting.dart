@@ -13,6 +13,7 @@ class _ResetToWatchSettingState extends State<ResetToWatchSetting> {
   void showConfirmationSnackbar() {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text("To watch list cleared!"),
+      behavior: SnackBarBehavior.floating,
     ));
   }
 
