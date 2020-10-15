@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
 
     try {
       String recievedUrl = (url ?? await getInitialLink()) ?? "";
-      RegExp regex = RegExp(r'https://twist.moe/a/(.*).*');
+      RegExp regex = RegExp(r'https://twist.moe/a/(.*)/+.*');
       Iterable<Match> matches = regex.allMatches(recievedUrl);
       String slug = matches.length > 0 ? matches.elementAt(0).group(1) : "";
 
