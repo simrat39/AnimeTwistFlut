@@ -31,9 +31,6 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
     _controller = PageController();
     _controller.addListener(() {
       double offset = _controller.page - _controller.page.floor();
-      if (offset > 0.5) {
-        offset = 1 - offset;
-      }
       context.read(offsetProvider).state = offset;
     });
     super.initState();
@@ -182,6 +179,8 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
 
                       return RecentlyWatchedCard(
                         lastWatchedModel: lastWatchedAnimes[index],
+                        pageNum: index,
+                        pageController: _controller,
                       );
                     },
                     onPageChanged: (index) {

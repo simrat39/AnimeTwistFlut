@@ -17,9 +17,13 @@ import 'RecentlyWatchedSlider.dart';
 
 class RecentlyWatchedCard extends StatefulWidget {
   final RecentlyWatchedModel lastWatchedModel;
+  final int pageNum;
+  final PageController pageController;
 
   const RecentlyWatchedCard({
     @required this.lastWatchedModel,
+    @required this.pageNum,
+    @required this.pageController,
   });
 
   @override
@@ -32,6 +36,14 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
   @override
   void initState() {
     super.initState();
+  }
+
+  bool shouldOffset() {
+    // Since we can't access pageController.page before min/maxScrollExtent /
+    // pixels is null, return false if thats the case and prevent nasty
+    // exceptions.
+    if (widget.pageController.position.minScrollExtent == null) return false;
+    return widget.pageController.page.floor() == widget.pageNum;
   }
 
   @override
@@ -49,7 +61,9 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
                       widget.lastWatchedModel.kitsuModel?.posterImage ??
                       DEFAULT_IMAGE_URL,
                   fit: BoxFit.cover,
-                  alignment: Alignment(-prov.state.abs(), 0),
+                  alignment: shouldOffset()
+                      ? Alignment(-prov.state.abs() * 1.25, 0)
+                      : Alignment(0, 0),
                 );
               },
             ),
