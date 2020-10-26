@@ -38,12 +38,13 @@ class _ExploreRowState extends State<ExploreRow> {
       int rand = r.nextInt(data.length);
       KitsuModel kitsuModel =
           await kitsuApiService.getKitsuModel(data[rand].kitsuId);
-      _randomCards.add(
-        ExploreRowItem(
-          twistModel: data[rand],
-          kitsuModel: kitsuModel,
-        ),
-      );
+      if (kitsuModel != null)
+        _randomCards.add(
+          ExploreRowItem(
+            twistModel: data[rand],
+            kitsuModel: kitsuModel,
+          ),
+        );
       precacheImage(
           NetworkImage(kitsuModel.posterImage ?? DEFAULT_IMAGE_URL), context,
           size: Size(480, 640));
