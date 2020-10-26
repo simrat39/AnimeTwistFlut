@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -33,7 +35,9 @@ class AnimeCacheService {
   bool shouldUpdateCache(
       {@required String cachedAnimeData, @required DateTime dateTime}) {
     DateTime now = DateTime.now();
-    return (cachedAnimeData == null ||
+    bool hasAnime = (jsonDecode(cachedAnimeData) as List<dynamic>).length > 0;
+    return (!hasAnime ||
+        cachedAnimeData == null ||
         cachedAnimeData.isEmpty ||
         dateTime == null ||
         now.difference(dateTime).abs() > 7.days);
