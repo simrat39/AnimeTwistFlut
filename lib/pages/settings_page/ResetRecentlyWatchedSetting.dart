@@ -13,7 +13,7 @@ class ResetRecentlyWatchedSetting extends StatefulWidget {
 class _ResetRecentlyWatchedSettingState
     extends State<ResetRecentlyWatchedSetting> {
   void showConfirmationSnackbar() {
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Recently watched animes cleared!"),
       behavior: SnackBarBehavior.floating,
     ));
