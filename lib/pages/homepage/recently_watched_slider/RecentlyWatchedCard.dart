@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'dart:ui';
 
-import 'package:AnimeTwistFlut/constants.dart';
-import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
+import 'package:anime_twist_flut/constants.dart';
+import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

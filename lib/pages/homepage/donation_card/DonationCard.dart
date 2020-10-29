@@ -1,12 +1,12 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/pages/homepage/donation_card/GenericDonationSheet.dart';
+import 'package:anime_twist_flut/pages/homepage/donation_card/GenericDonationSheet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:get/get.dart';
 
 // Project imports:
-import 'package:AnimeTwistFlut/services/twist_service/TwistApiService.dart';
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import '../../../utils/homepage/DonationUtils.dart';
 
 class DonationCard extends StatefulWidget {

@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/providers/AccentColorProvider.dart';
+import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 

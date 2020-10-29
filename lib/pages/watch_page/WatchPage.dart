@@ -2,9 +2,9 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
-import 'package:AnimeTwistFlut/pages/watch_page/DoubleTapLayer.dart';
-import 'package:AnimeTwistFlut/utils/GetUtils.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
+import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

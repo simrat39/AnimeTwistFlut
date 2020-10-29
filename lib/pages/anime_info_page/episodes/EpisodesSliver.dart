@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:AnimeTwistFlut/models/EpisodeModel.dart';
-import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodeCard.dart';
+import 'package:anime_twist_flut/models/EpisodeModel.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/episodes/EpisodeCard.dart';
 
 class EpisodesSliver extends StatelessWidget {
   final Key key;

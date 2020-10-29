@@ -1,6 +1,6 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/constants.dart';
-import 'package:AnimeTwistFlut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:anime_twist_flut/constants.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:

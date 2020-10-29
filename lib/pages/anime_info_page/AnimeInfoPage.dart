@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'dart:ui';
 
-import 'package:AnimeTwistFlut/pages/anime_info_page/DescriptionWidget.dart';
-import 'package:AnimeTwistFlut/pages/anime_info_page/WatchTrailerButton.dart';
-import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,14 +15,14 @@ import 'package:supercharged/supercharged.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:AnimeTwistFlut/pages/anime_info_page/episodes/EpisodesSliver.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/episodes/EpisodesSliver.dart';
 import '../../models/EpisodeModel.dart';
 import '../../models/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../services/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
-import 'package:AnimeTwistFlut/constants.dart';
+import 'package:anime_twist_flut/constants.dart';
 
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;

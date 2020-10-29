@@ -1,7 +1,7 @@
 // Package imports:
-import 'package:AnimeTwistFlut/models/EpisodeModel.dart';
-import 'package:AnimeTwistFlut/models/KitsuModel.dart';
-import 'package:AnimeTwistFlut/models/TwistModel.dart';
+import 'package:anime_twist_flut/models/EpisodeModel.dart';
+import 'package:anime_twist_flut/models/KitsuModel.dart';
+import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:hive/hive.dart';
 
 part 'RecentlyWatchedModel.g.dart';

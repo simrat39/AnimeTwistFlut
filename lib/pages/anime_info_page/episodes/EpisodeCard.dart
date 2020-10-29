@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

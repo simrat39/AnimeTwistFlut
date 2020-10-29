@@ -1,4 +1,4 @@
-import 'package:AnimeTwistFlut/main.dart';
+import 'package:anime_twist_flut/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:simple_color_picker/simple_color_picker.dart';

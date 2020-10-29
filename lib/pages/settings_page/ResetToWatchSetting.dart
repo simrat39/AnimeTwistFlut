@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AnimeTwistFlut/pages/homepage/HomePage.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:flutter_riverpod/all.dart';
 
 class ResetToWatchSetting extends StatefulWidget {

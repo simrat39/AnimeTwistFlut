@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:AnimeTwistFlut/pages/homepage/AppbarText.dart';
+import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

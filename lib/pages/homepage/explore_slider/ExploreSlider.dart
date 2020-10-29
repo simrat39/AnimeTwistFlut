@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:AnimeTwistFlut/constants.dart';
+import 'package:anime_twist_flut/constants.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:

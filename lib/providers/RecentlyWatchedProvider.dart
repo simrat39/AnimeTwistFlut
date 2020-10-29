@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:AnimeTwistFlut/models/RecentlyWatchedModel.dart';
+import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
