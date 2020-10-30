@@ -34,8 +34,11 @@ class AnimeCacheService {
 
   bool shouldUpdateCache(
       {@required String cachedAnimeData, @required DateTime dateTime}) {
+    if (cachedAnimeData == null) return true;
     DateTime now = DateTime.now();
-    bool hasAnime = (jsonDecode(cachedAnimeData) as List<dynamic>).length > 0;
+    bool hasAnime =
+        (jsonDecode(cachedAnimeData ?? "{[]}") as List<dynamic>).length > 0;
+    print(hasAnime);
     return (!hasAnime ||
         cachedAnimeData == null ||
         cachedAnimeData.isEmpty ||
