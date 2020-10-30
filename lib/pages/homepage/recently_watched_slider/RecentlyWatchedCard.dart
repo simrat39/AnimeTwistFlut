@@ -39,10 +39,8 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
   }
 
   bool shouldOffset() {
-    // Since we can't access pageController.page before min/maxScrollExtent /
-    // pixels is null, return false if thats the case and prevent nasty
-    // exceptions.
-    if (widget.pageController.position.minScrollExtent == null) return false;
+    // Dont offset if min/max scroll extent havent been laid out yet
+    if (!widget.pageController.position.hasContentDimensions) return false;
     return widget.pageController.page.floor() == widget.pageNum;
   }
 
