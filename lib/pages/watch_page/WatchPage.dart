@@ -90,36 +90,38 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
           'https://twist.moe/a/${widget.twistModel.slug}/${widget.episodeModel.number}'
     };
 
-    String sourceSuffix =
-        CryptoUtils.decryptAESCryptoJS(widget.episodeModel.source, key);
+    if (key.isNotEmpty) {
+      String sourceSuffix =
+          CryptoUtils.decryptAESCryptoJS(widget.episodeModel.source, key);
 
-    String vidUrl;
-    if (sourceSuffix.startsWith('https')) {
-      vidUrl = Uri.parse(sourceSuffix).toString();
-    } else {
-      vidUrl =
-          Uri.parse("https://twistcdn.bunny.sh/" + sourceSuffix).toString();
-    }
+      String vidUrl;
+      if (sourceSuffix.startsWith('https')) {
+        vidUrl = Uri.parse(sourceSuffix).toString();
+      } else {
+        vidUrl =
+            Uri.parse("https://twistcdn.bunny.sh/" + sourceSuffix).toString();
+      }
 
-    _controller = VideoPlayerController.network(vidUrl, headers: headers)
-      ..initialize().then((_) {
-        setState(() {
-          play();
-          _duration = TimeUtils.secondsToHumanReadable(
-              _controller.value.duration.inSeconds);
+      _controller = VideoPlayerController.network(vidUrl, headers: headers)
+        ..initialize().then((_) {
+          setState(() {
+            play();
+            _duration = TimeUtils.secondsToHumanReadable(
+                _controller.value.duration.inSeconds);
+          });
+          toggleUI();
         });
-        toggleUI();
+
+      _controller.addListener(() {
+        setState(() {
+          currentPosition = _controller.value.position.inSeconds.toDouble();
+          currentPositionStr = TimeUtils.secondsToHumanReadable(
+              _controller.value.position.inSeconds);
+        });
       });
 
-    _controller.addListener(() {
-      setState(() {
-        currentPosition = _controller.value.position.inSeconds.toDouble();
-        currentPositionStr = TimeUtils.secondsToHumanReadable(
-            _controller.value.position.inSeconds);
-      });
-    });
-
-    _init = init();
+      _init = init();
+    }
     super.initState();
   }
 
@@ -235,6 +237,27 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         MediaQuery.of(context).orientation == Orientation.portrait
             ? MediaQuery.of(context).size.height * 0.05
             : MediaQuery.of(context).size.height * 0.1;
+
+    if (key.isEmpty)
+      return Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    "A decryption key was not provided while building. Episode can't be played",
+                    textAlign: TextAlign.center),
+                SizedBox(height: 10),
+                RaisedButton(
+                    child: Text("Go back"),
+                    onPressed: () => Navigator.of(context).pop()),
+              ],
+            ),
+          ),
+        ),
+      );
 
     return GestureDetector(
       onTap: () {
