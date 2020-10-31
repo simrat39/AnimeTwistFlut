@@ -649,7 +649,7 @@ packages:
     source: hosted
     version: "1.0.4"
   shared_preferences_web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences_web
       url: "https://pub.dartlang.org"
