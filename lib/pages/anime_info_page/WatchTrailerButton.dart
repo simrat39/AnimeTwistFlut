@@ -23,7 +23,7 @@ class WatchTrailerButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(
         left: 16.0,
-        right: 16.0,
+        right: 8.0,
         top: 25.0,
         bottom: 20.0,
       ),

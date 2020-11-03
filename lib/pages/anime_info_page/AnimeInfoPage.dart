@@ -24,6 +24,8 @@ import '../../services/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/constants.dart';
 
+import 'FavouriteButton.dart';
+
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;
   final KitsuModel kitsuModel;
@@ -301,8 +303,15 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                     SliverList(
                       delegate: SliverChildListDelegate(
                         [
-                          WatchTrailerButton(
-                            kitsuModel: kitsuModel,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: WatchTrailerButton(
+                                  kitsuModel: kitsuModel,
+                                ),
+                              ),
+                              FavouriteButton(twistModel: widget.twistModel),
+                            ],
                           ),
                           DescriptionWidget(
                             twistModel: widget.twistModel,

@@ -1,0 +1,55 @@
+import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
+
+class FavouriteButton extends StatelessWidget {
+  const FavouriteButton({Key key, @required this.twistModel}) : super(key: key);
+
+  final TwistModel twistModel;
+
+  @override
+  Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    var side =
+        orientation == Orientation.portrait ? height * 0.06 : width * 0.06;
+    return Consumer(
+      builder: (context, watch, child) {
+        var prov = watch(favouriteAnimeProvider);
+        bool isFav = prov.isSlugInFavourites(twistModel.slug);
+        Color accentColor = Theme.of(context).accentColor;
+
+        return Container(
+          margin: EdgeInsets.only(
+            right: 16.0,
+            top: 25.0,
+            bottom: 20.0,
+          ),
+          height: side,
+          width: side,
+          decoration: BoxDecoration(
+            color: accentColor,
+            borderRadius: BorderRadius.circular(
+              8.0,
+            ),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => prov.toggleFromFavs(twistModel.slug),
+              child: Icon(
+                isFav ? Icons.favorite : Icons.favorite_outline,
+                color: accentColor.computeLuminance() < 0.5
+                    ? Colors.white
+                    : Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

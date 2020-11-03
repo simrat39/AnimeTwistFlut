@@ -35,7 +35,6 @@ class RecentlyWatchedProvider extends ChangeNotifier {
     }
   }
 
-  // TODO: Cleanup on 12 Sep 20
   void addToLastWatched({
     TwistModel twistModel,
     KitsuModel kitsuModel,

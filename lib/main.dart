@@ -1,4 +1,10 @@
 // Flutter imports:
+import 'package:anime_twist_flut/animations/Transitions.dart';
+import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
+import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
+import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
+import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
+import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -26,7 +32,13 @@ final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
   return AccentColorProvider();
 });
 
+final indexProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
 class RootWindow extends StatelessWidget {
+  final List<String> _windowTitles = ["twist", "favourites"];
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -37,7 +49,72 @@ class RootWindow extends StatelessWidget {
       builder: (context, watch, child) {
         var accentColor = watch(accentProvider).color;
         return MaterialApp(
-          home: HomePage(),
+          home: Consumer(
+            builder: (context, watch, child) {
+              var prov = watch(indexProvider);
+              return Scaffold(
+                appBar: AppBar(
+                  title: AppbarText(custom: _windowTitles[prov.state]),
+                  actions: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                      ),
+                      onPressed: () {
+                        Transitions.slideTransition(
+                          context: context,
+                          pageBuilder: () => SettingsPage(),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.chat_bubble,
+                      ),
+                      onPressed: () {
+                        Transitions.slideTransition(
+                          context: context,
+                          pageBuilder: () => ChatPage(),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.search,
+                      ),
+                      onPressed: () {
+                        Transitions.slideTransition(
+                          context: context,
+                          pageBuilder: () => SearchPage(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                bottomNavigationBar: BottomNavigationBar(
+                  currentIndex: prov.state,
+                  onTap: (index) => prov.state = index,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: "Home",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.favorite_outline),
+                      label: "Favourites",
+                    ),
+                  ],
+                ),
+                body: IndexedStack(
+                  index: prov.state,
+                  children: [
+                    HomePage(),
+                    FavouritesPage(),
+                  ],
+                ),
+              );
+            },
+          ),
           darkTheme: ThemeData.dark().copyWith(
             cardColor: cardColor,
             scaffoldBackgroundColor: bgColor,

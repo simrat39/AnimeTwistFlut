@@ -4,9 +4,8 @@ import 'dart:async';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
-import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/homepage/to_watch_row/ToWatchRow.dart';
-import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
+import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,8 +18,6 @@ import 'package:supercharged/supercharged.dart';
 import '../../animations/Transitions.dart';
 import '../../providers/RecentlyWatchedProvider.dart';
 import '../../services/twist_service/TwistApiService.dart';
-import '../chat_page/ChatPage.dart';
-import '../search_page/SearchPage.dart';
 import 'recently_watched_slider/RecentlyWatchedSlider.dart';
 import 'MOTDCard.dart';
 import 'ViewAllAnimeCard.dart';
@@ -44,6 +41,9 @@ final recentlyWatchedProvider =
 final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
   return ToWatchProvider();
 });
+
+final favouriteAnimeProvider = ChangeNotifierProvider<FavouriteAnimeProvider>(
+    (ref) => FavouriteAnimeProvider());
 
 class _HomePageState extends State<HomePage> {
   Future _initData;
@@ -118,112 +118,71 @@ class _HomePageState extends State<HomePage> {
     await twistApiService.setTwistModels();
     await context.read(recentlyWatchedProvider).initData();
     await context.read(toWatchProvider).initData();
+    await context.read(favouriteAnimeProvider).init();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: AppbarText(),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-            ),
-            onPressed: () {
-              Transitions.slideTransition(
-                context: context,
-                pageBuilder: () => SettingsPage(),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.chat_bubble,
-            ),
-            onPressed: () {
-              Transitions.slideTransition(
-                context: context,
-                pageBuilder: () => ChatPage(),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.search,
-            ),
-            onPressed: () {
-              Transitions.slideTransition(
-                context: context,
-                pageBuilder: () => SearchPage(),
-              );
-            },
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: FutureBuilder(
-          future: _initData,
-          builder: (context, snapshot) {
-            if (!(snapshot.connectionState == ConnectionState.done))
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(
-                      height: 24.0,
-                    ),
-                    Text(
-                      "Loading Anime!",
-                      style: TextStyle(
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+    return FutureBuilder(
+      future: _initData,
+      builder: (context, snapshot) {
+        if (!(snapshot.connectionState == ConnectionState.done))
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 24.0,
                 ),
-              );
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  RecentlyWatchedSlider(),
-                  SizedBox(
-                    height: 15.0,
+                Text(
+                  "Loading Anime!",
+                  style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  ToWatchRow(),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 15.0,
-                    ),
-                    child: ExploreRow(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 15.0,
-                      right: 15.0,
-                      bottom: 8.0,
-                    ),
-                    child: DonationCard(),
-                  ),
-                  // View all anime card
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 15.0,
-                      right: 15.0,
-                      bottom: 8.0,
-                    ),
-                    child: ViewAllAnimeCard(),
-                  ),
-                  // Message Of The Day Card
-                  MOTDCard(),
-                ],
+                ),
+              ],
+            ),
+          );
+        return SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              RecentlyWatchedSlider(),
+              SizedBox(
+                height: 15.0,
               ),
-            );
-          },
-        ),
-      ),
+              ToWatchRow(),
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 15.0,
+                ),
+                child: ExploreRow(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 15.0,
+                  right: 15.0,
+                  bottom: 8.0,
+                ),
+                child: DonationCard(),
+              ),
+              // View all anime card
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 15.0,
+                  right: 15.0,
+                  bottom: 8.0,
+                ),
+                child: ViewAllAnimeCard(),
+              ),
+              // Message Of The Day Card
+              MOTDCard(),
+            ],
+          ),
+        );
+      },
     );
   }
 }
