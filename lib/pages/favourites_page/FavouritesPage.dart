@@ -29,7 +29,8 @@ class _FavouritesPageState extends State<FavouritesPage> {
     return Consumer(
       builder: (context, watch, child) {
         var prov = watch(favouriteAnimeProvider);
-        List<TwistModel> models = prov.getTwistModelsForFavs();
+        List<TwistModel> models =
+            prov.getTwistModelsForFavs().reversed.toList();
 
         if (models.isEmpty) {
           return FadeIn(
@@ -43,6 +44,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
         }
         return ListView.builder(
           itemCount: models.length,
+          physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             var model = models[index];
             _getKitsuModel = KitsuApiService().getKitsuModel(model.kitsuId);
