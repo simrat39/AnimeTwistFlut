@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccentColorProvider with ChangeNotifier {
-  static const DEFAULT_ACCENT = Colors.blue;
+  static const DEFAULT_ACCENT = Color(0xff7a92ea);
   static const String PREF_NAME = "accent";
 
   Color _color = DEFAULT_ACCENT;
