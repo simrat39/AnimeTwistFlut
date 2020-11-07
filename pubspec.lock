@@ -298,13 +298,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
-  get:
+  get_it:
     dependency: "direct main"
     description:
-      name: get
+      name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.15.0"
+    version: "5.0.1"
   glob:
     dependency: transitive
     description:
@@ -931,5 +931,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.0 <=2.11.0-242.0.dev"
+  dart: ">=2.10.0-110 <=2.11.0-242.0.dev"
   flutter: ">=1.22.0 <2.0.0"

@@ -3,7 +3,7 @@ import 'package:anime_twist_flut/pages/homepage/donation_card/GenericDonationShe
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:get/get.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 
 // Project imports:
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';

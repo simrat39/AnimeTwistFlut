@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:get/get.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

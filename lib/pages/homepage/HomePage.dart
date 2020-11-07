@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:get/get.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:

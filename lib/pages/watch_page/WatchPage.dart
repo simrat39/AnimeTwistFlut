@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_android_pip/flutter_android_pip.dart';
-import 'package:get/get.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_player_header/video_player_header.dart';
@@ -35,7 +34,7 @@ class WatchPage extends StatefulWidget {
   final ChangeNotifierProvider<EpisodesWatchedProvider> episodesWatchedProvider;
 
   final TwistModel twistModel = Get.find();
-  final KitsuModel kitsuModel = getAllowNull<KitsuModel>();
+  final KitsuModel kitsuModel = Get.find<KitsuModel>();
 
   WatchPage({
     @required this.episodeModel,

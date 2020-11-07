@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:get/get.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
@@ -22,7 +22,7 @@ class EpisodeCard extends StatelessWidget {
   final EpisodeModel episodeModel;
 
   final TwistModel twistModel = Get.find();
-  final KitsuModel kitsuModel = getAllowNull<KitsuModel>();
+  final KitsuModel kitsuModel = Get.find<KitsuModel>();
   final ChangeNotifierProvider<EpisodesWatchedProvider>
       episodesWatchedProvider = Get.find();
 

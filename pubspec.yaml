@@ -39,7 +39,7 @@ dependencies:
   flutter_riverpod: ^0.12.1
   font_awesome_flutter: ^8.10.0
   fuzzy: ^0.2.3
-  get: ^3.15.0
+  get_it: ^5.0.1
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   http: ^0.12.2
