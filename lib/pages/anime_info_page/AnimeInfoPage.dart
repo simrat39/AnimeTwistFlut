@@ -117,6 +117,46 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     await context.read(_episodesWatchedProvider).getWatchedPref();
   }
 
+  // Scrolls to the latest watched episode if isFromRecentlyWatched is true and
+  // a last watched episode number is provided.
+  void scrollToLastWatched(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    if (hasScrolled) return;
+    if (widget.isFromRecentlyWatched && widget.lastWatchedEpisodeNum != null) {
+      // Height of the expanded app bar which contains the image and other info
+      var sliverAppBarHeight =
+          orientation == Orientation.portrait ? height * 0.4 : width * 0.28;
+      // Height of the widget which holds the description text
+      var descHeight = 150;
+      // Maximum distance our screen is able to scroll with the given contents
+      var maxScrollExtent = _scrollController.position.maxScrollExtent;
+      // Approximate height of each episode card. We use this to calculate how
+      // much we need to scroll by multiplying it by our last watched episode.
+      var episodeCardHeight =
+          (maxScrollExtent - (sliverAppBarHeight + descHeight)) /
+              episodes.length;
+
+      var scrollLength = sliverAppBarHeight +
+          descHeight +
+          (widget.lastWatchedEpisodeNum * episodeCardHeight);
+
+      // Don't overscroll if our calculated scroll length is greater than the
+      // maximum
+      if (scrollLength > maxScrollExtent) scrollLength = maxScrollExtent;
+
+      _scrollController
+          .animateTo(
+            scrollLength,
+            duration: 1.seconds,
+            curve: Curves.ease,
+          )
+          .whenComplete(() => hasScrolled = true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -135,6 +175,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
           future: _initData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                  (timeStamp) => scrollToLastWatched(context));
               return CupertinoScrollbar(
                 controller: _scrollController,
                 child: CustomScrollView(
