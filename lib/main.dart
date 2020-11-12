@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
@@ -105,7 +106,7 @@ class RootWindow extends StatelessWidget {
                     ),
                   ],
                 ),
-                body: IndexedStack(
+                body: FadeThroughIndexedStack(
                   index: prov.state,
                   children: [
                     HomePage(),
