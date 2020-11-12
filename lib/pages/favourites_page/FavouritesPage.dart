@@ -1,4 +1,4 @@
-import 'package:anime_twist_flut/animations/FadeInSlide.dart';
+import 'package:anime_twist_flut/animations/SlideInAnimation.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
@@ -33,7 +33,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
             prov.getTwistModelsForFavs().reversed.toList();
 
         if (models.isEmpty) {
-          return FadeIn(
+          return SlideInAnimation(
             child: Center(
               child: Icon(
                 FontAwesomeIcons.heartBroken,
