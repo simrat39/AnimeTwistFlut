@@ -187,6 +187,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                       expandedHeight: orientation == Orientation.portrait
                           ? height * 0.4
                           : width * 0.28,
+                      stretch: true,
                       actions: [
                         Center(
                           child: Container(
