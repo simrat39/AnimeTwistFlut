@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
@@ -147,10 +148,12 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       // maximum
       if (scrollLength > maxScrollExtent) scrollLength = maxScrollExtent;
 
+      int duration = max(1000, widget.lastWatchedEpisodeNum * 10);
+
       _scrollController
           .animateTo(
             scrollLength,
-            duration: 1.seconds,
+            duration: duration.milliseconds,
             curve: Curves.ease,
           )
           .whenComplete(() => hasScrolled = true);
