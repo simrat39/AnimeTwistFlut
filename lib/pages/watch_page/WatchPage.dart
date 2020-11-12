@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +25,7 @@ import '../../secrets.dart';
 import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
 import 'package:wakelock/wakelock.dart';
+import 'package:anime_twist_flut/main.dart';
 
 class WatchPage extends StatefulWidget {
   final EpisodeModel episodeModel;

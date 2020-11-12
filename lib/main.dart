@@ -7,6 +7,11 @@ import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
 import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
+import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
+import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
+import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -38,10 +43,42 @@ final indexProvider = StateProvider<int>((ref) {
   return 0;
 });
 
-class RootWindow extends StatelessWidget {
-  final List<String> _windowTitles = ["twist", "favourites"];
+final recentlyWatchedProvider =
+    ChangeNotifierProvider<RecentlyWatchedProvider>((ref) {
+  return RecentlyWatchedProvider();
+});
 
-  // This widget is the root of your application.
+final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
+  return ToWatchProvider();
+});
+
+final favouriteAnimeProvider = ChangeNotifierProvider<FavouriteAnimeProvider>(
+    (ref) => FavouriteAnimeProvider());
+
+class RootWindow extends StatefulWidget {
+  @override
+  _RootWindowState createState() => _RootWindowState();
+}
+
+class _RootWindowState extends State<RootWindow> {
+  final List<String> _windowTitles = ["twist", "favourites"];
+  Future _initData;
+
+  Future initData(BuildContext context) async {
+    TwistApiService twistApiService = Get.put(TwistApiService());
+    await context.read(accentProvider).initData();
+    await twistApiService.setTwistModels();
+    await context.read(recentlyWatchedProvider).initData();
+    await context.read(toWatchProvider).initData();
+    await context.read(favouriteAnimeProvider).init();
+  }
+
+  @override
+  void initState() {
+    _initData = initData(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Color bgColor = Color(0xff121212);
@@ -51,90 +88,116 @@ class RootWindow extends StatelessWidget {
       builder: (context, watch, child) {
         var accentColor = watch(accentProvider).color;
         return MaterialApp(
-          home: Consumer(
-            builder: (context, watch, child) {
-              var prov = watch(indexProvider);
-              return Scaffold(
-                appBar: AppBar(
-                  title: AppbarText(custom: _windowTitles[prov.state]),
-                  actions: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.settings,
-                      ),
-                      onPressed: () {
-                        Transitions.slideTransition(
-                          context: context,
-                          pageBuilder: () => SettingsPage(),
-                        );
-                      },
+          home: FutureBuilder(
+            future: _initData,
+            builder: (context, snapshot) {
+              if (!(snapshot.connectionState == ConnectionState.done))
+                return Scaffold(
+                  body: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(
+                          height: 24.0,
+                        ),
+                        Text(
+                          "Loading Anime!",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.chat_bubble,
-                      ),
-                      onPressed: () {
-                        Transitions.slideTransition(
-                          context: context,
-                          pageBuilder: () => ChatPage(),
-                        );
-                      },
+                  ),
+                );
+              return Consumer(
+                builder: (context, watch, child) {
+                  var prov = watch(indexProvider);
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: AppbarText(custom: _windowTitles[prov.state]),
+                      actions: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.settings,
+                          ),
+                          onPressed: () {
+                            Transitions.slideTransition(
+                              context: context,
+                              pageBuilder: () => SettingsPage(),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.chat_bubble,
+                          ),
+                          onPressed: () {
+                            Transitions.slideTransition(
+                              context: context,
+                              pageBuilder: () => ChatPage(),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.search,
+                          ),
+                          onPressed: () {
+                            Transitions.slideTransition(
+                              context: context,
+                              pageBuilder: () => SearchPage(),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.search,
-                      ),
-                      onPressed: () {
-                        Transitions.slideTransition(
-                          context: context,
-                          pageBuilder: () => SearchPage(),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                bottomNavigationBar: Container(
-                  color: Theme.of(context).cardColor,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 8),
-                    child: GNav(
-                        gap: 8,
-                        activeColor:
-                            Theme.of(context).accentColor.computeLuminance() >
+                    bottomNavigationBar: Container(
+                      color: Theme.of(context).cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 8),
+                        child: GNav(
+                            gap: 8,
+                            activeColor: Theme.of(context)
+                                        .accentColor
+                                        .computeLuminance() >
                                     0.5
                                 ? Colors.black
                                 : Colors.white,
-                        iconSize: 24,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                        duration: Duration(milliseconds: 500),
-                        tabBackgroundColor:
-                            Theme.of(context).accentColor.withOpacity(0.8),
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        tabs: [
-                          GButton(
-                            icon: Icons.home_outlined,
-                            text: 'Home',
-                          ),
-                          GButton(
-                            icon: Icons.favorite_outline,
-                            text: 'Favorites',
-                          ),
-                        ],
-                        selectedIndex: prov.state,
-                        onTabChange: (index) {
-                          prov.state = index;
-                        }),
-                  ),
-                ),
-                body: FadeThroughIndexedStack(
-                  index: prov.state,
-                  children: [
-                    HomePage(),
-                    FavouritesPage(),
-                  ],
-                ),
+                            iconSize: 24,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            duration: Duration(milliseconds: 500),
+                            tabBackgroundColor:
+                                Theme.of(context).accentColor.withOpacity(0.8),
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            tabs: [
+                              GButton(
+                                icon: Icons.home_outlined,
+                                text: 'Home',
+                              ),
+                              GButton(
+                                icon: Icons.favorite_outline,
+                                text: 'Favorites',
+                              ),
+                            ],
+                            selectedIndex: prov.state,
+                            onTabChange: (index) {
+                              prov.state = index;
+                            }),
+                      ),
+                    ),
+                    body: FadeThroughIndexedStack(
+                      index: prov.state,
+                      children: [
+                        HomePage(),
+                        FavouritesPage(),
+                      ],
+                    ),
+                  );
+                },
               );
             },
           ),

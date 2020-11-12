@@ -1,6 +1,6 @@
 // Flutter imports:
+import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
-import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:anime_twist_flut/pages/homepage/explore_slider/ExploreRowItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';

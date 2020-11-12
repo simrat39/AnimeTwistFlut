@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:anime_twist_flut/animations/Transitions.dart';
+import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/all_anime_page/AllAnimePage.dart';
-import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';

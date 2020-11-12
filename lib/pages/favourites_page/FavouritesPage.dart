@@ -1,9 +1,9 @@
 import 'package:anime_twist_flut/animations/SlideInAnimation.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
+import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
-import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:anime_twist_flut/services/KitsuApiService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';

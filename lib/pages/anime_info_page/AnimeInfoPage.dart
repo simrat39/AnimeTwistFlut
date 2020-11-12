@@ -2,9 +2,9 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
-import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

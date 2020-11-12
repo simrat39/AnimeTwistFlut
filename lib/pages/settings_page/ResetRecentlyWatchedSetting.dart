@@ -1,5 +1,5 @@
+import 'package:anime_twist_flut/main.dart';
 import 'package:flutter/material.dart';
-import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:flutter_riverpod/all.dart';
 
 class ResetRecentlyWatchedSetting extends StatefulWidget {
