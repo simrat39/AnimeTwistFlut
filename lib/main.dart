@@ -9,6 +9,7 @@ import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 // Project imports:
 import 'pages/homepage/HomePage.dart';
@@ -92,19 +93,40 @@ class RootWindow extends StatelessWidget {
                     ),
                   ],
                 ),
-                bottomNavigationBar: BottomNavigationBar(
-                  currentIndex: prov.state,
-                  onTap: (index) => prov.state = index,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: "Home",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite_outline),
-                      label: "Favourites",
-                    ),
-                  ],
+                bottomNavigationBar: Container(
+                  color: Theme.of(context).cardColor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 8),
+                    child: GNav(
+                        gap: 8,
+                        activeColor:
+                            Theme.of(context).accentColor.computeLuminance() >
+                                    0.5
+                                ? Colors.black
+                                : Colors.white,
+                        iconSize: 24,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                        duration: Duration(milliseconds: 500),
+                        tabBackgroundColor:
+                            Theme.of(context).accentColor.withOpacity(0.8),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        tabs: [
+                          GButton(
+                            icon: Icons.home_outlined,
+                            text: 'Home',
+                          ),
+                          GButton(
+                            icon: Icons.favorite_outline,
+                            text: 'Favorites',
+                          ),
+                        ],
+                        selectedIndex: prov.state,
+                        onTabChange: (index) {
+                          prov.state = index;
+                        }),
+                  ),
                 ),
                 body: FadeThroughIndexedStack(
                   index: prov.state,
