@@ -31,7 +31,12 @@ class _DonationCardState extends State<DonationCard> {
     return FutureBuilder(
       future: _dataInit,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done)
+        if (snapshot.connectionState == ConnectionState.done) {
+          int currentAmount, totalAmount;
+          if ((snapshot.data as List<int>).length > 0) {
+            currentAmount = snapshot.data[0];
+            totalAmount = snapshot.data[1];
+          }
           return Card(
             child: InkWell(
               borderRadius: BorderRadius.circular(8.0),
@@ -111,9 +116,9 @@ class _DonationCardState extends State<DonationCard> {
                             ),
                           ),
                           Text(
-                            snapshot.data[0].toString() +
+                            (currentAmount?.toString() ?? "?") +
                                 " / " +
-                                snapshot.data[1].toString(),
+                                (totalAmount?.toString() ?? "?"),
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontSize: 20.0,
@@ -128,7 +133,7 @@ class _DonationCardState extends State<DonationCard> {
                         bottom: 10.0,
                       ),
                       child: LinearProgressIndicator(
-                        value: snapshot.data[0] / snapshot.data[1],
+                        value: (currentAmount ?? 0.0) / (currentAmount ?? 1.0),
                         backgroundColor:
                             Theme.of(context).accentColor.withOpacity(
                                   0.5,
@@ -155,6 +160,7 @@ class _DonationCardState extends State<DonationCard> {
               ),
             ),
           );
+        }
         return Card(
           child: Center(
             child: Padding(

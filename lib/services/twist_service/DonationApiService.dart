@@ -22,8 +22,10 @@ class DonationApiService {
 
     Map<String, dynamic> jsonData = jsonDecode(response.body);
 
-    data.add(jsonData["received"].floor());
-    data.add(jsonData["target"].floor());
+    if (jsonData["received"] != null) {
+      data.add(jsonData["received"].floor());
+      data.add(jsonData["target"].floor());
+    }
     return data;
   }
 }
