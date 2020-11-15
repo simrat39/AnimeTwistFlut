@@ -49,8 +49,8 @@ dependencies:
   path_provider: ^1.6.22
   responsive_builder: ^0.3.0
   shared_preferences: ^0.5.12+2
-  simple_animations: ^2.2.3
   smooth_page_indicator: ^0.2.0
+  supercharged: ^1.11.1
   tuple: ^1.0.3
   uni_links: ^0.4.0
   url_launcher: ^5.7.8
@@ -71,7 +71,6 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
   # fonts:
   #   - family: ProductSans
   #     fonts:
