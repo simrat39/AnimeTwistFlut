@@ -39,6 +39,12 @@ class _SlideInAnimationState extends State<SlideInAnimation>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: axisAnimation,
