@@ -36,12 +36,11 @@ class SearchListTile extends StatelessWidget {
           !twistModel.ongoing
               ? Container()
               : Text(
-                  "Ongoing",
+                  "Ongoing".toUpperCase(),
                   style: TextStyle(
                     color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: "ProductSans",
-                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
                 ),
           Icon(

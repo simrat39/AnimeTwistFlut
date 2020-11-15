@@ -72,10 +72,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  fonts:
-    - family: ProductSans
-      fonts:
-        - asset: assets/fonts/google_sans/ProductSans-Regular.ttf
+  # fonts:
+  #   - family: ProductSans
+  #     fonts:
+  #       - asset: assets/fonts/google_sans/ProductSans-Regular.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
