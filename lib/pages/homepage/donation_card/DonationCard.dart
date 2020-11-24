@@ -133,7 +133,7 @@ class _DonationCardState extends State<DonationCard> {
                         bottom: 10.0,
                       ),
                       child: LinearProgressIndicator(
-                        value: (currentAmount ?? 0.0) / (currentAmount ?? 1.0),
+                        value: (currentAmount ?? 0.0) / (totalAmount ?? 1.0),
                         backgroundColor:
                             Theme.of(context).accentColor.withOpacity(
                                   0.5,
