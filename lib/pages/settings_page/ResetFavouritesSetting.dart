@@ -1,6 +1,5 @@
 import 'package:anime_twist_flut/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
 
 class ResetFavouritesSetting extends StatefulWidget {
   const ResetFavouritesSetting({Key key}) : super(key: key);
@@ -19,7 +18,7 @@ class _ResetFavouritesSettingState extends State<ResetFavouritesSetting> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = context.read(favouriteAnimeProvider);
+    var provider = favouriteAnimeProvider;
     return ListTile(
       title: Text("Reset Favourited animes"),
       subtitle: Text("Clear your favourite animes"),

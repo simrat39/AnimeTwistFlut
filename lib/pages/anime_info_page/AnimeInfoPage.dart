@@ -5,13 +5,14 @@ import 'dart:ui';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
+import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:change_notifier_listener/change_notifier_listener.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -53,12 +54,10 @@ class AnimeInfoPage extends StatefulWidget {
 class _AnimeInfoPageState extends State<AnimeInfoPage> {
   Future _initData;
   ScrollController _scrollController;
-  ChangeNotifierProvider<EpisodesWatchedProvider> _episodesWatchedProvider;
+  EpisodesWatchedProvider _episodesWatchedProvider;
   bool hasScrolled = false;
 
-  final offsetProvider = StateProvider<double>((ref) {
-    return 0.0;
-  });
+  final offsetProvider = ValueNotifier(0.0);
 
   @override
   void initState() {
@@ -67,7 +66,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _scrollController.addListener(() {
       double offset =
           _scrollController.offset / MediaQuery.of(context).size.height * 5;
-      context.read(offsetProvider).state = offset;
+      offsetProvider.value = offset;
     });
     Get.put<TwistModel>(widget.twistModel);
     super.initState();
@@ -77,7 +76,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   void dispose() {
     Get.delete<TwistModel>();
     Get.delete<KitsuModel>();
-    Get.delete<ChangeNotifierProvider<EpisodesWatchedProvider>>();
+    Get.delete<EpisodesWatchedProvider>();
     super.dispose();
   }
 
@@ -107,15 +106,12 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
             (kitsuModel?.coverImage ?? DEFAULT_IMAGE_URL)),
         context);
 
-    _episodesWatchedProvider = ChangeNotifierProvider<EpisodesWatchedProvider>(
-      (ref) {
-        return EpisodesWatchedProvider(slug: widget.twistModel.slug);
-      },
-    );
-    Get.put<ChangeNotifierProvider<EpisodesWatchedProvider>>(
-        _episodesWatchedProvider);
+    _episodesWatchedProvider =
+        EpisodesWatchedProvider(slug: widget.twistModel.slug);
 
-    await context.read(_episodesWatchedProvider).getWatchedPref();
+    Get.put<EpisodesWatchedProvider>(_episodesWatchedProvider);
+
+    await _episodesWatchedProvider.getWatchedPref();
   }
 
   // Scrolls to the latest watched episode if isFromRecentlyWatched is true and
@@ -235,16 +231,17 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                             fit: StackFit.expand,
                             children: [
                               Positioned.fill(
-                                child: Consumer(
-                                  builder: (context, watch, child) {
-                                    final provider = watch(offsetProvider);
+                                child: ChangeNotifierListener<
+                                    ValueNotifier<double>>(
+                                  changeNotifier: offsetProvider,
+                                  builder: (context, notifier) {
                                     return Image.network(
                                       kitsuModel?.posterImage ??
                                           kitsuModel?.coverImage ??
                                           DEFAULT_IMAGE_URL,
                                       fit: BoxFit.cover,
                                       alignment:
-                                          Alignment(0, -provider.state.abs()),
+                                          Alignment(0, -notifier.value.abs()),
                                     );
                                   },
                                 ),
@@ -288,10 +285,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                                 ),
                                               ),
                                             ),
-                                            Consumer(
-                                              builder: (context, watch, child) {
-                                                final provider =
-                                                    watch(toWatchProvider);
+                                            ChangeNotifierListener<
+                                                ToWatchProvider>(
+                                              changeNotifier: toWatchProvider,
+                                              builder: (context, notifier) {
                                                 return Container(
                                                   height: 35.0,
                                                   margin: EdgeInsets.only(
@@ -299,7 +296,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                                   ),
                                                   child: IconButton(
                                                     icon: Icon(
-                                                      provider.isAlreadyInToWatch(
+                                                      notifier.isAlreadyInToWatch(
                                                                   widget
                                                                       .twistModel) >=
                                                               0
@@ -309,7 +306,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                                               .plus,
                                                     ),
                                                     onPressed: () {
-                                                      provider
+                                                      notifier
                                                           .toggleFromToWatched(
                                                         episodeModel: null,
                                                         kitsuModel: kitsuModel,

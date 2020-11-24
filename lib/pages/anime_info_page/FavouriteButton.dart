@@ -1,7 +1,8 @@
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:change_notifier_listener/change_notifier_listener.dart';
 
 class FavouriteButton extends StatelessWidget {
   const FavouriteButton({Key key, @required this.twistModel}) : super(key: key);
@@ -31,15 +32,15 @@ class FavouriteButton extends StatelessWidget {
           8.0,
         ),
       ),
-      child: Consumer(
-        builder: (context, watch, child) {
-          var prov = watch(favouriteAnimeProvider);
-          bool isFav = prov.isSlugInFavourites(twistModel.slug);
+      child: ChangeNotifierListener<FavouriteAnimeProvider>(
+        changeNotifier: favouriteAnimeProvider,
+        builder: (context, notifier) {
+          bool isFav = notifier.isSlugInFavourites(twistModel.slug);
 
           return Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => prov.toggleFromFavs(twistModel.slug),
+              onTap: () => notifier.toggleFromFavs(twistModel.slug),
               child: Icon(
                 isFav ? Icons.favorite : Icons.favorite_outline,
                 color: accentColor.computeLuminance() < 0.5

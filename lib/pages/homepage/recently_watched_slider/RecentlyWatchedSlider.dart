@@ -3,8 +3,9 @@ import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/all_anime_page/AllAnimePage.dart';
+import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:change_notifier_listener/change_notifier_listener.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:anime_twist_flut/constants.dart';
 
@@ -18,9 +19,7 @@ class RecentlyWatchedSlider extends StatefulWidget {
   }
 }
 
-final offsetProvider = StateProvider<double>((ref) {
-  return 0.0;
-});
+final recentsOffsetProvider = ValueNotifier(0.0);
 
 class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
   PageController _controller;
@@ -31,7 +30,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
     _controller = PageController();
     _controller.addListener(() {
       double offset = _controller.page - _controller.page.floor();
-      context.read(offsetProvider).state = offset;
+      recentsOffsetProvider.value = offset;
     });
     super.initState();
   }
@@ -44,10 +43,10 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
 
     var containerHeight =
         orientation == Orientation.portrait ? height * 0.4 : width * 0.3;
-    return Consumer(
-      builder: (context, watch, child) {
-        final provider = watch(recentlyWatchedProvider);
-        if (!provider.hasData()) {
+    return ChangeNotifierListener<RecentlyWatchedProvider>(
+      changeNotifier: recentlyWatchedProvider,
+      builder: (context, notifier) {
+        if (!notifier.hasData()) {
           return Container(
             width: double.infinity,
             height: containerHeight,
@@ -175,7 +174,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                       // anime is shown first. Maybe do this in the service itself
                       // but fine here for now.
                       List<RecentlyWatchedModel> lastWatchedAnimes =
-                          provider.recentlyWatchedAnimes.reversed.toList();
+                          notifier.recentlyWatchedAnimes.reversed.toList();
 
                       return RecentlyWatchedCard(
                         lastWatchedModel: lastWatchedAnimes[index],
@@ -188,7 +187,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                         _currentPageNotifier.value = index;
                       });
                     },
-                    itemCount: provider.recentlyWatchedAnimes.length,
+                    itemCount: notifier.recentlyWatchedAnimes.length,
                   ),
                   Positioned(
                     bottom: orientation == Orientation.portrait
@@ -221,7 +220,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                     bottom: MediaQuery.of(context).size.height * 0.05,
                     child: AnimatedSmoothIndicator(
                       activeIndex: _currentPageNotifier.value,
-                      count: provider.recentlyWatchedAnimes.length,
+                      count: notifier.recentlyWatchedAnimes.length,
                       effect: WormEffect(
                         dotColor: Theme.of(context).hintColor,
                         activeDotColor: Colors.white,

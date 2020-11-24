@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:change_notifier_listener/change_notifier_listener.dart';
 
 // Project imports:
 import '../../../animations/Transitions.dart';
@@ -23,8 +23,7 @@ class EpisodeCard extends StatelessWidget {
 
   final TwistModel twistModel = Get.find();
   final KitsuModel kitsuModel = Get.find<KitsuModel>();
-  final ChangeNotifierProvider<EpisodesWatchedProvider>
-      episodesWatchedProvider = Get.find();
+  final EpisodesWatchedProvider episodesWatchedProvider = Get.find();
 
   EpisodeCard({
     @required this.episodes,
@@ -37,9 +36,9 @@ class EpisodeCard extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     Orientation orientation = MediaQuery.of(context).orientation;
 
-    return Consumer(
-      builder: (context, watch, child) {
-        final prov = watch(episodesWatchedProvider);
+    return ChangeNotifierListener<EpisodesWatchedProvider>(
+      changeNotifier: episodesWatchedProvider,
+      builder: (context, notifier) {
         return CupertinoContextMenu(
           actions: [
             RaisedButton(
@@ -51,11 +50,11 @@ class EpisodeCard extends StatelessWidget {
                   12.0,
                 ),
               ),
-              child: Text(prov.isWatched(episodeModel.number)
+              child: Text(notifier.isWatched(episodeModel.number)
                   ? "Remove from watched"
                   : "Add to watched"),
               onPressed: () {
-                prov.toggleWatched(episodeModel.number);
+                notifier.toggleWatched(episodeModel.number);
                 Navigator.of(context).pop();
               },
               elevation: 0,
@@ -75,7 +74,7 @@ class EpisodeCard extends StatelessWidget {
               ),
               child: Text("Set watched till here"),
               onPressed: () {
-                prov.setWatchedTill(episodeModel.number);
+                notifier.setWatchedTill(episodeModel.number);
                 Navigator.of(context).pop();
               },
               elevation: 0,
@@ -90,11 +89,11 @@ class EpisodeCard extends StatelessWidget {
             child: Card(
               child: InkWell(
                 onTap: () {
-                  context.read(recentlyWatchedProvider).addToLastWatched(
-                        twistModel: twistModel,
-                        kitsuModel: kitsuModel,
-                        episodeModel: episodeModel,
-                      );
+                  recentlyWatchedProvider.addToLastWatched(
+                    twistModel: twistModel,
+                    kitsuModel: kitsuModel,
+                    episodeModel: episodeModel,
+                  );
                   Transitions.slideTransition(
                     context: context,
                     pageBuilder: () => WatchPage(
@@ -125,7 +124,7 @@ class EpisodeCard extends StatelessWidget {
                               ),
                         ),
                       ),
-                      prov.isWatched(episodeModel.number)
+                      notifier.isWatched(episodeModel.number)
                           ? Icon(
                               Icons.check,
                               color: Theme.of(context).accentColor,

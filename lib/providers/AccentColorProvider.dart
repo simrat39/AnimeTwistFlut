@@ -9,7 +9,7 @@ class AccentColorProvider with ChangeNotifier {
   Color _color = DEFAULT_ACCENT;
   SharedPreferences pref;
 
-  get color => _color;
+  Color get color => _color;
 
   Future initData() async {
     pref = await SharedPreferences.getInstance();
