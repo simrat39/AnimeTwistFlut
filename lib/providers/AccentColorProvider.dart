@@ -12,8 +12,12 @@ class AccentColorProvider with ChangeNotifier {
   get color => _color;
 
   Future initData() async {
-    pref = await SharedPreferences.getInstance();
-    _color = Color(pref.getInt(PREF_NAME) ?? DEFAULT_ACCENT.value);
+    try {
+      pref = await SharedPreferences.getInstance();
+      _color = Color(pref.getInt(PREF_NAME) ?? DEFAULT_ACCENT.value);
+    } catch (e) {
+      throw Exception("Cannot load accent data\n" + e);
+    }
     notifyListeners();
   }
 

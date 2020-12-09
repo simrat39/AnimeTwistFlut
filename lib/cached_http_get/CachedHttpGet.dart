@@ -1,9 +1,6 @@
 // Package imports:
 import 'package:http/http.dart' as http;
 
-// Project imports:
-import '../infinity_retry/InfinityRetry.dart';
-
 // A shitty cacher for http requests, works perfect for this project
 class CachedHttpGet {
   static Map<Request, String> cache = {};
@@ -11,11 +8,9 @@ class CachedHttpGet {
   static Future<String> get(Request req) async {
     if (cache.keys.contains(req)) return cache[req];
 
-    var response = await infinityRetry(
-      future: () => http.get(
-        req.url,
-        headers: req.header,
-      ),
+    var response = await http.get(
+      req.url,
+      headers: req.header,
     );
 
     cache[req] = response.body;

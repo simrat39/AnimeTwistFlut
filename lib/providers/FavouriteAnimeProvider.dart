@@ -10,8 +10,12 @@ class FavouriteAnimeProvider extends ChangeNotifier {
   SharedPreferences pref;
 
   Future init() async {
-    pref = await SharedPreferences.getInstance();
-    favouriteAnimeSlugsList = _getStoredData();
+    try {
+      pref = await SharedPreferences.getInstance();
+      favouriteAnimeSlugsList = _getStoredData();
+    } catch (e) {
+      throw Exception("Cannot load fav animes\n" + e);
+    }
     notifyListeners();
   }
 

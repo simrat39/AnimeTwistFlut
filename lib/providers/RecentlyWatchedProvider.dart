@@ -19,19 +19,23 @@ class RecentlyWatchedProvider extends ChangeNotifier {
   static const String KEY_NAME = 'list';
 
   Future initData() async {
-    await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
-    Hive.registerAdapter<TwistModel>(TwistModelAdapter());
-    Hive.registerAdapter<KitsuModel>(KitsuModelAdapter());
-    Hive.registerAdapter<EpisodeModel>(EpisodeModelAdapter());
-    Hive.registerAdapter<RecentlyWatchedModel>(RecentlyWatchedModelAdapter());
-    var box = await Hive.openBox(BOX_NAME);
+    try {
+      await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
+      Hive.registerAdapter<TwistModel>(TwistModelAdapter());
+      Hive.registerAdapter<KitsuModel>(KitsuModelAdapter());
+      Hive.registerAdapter<EpisodeModel>(EpisodeModelAdapter());
+      Hive.registerAdapter<RecentlyWatchedModel>(RecentlyWatchedModelAdapter());
+      var box = await Hive.openBox(BOX_NAME);
 
-    // For whatever reason, directly assigning lastWatchedAnimes to
-    // box.get(KEY_NAME) does not work, so loop through all the elements and add
-    // it to the list one by one.
-    dynamic contents = box?.get(KEY_NAME) ?? [];
-    for (int i = 0; i < contents?.length ?? 0; i++) {
-      recentlyWatchedAnimes.add(contents[i]);
+      // For whatever reason, directly assigning lastWatchedAnimes to
+      // box.get(KEY_NAME) does not work, so loop through all the elements and add
+      // it to the list one by one.
+      dynamic contents = box?.get(KEY_NAME) ?? [];
+      for (int i = 0; i < contents?.length ?? 0; i++) {
+        recentlyWatchedAnimes.add(contents[i]);
+      }
+    } catch (e) {
+      throw Exception("Cannot load recently watched animes\n" + e);
     }
   }
 

@@ -10,13 +10,14 @@ Future infinityRetry({
   Future Function() future,
   int delay = 500,
 }) async {
-  while (true) {
-    try {
-      return await future();
-    } catch (e) {
-      Future.delayed(delay.milliseconds);
-    }
-  }
+  // while (true) {
+  //   try {
+  //     return await future();
+  //   } catch (e) {
+  //     Future.delayed(delay.milliseconds);
+  //   }
+  // }
+  return await future();
 }
 
 /// Infinitely retry a future till we get a response, but do it linearly

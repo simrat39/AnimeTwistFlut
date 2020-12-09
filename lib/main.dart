@@ -1,13 +1,16 @@
 // Flutter imports:
 import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
+import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
+import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
 import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
 import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
+import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
 import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
 import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
@@ -62,22 +65,21 @@ class RootWindow extends StatefulWidget {
 
 class _RootWindowState extends State<RootWindow> {
   final List<String> _windowTitles = ["twist", "favourites"];
-  Future _initData;
 
-  Future initData(BuildContext context) async {
+  var _initDataProvider = FutureProvider.autoDispose((ref) async {
+    ref.maintainState = true;
+
+    // Incase we refresh on an error
+    Get.delete<TwistApiService>();
+
     TwistApiService twistApiService = Get.put(TwistApiService());
-    await context.read(accentProvider).initData();
+    await NetworkInfoProvider().throwIfNoNetwork();
+    await ref.read(accentProvider).initData();
     await twistApiService.setTwistModels();
-    await context.read(recentlyWatchedProvider).initData();
-    await context.read(toWatchProvider).initData();
-    await context.read(favouriteAnimeProvider).init();
-  }
-
-  @override
-  void initState() {
-    _initData = initData(context);
-    super.initState();
-  }
+    await ref.read(recentlyWatchedProvider).initData();
+    await ref.read(toWatchProvider).initData();
+    await ref.read(favouriteAnimeProvider).init();
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,116 +90,110 @@ class _RootWindowState extends State<RootWindow> {
       builder: (context, watch, child) {
         var accentColor = watch(accentProvider).color;
         return MaterialApp(
-          home: FutureBuilder(
-            future: _initData,
-            builder: (context, snapshot) {
-              if (!(snapshot.connectionState == ConnectionState.done))
+          home: watch(_initDataProvider).when(
+            data: (v) => Consumer(
+              builder: (context, watch, child) {
+                var prov = watch(indexProvider);
                 return Scaffold(
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          height: 24.0,
+                  appBar: AppBar(
+                    title: AppbarText(custom: _windowTitles[prov.state]),
+                    actions: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.settings,
                         ),
-                        Text(
-                          "Loading Anime!",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        onPressed: () {
+                          Transitions.slideTransition(
+                            context: context,
+                            pageBuilder: () => SettingsPage(),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.chat_bubble,
                         ),
-                      ],
+                        onPressed: () {
+                          Transitions.slideTransition(
+                            context: context,
+                            pageBuilder: () => ChatPage(),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.search,
+                        ),
+                        onPressed: () {
+                          Transitions.slideTransition(
+                            context: context,
+                            pageBuilder: () => SearchPage(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  bottomNavigationBar: Container(
+                    color: Theme.of(context).cardColor,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 8),
+                      child: GNav(
+                          gap: 8,
+                          activeColor:
+                              Theme.of(context).accentColor.computeLuminance() >
+                                      0.5
+                                  ? Colors.black
+                                  : Colors.white,
+                          iconSize: 24,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          duration: Duration(milliseconds: 500),
+                          tabBackgroundColor:
+                              Theme.of(context).accentColor.withOpacity(0.8),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          tabs: [
+                            GButton(
+                              icon: Icons.home_outlined,
+                              text: 'Home',
+                            ),
+                            GButton(
+                              icon: Icons.favorite_outline,
+                              text: 'Favorites',
+                            ),
+                          ],
+                          selectedIndex: prov.state,
+                          onTabChange: (index) {
+                            prov.state = index;
+                          }),
                     ),
                   ),
+                  body: FadeThroughIndexedStack(
+                    index: prov.state,
+                    children: [
+                      HomePage(),
+                      FavouritesPage(),
+                    ],
+                  ),
                 );
-              return Consumer(
-                builder: (context, watch, child) {
-                  var prov = watch(indexProvider);
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: AppbarText(custom: _windowTitles[prov.state]),
-                      actions: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.settings,
-                          ),
-                          onPressed: () {
-                            Transitions.slideTransition(
-                              context: context,
-                              pageBuilder: () => SettingsPage(),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.chat_bubble,
-                          ),
-                          onPressed: () {
-                            Transitions.slideTransition(
-                              context: context,
-                              pageBuilder: () => ChatPage(),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.search,
-                          ),
-                          onPressed: () {
-                            Transitions.slideTransition(
-                              context: context,
-                              pageBuilder: () => SearchPage(),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    bottomNavigationBar: Container(
-                      color: Theme.of(context).cardColor,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 8),
-                        child: GNav(
-                            gap: 8,
-                            activeColor: Theme.of(context)
-                                        .accentColor
-                                        .computeLuminance() >
-                                    0.5
-                                ? Colors.black
-                                : Colors.white,
-                            iconSize: 24,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            duration: Duration(milliseconds: 500),
-                            tabBackgroundColor:
-                                Theme.of(context).accentColor.withOpacity(0.8),
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            tabs: [
-                              GButton(
-                                icon: Icons.home_outlined,
-                                text: 'Home',
-                              ),
-                              GButton(
-                                icon: Icons.favorite_outline,
-                                text: 'Favorites',
-                              ),
-                            ],
-                            selectedIndex: prov.state,
-                            onTabChange: (index) {
-                              prov.state = index;
-                            }),
-                      ),
-                    ),
-                    body: FadeThroughIndexedStack(
-                      index: prov.state,
-                      children: [
-                        HomePage(),
-                        FavouritesPage(),
-                      ],
-                    ),
-                  );
-                },
+              },
+            ),
+            loading: () {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            error: (e, s) {
+              var message = 'Whoops! An error occured';
+              switch (e) {
+                case NoInternetException:
+                  message =
+                      "Looks like you are not connected to the internet . Please reconnect and try again";
+                  break;
+              }
+              return ErrorPage(
+                message: message,
+                onRefresh: () => context.refresh(_initDataProvider),
               );
             },
           ),
@@ -227,6 +223,8 @@ class _RootWindowState extends State<RootWindow> {
                 ),
               ),
             ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(primary: accentColor)),
             bottomSheetTheme: BottomSheetThemeData(
               backgroundColor: bgColor,
             ),

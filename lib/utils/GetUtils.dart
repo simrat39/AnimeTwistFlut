@@ -10,7 +10,9 @@ class Get {
   }
 
   static void delete<T>() {
-    GetIt.I.unregister<T>();
+    try {
+      GetIt.I.unregister<T>();
+    } catch (e) {}
   }
 
   static T put<T>(T val) {

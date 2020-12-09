@@ -7,6 +7,7 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 
 // Project imports:
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:flutter_riverpod/all.dart';
 import '../../../utils/homepage/DonationUtils.dart';
 
 class DonationCard extends StatefulWidget {
@@ -17,25 +18,20 @@ class DonationCard extends StatefulWidget {
 }
 
 class _DonationCardState extends State<DonationCard> {
-  Future<List<int>> _dataInit;
-
-  @override
-  void initState() {
+  final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) {
     TwistApiService twistApiService = Get.find();
-    _dataInit = twistApiService.getDonationsData();
-    super.initState();
-  }
+    return twistApiService.getDonationsData();
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _dataInit,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+    return Consumer(builder: (context, watch, child) {
+      return watch(_dataInitProvider).when(
+        data: (data) {
           int currentAmount, totalAmount;
-          if ((snapshot.data as List<int>).length > 0) {
-            currentAmount = snapshot.data[0];
-            totalAmount = snapshot.data[1];
+          if ((data).length > 0) {
+            currentAmount = data[0];
+            totalAmount = data[1];
           }
           return Card(
             child: InkWell(
@@ -160,8 +156,8 @@ class _DonationCardState extends State<DonationCard> {
               ),
             ),
           );
-        }
-        return Card(
+        },
+        loading: () => Card(
           child: Center(
             child: Padding(
               padding: EdgeInsets.all(
@@ -173,8 +169,28 @@ class _DonationCardState extends State<DonationCard> {
               ),
             ),
           ),
-        );
-      },
-    );
+        ),
+        error: (error, stacktrace) => Card(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 2,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Failed to get donation data"),
+                  ElevatedButton(
+                    child: Text("Retry"),
+                    onPressed: () => context.refresh(_dataInitProvider),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

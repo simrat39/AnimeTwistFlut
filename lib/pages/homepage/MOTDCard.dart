@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:anime_twist_flut/utils/GetUtils.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
@@ -16,23 +17,19 @@ class MOTDCard extends StatefulWidget {
 }
 
 class _MOTDCardState extends State<MOTDCard> {
-  Future<List<String>> _dataInit;
   bool shouldShow = true;
 
-  @override
-  void initState() {
+  final _dataInitProvider = FutureProvider.autoDispose<List<String>>((ref) {
     TwistApiService twistApiService = Get.find();
-    _dataInit = twistApiService.getMOTD();
-    super.initState();
-  }
+    return twistApiService.getMOTD();
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _dataInit,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done)
-          return AnimatedSwitcher(
+    return Consumer(
+      builder: (context, watch, child) {
+        return watch(_dataInitProvider).when(
+          data: (data) => AnimatedSwitcher(
             duration: 500.milliseconds,
             child: shouldShow
                 ? Padding(
@@ -59,7 +56,7 @@ class _MOTDCardState extends State<MOTDCard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
-                                    snapshot.data[0],
+                                    data[0],
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                       fontSize: 20.0,
@@ -86,7 +83,7 @@ class _MOTDCardState extends State<MOTDCard> {
                                 right: 15.0,
                               ),
                               child: Text(
-                                snapshot.data[1],
+                                data[1],
                                 textAlign: TextAlign.start,
                               ),
                             ),
@@ -96,22 +93,50 @@ class _MOTDCardState extends State<MOTDCard> {
                     ),
                   )
                 : Container(),
-          );
-        return Padding(
-          padding: EdgeInsets.only(
-            left: 15.0,
-            right: 15.0,
-            bottom: 15.0,
           ),
-          child: Card(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(
-                  30.0,
+          loading: () => Padding(
+            padding: EdgeInsets.only(
+              left: 15.0,
+              right: 15.0,
+              bottom: 15.0,
+            ),
+            child: Card(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    30.0,
+                  ),
+                  child: Transform.scale(
+                    scale: 0.6,
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
-                child: Transform.scale(
-                  scale: 0.6,
-                  child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+          error: (e, s) => Padding(
+            padding: EdgeInsets.only(
+              left: 15.0,
+              right: 15.0,
+              bottom: 15.0,
+            ),
+            child: Card(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 2,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Failed to get MOTD"),
+                      ElevatedButton(
+                        child: Text("Retry"),
+                        onPressed: () => context.refresh(_dataInitProvider),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
