@@ -4,10 +4,9 @@ import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
-import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:anime_twist_flut/services/KitsuApiService.dart';
 import 'package:flutter/material.dart';
-import 'package:change_notifier_listener/change_notifier_listener.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -27,11 +26,11 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierListener<FavouriteAnimeProvider>(
-      changeNotifier: favouriteAnimeProvider,
-      builder: (context, notifier) {
+    return Consumer(
+      builder: (context, watch, child) {
+        var prov = watch(favouriteAnimeProvider);
         List<TwistModel> models =
-            notifier.getTwistModelsForFavs().reversed.toList();
+            prov.getTwistModelsForFavs().reversed.toList();
 
         if (models.isEmpty) {
           return SlideInAnimation(
@@ -55,7 +54,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
               subtitle: Text("Season " + model.season.toString()),
               trailing: IconButton(
                 icon: Icon(Icons.favorite),
-                onPressed: () => notifier.toggleFromFavs(model.slug),
+                onPressed: () => prov.toggleFromFavs(model.slug),
               ),
               onTap: () => Transitions.slideTransition(
                   context: context,

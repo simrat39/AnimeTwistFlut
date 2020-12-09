@@ -1,7 +1,6 @@
 import 'package:anime_twist_flut/main.dart';
-import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:change_notifier_listener/change_notifier_listener.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:simple_color_picker/simple_color_picker.dart';
 
 class AccentPickerSetting extends StatefulWidget {
@@ -14,9 +13,9 @@ class AccentPickerSetting extends StatefulWidget {
 class _AccentPickerSettingState extends State<AccentPickerSetting> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierListener<AccentColorProvider>(
-      changeNotifier: accentProvider,
-      builder: (context, notifier) {
+    return Consumer(
+      builder: (context, watch, child) {
+        var provider = watch(accentProvider);
         return ListTile(
           title: Text("Accent Color"),
           subtitle: Text("Make it colorful"),
@@ -29,7 +28,7 @@ class _AccentPickerSettingState extends State<AccentPickerSetting> {
                 height: MediaQuery.of(context).size.height * 0.6,
                 onCancel: () => Navigator.of(context).pop(),
                 onColorSelect: (color) {
-                  notifier.updateAccent(color);
+                  provider.updateAccent(color);
                   Navigator.of(context).pop();
                 },
                 initialColor: Theme.of(context).accentColor,

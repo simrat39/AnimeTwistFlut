@@ -13,7 +13,7 @@ import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:change_notifier_listener/change_notifier_listener.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 // Project imports:
@@ -32,18 +32,28 @@ class CustomImageCache extends WidgetsFlutterBinding {
 
 void main() {
   CustomImageCache();
-  runApp(RootWindow());
+  runApp(ProviderScope(child: RootWindow()));
 }
 
-final accentProvider = AccentColorProvider();
+final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
+  return AccentColorProvider();
+});
 
-final indexProvider = ValueNotifier(0);
+final indexProvider = StateProvider<int>((ref) {
+  return 0;
+});
 
-final recentlyWatchedProvider = RecentlyWatchedProvider();
+final recentlyWatchedProvider =
+    ChangeNotifierProvider<RecentlyWatchedProvider>((ref) {
+  return RecentlyWatchedProvider();
+});
 
-final toWatchProvider = ToWatchProvider();
+final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
+  return ToWatchProvider();
+});
 
-final favouriteAnimeProvider = FavouriteAnimeProvider();
+final favouriteAnimeProvider = ChangeNotifierProvider<FavouriteAnimeProvider>(
+    (ref) => FavouriteAnimeProvider());
 
 class RootWindow extends StatefulWidget {
   @override
@@ -54,18 +64,18 @@ class _RootWindowState extends State<RootWindow> {
   final List<String> _windowTitles = ["twist", "favourites"];
   Future _initData;
 
-  Future initData() async {
+  Future initData(BuildContext context) async {
     TwistApiService twistApiService = Get.put(TwistApiService());
-    await accentProvider.initData();
+    await context.read(accentProvider).initData();
     await twistApiService.setTwistModels();
-    await recentlyWatchedProvider.initData();
-    await toWatchProvider.initData();
-    await favouriteAnimeProvider.init();
+    await context.read(recentlyWatchedProvider).initData();
+    await context.read(toWatchProvider).initData();
+    await context.read(favouriteAnimeProvider).init();
   }
 
   @override
   void initState() {
-    _initData = initData();
+    _initData = initData(context);
     super.initState();
   }
 
@@ -74,10 +84,9 @@ class _RootWindowState extends State<RootWindow> {
     Color bgColor = Color(0xff121212);
     Color cardColor = Color(0xff11D1D1D);
 
-    return ChangeNotifierListener<AccentColorProvider>(
-      changeNotifier: accentProvider,
-      builder: (context, notifier) {
-        var accentColor = notifier.color;
+    return Consumer(
+      builder: (context, watch, child) {
+        var accentColor = watch(accentProvider).color;
         return MaterialApp(
           home: FutureBuilder(
             future: _initData,
@@ -102,12 +111,12 @@ class _RootWindowState extends State<RootWindow> {
                     ),
                   ),
                 );
-              return ChangeNotifierListener<ValueNotifier<int>>(
-                changeNotifier: indexProvider,
-                builder: (context, notifier) {
+              return Consumer(
+                builder: (context, watch, child) {
+                  var prov = watch(indexProvider);
                   return Scaffold(
                     appBar: AppBar(
-                      title: AppbarText(custom: _windowTitles[notifier.value]),
+                      title: AppbarText(custom: _windowTitles[prov.state]),
                       actions: [
                         IconButton(
                           icon: Icon(
@@ -174,14 +183,14 @@ class _RootWindowState extends State<RootWindow> {
                                 text: 'Favorites',
                               ),
                             ],
-                            selectedIndex: notifier.value,
+                            selectedIndex: prov.state,
                             onTabChange: (index) {
-                              notifier.value = index;
+                              prov.state = index;
                             }),
                       ),
                     ),
                     body: FadeThroughIndexedStack(
-                      index: notifier.value,
+                      index: prov.state,
                       children: [
                         HomePage(),
                         FavouritesPage(),

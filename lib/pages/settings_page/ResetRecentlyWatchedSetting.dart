@@ -1,5 +1,6 @@
 import 'package:anime_twist_flut/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
 
 class ResetRecentlyWatchedSetting extends StatefulWidget {
   const ResetRecentlyWatchedSetting({Key key}) : super(key: key);
@@ -20,7 +21,7 @@ class _ResetRecentlyWatchedSettingState
 
   @override
   Widget build(BuildContext context) {
-    var provider = recentlyWatchedProvider;
+    var provider = context.read(recentlyWatchedProvider);
     return ListTile(
       title: Text("Reset Recently Watched"),
       subtitle: Text("Clear recently watched animes"),

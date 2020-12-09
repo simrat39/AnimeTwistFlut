@@ -32,13 +32,11 @@ dependencies:
   video_player_header:
     git:
       url: https://github.com/simrat39/videoPlayerWithHeader
-  change_notifier_listener:
-    git:
-      url: https://github.com/simrat39/change_notifier_listener
   auto_orientation: ^1.0.6
   auto_size_text: ^2.1.0
   edit_distance: ^0.4.1
   encrypt: ^4.1.0
+  flutter_riverpod: ^0.12.1
   font_awesome_flutter: ^8.10.0
   fuzzy: ^0.2.3
   get_it: ^5.0.1

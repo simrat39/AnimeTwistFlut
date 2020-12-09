@@ -1,5 +1,6 @@
 import 'package:anime_twist_flut/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
 
 class ResetToWatchSetting extends StatefulWidget {
   const ResetToWatchSetting({Key key}) : super(key: key);
@@ -18,7 +19,7 @@ class _ResetToWatchSettingState extends State<ResetToWatchSetting> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = toWatchProvider;
+    var provider = context.read(toWatchProvider);
     return ListTile(
       title: Text("Reset To Watch list"),
       subtitle: Text("Clear to watch animes"),

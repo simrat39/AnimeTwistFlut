@@ -2,9 +2,8 @@
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/homepage/explore_slider/ExploreRowItem.dart';
-import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:change_notifier_listener/change_notifier_listener.dart';
+import 'package:flutter_riverpod/all.dart';
 
 class ToWatchRow extends StatefulWidget {
   @override
@@ -23,10 +22,10 @@ class _ToWatchRowState extends State<ToWatchRow> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     Orientation orientation = MediaQuery.of(context).orientation;
-    return ChangeNotifierListener<ToWatchProvider>(
-      changeNotifier: toWatchProvider,
-      builder: (context, notifier) {
-        if (!notifier.hasData()) return Container();
+    return Consumer(
+      builder: (context, watch, child) {
+        final provider = watch(toWatchProvider);
+        if (!provider.hasData()) return Container();
         return Container(
           margin: EdgeInsets.only(
             bottom: 15.0,
@@ -63,13 +62,13 @@ class _ToWatchRowState extends State<ToWatchRow> {
                     // to new and we want the user to see the latest added
                     // anime first
                     RecentlyWatchedModel recentlyWatchedModel =
-                        notifier.toWatchAnimes.reversed.elementAt(index);
+                        provider.toWatchAnimes.reversed.elementAt(index);
                     return ExploreRowItem(
                       twistModel: recentlyWatchedModel.twistModel,
                       kitsuModel: recentlyWatchedModel.kitsuModel,
                     );
                   },
-                  itemCount: notifier.toWatchAnimes.length,
+                  itemCount: provider.toWatchAnimes.length,
                 ),
               ),
             ],
