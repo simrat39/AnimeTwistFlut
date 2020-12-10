@@ -179,8 +179,10 @@ class _RootWindowState extends State<RootWindow> {
               },
             ),
             loading: () {
-              return Center(
-                child: CircularProgressIndicator(),
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             },
             error: (e, s) {
