@@ -222,6 +222,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  // Most intros/outros are 85 seconds so skip that much time.
+  Future skipIntro() async {
+    _controller
+        .seekTo(Duration(seconds: (await _controller.position).inSeconds + 85));
+  }
+
   Future init() async {
     await SystemChrome.setEnabledSystemUIOverlays([]);
     await Wakelock.toggle(enable: true);
@@ -479,21 +485,35 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                       ),
                                     ),
                                   ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.skip_next_outlined,
+                                  Container(
+                                    width: 30,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.skip_next_outlined,
+                                      ),
+                                      iconSize: 22.5,
+                                      onPressed: widget.episodes.last ==
+                                              widget.episodeModel
+                                          ? null
+                                          : () {
+                                              setEpisodeAsCompleted(
+                                                  context, false);
+                                              addEpisodeToRecentlyWatched(
+                                                  context);
+                                              goToNextEpisode(context);
+                                            },
                                     ),
-                                    iconSize: 22.5,
-                                    onPressed: widget.episodes.last ==
-                                            widget.episodeModel
-                                        ? null
-                                        : () {
-                                            setEpisodeAsCompleted(
-                                                context, false);
-                                            addEpisodeToRecentlyWatched(
-                                                context);
-                                            goToNextEpisode(context);
-                                          },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      width: 30,
+                                      child: IconButton(
+                                        icon: Icon(Icons.fast_forward_outlined),
+                                        onPressed: () => skipIntro(),
+                                        iconSize: 22.5,
+                                      ),
+                                    ),
                                   ),
                                   Text(
                                     currentPositionStr,
