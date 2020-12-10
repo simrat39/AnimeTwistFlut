@@ -5,9 +5,13 @@ import 'package:supercharged/supercharged.dart';
 class DoubleTapLayer extends StatelessWidget {
   final VideoPlayerController videoPlayerController;
   final Function toggleUI;
+  final bool isUiVisible;
 
   const DoubleTapLayer(
-      {Key key, @required this.videoPlayerController, @required this.toggleUI})
+      {Key key,
+      @required this.videoPlayerController,
+      @required this.toggleUI,
+      @required this.isUiVisible})
       : super(key: key);
 
   @override
@@ -27,9 +31,11 @@ class DoubleTapLayer extends StatelessWidget {
                     await (videoPlayerController.position) - 10.seconds);
                 toggleUI();
               },
-              onTap: () {
-                toggleUI();
-              },
+              onTap: !isUiVisible
+                  ? () {
+                      toggleUI();
+                    }
+                  : null,
             ),
           ),
           Container(
@@ -42,9 +48,11 @@ class DoubleTapLayer extends StatelessWidget {
                     await (videoPlayerController.position) + 10.seconds);
                 toggleUI();
               },
-              onTap: () {
-                toggleUI();
-              },
+              onTap: !isUiVisible
+                  ? () {
+                      toggleUI();
+                    }
+                  : null,
             ),
           ),
         ],

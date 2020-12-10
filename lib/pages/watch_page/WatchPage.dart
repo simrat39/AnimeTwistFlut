@@ -49,13 +49,12 @@ class WatchPage extends StatefulWidget {
 
 class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   VideoPlayerController _controller;
-  String _duration;
   bool isUIvisible = false;
-  bool isWaiting = false;
-  double currentPosition;
-  String currentPositionStr;
   bool isPictureInPicture = false;
   bool isTouchingSlider = false;
+  String _duration;
+  double currentPosition;
+  String currentPositionStr;
   Future _init;
 
   @override
@@ -150,14 +149,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   }
 
   void hideUIAfterWait() async {
-    if (!isWaiting && isUIvisible) {
-      isWaiting = true;
-      Timer(5.seconds, () {
+    if (isUIvisible) {
+      Timer(4.seconds, () {
         if (!isTouchingSlider)
           setState(() {
             isUIvisible = false;
           });
-        isWaiting = false;
       });
     }
   }
@@ -300,6 +297,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                 Positioned.fill(
                   child: DoubleTapLayer(
                     videoPlayerController: _controller,
+                    isUiVisible: isUIvisible,
                     toggleUI: toggleUI,
                   ),
                 ),
