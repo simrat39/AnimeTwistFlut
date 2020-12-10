@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +16,8 @@ jobs:
           java-version: "12.x"
       # Setup the flutter environment.
       - uses: takuyaohashi/setup-flutter@v1
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         with:
           flutter-version: "latest"
           channel: "dev"
@@ -22,7 +25,6 @@ jobs:
       - run: flutter pub get
       - run: flutter format --set-exit-if-changed .
       - run: flutter analyze .
-      # - run: flutter test
       - run: flutter build apk --split-per-abi --dart-define=KEY='${{ secrets.KEY }}' --release
 
       # Upload generated apk to the artifacts.
