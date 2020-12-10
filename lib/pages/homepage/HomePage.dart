@@ -103,12 +103,7 @@ class _HomePageState extends State<HomePage> {
             height: 15.0,
           ),
           ToWatchRow(),
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 15.0,
-            ),
-            child: ExploreRow(),
-          ),
+          ExploreRow(),
           Padding(
             padding: EdgeInsets.only(
               left: 15.0,
