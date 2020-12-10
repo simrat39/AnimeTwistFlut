@@ -52,6 +52,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   bool isUIvisible = false;
   bool isPictureInPicture = false;
   bool isTouchingSlider = false;
+  bool isVideoStretched = false;
   String _duration;
   double currentPosition;
   String currentPositionStr;
@@ -150,7 +151,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   void hideUIAfterWait() async {
     if (isUIvisible) {
-      Timer(4.seconds, () {
+      Timer(5.seconds, () {
         if (!isTouchingSlider)
           setState(() {
             isUIvisible = false;
@@ -225,6 +226,18 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         .seekTo(Duration(seconds: (await _controller.position).inSeconds + 85));
   }
 
+  double getScreenAspectRatio(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return size.aspectRatio;
+  }
+
+  void toggleAspectRatio() {
+    setState(() {
+      isVideoStretched = !isVideoStretched;
+    });
+  }
+
   Future init() async {
     await SystemChrome.setEnabledSystemUIOverlays([]);
     await Wakelock.toggle(enable: true);
@@ -288,7 +301,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
               children: [
                 Center(
                   child: AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
+                    aspectRatio: isVideoStretched
+                        ? getScreenAspectRatio(context)
+                        : _controller.value.aspectRatio,
                     child: VideoPlayer(
                       _controller,
                     ),
@@ -536,12 +551,28 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                       bottom: 3.0,
+                                      left: 8.0,
+                                    ),
+                                    child: Icon(
+                                      isVideoStretched
+                                          ? Icons.fullscreen_exit
+                                          : Icons.fullscreen,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    toggleAspectRatio();
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: 5.0,
                                       right: 15.0,
                                       left: 10.0,
                                     ),
                                     child: Icon(
                                       Icons.screen_rotation_rounded,
-                                      size: 19.0,
+                                      size: 18.0,
                                     ),
                                   ),
                                   onTap: () {
