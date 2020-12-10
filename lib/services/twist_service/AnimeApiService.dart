@@ -42,6 +42,8 @@ class AnimeApiService {
       } else {
         print("Data is cached");
         response = cachedAnimeData;
+        // Delay it a bit so that the loading animation doesnt flash.
+        await Future.delayed(Duration(milliseconds: 400));
       }
 
       List<dynamic> jsonData = jsonDecode(response);

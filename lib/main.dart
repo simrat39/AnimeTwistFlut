@@ -72,9 +72,9 @@ class _RootWindowState extends State<RootWindow> {
     // Incase we refresh on an error
     Get.delete<TwistApiService>();
 
+    await ref.read(accentProvider).initData();
     TwistApiService twistApiService = Get.put(TwistApiService());
     await NetworkInfoProvider().throwIfNoNetwork();
-    await ref.read(accentProvider).initData();
     await twistApiService.setTwistModels();
     await ref.read(recentlyWatchedProvider).initData();
     await ref.read(toWatchProvider).initData();
