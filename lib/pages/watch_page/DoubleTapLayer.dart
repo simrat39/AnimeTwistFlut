@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_header/video_player_header.dart';
 import 'package:supercharged/supercharged.dart';
-import 'package:inkwell_splash/inkwell_splash.dart';
 
 class DoubleTapLayer extends StatelessWidget {
   final VideoPlayerController videoPlayerController;
@@ -22,8 +21,7 @@ class DoubleTapLayer extends StatelessWidget {
             color: Colors.transparent,
             height: double.infinity,
             width: width * 0.5,
-            child: InkWellSplash(
-              doubleTapTime: 500.milliseconds,
+            child: InkWell(
               onDoubleTap: () async {
                 videoPlayerController.seekTo(
                     await (videoPlayerController.position) - 10.seconds);
@@ -38,8 +36,7 @@ class DoubleTapLayer extends StatelessWidget {
             color: Colors.transparent,
             height: double.infinity,
             width: width * 0.5,
-            child: InkWellSplash(
-              doubleTapTime: 500.milliseconds,
+            child: InkWell(
               onDoubleTap: () async {
                 videoPlayerController.seekTo(
                     await (videoPlayerController.position) + 10.seconds);
