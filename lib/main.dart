@@ -216,6 +216,7 @@ class _RootWindowState extends State<RootWindow> {
             scaffoldBackgroundColor: bgColor,
             dialogBackgroundColor: bgColor,
             accentColor: accentColor,
+            toggleableActiveColor: accentColor,
             appBarTheme: AppBarTheme(
               color: bgColor,
               elevation: 0.0,
