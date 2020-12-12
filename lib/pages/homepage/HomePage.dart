@@ -27,7 +27,8 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   StreamSubscription _uriSub;
 
   @override
@@ -94,6 +95,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -127,4 +129,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

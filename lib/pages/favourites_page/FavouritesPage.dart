@@ -16,7 +16,8 @@ class FavouritesPage extends StatefulWidget {
   _FavouritesPageState createState() => _FavouritesPageState();
 }
 
-class _FavouritesPageState extends State<FavouritesPage> {
+class _FavouritesPageState extends State<FavouritesPage>
+    with AutomaticKeepAliveClientMixin {
   Future<KitsuModel> _getKitsuModel;
 
   @override
@@ -26,6 +27,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer(
       builder: (context, watch, child) {
         var prov = watch(favouriteAnimeProvider);
@@ -81,4 +83,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

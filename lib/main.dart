@@ -65,6 +65,11 @@ class RootWindow extends StatefulWidget {
 
 class _RootWindowState extends State<RootWindow> {
   final List<String> _windowTitles = ["twist", "favourites"];
+  PageController pageController;
+  var pages = [
+    HomePage(),
+    FavouritesPage(),
+  ];
 
   var _initDataProvider = FutureProvider.autoDispose((ref) async {
     ref.maintainState = true;
@@ -80,6 +85,12 @@ class _RootWindowState extends State<RootWindow> {
     await ref.read(toWatchProvider).initData();
     await ref.read(favouriteAnimeProvider).init();
   });
+
+  @override
+  void initState() {
+    pageController = PageController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,41 +150,42 @@ class _RootWindowState extends State<RootWindow> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 8),
                       child: GNav(
-                          gap: 8,
-                          activeColor:
-                              Theme.of(context).accentColor.computeLuminance() >
-                                      0.5
-                                  ? Colors.black
-                                  : Colors.white,
-                          iconSize: 24,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          duration: Duration(milliseconds: 500),
-                          tabBackgroundColor:
-                              Theme.of(context).accentColor.withOpacity(0.8),
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          tabs: [
-                            GButton(
-                              icon: Icons.home_outlined,
-                              text: 'Home',
-                            ),
-                            GButton(
-                              icon: Icons.favorite_outline,
-                              text: 'Favorites',
-                            ),
-                          ],
-                          selectedIndex: prov.state,
-                          onTabChange: (index) {
-                            prov.state = index;
-                          }),
+                        gap: 8,
+                        activeColor:
+                            Theme.of(context).accentColor.computeLuminance() >
+                                    0.5
+                                ? Colors.black
+                                : Colors.white,
+                        iconSize: 24,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                        duration: Duration(milliseconds: 500),
+                        tabBackgroundColor:
+                            Theme.of(context).accentColor.withOpacity(0.8),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        tabs: [
+                          GButton(
+                            icon: Icons.home_outlined,
+                            text: 'Home',
+                          ),
+                          GButton(
+                            icon: Icons.favorite_outline,
+                            text: 'Favorites',
+                          ),
+                        ],
+                        selectedIndex: prov.state,
+                        onTabChange: (index) {
+                          prov.state = index;
+                          pageController.jumpToPage(index);
+                        },
+                      ),
                     ),
                   ),
-                  body: FadeThroughIndexedStack(
-                    index: prov.state,
-                    children: [
-                      HomePage(),
-                      FavouritesPage(),
-                    ],
+                  body: PageView.builder(
+                    controller: pageController,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => pages[index],
+                    itemCount: pages.length,
                   ),
                 );
               },
