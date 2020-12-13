@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 
 // A shitty cacher for http requests, works perfect for this project
@@ -13,7 +15,9 @@ class CachedHttpGet {
       headers: req.header,
     );
 
-    cache[req] = response.body;
+    if (response.statusCode == HttpStatus.ok) {
+      cache[req] = response.body;
+    }
 
     return response.body;
   }
