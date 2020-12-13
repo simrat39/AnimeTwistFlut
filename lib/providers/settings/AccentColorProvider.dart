@@ -5,11 +5,13 @@ class AccentColorProvider extends CustomSettingProvider<Color> {
   @override
   String exceptionMessage = "An error occured while getting accent data";
 
-  @override
-  Color defaultValue = Colors.pinkAccent;
+  static const Color DEFAULT_COLOR = Colors.pinkAccent;
 
   @override
   String prefName = "accent";
+
+  @override
+  Color data = DEFAULT_COLOR;
 
   @override
   void updateValue(Color newValue) {
@@ -20,7 +22,7 @@ class AccentColorProvider extends CustomSettingProvider<Color> {
   @override
   Future initData() async {
     pref = await getPref();
-    data = Color(pref.getInt(prefName) ?? defaultValue.value);
+    data = Color(pref.getInt(prefName) ?? DEFAULT_COLOR.value);
     notifyListeners();
   }
 

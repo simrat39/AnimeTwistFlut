@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class CustomSettingProvider<T> extends ChangeNotifier {
   String prefName = "pref";
-  T defaultValue;
   String exceptionMessage = "Could not load setting";
 
   T data;
