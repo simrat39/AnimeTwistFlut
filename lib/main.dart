@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
