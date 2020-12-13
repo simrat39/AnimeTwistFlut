@@ -28,7 +28,7 @@ class _AccentPickerSettingState extends State<AccentPickerSetting> {
                 height: MediaQuery.of(context).size.height * 0.6,
                 onCancel: () => Navigator.of(context).pop(),
                 onColorSelect: (color) {
-                  provider.updateAccent(color);
+                  provider.updateValue(color);
                   Navigator.of(context).pop();
                 },
                 initialColor: Theme.of(context).accentColor,

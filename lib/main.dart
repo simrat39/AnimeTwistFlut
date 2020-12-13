@@ -8,7 +8,7 @@ import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
 import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
-import 'package:anime_twist_flut/providers/AccentColorProvider.dart';
+import 'package:anime_twist_flut/providers/settings/AccentColorProvider.dart';
 import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
 import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
@@ -99,7 +99,7 @@ class _RootWindowState extends State<RootWindow> {
 
     return Consumer(
       builder: (context, watch, child) {
-        var accentColor = watch(accentProvider).color;
+        var accentColor = watch(accentProvider).data;
         return MaterialApp(
           home: watch(_initDataProvider).when(
             data: (v) => Consumer(
