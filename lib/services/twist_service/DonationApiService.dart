@@ -5,19 +5,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 // Project imports:
-import '../../infinity_retry/InfinityRetry.dart';
 import '../../secrets.dart';
 
 class DonationApiService {
   Future<List<int>> getDonations() async {
     List<int> data = [];
-    var response = await infinityRetry(
-      future: () => http.get(
-        'https://twist.moe/api/donation',
-        headers: {
-          'x-access-token': x_access_token,
-        },
-      ),
+    var response = await http.get(
+      'https://twist.moe/api/donation',
+      headers: {
+        'x-access-token': x_access_token,
+      },
     );
 
     Map<String, dynamic> jsonData = jsonDecode(response.body);
