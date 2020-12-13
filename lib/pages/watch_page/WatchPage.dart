@@ -13,6 +13,7 @@ import 'package:auto_orientation/auto_orientation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_android_pip/flutter_android_pip.dart';
 import 'package:flutter_riverpod/all.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_player_header/video_player_header.dart';
 
@@ -26,6 +27,12 @@ import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:anime_twist_flut/main.dart';
+
+enum VideoMode {
+  Normal,
+  Stretched,
+  Fill,
+}
 
 class WatchPage extends StatefulWidget {
   final EpisodeModel episodeModel;
@@ -49,10 +56,10 @@ class WatchPage extends StatefulWidget {
 
 class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   VideoPlayerController _controller;
+  VideoMode videoMode = VideoMode.Normal;
   bool isUIvisible = false;
   bool isPictureInPicture = false;
   bool isTouchingSlider = false;
-  bool isVideoStretched = false;
   String _duration;
   double currentPosition;
   String currentPositionStr;
@@ -232,10 +239,48 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     return size.aspectRatio;
   }
 
-  void toggleAspectRatio() {
+  void setNextVideoMode() {
     setState(() {
-      isVideoStretched = !isVideoStretched;
+      switch (videoMode) {
+        case VideoMode.Normal:
+          videoMode = VideoMode.Stretched;
+          break;
+        case VideoMode.Stretched:
+          videoMode = VideoMode.Fill;
+          break;
+        case VideoMode.Fill:
+          videoMode = VideoMode.Normal;
+          break;
+      }
     });
+  }
+
+  IconData getVideoModeIcon() {
+    switch (videoMode) {
+      case VideoMode.Stretched:
+        return FontAwesomeIcons.expandAlt;
+        break;
+      case VideoMode.Fill:
+        return FontAwesomeIcons.compress;
+        break;
+      case VideoMode.Normal:
+      default:
+        return FontAwesomeIcons.expand;
+        break;
+    }
+  }
+
+  double getAspectRatio(BuildContext context) {
+    switch (videoMode) {
+      case VideoMode.Stretched:
+        return getScreenAspectRatio(context);
+        break;
+      case VideoMode.Fill:
+      case VideoMode.Normal:
+      default:
+        return _controller.value.aspectRatio;
+        break;
+    }
   }
 
   Future init() async {
@@ -300,12 +345,13 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
               alignment: Alignment.topCenter,
               children: [
                 Center(
-                  child: AspectRatio(
-                    aspectRatio: isVideoStretched
-                        ? getScreenAspectRatio(context)
-                        : _controller.value.aspectRatio,
-                    child: VideoPlayer(
-                      _controller,
+                  child: Transform.scale(
+                    scale: videoMode == VideoMode.Fill ? 1.1 : 1,
+                    child: AspectRatio(
+                      aspectRatio: getAspectRatio(context),
+                      child: VideoPlayer(
+                        _controller,
+                      ),
                     ),
                   ),
                 ),
@@ -348,7 +394,6 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                               ),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
                                   child: Row(
@@ -457,59 +502,64 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                               ),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 10.0,
-                                  ),
-                                  child: Container(
-                                    width: 30.0,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        _controller.value.isPlaying
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 8.0,
                                       ),
-                                      onPressed: () {
-                                        togglePlay();
-                                      },
-                                      iconSize: 22.5,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 30,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.skip_next_outlined,
-                                    ),
-                                    iconSize: 22.5,
-                                    onPressed: widget.episodes.last ==
-                                            widget.episodeModel
-                                        ? null
-                                        : () {
-                                            setEpisodeAsCompleted(
-                                                context, false);
-                                            addEpisodeToRecentlyWatched(
-                                                context);
-                                            goToNextEpisode(context);
+                                      child: Container(
+                                        width: 35.0,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            _controller.value.isPlaying
+                                                ? Icons.pause
+                                                : Icons.play_arrow,
+                                          ),
+                                          onPressed: () {
+                                            togglePlay();
                                           },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Container(
-                                    width: 30,
-                                    child: IconButton(
-                                      icon: Icon(Icons.fast_forward_outlined),
-                                      onPressed: () => skipIntro(),
-                                      iconSize: 22.5,
+                                          iconSize: 22.5,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Text(
-                                  currentPositionStr,
+                                    Container(
+                                      width: 35,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.skip_next_outlined,
+                                        ),
+                                        iconSize: 22.5,
+                                        onPressed: widget.episodes.last ==
+                                                widget.episodeModel
+                                            ? null
+                                            : () {
+                                                setEpisodeAsCompleted(
+                                                    context, false);
+                                                addEpisodeToRecentlyWatched(
+                                                    context);
+                                                goToNextEpisode(context);
+                                              },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Container(
+                                        width: 35,
+                                        child: IconButton(
+                                          icon:
+                                              Icon(Icons.fast_forward_outlined),
+                                          onPressed: () => skipIntro(),
+                                          iconSize: 22.5,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      currentPositionStr,
+                                    ),
+                                  ],
                                 ),
                                 Expanded(
                                   child: Slider(
@@ -541,43 +591,39 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                     }),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 5.0,
-                                  ),
-                                  child: Text(_duration),
-                                ),
-                                GestureDetector(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      bottom: 3.0,
-                                      left: 8.0,
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 8.0,
+                                      ),
+                                      child: Text(_duration),
                                     ),
-                                    child: Icon(
-                                      isVideoStretched
-                                          ? Icons.fullscreen_exit
-                                          : Icons.fullscreen,
+                                    Container(
+                                      width: 35,
+                                      margin: EdgeInsets.only(bottom: 3),
+                                      child: IconButton(
+                                        icon: Icon(getVideoModeIcon()),
+                                        iconSize: 18,
+                                        onPressed: () {
+                                          setNextVideoMode();
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  onTap: () {
-                                    toggleAspectRatio();
-                                  },
-                                ),
-                                GestureDetector(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      bottom: 5.0,
-                                      right: 15.0,
-                                      left: 10.0,
+                                    Container(
+                                      width: 35,
+                                      margin: EdgeInsets.only(bottom: 3),
+                                      child: IconButton(
+                                        icon:
+                                            Icon(Icons.screen_rotation_rounded),
+                                        iconSize: 18,
+                                        onPressed: () {
+                                          rotate();
+                                        },
+                                      ),
                                     ),
-                                    child: Icon(
-                                      Icons.screen_rotation_rounded,
-                                      size: 18.0,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    rotate();
-                                  },
+                                    SizedBox(width: 8.0),
+                                  ],
                                 ),
                               ],
                             ),
