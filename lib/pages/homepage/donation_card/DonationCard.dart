@@ -45,8 +45,9 @@ class _DonationCardState extends State<DonationCard> {
                           children: [
                             ListTile(
                               title: Text("Patreon"),
-                              onTap: () {
-                                DonationUtils.donatePatreon();
+                              onTap: () async {
+                                await DonationUtils.donatePatreon();
+                                Navigator.of(context).pop(); // close modal bottomsheet
                               },
                             ),
                             ListTile(
@@ -57,10 +58,8 @@ class _DonationCardState extends State<DonationCard> {
                                   isScrollControlled: true,
                                   builder: (context) => GenericDonationSheet(
                                     name: "Bitcoin",
-                                    address:
-                                        '1ATvQNxFnyVBa4Pd5njdvjTXcECgptzcZo',
-                                    qrURL:
-                                        'https://twist.moe/public/img/bitcoin-qr.png',
+                                    address: '1ATvQNxFnyVBa4Pd5njdvjTXcECgptzcZo',
+                                    qrURL: 'https://twist.moe/public/img/bitcoin-qr.png',
                                   ),
                                 );
                               },
@@ -73,10 +72,8 @@ class _DonationCardState extends State<DonationCard> {
                                   isScrollControlled: true,
                                   builder: (context) => GenericDonationSheet(
                                     name: "Ethereum",
-                                    address:
-                                        "0x8337104096a3297a71ee16a9C922a5ff3818DF46",
-                                    qrURL:
-                                        'https://twist.moe/public/img/ethereum-qr.png',
+                                    address: "0x8337104096a3297a71ee16a9C922a5ff3818DF46",
+                                    qrURL: 'https://twist.moe/public/img/ethereum-qr.png',
                                   ),
                                 );
                               },
@@ -112,9 +109,7 @@ class _DonationCardState extends State<DonationCard> {
                             ),
                           ),
                           Text(
-                            (currentAmount?.toString() ?? "?") +
-                                " / " +
-                                (totalAmount?.toString() ?? "?"),
+                            (currentAmount?.toString() ?? "?") + " / " + (totalAmount?.toString() ?? "?"),
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontSize: 20.0,
@@ -130,10 +125,9 @@ class _DonationCardState extends State<DonationCard> {
                       ),
                       child: LinearProgressIndicator(
                         value: (currentAmount ?? 0.0) / (totalAmount ?? 1.0),
-                        backgroundColor:
-                            Theme.of(context).accentColor.withOpacity(
-                                  0.5,
-                                ),
+                        backgroundColor: Theme.of(context).accentColor.withOpacity(
+                              0.5,
+                            ),
                       ),
                     ),
                     Text(
@@ -141,11 +135,7 @@ class _DonationCardState extends State<DonationCard> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.5,
-                        color: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .color
-                            .withOpacity(
+                        color: Theme.of(context).textTheme.headline6.color.withOpacity(
                               0.7,
                             ),
                         fontWeight: FontWeight.bold,
