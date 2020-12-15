@@ -18,6 +18,11 @@ abstract class CustomSettingProvider<T> extends ChangeNotifier {
     }
   }
 
-  void updateValue(T newValue);
+  void updateValue(T newValue) {
+    data = newValue;
+    notifyListeners();
+    writePref();
+  }
+
   void writePref();
 }

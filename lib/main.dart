@@ -12,6 +12,7 @@ import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
 import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
 import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
+import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,10 @@ void main() {
 
 final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
   return AccentColorProvider();
+});
+
+final zoomFactorProvider = ChangeNotifierProvider<ZoomFactorProvider>((ref) {
+  return ZoomFactorProvider();
 });
 
 final indexProvider = StateProvider<int>((ref) {
@@ -83,6 +88,7 @@ class _RootWindowState extends State<RootWindow> {
     await ref.read(recentlyWatchedProvider).initData();
     await ref.read(toWatchProvider).initData();
     await ref.read(favouriteAnimeProvider).init();
+    await ref.read(zoomFactorProvider).initData();
   });
 
   @override

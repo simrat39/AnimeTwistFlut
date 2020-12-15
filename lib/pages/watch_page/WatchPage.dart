@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
@@ -344,16 +345,21 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
-                Center(
-                  child: Transform.scale(
-                    scale: videoMode == VideoMode.Fill ? 1.1 : 1,
-                    child: AspectRatio(
-                      aspectRatio: getAspectRatio(context),
-                      child: VideoPlayer(
-                        _controller,
+                Consumer(
+                  builder: (context, watch, child) {
+                    var zoom = watch(zoomFactorProvider);
+                    return Center(
+                      child: Transform.scale(
+                        scale: videoMode == VideoMode.Fill ? zoom.data : 1,
+                        child: AspectRatio(
+                          aspectRatio: getAspectRatio(context),
+                          child: VideoPlayer(
+                            _controller,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 Positioned.fill(
                   child: DoubleTapLayer(
@@ -428,15 +434,42 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                 ),
                                 Row(
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 5.0,
+                                    Container(
+                                      width: 40,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.settings,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                contentPadding:
+                                                    EdgeInsets.fromLTRB(
+                                                        24, 24, 24, 16),
+                                                content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Container(
+                                                        child:
+                                                            ZoomFactorSetting()),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
                                       ),
-                                      child: GestureDetector(
-                                        child: Icon(
+                                    ),
+                                    Container(
+                                      width: 40,
+                                      child: IconButton(
+                                        icon: Icon(
                                           Icons.picture_in_picture_rounded,
                                         ),
-                                        onTap: () {
+                                        onPressed: () {
                                           setState(() {
                                             isPictureInPicture = true;
                                             FlutterAndroidPip
@@ -445,22 +478,25 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         },
                                       ),
                                     ),
-                                    Consumer(
-                                      builder: (context, watch, child) {
-                                        final prov = watch(
-                                            widget.episodesWatchedProvider);
-                                        return Checkbox(
-                                          value: prov.isWatched(
-                                            widget.episodeModel.number,
-                                          ),
-                                          checkColor: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          onChanged: (val) {
-                                            setEpisodeAsCompleted(
-                                                context, true);
-                                          },
-                                        );
-                                      },
+                                    Container(
+                                      width: 40,
+                                      child: Consumer(
+                                        builder: (context, watch, child) {
+                                          final prov = watch(
+                                              widget.episodesWatchedProvider);
+                                          return Checkbox(
+                                            value: prov.isWatched(
+                                              widget.episodeModel.number,
+                                            ),
+                                            checkColor: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            onChanged: (val) {
+                                              setEpisodeAsCompleted(
+                                                  context, true);
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(

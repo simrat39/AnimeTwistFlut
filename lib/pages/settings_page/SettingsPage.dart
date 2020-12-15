@@ -5,6 +5,7 @@ import 'package:anime_twist_flut/pages/settings_page/ResetFavouritesSetting.dart
 import 'package:anime_twist_flut/pages/settings_page/ResetRecentlyWatchedSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ResetToWatchSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/SettingsCategory.dart';
+import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -26,6 +27,8 @@ class SettingsPage extends StatelessWidget {
           ResetRecentlyWatchedSetting(),
           ResetToWatchSetting(),
           ResetFavouritesSetting(),
+          SettingsCategory(title: "Player"),
+          ZoomFactorSetting(),
           SettingsCategory(title: "Themeing"),
           AccentPickerSetting(),
           SettingsCategory(title: "Info"),

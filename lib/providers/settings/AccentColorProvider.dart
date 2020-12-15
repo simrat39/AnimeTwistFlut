@@ -14,12 +14,6 @@ class AccentColorProvider extends CustomSettingProvider<Color> {
   Color data = DEFAULT_COLOR;
 
   @override
-  void updateValue(Color newValue) {
-    data = newValue;
-    notifyListeners();
-  }
-
-  @override
   Future initData() async {
     pref = await getPref();
     data = Color(pref.getInt(prefName) ?? DEFAULT_COLOR.value);
