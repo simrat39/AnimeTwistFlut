@@ -4,6 +4,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
+import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -371,8 +372,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                 AnimatedOpacity(
                   duration: 300.milliseconds,
                   opacity: _controller.value.isBuffering ? 1.0 : 0.0,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                  child: Transform.scale(
+                    scale: 0.5,
+                    child: Center(
+                      child: RotatingPinLoadingAnimation(),
+                    ),
                   ),
                 ),
                 AnimatedOpacity(

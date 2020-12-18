@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/all.dart';
 import 'package:supercharged/supercharged.dart';
 
 // Project imports:
+import '../../animations/TwistLoadingWidget.dart';
 import '../../services/twist_service/TwistApiService.dart';
 
 class MOTDCard extends StatefulWidget {
@@ -19,7 +20,8 @@ class MOTDCard extends StatefulWidget {
 class _MOTDCardState extends State<MOTDCard> {
   bool shouldShow = true;
 
-  final _dataInitProvider = FutureProvider.autoDispose<List<String>>((ref) {
+  final _dataInitProvider =
+      FutureProvider.autoDispose<List<String>>((ref) async {
     TwistApiService twistApiService = Get.find();
     return twistApiService.getMOTD();
   });
@@ -104,11 +106,11 @@ class _MOTDCardState extends State<MOTDCard> {
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.all(
-                    30.0,
+                    35.0,
                   ),
                   child: Transform.scale(
-                    scale: 0.6,
-                    child: CircularProgressIndicator(),
+                    scale: 0.4,
+                    child: RotatingPinLoadingAnimation(),
                   ),
                 ),
               ),

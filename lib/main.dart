@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:anime_twist_flut/animations/Transitions.dart';
+import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
@@ -198,7 +199,7 @@ class _RootWindowState extends State<RootWindow> {
             loading: () {
               return Scaffold(
                 body: Center(
-                  child: CircularProgressIndicator(),
+                  child: RotatingPinLoadingAnimation(),
                 ),
               );
             },

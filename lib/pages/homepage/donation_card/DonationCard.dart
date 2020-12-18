@@ -9,6 +9,7 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:flutter_riverpod/all.dart';
 import '../../../utils/homepage/DonationUtils.dart';
+import '../../../animations/TwistLoadingWidget.dart';
 
 class DonationCard extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class DonationCard extends StatefulWidget {
 }
 
 class _DonationCardState extends State<DonationCard> {
-  final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) {
+  final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) async {
     TwistApiService twistApiService = Get.find();
     return twistApiService.getDonationsData();
   });
@@ -161,11 +162,11 @@ class _DonationCardState extends State<DonationCard> {
           child: Center(
             child: Padding(
               padding: EdgeInsets.all(
-                15.0,
+                35,
               ),
               child: Transform.scale(
-                scale: 0.5,
-                child: CircularProgressIndicator(),
+                scale: 0.4,
+                child: RotatingPinLoadingAnimation(),
               ),
             ),
           ),

@@ -12,6 +12,7 @@ import '../../../models/KitsuModel.dart';
 import '../../../services/KitsuApiService.dart';
 import '../../../services/twist_service/TwistApiService.dart';
 import 'ExploreRowItem.dart';
+import '../../../animations/TwistLoadingWidget.dart';
 
 class ExploreRow extends StatefulWidget {
   @override
@@ -124,8 +125,9 @@ class _ExploreRowState extends State<ExploreRow> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 24.0),
+                  Transform.scale(
+                      scale: 0.5, child: RotatingPinLoadingAnimation()),
+                  SizedBox(height: 50.0),
                   Text("Finding you some quality anime!"),
                 ],
               ),

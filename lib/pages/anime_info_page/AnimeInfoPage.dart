@@ -25,6 +25,7 @@ import '../../providers/EpisodesWatchedProvider.dart';
 import '../../services/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/constants.dart';
+import '../../animations/TwistLoadingWidget.dart';
 
 import 'FavouriteButton.dart';
 
@@ -400,7 +401,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                   ),
                 );
               },
-              loading: () => Center(child: CircularProgressIndicator()),
+              loading: () => Center(child: RotatingPinLoadingAnimation()),
               error: (e, s) => ErrorPage(
                 message:
                     "Whoops! An error occured. Looks like twist.moe is down, or your internet is not working. Please try again later.",
