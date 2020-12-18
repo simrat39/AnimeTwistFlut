@@ -40,6 +40,9 @@ class FavouriteButton extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () => prov.toggleFromFavs(twistModel.slug),
+              borderRadius: BorderRadius.circular(
+                8.0,
+              ),
               child: Icon(
                 isFav ? Icons.favorite : Icons.favorite_outline,
                 color: accentColor.computeLuminance() < 0.5
