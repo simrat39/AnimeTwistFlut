@@ -17,6 +17,7 @@ import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -78,6 +79,12 @@ class _RootWindowState extends State<RootWindow> {
 
   var _initDataProvider = FutureProvider.autoDispose((ref) async {
     ref.maintainState = true;
+
+    // android: Make the navbar transparent, the actual color will be set in
+    // styles.xml
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+    ));
 
     // Incase we refresh on an error
     Get.delete<TwistApiService>();
