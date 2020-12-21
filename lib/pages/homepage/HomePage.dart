@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:anime_twist_flut/pages/homepage/to_watch_row/ToWatchRow.dart';
+import 'package:anime_twist_flut/services/AppUpdateService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,6 +49,13 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _uriSub.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    AppUpdateService appUpdateService = AppUpdateService();
+    appUpdateService.checkUpdate(context: context);
   }
 
   Future _checkURIAndLaunchPage([String url]) async {
