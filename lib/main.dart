@@ -19,7 +19,6 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 // Project imports:
 import 'pages/homepage/HomePage.dart';
@@ -157,42 +156,27 @@ class _RootWindowState extends State<RootWindow> {
                       ),
                     ],
                   ),
-                  bottomNavigationBar: Container(
-                    color: Theme.of(context).cardColor,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 8),
-                      child: GNav(
-                        gap: 8,
-                        activeColor:
-                            Theme.of(context).accentColor.computeLuminance() >
-                                    0.5
-                                ? Colors.black
-                                : Colors.white,
-                        iconSize: 24,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                        duration: Duration(milliseconds: 500),
-                        tabBackgroundColor:
-                            Theme.of(context).accentColor.withOpacity(0.8),
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        tabs: [
-                          GButton(
-                            icon: Icons.home_outlined,
-                            text: 'Home',
-                          ),
-                          GButton(
-                            icon: Icons.favorite_outline,
-                            text: 'Favorites',
-                          ),
-                        ],
-                        selectedIndex: prov.state,
-                        onTabChange: (index) {
-                          prov.state = index;
-                          pageController.jumpToPage(index);
-                        },
+                  bottomNavigationBar: BottomNavigationBar(
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home_outlined),
+                        label: 'Home',
                       ),
-                    ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite_outline),
+                        label: 'Favourites',
+                      ),
+                    ],
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    currentIndex: prov.state,
+                    onTap: (value) {
+                      prov.state = value;
+                      setState(() {
+                        pageController.jumpToPage(value);
+                      });
+                    },
+                    selectedItemColor: Theme.of(context).accentColor,
                   ),
                   body: PageView.builder(
                     controller: pageController,
