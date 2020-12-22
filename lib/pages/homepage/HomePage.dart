@@ -66,9 +66,11 @@ class _HomePageState extends State<HomePage>
 
     try {
       String recievedUrl = (url ?? await getInitialLink()) ?? "";
-      RegExp regex = RegExp(r'https://twist.moe/a/(.*)/+.*');
+      RegExp regex = RegExp(r'https://twist.moe/a/(.*)/+(.*)');
       Iterable<Match> matches = regex.allMatches(recievedUrl);
       String slug = matches.length > 0 ? matches.elementAt(0).group(1) : "";
+      int episodeNum =
+          matches.length > 0 ? int.parse(matches.elementAt(0).group(2)) : null;
 
       if (slug.isNotEmpty) {
         for (int i = 0; i < TwistApiService.allTwistModel.length; i++) {
@@ -83,6 +85,8 @@ class _HomePageState extends State<HomePage>
                 context: context,
                 pageBuilder: () => AnimeInfoPage(
                   twistModel: twistModel,
+                  isFromRecentlyWatched: episodeNum > 1 ? true : false,
+                  lastWatchedEpisodeNum: episodeNum,
                 ),
               );
             } else {
@@ -90,6 +94,8 @@ class _HomePageState extends State<HomePage>
                 context: context,
                 pageBuilder: () => AnimeInfoPage(
                   twistModel: twistModel,
+                  isFromRecentlyWatched: episodeNum > 1 ? true : false,
+                  lastWatchedEpisodeNum: episodeNum,
                 ),
               );
             }
