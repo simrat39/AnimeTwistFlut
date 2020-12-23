@@ -17,7 +17,8 @@ class MOTDCard extends StatefulWidget {
   }
 }
 
-class _MOTDCardState extends State<MOTDCard> {
+class _MOTDCardState extends State<MOTDCard>
+    with AutomaticKeepAliveClientMixin {
   bool shouldShow = true;
 
   final _dataInitProvider =
@@ -28,6 +29,7 @@ class _MOTDCardState extends State<MOTDCard> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer(
       builder: (context, watch, child) {
         return watch(_dataInitProvider).when(
@@ -147,4 +149,7 @@ class _MOTDCardState extends State<MOTDCard> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

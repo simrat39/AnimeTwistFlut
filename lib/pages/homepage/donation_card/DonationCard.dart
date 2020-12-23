@@ -18,7 +18,8 @@ class DonationCard extends StatefulWidget {
   }
 }
 
-class _DonationCardState extends State<DonationCard> {
+class _DonationCardState extends State<DonationCard>
+    with AutomaticKeepAliveClientMixin {
   final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) async {
     TwistApiService twistApiService = Get.find();
     return twistApiService.getDonationsData();
@@ -26,6 +27,7 @@ class _DonationCardState extends State<DonationCard> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer(builder: (context, watch, child) {
       return watch(_dataInitProvider).when(
         data: (data) {
@@ -194,4 +196,7 @@ class _DonationCardState extends State<DonationCard> {
       );
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
