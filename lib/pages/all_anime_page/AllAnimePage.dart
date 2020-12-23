@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/widgets/GoBackButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -86,7 +85,7 @@ class _AllAnimePageState extends State<AllAnimePage> {
             ),
           ],
         ),
-        body: CupertinoScrollbar(
+        body: Scrollbar(
           controller: _controller,
           child: ListView.builder(
             controller: _controller,

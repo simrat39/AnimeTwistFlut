@@ -44,41 +44,44 @@ class _FavouritesPageState extends State<FavouritesPage>
             ),
           );
         }
-        return ListView.builder(
-          itemCount: models.length,
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            var model = models[index];
-            _getKitsuModel = KitsuApiService().getKitsuModel(model.kitsuId);
+        return Scrollbar(
+          child: ListView.builder(
+            itemCount: models.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              var model = models[index];
+              _getKitsuModel = KitsuApiService().getKitsuModel(model.kitsuId);
 
-            return ListTile(
-              title: Text(model.title),
-              subtitle: Text("Season " + model.season.toString()),
-              trailing: IconButton(
-                icon: Icon(Icons.favorite),
-                onPressed: () => prov.toggleFromFavs(model.slug),
-              ),
-              onTap: () => Transitions.slideTransition(
-                  context: context,
-                  pageBuilder: () {
-                    return AnimeInfoPage(
-                      twistModel: model,
-                    );
-                  }),
-              leading: FutureBuilder(
-                future: _getKitsuModel,
-                builder: (context, AsyncSnapshot<KitsuModel> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return CircleAvatar(
-                      backgroundImage: NetworkImage(snapshot.data.posterImage),
-                    );
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                },
-              ),
-            );
-          },
+              return ListTile(
+                title: Text(model.title),
+                subtitle: Text("Season " + model.season.toString()),
+                trailing: IconButton(
+                  icon: Icon(Icons.favorite),
+                  onPressed: () => prov.toggleFromFavs(model.slug),
+                ),
+                onTap: () => Transitions.slideTransition(
+                    context: context,
+                    pageBuilder: () {
+                      return AnimeInfoPage(
+                        twistModel: model,
+                      );
+                    }),
+                leading: FutureBuilder(
+                  future: _getKitsuModel,
+                  builder: (context, AsyncSnapshot<KitsuModel> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(snapshot.data.posterImage),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
+              );
+            },
+          ),
         );
       },
     );

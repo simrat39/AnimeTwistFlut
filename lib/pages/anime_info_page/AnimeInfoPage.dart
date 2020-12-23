@@ -6,7 +6,6 @@ import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -185,7 +184,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
               data: (data) {
                 WidgetsBinding.instance.addPostFrameCallback(
                     (timeStamp) => scrollToLastWatched(context));
-                return CupertinoScrollbar(
+                return Scrollbar(
                   controller: _scrollController,
                   child: CustomScrollView(
                     physics: BouncingScrollPhysics(),

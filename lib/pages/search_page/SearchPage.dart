@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/widgets/GoBackButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:spicy_components/spicy_components.dart';
@@ -118,7 +117,7 @@ class _SearchPageState extends State<SearchPage> {
                               child: Text("No results found :("),
                             ),
                           );
-                        return CupertinoScrollbar(
+                        return Scrollbar(
                           child: ListView.builder(
                             controller: _scrollController,
                             shrinkWrap: true,
