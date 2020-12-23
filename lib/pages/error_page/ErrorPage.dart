@@ -1,5 +1,7 @@
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
+import 'package:anime_twist_flut/widgets/GoBackButton.dart';
 import 'package:flutter/material.dart';
+import 'package:spicy_components/spicy_components.dart';
 
 class ErrorPage extends StatefulWidget {
   ErrorPage({Key key, @required this.message, @required this.onRefresh})
@@ -16,8 +18,11 @@ class _ErrorPageState extends State<ErrorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: AppbarText(custom: "error"),
+      bottomNavigationBar: SpicyBottomBar(
+        leftItems: [
+          GoBackButton(),
+          AppbarText(custom: "error"),
+        ],
       ),
       body: Center(
         child: Padding(
