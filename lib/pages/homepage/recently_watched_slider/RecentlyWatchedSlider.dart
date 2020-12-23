@@ -41,6 +41,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
+    double topInset = MediaQuery.of(context).viewPadding.top;
 
     var containerHeight =
         orientation == Orientation.portrait ? height * 0.4 : width * 0.3;
@@ -162,7 +163,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
         return Stack(
           children: [
             Container(
-              height: containerHeight,
+              height: containerHeight + topInset,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -191,9 +192,10 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                     itemCount: provider.recentlyWatchedAnimes.length,
                   ),
                   Positioned(
-                    bottom: orientation == Orientation.portrait
-                        ? height * 0.3
-                        : width * 0.23,
+                    bottom: (orientation == Orientation.portrait
+                            ? height * 0.3
+                            : width * 0.23) +
+                        topInset / 2,
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 20.0,

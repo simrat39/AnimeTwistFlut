@@ -73,7 +73,8 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
               color: Color(0xff070E30).withOpacity(0.7),
             ),
           ),
-          Positioned(
+          Positioned.fill(
+            top: MediaQuery.of(context).viewPadding.top,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
