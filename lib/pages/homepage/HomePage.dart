@@ -107,40 +107,42 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  final List<Widget> widgets = [
+    RecentlyWatchedSlider(),
+    SizedBox(
+      height: 15.0,
+    ),
+    ToWatchRow(),
+    ExploreRow(),
+    Padding(
+      padding: EdgeInsets.only(
+        left: 15.0,
+        right: 15.0,
+        bottom: 8.0,
+      ),
+      child: DonationCard(),
+    ),
+    // View all anime card
+    Padding(
+      padding: EdgeInsets.only(
+        left: 15.0,
+        right: 15.0,
+        bottom: 8.0,
+      ),
+      child: ViewAllAnimeCard(),
+    ),
+    // Message Of The Day Card
+    MOTDCard(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SingleChildScrollView(
+    return ListView.builder(
       physics: BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          RecentlyWatchedSlider(),
-          SizedBox(
-            height: 15.0,
-          ),
-          ToWatchRow(),
-          ExploreRow(),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 15.0,
-              right: 15.0,
-              bottom: 8.0,
-            ),
-            child: DonationCard(),
-          ),
-          // View all anime card
-          Padding(
-            padding: EdgeInsets.only(
-              left: 15.0,
-              right: 15.0,
-              bottom: 8.0,
-            ),
-            child: ViewAllAnimeCard(),
-          ),
-          // Message Of The Day Card
-          MOTDCard(),
-        ],
-      ),
+      itemBuilder: (context, index) => widgets.elementAt(index),
+      itemCount: widgets.length,
+      padding: EdgeInsets.zero,
     );
   }
 
