@@ -29,6 +29,7 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Scrollbar(
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             SizedBox(height: 4.0),
             SettingsCategory(title: "Data"),
