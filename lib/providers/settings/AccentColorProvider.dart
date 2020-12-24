@@ -5,7 +5,7 @@ class AccentColorProvider extends CustomSettingProvider<Color> {
   @override
   String exceptionMessage = "An error occured while getting accent data";
 
-  static const Color DEFAULT_COLOR = Colors.pinkAccent;
+  static const Color DEFAULT_COLOR = Color(0xfffb76a9);
 
   @override
   String prefName = "accent";
