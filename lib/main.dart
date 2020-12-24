@@ -13,6 +13,7 @@ import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
 import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
 import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
+import 'package:anime_twist_flut/providers/settings/DoubleTapDuration.dart';
 import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
@@ -45,6 +46,11 @@ final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
 
 final zoomFactorProvider = ChangeNotifierProvider<ZoomFactorProvider>((ref) {
   return ZoomFactorProvider();
+});
+
+final doubleTapDurationProvider =
+    ChangeNotifierProvider<DoubleTapDurationProvider>((ref) {
+  return DoubleTapDurationProvider();
 });
 
 final recentlyWatchedProvider =
@@ -88,7 +94,10 @@ class _RootWindowState extends State<RootWindow>
     await ref.read(recentlyWatchedProvider).initData();
     await ref.read(toWatchProvider).initData();
     await ref.read(favouriteAnimeProvider).init();
-    await ref.read(zoomFactorProvider).initData();
+
+    // dont be blocking
+    ref.read(zoomFactorProvider).initData();
+    ref.read(doubleTapDurationProvider).initData();
   });
 
   @override

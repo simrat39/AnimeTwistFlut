@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:anime_twist_flut/pages/settings_page/DoubleTapDurationSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
@@ -457,8 +458,13 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                       MainAxisSize.min,
                                                   children: [
                                                     Container(
-                                                        child:
-                                                            ZoomFactorSetting()),
+                                                      child:
+                                                          ZoomFactorSetting(),
+                                                    ),
+                                                    Container(
+                                                      child:
+                                                          DoubleTapDurationSetting(),
+                                                    ),
                                                   ],
                                                 ),
                                               );
