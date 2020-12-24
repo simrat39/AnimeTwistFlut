@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:anime_twist_flut/widgets/SpicyMenuSheet.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
@@ -20,7 +19,6 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:spicy_components/spicy_components.dart';
 
 // Project imports:
 import 'pages/homepage/HomePage.dart';
@@ -109,8 +107,7 @@ class _RootWindowState extends State<RootWindow> {
   @override
   Widget build(BuildContext context) {
     Color bgColor = Color(0xff121212);
-    Color cardColor = Color(0xff1e1e1e);
-    Color bottomBarColor = Color(0xff2d2d2d);
+    Color cardColor = Color(0xff11D1D1D);
 
     return Consumer(
       builder: (context, watch, child) {
@@ -121,41 +118,9 @@ class _RootWindowState extends State<RootWindow> {
               builder: (context, watch, child) {
                 var prov = watch(indexProvider);
                 return Scaffold(
-                  bottomNavigationBar: SpicyBottomBar(
-                    leftItems: [
-                      IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => SpicyMenuSheet(
-                              bgColor: bottomBarColor,
-                              activeColor: accentColor,
-                              activeIndex: prov.state,
-                              onChange: (index) {
-                                prov.state = index;
-                                pageController.jumpToPage(index);
-                                Navigator.of(context).pop();
-                              },
-                              items: [
-                                SpicyMenuSheetItem(
-                                  text: "Home",
-                                  icon: Icons.home,
-                                ),
-                                SpicyMenuSheetItem(
-                                  text: "Favourites",
-                                  icon: Icons.favorite_outline,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      AppbarText(custom: _windowTitles[prov.state]),
-                    ],
-                    bgColor: bottomBarColor,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    rightItems: [
+                  appBar: AppBar(
+                    title: AppbarText(custom: _windowTitles[prov.state]),
+                    actions: [
                       IconButton(
                         icon: Icon(
                           Icons.settings,
@@ -190,6 +155,28 @@ class _RootWindowState extends State<RootWindow> {
                         },
                       ),
                     ],
+                  ),
+                  bottomNavigationBar: BottomNavigationBar(
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home_outlined),
+                        label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite_outline),
+                        label: 'Favourites',
+                      ),
+                    ],
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    currentIndex: prov.state,
+                    onTap: (value) {
+                      prov.state = value;
+                      setState(() {
+                        pageController.jumpToPage(value);
+                      });
+                    },
+                    selectedItemColor: Theme.of(context).accentColor,
                   ),
                   body: PageView.builder(
                     controller: pageController,
@@ -227,10 +214,9 @@ class _RootWindowState extends State<RootWindow> {
             dialogBackgroundColor: bgColor,
             accentColor: accentColor,
             toggleableActiveColor: accentColor,
-            bottomNavigationBarTheme:
-                BottomNavigationBarThemeData(backgroundColor: bottomBarColor),
             appBarTheme: AppBarTheme(
               color: bgColor,
+              elevation: 0.0,
             ),
             cardTheme: CardTheme(
               margin: EdgeInsets.zero,

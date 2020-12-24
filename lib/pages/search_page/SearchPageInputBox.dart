@@ -21,6 +21,12 @@ class SearchPageInputBox extends StatelessWidget {
       cursorColor: Theme.of(context).accentColor,
       decoration: InputDecoration(
         labelText: "Search",
+        prefixIcon: IconButton(
+          icon: Icon(Icons.navigate_before),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(8.0),

@@ -1,11 +1,10 @@
 // Flutter imports:
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
-import 'package:anime_twist_flut/widgets/GoBackButton.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:spicy_components/spicy_components.dart';
 
 // Project imports:
 import '../../animations/Transitions.dart';
@@ -34,11 +33,9 @@ class _AllAnimePageState extends State<AllAnimePage> {
         return true;
       },
       child: Scaffold(
-        bottomNavigationBar: SpicyBottomBar(
-          bgColor: Theme.of(context).cardColor,
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          leftItems: [GoBackButton(), AppbarText()],
-          rightItems: [
+        appBar: AppBar(
+          title: AppbarText(),
+          actions: [
             IconButton(
               icon: Icon(
                 FontAwesomeIcons.chevronUp,
@@ -84,6 +81,7 @@ class _AllAnimePageState extends State<AllAnimePage> {
               },
             ),
           ],
+          elevation: 0.0,
         ),
         body: Scrollbar(
           controller: _controller,

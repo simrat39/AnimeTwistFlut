@@ -3,9 +3,7 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
-import 'package:anime_twist_flut/widgets/GoBackButton.dart';
 import 'package:flutter/material.dart';
-import 'package:spicy_components/spicy_components.dart';
 
 // Package imports:
 import 'package:web_socket_channel/io.dart';
@@ -67,16 +65,11 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
       _controller.jumpTo(_controller.position.maxScrollExtent);
     });
     return Scaffold(
-      bottomNavigationBar: SpicyBottomBar(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        bgColor: Theme.of(context).cardColor,
-        leftItems: [
-          GoBackButton(),
-          AppbarText(
-            custom: "chat",
-          ),
-        ],
-        rightItems: [
+      appBar: AppBar(
+        title: AppbarText(
+          custom: "chat",
+        ),
+        actions: [
           IconButton(
             icon: Icon(
               Icons.arrow_downward,

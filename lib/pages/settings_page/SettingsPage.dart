@@ -7,9 +7,7 @@ import 'package:anime_twist_flut/pages/settings_page/ResetRecentlyWatchedSetting
 import 'package:anime_twist_flut/pages/settings_page/ResetToWatchSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/SettingsCategory.dart';
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
-import 'package:anime_twist_flut/widgets/GoBackButton.dart';
 import 'package:flutter/material.dart';
-import 'package:spicy_components/spicy_components.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key key}) : super(key: key);
@@ -17,15 +15,10 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: SpicyBottomBar(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        bgColor: Theme.of(context).cardColor,
-        leftItems: [
-          GoBackButton(),
-          AppbarText(
-            custom: "settings",
-          ),
-        ],
+      appBar: AppBar(
+        title: AppbarText(
+          custom: "settings",
+        ),
       ),
       body: Scrollbar(
         child: ListView(
