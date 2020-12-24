@@ -47,6 +47,7 @@ class _FavouritesPageState extends State<FavouritesPage>
         return Scrollbar(
           child: ListView.builder(
             itemCount: models.length,
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               var model = models[index];
               _getKitsuModel = KitsuApiService().getKitsuModel(model.kitsuId);
