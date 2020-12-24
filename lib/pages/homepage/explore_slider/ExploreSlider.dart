@@ -95,7 +95,6 @@ class _ExploreRowState extends State<ExploreRow> {
                 ),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return _randomCards[index];
                   },

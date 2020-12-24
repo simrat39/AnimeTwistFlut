@@ -169,7 +169,6 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                 children: [
                   PageView.builder(
                     controller: _controller,
-                    physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       // Since the lastWatchedAnimes are stored from oldest first to
                       // newest last, reverse the list so that the latest watched

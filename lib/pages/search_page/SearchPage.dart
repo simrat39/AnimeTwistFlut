@@ -110,7 +110,6 @@ class _SearchPageState extends State<SearchPage> {
                         child: ListView.builder(
                           controller: _scrollController,
                           shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
                           itemBuilder: (context, index) => results[index],
                           itemCount: results.length,
                         ),

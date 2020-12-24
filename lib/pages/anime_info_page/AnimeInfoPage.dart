@@ -187,7 +187,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                 return Scrollbar(
                   controller: _scrollController,
                   child: CustomScrollView(
-                    physics: BouncingScrollPhysics(),
                     controller: _scrollController,
                     slivers: [
                       SliverAppBar(

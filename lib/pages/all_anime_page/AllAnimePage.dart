@@ -87,7 +87,6 @@ class _AllAnimePageState extends State<AllAnimePage> {
           controller: _controller,
           child: ListView.builder(
             controller: _controller,
-            physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               TwistModel model = TwistApiService.allTwistModel.elementAt(index);
               return SearchListTile(

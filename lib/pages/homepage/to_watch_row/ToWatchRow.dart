@@ -56,7 +56,6 @@ class _ToWatchRowState extends State<ToWatchRow> {
                 ),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     // The list is reversed as the animes are stored from old
                     // to new and we want the user to see the latest added

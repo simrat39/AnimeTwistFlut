@@ -139,7 +139,6 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) => widgets.elementAt(index),
       itemCount: widgets.length,
       padding: EdgeInsets.zero,
