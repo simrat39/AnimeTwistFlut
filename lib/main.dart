@@ -47,10 +47,6 @@ final zoomFactorProvider = ChangeNotifierProvider<ZoomFactorProvider>((ref) {
   return ZoomFactorProvider();
 });
 
-final indexProvider = StateProvider<int>((ref) {
-  return 0;
-});
-
 final recentlyWatchedProvider =
     ChangeNotifierProvider<RecentlyWatchedProvider>((ref) {
   return RecentlyWatchedProvider();
@@ -68,13 +64,10 @@ class RootWindow extends StatefulWidget {
   _RootWindowState createState() => _RootWindowState();
 }
 
-class _RootWindowState extends State<RootWindow> {
-  final List<String> _windowTitles = ["twist", "favourites"];
-  PageController pageController;
-  var pages = [
-    HomePage(),
-    FavouritesPage(),
-  ];
+class _RootWindowState extends State<RootWindow>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+  var pages = [HomePage(), FavouritesPage()];
 
   var _initDataProvider = FutureProvider.autoDispose((ref) async {
     ref.maintainState = true;
@@ -100,8 +93,8 @@ class _RootWindowState extends State<RootWindow> {
 
   @override
   void initState() {
-    pageController = PageController();
     super.initState();
+    _tabController = TabController(length: pages.length, vsync: this);
   }
 
   @override
@@ -116,73 +109,65 @@ class _RootWindowState extends State<RootWindow> {
           home: watch(_initDataProvider).when(
             data: (v) => Consumer(
               builder: (context, watch, child) {
-                var prov = watch(indexProvider);
                 return Scaffold(
-                  appBar: AppBar(
-                    title: AppbarText(custom: _windowTitles[prov.state]),
-                    actions: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.settings,
+                  body: NestedScrollView(
+                    headerSliverBuilder: (context, innerBoxIsScrolled) {
+                      return [
+                        SliverAppBar(
+                          bottom: TabBar(
+                            controller: _tabController,
+                            indicatorColor: Theme.of(context).accentColor,
+                            tabs: [
+                              Tab(icon: Icon(Icons.home)),
+                              Tab(icon: Icon(Icons.favorite_outline)),
+                            ],
+                          ),
+                          title: AppbarText(),
+                          actions: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.settings,
+                              ),
+                              onPressed: () {
+                                Transitions.slideTransition(
+                                  context: context,
+                                  pageBuilder: () => SettingsPage(),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.chat_bubble,
+                              ),
+                              onPressed: () {
+                                Transitions.slideTransition(
+                                  context: context,
+                                  pageBuilder: () => ChatPage(),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.search,
+                              ),
+                              onPressed: () {
+                                Transitions.slideTransition(
+                                  context: context,
+                                  pageBuilder: () => SearchPage(),
+                                );
+                              },
+                            ),
+                          ],
+                          pinned: true,
+                          floating: true,
+                          snap: true,
                         ),
-                        onPressed: () {
-                          Transitions.slideTransition(
-                            context: context,
-                            pageBuilder: () => SettingsPage(),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.chat_bubble,
-                        ),
-                        onPressed: () {
-                          Transitions.slideTransition(
-                            context: context,
-                            pageBuilder: () => ChatPage(),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.search,
-                        ),
-                        onPressed: () {
-                          Transitions.slideTransition(
-                            context: context,
-                            pageBuilder: () => SearchPage(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  bottomNavigationBar: BottomNavigationBar(
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home_outlined),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.favorite_outline),
-                        label: 'Favourites',
-                      ),
-                    ],
-                    showSelectedLabels: false,
-                    showUnselectedLabels: false,
-                    currentIndex: prov.state,
-                    onTap: (value) {
-                      prov.state = value;
-                      setState(() {
-                        pageController.jumpToPage(value);
-                      });
+                      ];
                     },
-                    selectedItemColor: Theme.of(context).accentColor,
-                  ),
-                  body: PageView.builder(
-                    controller: pageController,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => pages[index],
-                    itemCount: pages.length,
+                    body: TabBarView(
+                      controller: _tabController,
+                      children: pages,
+                    ),
                   ),
                 );
               },
