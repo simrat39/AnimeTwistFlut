@@ -138,10 +138,17 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ListView.builder(
-      itemBuilder: (context, index) => widgets.elementAt(index),
-      itemCount: widgets.length,
-      padding: EdgeInsets.zero,
+    return CustomScrollView(
+      slivers: [
+        SliverOverlapInjector(
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+              (context, index) => widgets.elementAt(index),
+              childCount: widgets.length),
+        ),
+      ],
     );
   }
 

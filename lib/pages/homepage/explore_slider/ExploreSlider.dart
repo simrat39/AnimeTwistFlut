@@ -21,7 +21,8 @@ class ExploreRow extends StatefulWidget {
   }
 }
 
-class _ExploreRowState extends State<ExploreRow> {
+class _ExploreRowState extends State<ExploreRow>
+    with AutomaticKeepAliveClientMixin {
   List<Widget> _randomCards = [];
   FutureProvider _randomCardsProvider;
 
@@ -63,6 +64,7 @@ class _ExploreRowState extends State<ExploreRow> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double height = MediaQuery.of(context).size.height;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Consumer(
@@ -163,4 +165,7 @@ class _ExploreRowState extends State<ExploreRow> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

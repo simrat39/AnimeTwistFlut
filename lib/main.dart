@@ -120,56 +120,64 @@ class _RootWindowState extends State<RootWindow>
               builder: (context, watch, child) {
                 return Scaffold(
                   body: NestedScrollView(
+                    floatHeaderSlivers: true,
                     headerSliverBuilder: (context, innerBoxIsScrolled) {
                       return [
-                        SliverAppBar(
-                          bottom: TabBar(
-                            controller: _tabController,
-                            indicatorColor: Theme.of(context).accentColor,
-                            tabs: [
-                              Tab(icon: Icon(Icons.home)),
-                              Tab(icon: Icon(Icons.favorite_outline)),
-                            ],
+                        SliverOverlapAbsorber(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context,
                           ),
-                          title: AppbarText(),
-                          actions: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.settings,
-                              ),
-                              onPressed: () {
-                                Transitions.slideTransition(
-                                  context: context,
-                                  pageBuilder: () => SettingsPage(),
-                                );
-                              },
+                          sliver: SliverAppBar(
+                            primary: true,
+                            bottom: TabBar(
+                              controller: _tabController,
+                              indicatorColor: Theme.of(context).accentColor,
+                              tabs: [
+                                Tab(icon: Icon(Icons.home)),
+                                Tab(icon: Icon(Icons.favorite_outline)),
+                              ],
                             ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.chat_bubble,
+                            title: AppbarText(),
+                            actions: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.settings,
+                                ),
+                                onPressed: () {
+                                  Transitions.slideTransition(
+                                    context: context,
+                                    pageBuilder: () => SettingsPage(),
+                                  );
+                                },
                               ),
-                              onPressed: () {
-                                Transitions.slideTransition(
-                                  context: context,
-                                  pageBuilder: () => ChatPage(),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.search,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.chat_bubble,
+                                ),
+                                onPressed: () {
+                                  Transitions.slideTransition(
+                                    context: context,
+                                    pageBuilder: () => ChatPage(),
+                                  );
+                                },
                               ),
-                              onPressed: () {
-                                Transitions.slideTransition(
-                                  context: context,
-                                  pageBuilder: () => SearchPage(),
-                                );
-                              },
-                            ),
-                          ],
-                          pinned: true,
-                          floating: true,
-                          snap: true,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.search,
+                                ),
+                                onPressed: () {
+                                  Transitions.slideTransition(
+                                    context: context,
+                                    pageBuilder: () => SearchPage(),
+                                  );
+                                },
+                              ),
+                            ],
+                            pinned: true,
+                            floating: true,
+                            snap: true,
+                          ),
                         ),
                       ];
                     },

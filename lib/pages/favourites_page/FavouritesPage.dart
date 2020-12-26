@@ -6,6 +6,7 @@ import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:anime_twist_flut/services/KitsuApiService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -45,42 +46,53 @@ class _FavouritesPageState extends State<FavouritesPage>
           );
         }
         return Scrollbar(
-          child: ListView.builder(
-            itemCount: models.length,
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index) {
-              var model = models[index];
-              _getKitsuModel = KitsuApiService().getKitsuModel(model.kitsuId);
+          child: CustomScrollView(
+            slivers: [
+              SliverOverlapInjector(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    var model = models[index];
+                    _getKitsuModel =
+                        KitsuApiService().getKitsuModel(model.kitsuId);
 
-              return ListTile(
-                title: Text(model.title),
-                subtitle: Text("Season " + model.season.toString()),
-                trailing: IconButton(
-                  icon: Icon(Icons.favorite),
-                  onPressed: () => prov.toggleFromFavs(model.slug),
-                ),
-                onTap: () => Transitions.slideTransition(
-                    context: context,
-                    pageBuilder: () {
-                      return AnimeInfoPage(
-                        twistModel: model,
-                      );
-                    }),
-                leading: FutureBuilder(
-                  future: _getKitsuModel,
-                  builder: (context, AsyncSnapshot<KitsuModel> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(snapshot.data.posterImage),
-                      );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
+                    return ListTile(
+                      title: Text(model.title),
+                      subtitle: Text("Season " + model.season.toString()),
+                      trailing: IconButton(
+                        icon: Icon(Icons.favorite),
+                        onPressed: () => prov.toggleFromFavs(model.slug),
+                      ),
+                      onTap: () => Transitions.slideTransition(
+                          context: context,
+                          pageBuilder: () {
+                            return AnimeInfoPage(
+                              twistModel: model,
+                            );
+                          }),
+                      leading: FutureBuilder(
+                        future: _getKitsuModel,
+                        builder: (context, AsyncSnapshot<KitsuModel> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            return CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(snapshot.data.posterImage),
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      ),
+                    );
                   },
+                  childCount: models.length,
                 ),
-              );
-            },
+              ),
+            ],
           ),
         );
       },
