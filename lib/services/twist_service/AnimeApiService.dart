@@ -5,28 +5,24 @@ import 'dart:convert';
 import '../../cached_http_get/CachedHttpGet.dart';
 import '../../models/TwistModel.dart';
 import '../../secrets.dart';
-import '../AnimeCacheService.dart';
+import '../CacheService.dart';
+import 'package:supercharged/supercharged.dart';
 
 class AnimeApiService {
   static const String baseUrl = 'https://twist.moe/api/anime';
 
   Future<List<TwistModel>> getAllTwistModel() async {
-    try {
-      AnimeCacheService cacheService = AnimeCacheService();
+    // try {
+    CacheService cacheService = CacheService(
+      "/anime",
+      7.days,
+    );
 
-      String cachedAnimeData = await cacheService.getCachedAnimeData();
-      DateTime cacheDate = await cacheService.getCachedDateTime();
+    await cacheService.initialize();
 
-      String response;
-
-      List<TwistModel> ret = [];
-
-      if (cacheService.shouldUpdateCache(
-        cachedAnimeData: cachedAnimeData,
-        dateTime: cacheDate,
-      )) {
-        print("Data is not cached or very old");
-        response = await CachedHttpGet.get(
+    String response = await cacheService.getDataAndCacheIfNeeded(
+      getData: () {
+        return CachedHttpGet.get(
           Request(
             url: baseUrl,
             header: {
@@ -34,30 +30,31 @@ class AnimeApiService {
             },
           ),
         );
-
-        await cacheService.cacheAnimeData(
-          data: response,
-          dateTime: DateTime.now(),
-        );
-      } else {
+      },
+      onCache: () {
+        print("Data is not cached or very old");
+      },
+      onSkipCache: () async {
         print("Data is cached");
-        response = cachedAnimeData;
-        // Delay it a bit so that the loading animation doesnt flash.
         await Future.delayed(Duration(milliseconds: 400));
-      }
+      },
+    );
 
-      List<dynamic> jsonData = jsonDecode(response);
-
-      jsonData.forEach(
-        (element) async {
-          ret.add(
-            TwistModel.fromJson(element),
-          );
-        },
-      );
-      return ret;
-    } catch (e) {
-      throw Exception("Huh");
+    if (response == null) {
+      throw Exception("An error occured while getting all the animes :)");
     }
+
+    List<TwistModel> ret = [];
+
+    List<dynamic> jsonData = jsonDecode(response);
+
+    jsonData.forEach(
+      (element) async {
+        ret.add(
+          TwistModel.fromJson(element),
+        );
+      },
+    );
+    return ret;
   }
 }
