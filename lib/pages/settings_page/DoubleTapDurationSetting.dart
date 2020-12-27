@@ -32,23 +32,28 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
                     onPressed: () => Navigator.of(context).pop(),
                   )
                 ],
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ...(DoubleTapDurationProvider.POSSIBLE_VALUES
-                        .map(
-                          (e) => RadioListTile<int>(
-                            value: e,
-                            title: Text("$e Seconds"),
-                            groupValue: provider.value,
-                            onChanged: (value) {
-                              provider.updateValue(value);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        )
-                        .toList())
-                  ],
+                content: Scrollbar(
+                  thickness: 4,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...(DoubleTapDurationProvider.POSSIBLE_VALUES
+                            .map(
+                              (e) => RadioListTile<int>(
+                                value: e,
+                                title: Text("$e Seconds"),
+                                groupValue: provider.value,
+                                onChanged: (value) {
+                                  provider.updateValue(value);
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            )
+                            .toList())
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
