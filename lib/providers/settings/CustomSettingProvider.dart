@@ -1,28 +1,23 @@
+import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class CustomSettingProvider<T> extends ChangeNotifier {
-  String prefName = "pref";
+  CustomSettingProvider(this.sharedPreferencesManager);
+
+  final SharedPreferencesManager sharedPreferencesManager;
+
+  String preferenceName = "pref";
   String exceptionMessage = "Could not load setting";
 
-  T data;
-  SharedPreferences pref;
+  T value;
 
-  Future initData();
-
-  Future<SharedPreferences> getPref() async {
-    try {
-      return await SharedPreferences.getInstance();
-    } catch (e) {
-      throw Exception(exceptionMessage);
-    }
-  }
+  Future initalize();
 
   void updateValue(T newValue) {
-    data = newValue;
+    value = newValue;
     notifyListeners();
-    writePref();
+    writeValue();
   }
 
-  void writePref();
+  void writeValue();
 }

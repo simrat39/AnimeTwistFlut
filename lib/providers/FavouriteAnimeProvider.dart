@@ -1,68 +1,79 @@
 import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FavouriteAnimeProvider extends ChangeNotifier {
   static const String PREF_NAME = "favourite_anime";
 
-  List<String> favouriteAnimeSlugsList = [];
-  SharedPreferences pref;
+  final SharedPreferencesManager sharedPreferencesManager;
 
-  Future init() async {
-    try {
-      pref = await SharedPreferences.getInstance();
-      favouriteAnimeSlugsList = _getStoredData();
-    } catch (e) {
-      throw Exception("Cannot load fav animes\n" + e);
-    }
+  List<String> favouriteAnimesSlugList = [];
+
+  FavouriteAnimeProvider(this.sharedPreferencesManager);
+
+  /// Initializes our provider.
+  /// Reads the value of [favouriteAnimesSlugList] saved on the device using
+  /// SharedPreferences with key [PREF_NAME].
+  Future initialize() async {
+    favouriteAnimesSlugList =
+        sharedPreferencesManager.preferences.getStringList(PREF_NAME);
     notifyListeners();
   }
 
-  List<String> _getStoredData() {
-    return pref.getStringList(PREF_NAME) ?? [];
-  }
-
+  /// Updates the SharedPreference [PREF_NAME] with [favouriteAnimesSlugList].
   void _writeData() {
-    pref.setStringList(PREF_NAME, favouriteAnimeSlugsList);
-    super.notifyListeners();
+    sharedPreferencesManager.preferences
+        .setStringList(PREF_NAME, favouriteAnimesSlugList);
+    notifyListeners();
   }
 
-  bool isSlugInFavourites(String val) {
-    return favouriteAnimeSlugsList.contains(val);
+  /// Checks if [slug] is in [favouriteAnimesSlugList] and returns true if it is
+  /// present.
+  bool isFavourite(String slug) {
+    return favouriteAnimesSlugList.contains(slug);
   }
 
-  void addToFavs(String slug) {
-    favouriteAnimeSlugsList.add(slug);
+  /// Adds [slug] to [favouriteAnimesSlugList] and writes the data to the
+  /// device.
+  void addToFavourites(String slug) {
+    favouriteAnimesSlugList.add(slug);
     _writeData();
   }
 
-  void removeFromFavs(String slug) {
-    favouriteAnimeSlugsList.remove(slug);
+  /// Removes [slug] to [favouriteAnimesSlugList] and writes the data to the
+  /// device.
+  void removeFromFavourites(String slug) {
+    favouriteAnimesSlugList.remove(slug);
     _writeData();
   }
 
-  void clearFavsData() {
-    favouriteAnimeSlugsList.clear();
+  /// Removes everything from [favouriteAnimesSlugList] and writes the data
+  /// to the device.
+  void clearFavourites() {
+    favouriteAnimesSlugList.clear();
     _writeData();
   }
 
-  void toggleFromFavs(String slug) {
-    if (isSlugInFavourites(slug)) {
-      removeFromFavs(slug);
+  /// If [slug] is in [favouriteAnimesSlugList] then remove it, else add it.
+  void toggleFromFavourites(String slug) {
+    if (isFavourite(slug)) {
+      removeFromFavourites(slug);
     } else {
-      addToFavs(slug);
+      addToFavourites(slug);
     }
   }
 
-  List<TwistModel> getTwistModelsForFavs() {
+  /// Returns a [TwistModel] for each slug in [favouriteAnimesSlugList].
+  List<TwistModel> getTwistModelsForFavourites() {
     TwistApiService twistApiService = TwistApiService();
-    return favouriteAnimeSlugsList
+    return favouriteAnimesSlugList
         .map((e) => twistApiService.getTwistModelFromSlug(e))
         .toList();
   }
 
+  /// Whether we have any favourites.
   bool hasData() {
-    return favouriteAnimeSlugsList.isNotEmpty;
+    return favouriteAnimesSlugList.isNotEmpty;
   }
 }

@@ -33,7 +33,7 @@ class _FavouritesPageState extends State<FavouritesPage>
       builder: (context, watch, child) {
         var prov = watch(favouriteAnimeProvider);
         List<TwistModel> models =
-            prov.getTwistModelsForFavs().reversed.toList();
+            prov.getTwistModelsForFavourites().reversed.toList();
 
         if (models.isEmpty) {
           return SlideInAnimation(
@@ -64,7 +64,7 @@ class _FavouritesPageState extends State<FavouritesPage>
                       subtitle: Text("Season " + model.season.toString()),
                       trailing: IconButton(
                         icon: Icon(Icons.favorite),
-                        onPressed: () => prov.toggleFromFavs(model.slug),
+                        onPressed: () => prov.toggleFromFavourites(model.slug),
                       ),
                       onTap: () => Transitions.slideTransition(
                           context: context,

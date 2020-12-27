@@ -15,6 +15,7 @@ import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
 import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:anime_twist_flut/providers/settings/DoubleTapDuration.dart';
 import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
+import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
@@ -40,17 +41,21 @@ void main() {
   runApp(ProviderScope(child: RootWindow()));
 }
 
+final sharedPreferencesProvider = Provider<SharedPreferencesManager>((ref) {
+  return SharedPreferencesManager();
+});
+
 final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
-  return AccentColorProvider();
+  return AccentColorProvider(ref.read(sharedPreferencesProvider));
 });
 
 final zoomFactorProvider = ChangeNotifierProvider<ZoomFactorProvider>((ref) {
-  return ZoomFactorProvider();
+  return ZoomFactorProvider(ref.read(sharedPreferencesProvider));
 });
 
 final doubleTapDurationProvider =
     ChangeNotifierProvider<DoubleTapDurationProvider>((ref) {
-  return DoubleTapDurationProvider();
+  return DoubleTapDurationProvider(ref.read(sharedPreferencesProvider));
 });
 
 final recentlyWatchedProvider =
@@ -63,7 +68,7 @@ final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
 });
 
 final favouriteAnimeProvider = ChangeNotifierProvider<FavouriteAnimeProvider>(
-    (ref) => FavouriteAnimeProvider());
+    (ref) => FavouriteAnimeProvider(ref.read(sharedPreferencesProvider)));
 
 class RootWindow extends StatefulWidget {
   @override
@@ -87,17 +92,19 @@ class _RootWindowState extends State<RootWindow>
     // Incase we refresh on an error
     Get.delete<TwistApiService>();
 
-    await ref.read(accentProvider).initData();
+    await ref.read(sharedPreferencesProvider).initialize();
+
+    await ref.read(accentProvider).initalize();
     TwistApiService twistApiService = Get.put(TwistApiService());
     await NetworkInfoProvider().throwIfNoNetwork();
     await twistApiService.setTwistModels();
-    await ref.read(recentlyWatchedProvider).initData();
-    await ref.read(toWatchProvider).initData();
-    await ref.read(favouriteAnimeProvider).init();
+    await ref.read(recentlyWatchedProvider).initialize();
+    await ref.read(toWatchProvider).initialize();
+    await ref.read(favouriteAnimeProvider).initialize();
 
     // dont be blocking
-    ref.read(zoomFactorProvider).initData();
-    ref.read(doubleTapDurationProvider).initData();
+    ref.read(zoomFactorProvider).initalize();
+    ref.read(doubleTapDurationProvider).initalize();
   });
 
   @override
@@ -113,7 +120,7 @@ class _RootWindowState extends State<RootWindow>
 
     return Consumer(
       builder: (context, watch, child) {
-        var accentColor = watch(accentProvider).data;
+        var accentColor = watch(accentProvider).value;
         return MaterialApp(
           home: watch(_initDataProvider).when(
             data: (v) => Consumer(

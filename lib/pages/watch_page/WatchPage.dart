@@ -352,7 +352,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                     var zoom = watch(zoomFactorProvider);
                     return Center(
                       child: Transform.scale(
-                        scale: videoMode == VideoMode.Fill ? zoom.data : 1,
+                        scale: videoMode == VideoMode.Fill ? zoom.value : 1,
                         child: AspectRatio(
                           aspectRatio: getAspectRatio(context),
                           child: VideoPlayer(

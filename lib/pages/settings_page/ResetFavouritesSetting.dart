@@ -27,7 +27,7 @@ class _ResetFavouritesSettingState extends State<ResetFavouritesSetting> {
         icon: Icon(Icons.restore),
         onPressed: provider.hasData()
             ? () => setState(() {
-                  provider.clearFavsData();
+                  provider.clearFavourites();
                   showConfirmationSnackbar();
                 })
             : null,

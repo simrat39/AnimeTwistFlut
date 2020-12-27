@@ -34,12 +34,12 @@ class FavouriteButton extends StatelessWidget {
       child: Consumer(
         builder: (context, watch, child) {
           var prov = watch(favouriteAnimeProvider);
-          bool isFav = prov.isSlugInFavourites(twistModel.slug);
+          bool isFav = prov.isFavourite(twistModel.slug);
 
           return Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => prov.toggleFromFavs(twistModel.slug),
+              onTap: () => prov.toggleFromFavourites(twistModel.slug),
               borderRadius: BorderRadius.circular(
                 8.0,
               ),

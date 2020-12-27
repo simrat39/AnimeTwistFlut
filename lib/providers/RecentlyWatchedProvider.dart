@@ -18,7 +18,7 @@ class RecentlyWatchedProvider extends ChangeNotifier {
   static const String BOX_NAME = 'lastWatched';
   static const String KEY_NAME = 'list';
 
-  Future initData() async {
+  Future initialize() async {
     try {
       await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
       Hive.registerAdapter<TwistModel>(TwistModelAdapter());

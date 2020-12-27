@@ -17,7 +17,7 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
     var provider = context.read(doubleTapDurationProvider);
     return ListTile(
       title: Text("Double-tap to seek duration"),
-      subtitle: Text(provider.data.toString() + " Seconds"),
+      subtitle: Text(provider.value.toString() + " Seconds"),
       onTap: () => showDialog(
         context: context,
         builder: (context) {
@@ -38,7 +38,7 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
                       (e) => RadioListTile<int>(
                         value: e,
                         title: Text("$e Seconds"),
-                        groupValue: provider.data,
+                        groupValue: provider.value,
                         onChanged: (value) {
                           provider.updateValue(value);
                           Navigator.of(context).pop();

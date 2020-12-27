@@ -29,10 +29,10 @@ class _ZoomFactorSettingState extends State<ZoomFactorSetting> {
                 provider.updateValue(value);
               });
             },
-            value: provider.data,
+            value: provider.value,
             min: ZoomFactorProvider.MIN,
             max: ZoomFactorProvider.MAX,
-            label: provider.data.toString(),
+            label: provider.value.toString(),
             divisions: 20,
           ),
         ),

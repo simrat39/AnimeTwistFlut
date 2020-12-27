@@ -24,7 +24,7 @@ class DoubleTapLayer extends StatelessWidget {
       child: Consumer(
         builder: (context, watch, child) {
           var prov = watch(doubleTapDurationProvider);
-          int skipDuration = prov.data;
+          int skipDuration = prov.value;
           return Row(
             children: [
               Container(

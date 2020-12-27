@@ -18,7 +18,7 @@ class ToWatchProvider extends ChangeNotifier {
   static const String BOX_NAME = 'toWatch';
   static const String KEY_NAME = 'list';
 
-  Future initData() async {
+  Future initialize() async {
     try {
       var box = await Hive.openBox(BOX_NAME);
       // For whatever reason, directly assigning toWatchAnimes to

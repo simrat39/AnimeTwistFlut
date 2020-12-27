@@ -55,7 +55,6 @@ class AnimeApiService {
           );
         },
       );
-      print("reached here");
       return ret;
     } catch (e) {
       throw Exception("Huh");

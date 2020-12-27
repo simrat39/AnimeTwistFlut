@@ -1,27 +1,31 @@
 import 'package:anime_twist_flut/providers/settings/CustomSettingProvider.dart';
+import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:flutter/material.dart';
 
 class AccentColorProvider extends CustomSettingProvider<Color> {
+  AccentColorProvider(SharedPreferencesManager sharedPreferencesManager)
+      : super(sharedPreferencesManager);
+
   @override
   String exceptionMessage = "An error occured while getting accent data";
 
   static const Color DEFAULT_COLOR = Color(0xfffb76a9);
 
   @override
-  String prefName = "accent";
+  String preferenceName = "accent";
 
   @override
-  Color data = DEFAULT_COLOR;
+  Color value = DEFAULT_COLOR;
 
   @override
-  Future initData() async {
-    pref = await getPref();
-    data = Color(pref.getInt(prefName) ?? DEFAULT_COLOR.value);
+  Future initalize() async {
+    value = Color(sharedPreferencesManager.preferences.getInt(preferenceName) ??
+        DEFAULT_COLOR.value);
     notifyListeners();
   }
 
   @override
-  void writePref() {
-    pref.setInt(prefName, data.value);
+  void writeValue() {
+    sharedPreferencesManager.preferences.setInt(preferenceName, value.value);
   }
 }
