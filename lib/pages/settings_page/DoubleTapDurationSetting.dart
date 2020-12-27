@@ -14,43 +14,47 @@ class DoubleTapDurationSetting extends StatefulWidget {
 class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
   @override
   Widget build(BuildContext context) {
-    var provider = context.read(doubleTapDurationProvider);
-    return ListTile(
-      title: Text("Double-tap to seek duration"),
-      subtitle: Text(provider.value.toString() + " Seconds"),
-      onTap: () => showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Double-tap to seek"),
-            contentPadding: EdgeInsets.symmetric(vertical: 8),
-            actions: [
-              TextButton(
-                child: Text("Close"),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            ],
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ...(DoubleTapDurationProvider.POSSIBLE_VALUES
-                    .map(
-                      (e) => RadioListTile<int>(
-                        value: e,
-                        title: Text("$e Seconds"),
-                        groupValue: provider.value,
-                        onChanged: (value) {
-                          provider.updateValue(value);
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    )
-                    .toList())
-              ],
-            ),
-          );
-        },
-      ),
+    return Consumer(
+      builder: (context, watch, child) {
+        var provider = watch(doubleTapDurationProvider);
+        return ListTile(
+          title: Text("Double-tap to seek duration"),
+          subtitle: Text(provider.value.toString() + " Seconds"),
+          onTap: () => showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Double-tap to seek"),
+                contentPadding: EdgeInsets.symmetric(vertical: 8),
+                actions: [
+                  TextButton(
+                    child: Text("Close"),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                ],
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...(DoubleTapDurationProvider.POSSIBLE_VALUES
+                        .map(
+                          (e) => RadioListTile<int>(
+                            value: e,
+                            title: Text("$e Seconds"),
+                            groupValue: provider.value,
+                            onChanged: (value) {
+                              provider.updateValue(value);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        )
+                        .toList())
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
