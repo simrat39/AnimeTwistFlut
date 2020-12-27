@@ -213,6 +213,7 @@ class _RootWindowState extends State<RootWindow>
               }
               return ErrorPage(
                 message: message,
+                stackTrace: s,
                 onRefresh: () => context.refresh(_initDataProvider),
               );
             },
