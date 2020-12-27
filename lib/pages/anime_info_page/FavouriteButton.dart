@@ -1,11 +1,15 @@
 import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 
 class FavouriteButton extends StatelessWidget {
-  const FavouriteButton({Key key, @required this.twistModel}) : super(key: key);
+  const FavouriteButton(
+      {Key key, @required this.twistModel, @required this.kitsuModel})
+      : super(key: key);
 
+  final KitsuModel kitsuModel;
   final TwistModel twistModel;
 
   @override
@@ -39,7 +43,10 @@ class FavouriteButton extends StatelessWidget {
           return Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => prov.toggleFromFavourites(twistModel.slug),
+              onTap: () => prov.toggleFromFavourites(
+                twistModel,
+                kitsuModel,
+              ),
               borderRadius: BorderRadius.circular(
                 8.0,
               ),

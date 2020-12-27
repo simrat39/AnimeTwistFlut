@@ -68,7 +68,7 @@ final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
 });
 
 final favouriteAnimeProvider = ChangeNotifierProvider<FavouriteAnimeProvider>(
-    (ref) => FavouriteAnimeProvider(ref.read(sharedPreferencesProvider)));
+    (ref) => FavouriteAnimeProvider());
 
 class RootWindow extends StatefulWidget {
   @override

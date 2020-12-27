@@ -1,10 +1,10 @@
 import 'package:anime_twist_flut/animations/SlideInAnimation.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/main.dart';
-import 'package:anime_twist_flut/models/KitsuModel.dart';
-import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/models/FavouritedModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
-import 'package:anime_twist_flut/services/KitsuApiService.dart';
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -19,7 +19,7 @@ class FavouritesPage extends StatefulWidget {
 
 class _FavouritesPageState extends State<FavouritesPage>
     with AutomaticKeepAliveClientMixin {
-  Future<KitsuModel> _getKitsuModel;
+  TwistApiService twistApiService = Get.find();
 
   @override
   void initState() {
@@ -32,10 +32,10 @@ class _FavouritesPageState extends State<FavouritesPage>
     return Consumer(
       builder: (context, watch, child) {
         var prov = watch(favouriteAnimeProvider);
-        List<TwistModel> models =
-            prov.getTwistModelsForFavourites().reversed.toList();
+        List<FavouritedModel> favouritedAnimes =
+            prov.favouritedAnimes.reversed.toList();
 
-        if (models.isEmpty) {
+        if (favouritedAnimes.isEmpty) {
           return SlideInAnimation(
             child: Center(
               child: Icon(
@@ -56,16 +56,15 @@ class _FavouritesPageState extends State<FavouritesPage>
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    var model = models[index];
-                    _getKitsuModel =
-                        KitsuApiService().getKitsuModel(model.kitsuId);
+                    var model = twistApiService
+                        .getTwistModelFromSlug(favouritedAnimes[index].slug);
 
                     return ListTile(
                       title: Text(model.title),
                       subtitle: Text("Season " + model.season.toString()),
                       trailing: IconButton(
                         icon: Icon(Icons.favorite),
-                        onPressed: () => prov.toggleFromFavourites(model.slug),
+                        onPressed: () => prov.removeFromFavourites(model.slug),
                       ),
                       onTap: () => Transitions.slideTransition(
                           context: context,
@@ -74,23 +73,13 @@ class _FavouritesPageState extends State<FavouritesPage>
                               twistModel: model,
                             );
                           }),
-                      leading: FutureBuilder(
-                        future: _getKitsuModel,
-                        builder: (context, AsyncSnapshot<KitsuModel> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            return CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(snapshot.data.posterImage),
-                            );
-                          } else {
-                            return CircularProgressIndicator();
-                          }
-                        },
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(favouritedAnimes[index].coverURL),
                       ),
                     );
                   },
-                  childCount: models.length,
+                  childCount: favouritedAnimes.length,
                 ),
               ),
             ],

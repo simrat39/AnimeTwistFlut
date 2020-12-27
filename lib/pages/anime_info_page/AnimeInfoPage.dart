@@ -364,7 +364,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     kitsuModel: kitsuModel,
                                   ),
                                 ),
-                                FavouriteButton(twistModel: widget.twistModel),
+                                FavouriteButton(
+                                  twistModel: widget.twistModel,
+                                  kitsuModel: kitsuModel,
+                                ),
                               ],
                             ),
                             DescriptionWidget(

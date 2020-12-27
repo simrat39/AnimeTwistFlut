@@ -1,79 +1,82 @@
+import 'package:anime_twist_flut/models/FavouritedModel.dart';
+import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
-import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
-import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
 class FavouriteAnimeProvider extends ChangeNotifier {
-  static const String PREF_NAME = "favourite_anime";
+  static const String BOX_NAME = "favouritedAnime";
+  static const String KEY = "1";
 
-  final SharedPreferencesManager sharedPreferencesManager;
+  List<FavouritedModel> favouritedAnimes = [];
 
-  List<String> favouriteAnimesSlugList = [];
-
-  FavouriteAnimeProvider(this.sharedPreferencesManager);
-
-  /// Initializes our provider.
-  /// Reads the value of [favouriteAnimesSlugList] saved on the device using
-  /// SharedPreferences with key [PREF_NAME].
   Future initialize() async {
-    favouriteAnimesSlugList =
-        sharedPreferencesManager.preferences.getStringList(PREF_NAME);
-    notifyListeners();
-  }
+    try {
+      Hive.registerAdapter<FavouritedModel>(FavouritedModelAdapter());
+      var box = await Hive.openBox(BOX_NAME);
+      dynamic contents = box?.get(KEY) ?? [];
 
-  /// Updates the SharedPreference [PREF_NAME] with [favouriteAnimesSlugList].
-  void _writeData() {
-    sharedPreferencesManager.preferences
-        .setStringList(PREF_NAME, favouriteAnimesSlugList);
-    notifyListeners();
-  }
-
-  /// Checks if [slug] is in [favouriteAnimesSlugList] and returns true if it is
-  /// present.
-  bool isFavourite(String slug) {
-    return favouriteAnimesSlugList.contains(slug);
-  }
-
-  /// Adds [slug] to [favouriteAnimesSlugList] and writes the data to the
-  /// device.
-  void addToFavourites(String slug) {
-    favouriteAnimesSlugList.add(slug);
-    _writeData();
-  }
-
-  /// Removes [slug] to [favouriteAnimesSlugList] and writes the data to the
-  /// device.
-  void removeFromFavourites(String slug) {
-    favouriteAnimesSlugList.remove(slug);
-    _writeData();
-  }
-
-  /// Removes everything from [favouriteAnimesSlugList] and writes the data
-  /// to the device.
-  void clearFavourites() {
-    favouriteAnimesSlugList.clear();
-    _writeData();
-  }
-
-  /// If [slug] is in [favouriteAnimesSlugList] then remove it, else add it.
-  void toggleFromFavourites(String slug) {
-    if (isFavourite(slug)) {
-      removeFromFavourites(slug);
-    } else {
-      addToFavourites(slug);
+      for (int i = 0; i < contents?.length ?? 0; i++) {
+        favouritedAnimes.add(contents[i]);
+      }
+    } catch (e) {
+      throw Exception("Cannot load to watch animes");
     }
+    notifyListeners();
   }
 
-  /// Returns a [TwistModel] for each slug in [favouriteAnimesSlugList].
-  List<TwistModel> getTwistModelsForFavourites() {
-    TwistApiService twistApiService = TwistApiService();
-    return favouriteAnimesSlugList
-        .map((e) => twistApiService.getTwistModelFromSlug(e))
-        .toList();
+  Future _writeData() async {
+    var box = Hive.box(BOX_NAME);
+    await box.put(KEY, favouritedAnimes);
+    notifyListeners();
+  }
+
+  bool isFavourite(String slug) {
+    for (var item in favouritedAnimes) {
+      if (item.slug == slug) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void addToFavourites(TwistModel twistModel, KitsuModel kitsuModel) {
+    favouritedAnimes.add(
+      FavouritedModel(
+        slug: twistModel.slug,
+        coverURL: kitsuModel.coverImage,
+        posterURL: kitsuModel.posterImage,
+      ),
+    );
+    _writeData();
+  }
+
+  void removeFromFavourites(String slug) {
+    for (var item in favouritedAnimes) {
+      if (item.slug == slug) {
+        favouritedAnimes.remove(item);
+        break;
+      }
+    }
+
+    _writeData();
+  }
+
+  void clearFavourites() {
+    favouritedAnimes.clear();
+    _writeData();
+  }
+
+  void toggleFromFavourites(TwistModel twistModel, KitsuModel kitsuModel) {
+    if (isFavourite(twistModel.slug)) {
+      removeFromFavourites(twistModel.slug);
+    } else {
+      addToFavourites(twistModel, kitsuModel);
+    }
   }
 
   /// Whether we have any favourites.
   bool hasData() {
-    return favouriteAnimesSlugList.isNotEmpty;
+    return favouritedAnimes.isNotEmpty;
   }
 }
