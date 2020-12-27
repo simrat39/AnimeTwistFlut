@@ -185,6 +185,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                 WidgetsBinding.instance.addPostFrameCallback(
                     (timeStamp) => scrollToLastWatched(context));
                 return Scrollbar(
+                  thickness: 4,
                   controller: _scrollController,
                   child: CustomScrollView(
                     controller: _scrollController,

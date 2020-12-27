@@ -46,6 +46,7 @@ class _FavouritesPageState extends State<FavouritesPage>
           );
         }
         return Scrollbar(
+          thickness: 4,
           child: CustomScrollView(
             slivers: [
               SliverOverlapInjector(

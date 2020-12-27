@@ -22,6 +22,7 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
       body: Scrollbar(
+        thickness: 4,
         child: ListView(
           children: [
             SizedBox(height: 4.0),

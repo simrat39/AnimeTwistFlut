@@ -105,8 +105,9 @@ class _SearchPageState extends State<SearchPage> {
                             child: Text("No results found :("),
                           ),
                         );
-                      return CupertinoScrollbar(
+                      return Scrollbar(
                         controller: _scrollController,
+                        thickness: 4,
                         child: ListView.builder(
                           controller: _scrollController,
                           shrinkWrap: true,
