@@ -121,137 +121,142 @@ class _RootWindowState extends State<RootWindow>
     return Consumer(
       builder: (context, watch, child) {
         var accentColor = watch(accentProvider).value;
-        return MaterialApp(
-          home: watch(_initDataProvider).when(
-            data: (v) => Consumer(
-              builder: (context, watch, child) {
-                return Scaffold(
-                  body: NestedScrollView(
-                    floatHeaderSlivers: true,
-                    headerSliverBuilder: (context, innerBoxIsScrolled) {
-                      return [
-                        SliverOverlapAbsorber(
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context,
-                          ),
-                          sliver: SliverAppBar(
-                            primary: true,
-                            bottom: TabBar(
-                              controller: _tabController,
-                              indicatorColor: Theme.of(context).accentColor,
-                              tabs: [
-                                Tab(icon: Icon(Icons.home)),
-                                Tab(icon: Icon(Icons.favorite_outline)),
-                              ],
+        return Shortcuts(
+          shortcuts: <LogicalKeySet, Intent>{
+            LogicalKeySet(LogicalKeyboardKey.select): ActivateIntent(),
+          },
+          child: MaterialApp(
+            home: watch(_initDataProvider).when(
+              data: (v) => Consumer(
+                builder: (context, watch, child) {
+                  return Scaffold(
+                    body: NestedScrollView(
+                      floatHeaderSlivers: true,
+                      headerSliverBuilder: (context, innerBoxIsScrolled) {
+                        return [
+                          SliverOverlapAbsorber(
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                              context,
                             ),
-                            title: AppbarText(),
-                            actions: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.settings,
-                                ),
-                                onPressed: () {
-                                  Transitions.slideTransition(
-                                    context: context,
-                                    pageBuilder: () => SettingsPage(),
-                                  );
-                                },
+                            sliver: SliverAppBar(
+                              primary: true,
+                              bottom: TabBar(
+                                controller: _tabController,
+                                indicatorColor: Theme.of(context).accentColor,
+                                tabs: [
+                                  Tab(icon: Icon(Icons.home)),
+                                  Tab(icon: Icon(Icons.favorite_outline)),
+                                ],
                               ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.chat_bubble,
+                              title: AppbarText(),
+                              actions: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.settings,
+                                  ),
+                                  onPressed: () {
+                                    Transitions.slideTransition(
+                                      context: context,
+                                      pageBuilder: () => SettingsPage(),
+                                    );
+                                  },
                                 ),
-                                onPressed: () {
-                                  Transitions.slideTransition(
-                                    context: context,
-                                    pageBuilder: () => ChatPage(),
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.search,
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.chat_bubble,
+                                  ),
+                                  onPressed: () {
+                                    Transitions.slideTransition(
+                                      context: context,
+                                      pageBuilder: () => ChatPage(),
+                                    );
+                                  },
                                 ),
-                                onPressed: () {
-                                  Transitions.slideTransition(
-                                    context: context,
-                                    pageBuilder: () => SearchPage(),
-                                  );
-                                },
-                              ),
-                            ],
-                            pinned: true,
-                            floating: true,
-                            snap: true,
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.search,
+                                  ),
+                                  onPressed: () {
+                                    Transitions.slideTransition(
+                                      context: context,
+                                      pageBuilder: () => SearchPage(),
+                                    );
+                                  },
+                                ),
+                              ],
+                              pinned: true,
+                              floating: true,
+                              snap: true,
+                            ),
                           ),
-                        ),
-                      ];
-                    },
-                    body: TabBarView(
-                      controller: _tabController,
-                      children: pages,
+                        ];
+                      },
+                      body: TabBarView(
+                        controller: _tabController,
+                        children: pages,
+                      ),
                     ),
+                  );
+                },
+              ),
+              loading: () {
+                return Scaffold(
+                  body: Center(
+                    child: RotatingPinLoadingAnimation(),
                   ),
                 );
               },
+              error: (e, s) {
+                var message = 'Whoops! An error occured';
+                switch (e) {
+                  case NoInternetException:
+                    message =
+                        "Looks like you are not connected to the internet . Please reconnect and try again";
+                    break;
+                }
+                return ErrorPage(
+                  message: message,
+                  stackTrace: s,
+                  onRefresh: () => context.refresh(_initDataProvider),
+                );
+              },
             ),
-            loading: () {
-              return Scaffold(
-                body: Center(
-                  child: RotatingPinLoadingAnimation(),
-                ),
-              );
-            },
-            error: (e, s) {
-              var message = 'Whoops! An error occured';
-              switch (e) {
-                case NoInternetException:
-                  message =
-                      "Looks like you are not connected to the internet . Please reconnect and try again";
-                  break;
-              }
-              return ErrorPage(
-                message: message,
-                stackTrace: s,
-                onRefresh: () => context.refresh(_initDataProvider),
-              );
-            },
-          ),
-          darkTheme: ThemeData.dark().copyWith(
-            cardColor: cardColor,
-            scaffoldBackgroundColor: bgColor,
-            dialogBackgroundColor: bgColor,
-            accentColor: accentColor,
-            toggleableActiveColor: accentColor,
-            appBarTheme: AppBarTheme(
-              color: bgColor,
-              elevation: 0.0,
-            ),
-            cardTheme: CardTheme(
-              margin: EdgeInsets.zero,
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
+            darkTheme: ThemeData.dark().copyWith(
+              cardColor: cardColor,
+              scaffoldBackgroundColor: bgColor,
+              dialogBackgroundColor: bgColor,
+              accentColor: accentColor,
+              toggleableActiveColor: accentColor,
+              appBarTheme: AppBarTheme(
+                color: bgColor,
+                elevation: 0.0,
               ),
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: ButtonStyle(
-                foregroundColor: ButtonStyleButton.allOrNull<Color>(
-                  accentColor,
-                ),
-                overlayColor: ButtonStyleButton.allOrNull<Color>(
-                  accentColor.withOpacity(0.2),
+              cardTheme: CardTheme(
+                margin: EdgeInsets.zero,
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
+              textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                  foregroundColor: ButtonStyleButton.allOrNull<Color>(
+                    accentColor,
+                  ),
+                  overlayColor: ButtonStyleButton.allOrNull<Color>(
+                    accentColor.withOpacity(0.2),
+                  ),
+                ),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                  style: ElevatedButton.styleFrom(primary: accentColor)),
+              bottomSheetTheme: BottomSheetThemeData(
+                backgroundColor: bgColor,
+              ),
             ),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(primary: accentColor)),
-            bottomSheetTheme: BottomSheetThemeData(
-              backgroundColor: bgColor,
-            ),
+            themeMode: ThemeMode.dark,
           ),
-          themeMode: ThemeMode.dark,
         );
       },
     );
