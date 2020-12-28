@@ -1,8 +1,7 @@
 import 'package:anime_twist_flut/animations/SlideInAnimation.dart';
-import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/FavouritedModel.dart';
-import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:anime_twist_flut/pages/favourites_page/FavouritedAnimeTile.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,7 @@ class FavouritesPage extends StatefulWidget {
 class _FavouritesPageState extends State<FavouritesPage>
     with AutomaticKeepAliveClientMixin {
   TwistApiService twistApiService = Get.find();
+  final dummyScrollController = ScrollController();
 
   @override
   void initState() {
@@ -28,6 +28,7 @@ class _FavouritesPageState extends State<FavouritesPage>
 
   @override
   Widget build(BuildContext context) {
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     super.build(context);
     return Consumer(
       builder: (context, watch, child) {
@@ -47,39 +48,34 @@ class _FavouritesPageState extends State<FavouritesPage>
         }
         return Scrollbar(
           thickness: 4,
+          controller: dummyScrollController,
           child: CustomScrollView(
             slivers: [
               SliverOverlapInjector(
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    var model = twistApiService
-                        .getTwistModelFromSlug(favouritedAnimes[index].slug);
+              SliverPadding(
+                padding: EdgeInsets.all(15.0),
+                sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: isPortrait ? 0.65 : 1.4,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      var model = twistApiService
+                          .getTwistModelFromSlug(favouritedAnimes[index].slug);
 
-                    return ListTile(
-                      title: Text(model.title),
-                      subtitle: Text("Season " + model.season.toString()),
-                      trailing: IconButton(
-                        icon: Icon(Icons.favorite),
-                        onPressed: () => prov.removeFromFavourites(model.slug),
-                      ),
-                      onTap: () => Transitions.slideTransition(
-                          context: context,
-                          pageBuilder: () {
-                            return AnimeInfoPage(
-                              twistModel: model,
-                            );
-                          }),
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(favouritedAnimes[index].coverURL),
-                      ),
-                    );
-                  },
-                  childCount: favouritedAnimes.length,
+                      return FavouritedAnimeTile(
+                        favouritedModel: favouritedAnimes.elementAt(index),
+                        twistModel: model,
+                      );
+                    },
+                    childCount: favouritedAnimes.length,
+                  ),
                 ),
               ),
             ],

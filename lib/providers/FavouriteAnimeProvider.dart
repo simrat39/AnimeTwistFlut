@@ -44,8 +44,8 @@ class FavouriteAnimeProvider extends ChangeNotifier {
     favouritedAnimes.add(
       FavouritedModel(
         slug: twistModel.slug,
-        coverURL: kitsuModel.coverImage,
-        posterURL: kitsuModel.posterImage,
+        coverURL: kitsuModel?.coverImage ?? null,
+        posterURL: kitsuModel?.posterImage ?? null,
       ),
     );
     _writeData();
