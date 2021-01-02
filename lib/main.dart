@@ -8,6 +8,7 @@ import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
 import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
+import 'package:anime_twist_flut/providers/TVInfoProvider.dart';
 import 'package:anime_twist_flut/providers/settings/AccentColorProvider.dart';
 import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
 import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
@@ -43,6 +44,10 @@ void main() {
 
 final sharedPreferencesProvider = Provider<SharedPreferencesManager>((ref) {
   return SharedPreferencesManager();
+});
+
+final tvInfoProvider = Provider<TVInfoProvider>((ref) {
+  return TVInfoProvider();
 });
 
 final accentProvider = ChangeNotifierProvider<AccentColorProvider>((ref) {
@@ -105,6 +110,7 @@ class _RootWindowState extends State<RootWindow>
     // dont be blocking
     ref.read(zoomFactorProvider).initalize();
     ref.read(doubleTapDurationProvider).initalize();
+    ref.read(tvInfoProvider).initialize();
   });
 
   @override

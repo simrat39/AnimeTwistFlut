@@ -20,34 +20,24 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController _textEditingController;
   ScrollController _scrollController;
-  FocusNode _focusNode;
+  FocusNode listTileNode;
+  FocusNode backButtonNode;
 
   @override
   void initState() {
     super.initState();
     _textEditingController = TextEditingController(text: "");
-    _scrollController = ScrollController()
-      ..addListener(
-        () {
-          FocusScope.of(context).unfocus();
-        },
-      );
-    _focusNode = FocusNode()
-      ..addListener(
-        () {
-          if (_focusNode.hasFocus) {
-            _scrollController.jumpTo(_scrollController.position.pixels);
-            FocusScope.of(context).requestFocus(_focusNode);
-          }
-        },
-      );
+    _scrollController = ScrollController();
+    listTileNode = FocusNode();
+    backButtonNode = FocusNode();
   }
 
   @override
   void dispose() {
     _textEditingController.dispose();
     _scrollController.dispose();
-    _focusNode.dispose();
+    listTileNode.dispose();
+    backButtonNode.dispose();
     super.dispose();
   }
 
@@ -56,6 +46,13 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: AppbarText(),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          focusNode: backButtonNode,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -68,7 +65,8 @@ class _SearchPageState extends State<SearchPage> {
                   horizontal: 15.0,
                 ),
                 child: SearchPageInputBox(
-                  focusNode: _focusNode,
+                  listTileFocusNode: listTileNode,
+                  backButtonFocusNode: backButtonNode,
                   controller: _textEditingController,
                   onChanged: (text) {
                     setState(() {});
@@ -93,8 +91,10 @@ class _SearchPageState extends State<SearchPage> {
                         )) {
                           results.add(
                             SearchListTile(
+                              isFirstResult: results.length == 0,
                               twistModel: elem,
-                              node: _focusNode,
+                              firstTileNode: listTileNode,
+                              backButtonNode: backButtonNode,
                             ),
                           );
                         }

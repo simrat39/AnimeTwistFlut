@@ -3,8 +3,10 @@ package com.simrat39.AnimeTwistFlut
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration.UI_MODE_TYPE_TELEVISION
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +16,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.*
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
 import org.json.JSONObject
 import java.net.URL
 import java.util.concurrent.TimeUnit
@@ -32,13 +36,27 @@ class MainActivity : FlutterActivity() {
                 .getInstance(context)
                 .enqueue(req)
     }
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "tv_info").setMethodCallHandler { call, result ->
+            if (call.method == "isTV") {
+                result.success(isTV())
+            }
+        }
+    }
+
+    fun isTV(): Boolean {
+        val uiModeManager: UiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        return uiModeManager.currentModeType === UI_MODE_TYPE_TELEVISION
+    }
 }
 
 class UpdateCheckWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     var context = context
 
     override fun doWork(): Result {
-        WorkManager.getInstance(context).cancelAllWorkByTag(workTag);
+        WorkManager.getInstance(context).cancelAllWorkByTag(workTag)
 
         var githubUpdateChecker = GithubUpdateChecker()
         val hasUpdate = githubUpdateChecker.checkUpdate()
@@ -114,7 +132,7 @@ class NotificationHelper(context: Context, channelId: String) {
         return PendingIntent.getActivity(context, 0, i, 0)
     }
 
-    private fun getDeviceAccentColor() : Int {
+    private fun getDeviceAccentColor(): Int {
         val value = TypedValue()
         val ctx = ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault)
         ctx.theme.resolveAttribute(android.R.attr.colorAccent, value, true)

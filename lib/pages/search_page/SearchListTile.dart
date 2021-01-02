@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Project imports:
 import '../../animations/Transitions.dart';
@@ -8,16 +9,21 @@ import '../anime_info_page/AnimeInfoPage.dart';
 
 class SearchListTile extends StatelessWidget {
   final TwistModel twistModel;
-  final FocusNode node;
+  final FocusNode firstTileNode;
+  final FocusNode backButtonNode;
+  final bool isFirstResult;
 
   SearchListTile({
     @required this.twistModel,
-    this.node,
+    this.firstTileNode,
+    this.isFirstResult = false,
+    this.backButtonNode,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    Widget ret = ListTile(
+      focusNode: isFirstResult ? firstTileNode : null,
       title: Text(
         twistModel.title,
         maxLines: 1,
@@ -54,10 +60,32 @@ class SearchListTile extends StatelessWidget {
           pageBuilder: () => AnimeInfoPage(
             twistModel: twistModel,
             isFromSearchPage: true,
-            focusNode: node,
+            focusNode: firstTileNode,
           ),
         );
       },
     );
+    if (isFirstResult) {
+      ret = Shortcuts(
+        shortcuts: {
+          LogicalKeySet(LogicalKeyboardKey.arrowUp): FocusIntent(),
+          LogicalKeySet(LogicalKeyboardKey.select): ActivateIntent(),
+        },
+        child: Actions(
+          actions: <Type, Action<Intent>>{
+            FocusIntent: CallbackAction<FocusIntent>(
+              onInvoke: (intent) {
+                backButtonNode.requestFocus();
+                return true;
+              },
+            ),
+          },
+          child: ret,
+        ),
+      );
+    }
+    return ret;
   }
 }
+
+class FocusIntent extends Intent {}

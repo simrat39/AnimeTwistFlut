@@ -83,6 +83,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     Get.delete<TwistModel>();
     Get.delete<KitsuModel>();
     Get.delete<ChangeNotifierProvider<EpisodesWatchedProvider>>();
+
     super.dispose();
   }
 
@@ -172,9 +173,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        if (widget.isFromSearchPage ?? false) {
-          FocusScope.of(context).unfocus();
-        }
         return true;
       },
       child: Scaffold(
