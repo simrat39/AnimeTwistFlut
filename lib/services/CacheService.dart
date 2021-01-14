@@ -43,12 +43,14 @@ class CacheService {
   bool shouldUpdateCache({String cachedData, DateTime cachedDateTime}) {
     if (cachedData == null) return true;
     if (cachedData.isEmpty) return true;
+    if (cachedDateTime == null) return true;
     DateTime now = DateTime.now();
-    bool hasAnime =
-        (jsonDecode(cachedData.isEmpty ? "{[]}" : cachedData) as List<dynamic>)
-                .length >
-            0;
-    if (!hasAnime) return true;
+    try {
+      bool hasAnime = jsonDecode(cachedData).length > 0;
+      if (!hasAnime) return true;
+    } catch (e) {
+      throw Exception();
+    }
     return now.difference(cachedDateTime).abs() > cacheUpdateInterval;
   }
 

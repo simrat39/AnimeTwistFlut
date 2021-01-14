@@ -404,6 +404,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
               loading: () => Center(child: RotatingPinLoadingAnimation()),
               error: (e, s) => ErrorPage(
                 stackTrace: s,
+                e: e,
                 message:
                     "Whoops! An error occured. Looks like twist.moe is down, or your internet is not working. Please try again later.",
                 onRefresh: () => context.refresh(_initDataProvider),

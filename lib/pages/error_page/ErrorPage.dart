@@ -2,16 +2,18 @@ import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatefulWidget {
-  ErrorPage(
-      {Key key,
-      @required this.message,
-      @required this.onRefresh,
-      @required this.stackTrace})
-      : super(key: key);
+  ErrorPage({
+    Key key,
+    @required this.message,
+    @required this.onRefresh,
+    @required this.stackTrace,
+    @required this.e,
+  }) : super(key: key);
 
   final String message;
   final VoidCallback onRefresh;
   final StackTrace stackTrace;
+  final Exception e;
 
   @override
   _ErrorPageState createState() => _ErrorPageState();
@@ -48,7 +50,7 @@ class _ErrorPageState extends State<ErrorPage> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text("Stacktrace"),
+                      title: Text(widget.e.toString()),
                       scrollable: true,
                       content: Text(
                         widget.stackTrace.toString(),

@@ -1,12 +1,15 @@
 // Dart imports:
 import 'dart:convert';
+import 'dart:io';
 
 // Project imports:
-import '../../cached_http_get/CachedHttpGet.dart';
+import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
+
 import '../../models/TwistModel.dart';
 import '../../secrets.dart';
 import '../CacheService.dart';
 import 'package:supercharged/supercharged.dart';
+import 'package:http/http.dart';
 
 class AnimeApiService {
   static const String baseUrl = 'https://twist.moe/api/anime';
@@ -21,15 +24,17 @@ class AnimeApiService {
     await cacheService.initialize();
 
     String response = await cacheService.getDataAndCacheIfNeeded(
-      getData: () {
-        return CachedHttpGet.get(
-          Request(
-            url: baseUrl,
-            header: {
-              'x-access-token': x_access_token,
-            },
-          ),
+      getData: () async {
+        var ret = await get(
+          baseUrl,
+          headers: {
+            'x-access-token': x_access_token,
+          },
         );
+        if (ret.statusCode != HttpStatus.ok) {
+          throw TwistDownException();
+        } else
+          return ret.body;
       },
       onCache: () {
         print("Data is not cached or very old");
@@ -41,7 +46,7 @@ class AnimeApiService {
     );
 
     if (response == null) {
-      throw Exception("An error occured while getting all the animes :)");
+      throw TwistDownException();
     }
 
     List<TwistModel> ret = [];

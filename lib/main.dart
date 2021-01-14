@@ -2,6 +2,7 @@
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
+import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
@@ -215,14 +216,16 @@ class _RootWindowState extends State<RootWindow>
               },
               error: (e, s) {
                 var message = 'Whoops! An error occured';
-                switch (e) {
-                  case NoInternetException:
-                    message =
-                        "Looks like you are not connected to the internet . Please reconnect and try again";
-                    break;
+                if (e is NoInternetException) {
+                  message =
+                      "Looks like you are not connected to the internet. Please reconnect and try again";
+                } else if (e is TwistDownException) {
+                  message =
+                      "Looks like twist.moe is down. Please try again later";
                 }
                 return ErrorPage(
                   message: message,
+                  e: e,
                   stackTrace: s,
                   onRefresh: () => context.refresh(_initDataProvider),
                 );
