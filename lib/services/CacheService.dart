@@ -40,31 +40,35 @@ class CacheService {
     return DateTime.parse(data[0]);
   }
 
-  bool shouldUpdateCache({String cachedData, DateTime cachedDateTime}) {
+  bool shouldUpdateCache(
+      {String cachedData,
+      DateTime cachedDateTime,
+      bool Function(String data, DateTime dt) willUpdateCache}) {
     if (cachedData == null) return true;
     if (cachedData.isEmpty) return true;
     if (cachedDateTime == null) return true;
+    if (willUpdateCache(cachedData, cachedDateTime)) return true;
     DateTime now = DateTime.now();
-    try {
-      bool hasAnime = jsonDecode(cachedData).length > 0;
-      if (!hasAnime) return true;
-    } catch (e) {
-      throw Exception();
-    }
     return now.difference(cachedDateTime).abs() > cacheUpdateInterval;
   }
 
   Future<String> getDataAndCacheIfNeeded({
-    Future<String> Function() getData,
-    Function() onCache,
-    Function() onSkipCache,
+    @required Future<String> Function() getData,
+    @required Function() onCache,
+    @required Function() onSkipCache,
+    @required
+        bool Function(String cachedData, DateTime cachedDateTime)
+            willUpdateCache,
   }) async {
     String cachedAnimeData = await getCachedData();
     DateTime cachedDate = await getCachedDateTime();
     String ret;
 
     if (shouldUpdateCache(
-        cachedData: cachedAnimeData, cachedDateTime: cachedDate)) {
+      cachedData: cachedAnimeData,
+      cachedDateTime: cachedDate,
+      willUpdateCache: willUpdateCache,
+    )) {
       ret = await getData();
       cache(data: ret);
       await onCache();

@@ -43,6 +43,15 @@ class AnimeApiService {
         print("Data is cached");
         await Future.delayed(Duration(milliseconds: 400));
       },
+      willUpdateCache: (cachedData, cachedDateTime) {
+        try {
+          int len = jsonDecode(cachedData).length;
+          if (len > 0) return false;
+        } catch (e) {
+          return true;
+        }
+        return true;
+      },
     );
 
     if (response == null) {
