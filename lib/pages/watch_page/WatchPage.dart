@@ -108,7 +108,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         vidUrl = Uri.parse(sourceSuffix).toString();
       } else {
         vidUrl =
-            Uri.parse("https://twistcdn.bunny.sh/" + sourceSuffix).toString();
+            Uri.parse("https://twistcdn.bunny.sh" + sourceSuffix).toString();
       }
 
       _controller = VideoPlayerController.network(vidUrl, headers: headers)
