@@ -4,6 +4,7 @@ import 'dart:convert';
 // Project imports:
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/services/CacheService.dart';
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:supercharged_dart/supercharged_dart.dart';
 
 import '../../cached_http_get/CachedHttpGet.dart';
@@ -24,7 +25,7 @@ class EpisodeApiService {
       getData: () async {
         return await CachedHttpGet.get(
           Request(
-            url: 'https://twist.moe/api/anime/' +
+            url: '${TwistApiService.BASE_API_URL}/anime/' +
                 twistModel.slug.toString() +
                 "/sources",
             header: {

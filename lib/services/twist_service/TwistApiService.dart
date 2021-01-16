@@ -8,6 +8,7 @@ import 'MOTDApiService.dart';
 
 class TwistApiService {
   static List<TwistModel> allTwistModel = [];
+  static const String BASE_API_URL = "https://api.twist.moe/api";
 
   Future setTwistModels() async {
     AnimeApiService animeApiService = AnimeApiService();

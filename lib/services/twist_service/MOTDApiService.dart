@@ -4,6 +4,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:http/http.dart' as http;
 
 // Project imports:
@@ -13,7 +14,7 @@ class MOTDApiService {
   Future<List<String>> getMOTD() async {
     List<String> data = [];
     var response = await http.get(
-      'https://twist.moe/api/motd',
+      TwistApiService.BASE_API_URL + '/motd',
       headers: {
         'x-access-token': x_access_token,
       },

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:http/http.dart' as http;
 
 // Project imports:
@@ -11,7 +12,7 @@ class DonationApiService {
   Future<List<int>> getDonations() async {
     List<int> data = [];
     var response = await http.get(
-      'https://twist.moe/api/donation',
+      TwistApiService.BASE_API_URL + '/donation',
       headers: {
         'x-access-token': x_access_token,
       },

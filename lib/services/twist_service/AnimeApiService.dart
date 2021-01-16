@@ -4,6 +4,7 @@ import 'dart:io';
 
 // Project imports:
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 
 import '../../models/TwistModel.dart';
 import '../../secrets.dart';
@@ -25,7 +26,7 @@ class AnimeApiService {
     String response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         var ret = await get(
-          baseUrl,
+          TwistApiService.BASE_API_URL + "/anime",
           headers: {
             'x-access-token': x_access_token,
           },
