@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class CachedHttpGet {
   static Map<Request, String> cache = {};
 
-  static Future<String> get(Request req) async {
+  static Future<String> get(Request req, [Exception customException]) async {
     if (cache.keys.contains(req)) return cache[req];
 
     var response = await http.get(
@@ -17,6 +17,9 @@ class CachedHttpGet {
 
     if (response.statusCode == HttpStatus.ok) {
       cache[req] = response.body;
+    } else {
+      if (customException == null) throw Exception();
+      throw customException;
     }
 
     return response.body;

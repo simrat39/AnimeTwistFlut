@@ -96,8 +96,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     );
 
     if (widget.kitsuModel == null)
-      kitsuModel =
-          await kitsuApiService.getKitsuModel(widget.twistModel.kitsuId);
+      kitsuModel = await kitsuApiService.getKitsuModel(
+          widget.twistModel.kitsuId, widget.twistModel.ongoing);
     else {
       await Future.delayed(400.milliseconds);
       kitsuModel = widget.kitsuModel;

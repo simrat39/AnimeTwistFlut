@@ -43,8 +43,8 @@ class _ExploreRowState extends State<ExploreRow>
     for (int i = 0; i < 10; i++) {
       try {
         int rand = r.nextInt(data.length);
-        KitsuModel kitsuModel =
-            await kitsuApiService.getKitsuModel(data[rand].kitsuId);
+        KitsuModel kitsuModel = await kitsuApiService.getKitsuModel(
+            data[rand].kitsuId, data[rand].ongoing);
         if (kitsuModel != null)
           _randomCards.add(
             ExploreRowItem(

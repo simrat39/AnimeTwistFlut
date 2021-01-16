@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,8 +12,9 @@ class CacheService {
   CacheService(this.key, this.cacheUpdateInterval);
 
   /// Open the hive box and get ready for reading and writing the cache.
-  Future initialize() async {
-    await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
+  Future initialize([bool initHive = true]) async {
+    if (initHive)
+      await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
     await Hive.openBox(BOX_NAME);
   }
 

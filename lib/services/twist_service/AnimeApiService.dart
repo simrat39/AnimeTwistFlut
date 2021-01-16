@@ -15,7 +15,6 @@ class AnimeApiService {
   static const String baseUrl = 'https://twist.moe/api/anime';
 
   Future<List<TwistModel>> getAllTwistModel() async {
-    // try {
     CacheService cacheService = CacheService(
       "/anime",
       7.days,
