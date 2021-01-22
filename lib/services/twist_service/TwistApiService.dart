@@ -11,8 +11,7 @@ class TwistApiService {
   static const String BASE_API_URL = "https://api.twist.moe/api";
 
   Future setTwistModels() async {
-    AnimeApiService animeApiService = AnimeApiService();
-    allTwistModel = await animeApiService.getAllTwistModel();
+    allTwistModel = await AnimeApiService.getAllTwistModel();
   }
 
   Future<List<EpisodeModel>> getEpisodesForSource(

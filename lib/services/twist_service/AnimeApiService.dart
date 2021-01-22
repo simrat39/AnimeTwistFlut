@@ -5,6 +5,7 @@ import 'dart:io';
 // Project imports:
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../models/TwistModel.dart';
 import '../../secrets.dart';
@@ -15,7 +16,7 @@ import 'package:http/http.dart';
 class AnimeApiService {
   static const String baseUrl = 'https://twist.moe/api/anime';
 
-  Future<List<TwistModel>> getAllTwistModel() async {
+  static Future<List<TwistModel>> getAllTwistModel() async {
     CacheService cacheService = CacheService(
       "/anime",
       7.days,
@@ -59,8 +60,15 @@ class AnimeApiService {
     }
 
     List<TwistModel> ret = [];
+    ret = await compute(_parseAndAdd, response);
 
-    List<dynamic> jsonData = jsonDecode(response);
+    return ret;
+  }
+
+  static Future<List<TwistModel>> _parseAndAdd(String data) async {
+    List<TwistModel> ret = [];
+
+    List<dynamic> jsonData = jsonDecode(data);
 
     jsonData.forEach(
       (element) async {
