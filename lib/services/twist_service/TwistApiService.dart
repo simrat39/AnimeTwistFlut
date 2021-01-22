@@ -16,18 +16,15 @@ class TwistApiService {
 
   Future<List<EpisodeModel>> getEpisodesForSource(
       {TwistModel twistModel}) async {
-    EpisodeApiService episodeApiService = EpisodeApiService();
-    return await episodeApiService.getEpisodes(twistModel);
+    return await EpisodeApiService.getEpisodes(twistModel);
   }
 
   Future<List<String>> getMOTD() async {
-    MOTDApiService motdApiService = MOTDApiService();
-    return await motdApiService.getMOTD();
+    return await MOTDApiService.getMOTD();
   }
 
   Future<List<int>> getDonationsData() async {
-    DonationApiService donationApiService = DonationApiService();
-    return await donationApiService.getDonations();
+    return await DonationApiService.getDonations();
   }
 
   TwistModel getTwistModelFromSlug(String slug) {

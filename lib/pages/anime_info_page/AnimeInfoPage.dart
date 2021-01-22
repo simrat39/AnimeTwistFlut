@@ -88,7 +88,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   }
 
   Future initData() async {
-    KitsuApiService kitsuApiService = KitsuApiService();
     TwistApiService twistApiService = Get.find();
 
     episodes = await twistApiService.getEpisodesForSource(
@@ -96,7 +95,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     );
 
     if (widget.kitsuModel == null)
-      kitsuModel = await kitsuApiService.getKitsuModel(
+      kitsuModel = await KitsuApiService.getKitsuModel(
           widget.twistModel.kitsuId, widget.twistModel.ongoing);
     else {
       await Future.delayed(400.milliseconds);

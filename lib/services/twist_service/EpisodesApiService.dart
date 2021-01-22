@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/services/CacheService.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supercharged_dart/supercharged_dart.dart';
 
 import '../../cached_http_get/CachedHttpGet.dart';
@@ -13,7 +14,7 @@ import '../../models/TwistModel.dart';
 import '../../secrets.dart';
 
 class EpisodeApiService {
-  Future<List<EpisodeModel>> getEpisodes(TwistModel twistModel) async {
+  static Future<List<EpisodeModel>> getEpisodes(TwistModel twistModel) async {
     CacheService cacheService = CacheService(
       "/anime/episodes/${twistModel.slug}",
       7.days,
@@ -46,9 +47,12 @@ class EpisodeApiService {
         return twistModel.ongoing;
       },
     );
+    return await compute(_computeData, response);
+  }
 
+  static Future<List<EpisodeModel>> _computeData(String data) async {
     List<EpisodeModel> ret = [];
-    List<dynamic> jsonData = jsonDecode(response);
+    List<dynamic> jsonData = jsonDecode(data);
 
     jsonData.forEach(
       (element) {

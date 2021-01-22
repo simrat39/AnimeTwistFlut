@@ -37,13 +37,12 @@ class _ExploreRowState extends State<ExploreRow>
   Future makeRandomCards() async {
     var data = TwistApiService.allTwistModel;
     Random r = Random();
-    KitsuApiService kitsuApiService = KitsuApiService();
     _randomCards.clear();
 
     for (int i = 0; i < 10; i++) {
       try {
         int rand = r.nextInt(data.length);
-        KitsuModel kitsuModel = await kitsuApiService.getKitsuModel(
+        KitsuModel kitsuModel = await KitsuApiService.getKitsuModel(
             data[rand].kitsuId, data[rand].ongoing);
         if (kitsuModel != null)
           _randomCards.add(
