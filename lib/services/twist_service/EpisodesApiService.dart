@@ -38,7 +38,7 @@ class EpisodeApiService {
       },
       onCache: () {},
       onSkipCache: () {},
-      willUpdateCache: (cachedData, __) {
+      willUpdateCache: (cachedData, __) async {
         try {
           jsonDecode(cachedData);
         } catch (e) {

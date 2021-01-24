@@ -39,14 +39,14 @@ class CacheService {
     return DateTime.parse(data[0]);
   }
 
-  bool shouldUpdateCache(
+  Future<bool> shouldUpdateCache(
       {String cachedData,
       DateTime cachedDateTime,
-      bool Function(String data, DateTime dt) willUpdateCache}) {
+      Future<bool> Function(String data, DateTime dt) willUpdateCache}) async {
     if (cachedData == null) return true;
     if (cachedData.isEmpty) return true;
     if (cachedDateTime == null) return true;
-    if (willUpdateCache(cachedData, cachedDateTime)) return true;
+    if (await willUpdateCache(cachedData, cachedDateTime)) return true;
     DateTime now = DateTime.now();
     return now.difference(cachedDateTime).abs() > cacheUpdateInterval;
   }
@@ -56,14 +56,14 @@ class CacheService {
     @required Function() onCache,
     @required Function() onSkipCache,
     @required
-        bool Function(String cachedData, DateTime cachedDateTime)
+        Future<bool> Function(String cachedData, DateTime cachedDateTime)
             willUpdateCache,
   }) async {
     String cachedAnimeData = await getCachedData();
     DateTime cachedDate = await getCachedDateTime();
     String ret;
 
-    if (shouldUpdateCache(
+    if (await shouldUpdateCache(
       cachedData: cachedAnimeData,
       cachedDateTime: cachedDate,
       willUpdateCache: willUpdateCache,
