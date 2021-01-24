@@ -194,7 +194,7 @@ class _GenericDonationSheetState extends State<GenericDonationSheet> {
               ),
             ),
             Image.network(
-              widget.address,
+              widget.qrURL,
               fit: BoxFit.cover,
               width: height * 0.5,
               height: height * 0.5,
