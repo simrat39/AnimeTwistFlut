@@ -29,16 +29,18 @@ class WatchTrailerButton extends StatelessWidget {
       ),
       height:
           orientation == Orientation.portrait ? height * 0.06 : width * 0.06,
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: () {
           launchTrailer(kitsuModel.trailerURL);
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            8.0,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              8.0,
+            ),
           ),
+          primary: Color(0xffe50050),
         ),
-        color: Color(0xffe50050),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

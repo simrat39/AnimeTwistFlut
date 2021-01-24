@@ -313,7 +313,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                     "A decryption key was not provided while building. Episode can't be played",
                     textAlign: TextAlign.center),
                 SizedBox(height: 10),
-                RaisedButton(
+                ElevatedButton(
                     child: Text("Go back"),
                     onPressed: () => Navigator.of(context).pop()),
               ],

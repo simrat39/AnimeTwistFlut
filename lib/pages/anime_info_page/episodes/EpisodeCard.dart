@@ -42,14 +42,18 @@ class EpisodeCard extends StatelessWidget {
         final prov = watch(episodesWatchedProvider);
         return CupertinoContextMenu(
           actions: [
-            RaisedButton(
-              padding: EdgeInsets.symmetric(
-                vertical: 20.0,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  12.0,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20.0,
                 ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    12.0,
+                  ),
+                ),
+                elevation: 0,
+                primary: Theme.of(context).dialogBackgroundColor,
               ),
               child: Text(prov.isWatched(episodeModel.number)
                   ? "Remove from watched"
@@ -58,28 +62,28 @@ class EpisodeCard extends StatelessWidget {
                 prov.toggleWatched(episodeModel.number);
                 Navigator.of(context).pop();
               },
-              elevation: 0,
-              color: Theme.of(context).dialogBackgroundColor,
             ),
             SizedBox(
               height: 5.0,
             ),
-            RaisedButton(
-              padding: EdgeInsets.symmetric(
-                vertical: 20.0,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  12.0,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20.0,
                 ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    12.0,
+                  ),
+                ),
+                elevation: 0,
+                primary: Theme.of(context).dialogBackgroundColor,
               ),
               child: Text("Set watched till here"),
               onPressed: () {
                 prov.setWatchedTill(episodeModel.number);
                 Navigator.of(context).pop();
               },
-              elevation: 0,
-              color: Theme.of(context).dialogBackgroundColor,
             ),
           ],
           child: Container(
