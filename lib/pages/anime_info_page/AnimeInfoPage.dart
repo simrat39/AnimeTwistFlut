@@ -6,6 +6,8 @@ import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
+import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -239,13 +241,14 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   child: Consumer(
                                     builder: (context, watch, child) {
                                       final provider = watch(offsetProvider);
-                                      return Image.network(
-                                        kitsuModel?.posterImage ??
+                                      return CachedNetworkImage(
+                                        imageUrl: kitsuModel?.posterImage ??
                                             kitsuModel?.coverImage ??
                                             DEFAULT_IMAGE_URL,
                                         fit: BoxFit.cover,
                                         alignment:
                                             Alignment(0, -provider.state.abs()),
+                                        placeholder: (_, __) => CustomShimmer(),
                                       );
                                     },
                                   ),
@@ -254,7 +257,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   child: Container(
                                     width: double.infinity,
                                     height: double.infinity,
-                                    color: Color(0xff070E30).withOpacity(0.7),
+                                    color: Theme.of(context)
+                                        .cardColor
+                                        .withOpacity(0.7),
                                   ),
                                 ),
                                 Positioned.fill(

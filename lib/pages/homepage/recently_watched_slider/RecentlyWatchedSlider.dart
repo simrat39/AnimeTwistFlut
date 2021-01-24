@@ -3,6 +3,8 @@ import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/all_anime_page/AllAnimePage.dart';
+import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -56,16 +58,17 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
               alignment: Alignment.center,
               children: [
                 Positioned.fill(
-                  child: Image.network(
-                    DEFAULT_IMAGE_URL,
+                  child: CachedNetworkImage(
+                    imageUrl: DEFAULT_IMAGE_URL,
                     fit: BoxFit.cover,
+                    placeholder: (context, url) => CustomShimmer(),
                   ),
                 ),
                 Positioned.fill(
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
-                    color: Color(0xff070E30).withOpacity(0.7),
+                    color: Theme.of(context).cardColor.withOpacity(0.7),
                   ),
                 ),
                 Positioned(

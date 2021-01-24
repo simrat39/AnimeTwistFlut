@@ -5,6 +5,8 @@ import 'package:anime_twist_flut/constants.dart';
 import 'package:anime_twist_flut/models/FavouritedModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -53,13 +55,13 @@ class FavouritedAnimeTile extends StatelessWidget {
                     ),
                     Positioned.fill(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          getImageUrl(context),
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(12),
+                          child: CachedNetworkImage(
+                            imageUrl: getImageUrl(context),
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            placeholder: (_, __) => CustomShimmer(),
+                          )),
                     ),
                   ],
                 ),

@@ -34,6 +34,7 @@ dependencies:
       url: https://github.com/simrat39/videoPlayerWithHeader
   auto_orientation: ^1.0.6
   auto_size_text: ^2.1.0
+  cached_network_image: ^2.5.0
   edit_distance: ^0.4.1
   encrypt: ^4.1.0
   flutter_riverpod: ^0.12.1
@@ -48,6 +49,7 @@ dependencies:
   path_provider: ^1.6.22
   responsive_builder: ^0.3.0
   shared_preferences: ^0.5.12+2
+  shimmer: ^1.1.2
   smooth_page_indicator: ^0.2.0
   supercharged: ^1.11.1
   tuple: ^1.0.3

@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:anime_twist_flut/constants.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
+import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,14 +56,15 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
             child: Consumer(
               builder: (context, watch, child) {
                 var prov = watch(offsetProvider);
-                return Image.network(
-                  widget.lastWatchedModel.kitsuModel?.coverImage ??
+                return CachedNetworkImage(
+                  imageUrl: widget.lastWatchedModel.kitsuModel?.coverImage ??
                       widget.lastWatchedModel.kitsuModel?.posterImage ??
                       DEFAULT_IMAGE_URL,
                   fit: BoxFit.cover,
                   alignment: shouldOffset()
                       ? Alignment(-prov.state.abs() * 1.25, 0)
                       : Alignment(0, 0),
+                  placeholder: (context, url) => CustomShimmer(),
                 );
               },
             ),
