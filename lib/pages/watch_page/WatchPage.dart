@@ -67,6 +67,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   double currentPosition;
   String currentPositionStr;
   Future _init;
+  Timer t;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -118,7 +119,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
             _duration = TimeUtils.secondsToHumanReadable(
                 _controller.value.duration.inSeconds);
           });
-          toggleUI();
+          showUI();
         });
 
       _controller.addListener(() {
@@ -127,6 +128,13 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
           currentPositionStr = TimeUtils.secondsToHumanReadable(
               _controller.value.position.inSeconds);
         });
+      });
+
+      t = Timer(5.seconds, () {
+        if (!isTouchingSlider)
+          setState(() {
+            isUIvisible = false;
+          });
       });
 
       _init = init();
@@ -161,7 +169,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   void hideUIAfterWait() async {
     if (isUIvisible) {
-      Timer(5.seconds, () {
+      t.cancel();
+      t = Timer(5.seconds, () {
         if (!isTouchingSlider)
           setState(() {
             isUIvisible = false;
@@ -170,10 +179,10 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     }
   }
 
-  void toggleUI() async {
+  void showUI() async {
     setState(() {
       SystemChrome.setEnabledSystemUIOverlays([]);
-      isUIvisible = !isUIvisible;
+      isUIvisible = true;
     });
     hideUIAfterWait();
   }
@@ -367,7 +376,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                   child: DoubleTapLayer(
                     videoPlayerController: _controller,
                     isUiVisible: isUIvisible,
-                    toggleUI: toggleUI,
+                    toggleUI: showUI,
                   ),
                 ),
                 AnimatedOpacity(
