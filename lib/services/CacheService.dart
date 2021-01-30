@@ -18,6 +18,11 @@ class CacheService {
     await Hive.openBox(BOX_NAME);
   }
 
+  static Future<void> clearCache() async {
+    Box b = await Hive.openBox(BOX_NAME);
+    await b.clear();
+  }
+
   /// Caches the given data with [DateTime.now()] so that the time can be
   /// compared later if we want to update.
   Future cache({@required String data}) async {

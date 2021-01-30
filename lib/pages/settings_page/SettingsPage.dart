@@ -2,6 +2,7 @@ import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/settings_page/AboutAppSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/AccentPickerSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/CheckUpdateSetting.dart';
+import 'package:anime_twist_flut/pages/settings_page/ClearCacheSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/DoubleTapDurationSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ResetFavouritesSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ResetRecentlyWatchedSetting.dart';
@@ -30,6 +31,7 @@ class SettingsPage extends StatelessWidget {
             ResetRecentlyWatchedSetting(),
             ResetToWatchSetting(),
             ResetFavouritesSetting(),
+            ClearCacheSetting(),
             SettingsCategory(title: "Player"),
             ZoomFactorSetting(),
             DoubleTapDurationSetting(),
