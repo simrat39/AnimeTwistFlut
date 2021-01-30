@@ -31,36 +31,28 @@ class DoubleTapLayer extends StatelessWidget {
                 color: Colors.transparent,
                 height: double.infinity,
                 width: width * 0.5,
-                child: InkWell(
+                child: GestureDetector(
                   onDoubleTap: () async {
                     videoPlayerController.seekTo(
                         await (videoPlayerController.position) -
                             skipDuration.seconds);
                     toggleUI();
                   },
-                  onTap: !isUiVisible
-                      ? () {
-                          toggleUI();
-                        }
-                      : null,
+                  onTap: toggleUI,
                 ),
               ),
               Container(
                 color: Colors.transparent,
                 height: double.infinity,
                 width: width * 0.5,
-                child: InkWell(
+                child: GestureDetector(
                   onDoubleTap: () async {
                     videoPlayerController.seekTo(
                         await (videoPlayerController.position) +
                             skipDuration.seconds);
                     toggleUI();
                   },
-                  onTap: !isUiVisible
-                      ? () {
-                          toggleUI();
-                        }
-                      : null,
+                  onTap: toggleUI,
                 ),
               ),
             ],
