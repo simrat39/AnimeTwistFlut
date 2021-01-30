@@ -5,6 +5,7 @@ import 'dart:io';
 // Project imports:
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:anime_twist_flut/utils/JsonUtils.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../models/TwistModel.dart';
@@ -45,13 +46,7 @@ class AnimeApiService {
         await Future.delayed(Duration(milliseconds: 400));
       },
       willUpdateCache: (cachedData, cachedDateTime) async {
-        try {
-          int len = jsonDecode(cachedData).length;
-          if (len > 0) return false;
-        } catch (e) {
-          return true;
-        }
-        return true;
+        return !JsonUtils.isValidJson(cachedData);
       },
     );
 

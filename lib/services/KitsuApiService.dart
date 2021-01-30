@@ -3,6 +3,7 @@ import 'dart:convert';
 
 // Project imports:
 import 'package:anime_twist_flut/services/CacheService.dart';
+import 'package:anime_twist_flut/utils/JsonUtils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -33,12 +34,8 @@ class KitsuApiService {
       onCache: () {},
       onSkipCache: () {},
       willUpdateCache: (cachedData, __) async {
-        try {
-          jsonDecode(cachedData);
-        } catch (e) {
-          return true;
-        }
-        return ongoing;
+        if (ongoing) return true;
+        return !JsonUtils.isValidJson(cachedData);
       },
     );
 

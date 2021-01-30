@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/services/CacheService.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:anime_twist_flut/utils/JsonUtils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supercharged_dart/supercharged_dart.dart';
 
@@ -39,12 +40,8 @@ class EpisodeApiService {
       onCache: () {},
       onSkipCache: () {},
       willUpdateCache: (cachedData, __) async {
-        try {
-          jsonDecode(cachedData);
-        } catch (e) {
-          return true;
-        }
-        return twistModel.ongoing;
+        if (twistModel.ongoing) return true;
+        return !JsonUtils.isValidJson(cachedData);
       },
     );
     return await compute(_computeData, response);
