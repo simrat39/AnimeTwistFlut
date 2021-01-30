@@ -319,13 +319,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0"
-  fuzzy:
-    dependency: "direct main"
-    description:
-      name: fuzzy
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.4"
   get_it:
     dependency: "direct main"
     description:
@@ -445,13 +438,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
-  latinize:
-    dependency: transitive
-    description:
-      name: latinize
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   logging:
     dependency: transitive
     description:

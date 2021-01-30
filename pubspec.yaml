@@ -39,7 +39,6 @@ dependencies:
   encrypt: ^4.1.0
   flutter_riverpod: ^0.12.1
   font_awesome_flutter: ^8.10.0
-  fuzzy: ^0.2.3
   get_it: ^5.0.1
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
