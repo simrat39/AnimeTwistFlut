@@ -14,6 +14,7 @@ abstract class CustomSettingProvider<T> extends ChangeNotifier {
   Future initalize();
 
   void updateValue(T newValue) {
+    if (newValue == value) return;
     value = newValue;
     notifyListeners();
     writeValue();

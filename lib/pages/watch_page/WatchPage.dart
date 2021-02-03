@@ -3,9 +3,11 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:anime_twist_flut/pages/settings_page/DoubleTapDurationSetting.dart';
+import 'package:anime_twist_flut/pages/settings_page/PlaybackSpeedSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
+import 'package:anime_twist_flut/providers/settings/PlaybackSpeedProvider.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -295,6 +297,10 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     }
   }
 
+  Future setSpeed(double speed) async {
+    _controller.setPlaybackSpeed(speed);
+  }
+
   Future init() async {
     await SystemChrome.setEnabledSystemUIOverlays([]);
     await Wakelock.toggle(enable: true);
@@ -358,17 +364,23 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
               children: [
                 Consumer(
                   builder: (context, watch, child) {
-                    var zoom = watch(zoomFactorProvider);
-                    return Center(
-                      child: Transform.scale(
-                        scale: videoMode == VideoMode.Fill ? zoom.value : 1,
-                        child: AspectRatio(
-                          aspectRatio: getAspectRatio(context),
-                          child: VideoPlayer(
-                            _controller,
+                    var playbackSpeed = watch(playbackSpeeedProvider).value;
+                    setSpeed(playbackSpeed);
+                    return Consumer(
+                      builder: (context, watch, child) {
+                        var zoom = watch(zoomFactorProvider);
+                        return Center(
+                          child: Transform.scale(
+                            scale: videoMode == VideoMode.Fill ? zoom.value : 1,
+                            child: AspectRatio(
+                              aspectRatio: getAspectRatio(context),
+                              child: VideoPlayer(
+                                _controller,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -466,6 +478,10 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
+                                                    Container(
+                                                      child:
+                                                          PlaybackSpeedSetting(),
+                                                    ),
                                                     Container(
                                                       child:
                                                           ZoomFactorSetting(),

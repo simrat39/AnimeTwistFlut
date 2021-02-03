@@ -16,6 +16,7 @@ import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
 import 'package:anime_twist_flut/providers/RecentlyWatchedProvider.dart';
 import 'package:anime_twist_flut/providers/ToWatchProvider.dart';
 import 'package:anime_twist_flut/providers/settings/DoubleTapDuration.dart';
+import 'package:anime_twist_flut/providers/settings/PlaybackSpeedProvider.dart';
 import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
@@ -62,6 +63,11 @@ final zoomFactorProvider = ChangeNotifierProvider<ZoomFactorProvider>((ref) {
 final doubleTapDurationProvider =
     ChangeNotifierProvider<DoubleTapDurationProvider>((ref) {
   return DoubleTapDurationProvider(ref.read(sharedPreferencesProvider));
+});
+
+final playbackSpeeedProvider =
+    ChangeNotifierProvider<PlaybackSpeedProvider>((ref) {
+  return PlaybackSpeedProvider(ref.read(sharedPreferencesProvider));
 });
 
 final recentlyWatchedProvider =
@@ -111,6 +117,7 @@ class _RootWindowState extends State<RootWindow>
     // dont be blocking
     ref.read(zoomFactorProvider).initalize();
     ref.read(doubleTapDurationProvider).initalize();
+    ref.read(playbackSpeeedProvider).initalize();
     ref.read(tvInfoProvider).initialize();
   });
 
