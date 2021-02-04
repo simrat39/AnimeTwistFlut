@@ -1,5 +1,6 @@
 import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -91,15 +92,15 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
-              return ClipRect(
-                child: SizedOverflowBox(
-                  size: Size(
-                    double.infinity,
-                    _sizeAnimation?.value ?? 150.0,
+              return DeviceOrientationBuilder(
+                portrait: ClipRect(
+                  child: SizedOverflowBox(
+                    size: Size(double.infinity, _sizeAnimation?.value ?? 150.0),
+                    alignment: Alignment.topCenter,
+                    child: child,
                   ),
-                  alignment: Alignment.topCenter,
-                  child: child,
                 ),
+                landscape: child,
               );
             },
             child: Container(
@@ -119,7 +120,8 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
             ),
           ),
           Visibility(
-            visible: (_renderBox?.size?.height ?? 151) > 150,
+            visible: ((_renderBox?.size?.height ?? 151) > 150) &&
+                MediaQuery.of(context).orientation == Orientation.portrait,
             child: Container(
               margin: EdgeInsets.only(
                 left: 16.0,
