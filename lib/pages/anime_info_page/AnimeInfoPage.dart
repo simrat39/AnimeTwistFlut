@@ -74,8 +74,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _scrollController = ScrollController();
     _placeholderController = ScrollController();
     _scrollController.addListener(() {
-      double offset =
-          _scrollController.offset / MediaQuery.of(context).size.height * 5;
+      double offset = _placeholderController.offset /
+          MediaQuery.of(context).size.height *
+          5;
       context.read(offsetProvider).state = offset;
     });
     Get.put<TwistModel>(widget.twistModel);
@@ -135,7 +136,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   void scrollToLastWatched(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     if (hasScrolled) return;
     if (widget.isFromRecentlyWatched && widget.lastWatchedEpisodeNum != null) {
@@ -437,125 +437,182 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                         child: CustomScrollView(
                           controller: _placeholderController,
                           slivers: [
-                            SliverToBoxAdapter(
-                              child: SizedBox(
-                                height: 250,
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    Positioned.fill(
-                                      child: CachedNetworkImage(
-                                        imageUrl: kitsuModel?.posterImage ??
-                                            kitsuModel?.coverImage ??
-                                            DEFAULT_IMAGE_URL,
-                                        fit: BoxFit.cover,
-                                        placeholder: (_, __) => CustomShimmer(),
+                            SliverAppBar(
+                              expandedHeight:
+                                  orientation == Orientation.portrait
+                                      ? height * 0.4
+                                      : width * 0.28,
+                              stretch: true,
+                              actions: [
+                                Center(
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      right: 20.0,
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 14.0,
+                                      vertical: 6.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xfff8f8f2),
+                                      borderRadius: BorderRadius.circular(
+                                        20.0,
                                       ),
                                     ),
-                                    Positioned.fill(
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        color: Theme.of(context)
-                                            .cardColor
-                                            .withOpacity(0.7),
-                                      ),
-                                    ),
-                                    Positioned.fill(
-                                      bottom: 20,
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal: 20.0,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(right: 5),
+                                          child: Icon(
+                                            Icons.star,
+                                            color: Colors.pink,
+                                          ),
                                         ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Flexible(
-                                              fit: FlexFit.loose,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: AutoSizeText(
-                                                      widget.twistModel.title
-                                                          .toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 2,
-                                                      minFontSize: 20.0,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 30.0,
+                                        Text(
+                                          (kitsuModel?.rating?.toString() ??
+                                                  "??") +
+                                              " / 100",
+                                          style: TextStyle(
+                                            color: Colors.pink,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              flexibleSpace: FlexibleSpaceBar(
+                                background: Container(
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      Positioned.fill(
+                                        child: Consumer(
+                                          builder: (context, watch, child) {
+                                            final provider =
+                                                watch(offsetProvider);
+                                            return CachedNetworkImage(
+                                              imageUrl:
+                                                  kitsuModel?.posterImage ??
+                                                      kitsuModel?.coverImage ??
+                                                      DEFAULT_IMAGE_URL,
+                                              fit: BoxFit.cover,
+                                              alignment: Alignment(
+                                                  0, -provider.state.abs()),
+                                              placeholder: (_, __) =>
+                                                  CustomShimmer(),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          color: Theme.of(context)
+                                              .cardColor
+                                              .withOpacity(0.7),
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        bottom: 20,
+                                        child: Container(
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 20.0,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Flexible(
+                                                fit: FlexFit.loose,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Expanded(
+                                                      child: AutoSizeText(
+                                                        widget.twistModel.title
+                                                            .toUpperCase(),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 2,
+                                                        minFontSize: 20.0,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 30.0,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Consumer(
-                                                    builder: (context, watch,
-                                                        child) {
-                                                      final provider = watch(
-                                                          toWatchProvider);
-                                                      return Container(
-                                                        height: 35.0,
-                                                        margin: EdgeInsets.only(
-                                                          left: 5.0,
-                                                        ),
-                                                        child: IconButton(
-                                                          icon: Icon(
-                                                            provider.isAlreadyInToWatch(
-                                                                        widget
-                                                                            .twistModel) >=
-                                                                    0
-                                                                ? FontAwesomeIcons
-                                                                    .minus
-                                                                : FontAwesomeIcons
-                                                                    .plus,
+                                                    Consumer(
+                                                      builder: (context, watch,
+                                                          child) {
+                                                        final provider = watch(
+                                                            toWatchProvider);
+                                                        return Container(
+                                                          height: 35.0,
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                            left: 5.0,
                                                           ),
-                                                          onPressed: () {
-                                                            provider
-                                                                .toggleFromToWatched(
-                                                              episodeModel:
-                                                                  null,
-                                                              kitsuModel:
-                                                                  kitsuModel,
-                                                              twistModel: widget
-                                                                  .twistModel,
-                                                            );
-                                                          },
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ],
+                                                          child: IconButton(
+                                                            icon: Icon(
+                                                              provider.isAlreadyInToWatch(
+                                                                          widget
+                                                                              .twistModel) >=
+                                                                      0
+                                                                  ? FontAwesomeIcons
+                                                                      .minus
+                                                                  : FontAwesomeIcons
+                                                                      .plus,
+                                                            ),
+                                                            onPressed: () {
+                                                              provider
+                                                                  .toggleFromToWatched(
+                                                                episodeModel:
+                                                                    null,
+                                                                kitsuModel:
+                                                                    kitsuModel,
+                                                                twistModel: widget
+                                                                    .twistModel,
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(height: 5.0),
-                                            Text(
-                                              (episodes?.length?.toString() ??
-                                                      '0') +
-                                                  " Episodes | " +
-                                                  (widget.twistModel.ongoing
-                                                      ? "Ongoing"
-                                                      : "Finished"),
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                                color:
-                                                    Theme.of(context).hintColor,
+                                              SizedBox(height: 5.0),
+                                              Text(
+                                                (episodes?.length?.toString() ??
+                                                        '0') +
+                                                    " Episodes | " +
+                                                    (widget.twistModel.ongoing
+                                                        ? "Ongoing"
+                                                        : "Finished"),
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  color: Theme.of(context)
+                                                      .hintColor,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
