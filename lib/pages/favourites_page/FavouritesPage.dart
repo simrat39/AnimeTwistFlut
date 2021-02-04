@@ -51,10 +51,6 @@ class _FavouritesPageState extends State<FavouritesPage>
           controller: dummyScrollController,
           child: CustomScrollView(
             slivers: [
-              SliverOverlapInjector(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              ),
               SliverPadding(
                 padding: EdgeInsets.all(15.0),
                 sliver: SliverGrid(

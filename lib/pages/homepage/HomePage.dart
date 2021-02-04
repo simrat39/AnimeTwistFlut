@@ -5,6 +5,7 @@ import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:anime_twist_flut/pages/homepage/to_watch_row/ToWatchRow.dart';
 import 'package:anime_twist_flut/services/AppUpdateService.dart';
+import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -138,17 +139,44 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return CustomScrollView(
-      slivers: [
-        SliverOverlapInjector(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-              (context, index) => widgets.elementAt(index),
-              childCount: widgets.length),
-        ),
-      ],
+    return DeviceOrientationBuilder(
+      portrait: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                (context, index) => widgets.elementAt(index),
+                childCount: widgets.length),
+          ),
+        ],
+      ),
+      landscape: Row(
+        children: [
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => widgets.elementAt(index),
+                    childCount: 3,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => widgets.elementAt(index + 4),
+                    childCount: widgets.length - 4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
