@@ -29,6 +29,8 @@ class _FavouritesPageState extends State<FavouritesPage>
   @override
   Widget build(BuildContext context) {
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    var width = MediaQuery.of(context).size.width;
+
     super.build(context);
     return Consumer(
       builder: (context, watch, child) {
@@ -55,7 +57,7 @@ class _FavouritesPageState extends State<FavouritesPage>
                 padding: EdgeInsets.all(15.0),
                 sliver: SliverGrid(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: isPortrait ? 2 : (width / 400).ceil(),
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 16,
                     childAspectRatio: isPortrait ? 0.65 : 1.4,

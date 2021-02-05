@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePageLandscape.dart';
+import 'package:anime_twist_flut/pages/homepage/HomePagePortrait.dart';
 import 'package:anime_twist_flut/pages/homepage/to_watch_row/ToWatchRow.dart';
 import 'package:anime_twist_flut/services/AppUpdateService.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
@@ -140,43 +142,8 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
     return DeviceOrientationBuilder(
-      portrait: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                (context, index) => widgets.elementAt(index),
-                childCount: widgets.length),
-          ),
-        ],
-      ),
-      landscape: Row(
-        children: [
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => widgets.elementAt(index),
-                    childCount: 3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => widgets.elementAt(index + 4),
-                    childCount: widgets.length - 4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      portrait: HomePagePortrait(widgets: widgets),
+      landscape: HomePageLandscape(widgets: widgets),
     );
   }
 

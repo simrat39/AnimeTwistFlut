@@ -144,58 +144,55 @@ class _RootWindowState extends State<RootWindow>
               data: (v) => Consumer(
                 builder: (context, watch, child) {
                   return Scaffold(
+                    appBar: AppBar(
+                      primary: true,
+                      bottom: TabBar(
+                        controller: _tabController,
+                        indicatorColor: Theme.of(context).accentColor,
+                        tabs: [
+                          Tab(icon: Icon(Icons.home)),
+                          Tab(icon: Icon(Icons.favorite_outline)),
+                        ],
+                      ),
+                      title: AppbarText(),
+                      actions: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.settings,
+                          ),
+                          onPressed: () {
+                            Transitions.slideTransition(
+                              context: context,
+                              pageBuilder: () => SettingsPage(),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.chat_bubble,
+                          ),
+                          onPressed: () {
+                            Transitions.slideTransition(
+                              context: context,
+                              pageBuilder: () => ChatPage(),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.search,
+                          ),
+                          onPressed: () {
+                            Transitions.slideTransition(
+                              context: context,
+                              pageBuilder: () => SearchPage(),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                     body: CustomScrollView(
                       slivers: [
-                        SliverAppBar(
-                          primary: true,
-                          bottom: TabBar(
-                            controller: _tabController,
-                            indicatorColor: Theme.of(context).accentColor,
-                            tabs: [
-                              Tab(icon: Icon(Icons.home)),
-                              Tab(icon: Icon(Icons.favorite_outline)),
-                            ],
-                          ),
-                          title: AppbarText(),
-                          actions: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.settings,
-                              ),
-                              onPressed: () {
-                                Transitions.slideTransition(
-                                  context: context,
-                                  pageBuilder: () => SettingsPage(),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.chat_bubble,
-                              ),
-                              onPressed: () {
-                                Transitions.slideTransition(
-                                  context: context,
-                                  pageBuilder: () => ChatPage(),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.search,
-                              ),
-                              onPressed: () {
-                                Transitions.slideTransition(
-                                  context: context,
-                                  pageBuilder: () => SearchPage(),
-                                );
-                              },
-                            ),
-                          ],
-                          pinned: true,
-                          floating: true,
-                          snap: true,
-                        ),
                         SliverFillRemaining(
                           child: TabBarView(
                             controller: _tabController,
@@ -204,73 +201,6 @@ class _RootWindowState extends State<RootWindow>
                         ),
                       ],
                     ),
-                    // body: NestedScrollView(
-                    //   floatHeaderSlivers: true,
-                    //   headerSliverBuilder: (context, innerBoxIsScrolled) {
-                    //     return [
-                    //       SliverOverlapAbsorber(
-                    //         handle:
-                    //             NestedScrollView.sliverOverlapAbsorberHandleFor(
-                    //           context,
-                    //         ),
-                    //         sliver: SliverAppBar(
-                    //           primary: true,
-                    //           bottom: TabBar(
-                    //             controller: _tabController,
-                    //             indicatorColor: Theme.of(context).accentColor,
-                    //             tabs: [
-                    //               Tab(icon: Icon(Icons.home)),
-                    //               Tab(icon: Icon(Icons.favorite_outline)),
-                    //             ],
-                    //           ),
-                    //           title: AppbarText(),
-                    //           actions: [
-                    //             IconButton(
-                    //               icon: Icon(
-                    //                 Icons.settings,
-                    //               ),
-                    //               onPressed: () {
-                    //                 Transitions.slideTransition(
-                    //                   context: context,
-                    //                   pageBuilder: () => SettingsPage(),
-                    //                 );
-                    //               },
-                    //             ),
-                    //             IconButton(
-                    //               icon: Icon(
-                    //                 Icons.chat_bubble,
-                    //               ),
-                    //               onPressed: () {
-                    //                 Transitions.slideTransition(
-                    //                   context: context,
-                    //                   pageBuilder: () => ChatPage(),
-                    //                 );
-                    //               },
-                    //             ),
-                    //             IconButton(
-                    //               icon: Icon(
-                    //                 Icons.search,
-                    //               ),
-                    //               onPressed: () {
-                    //                 Transitions.slideTransition(
-                    //                   context: context,
-                    //                   pageBuilder: () => SearchPage(),
-                    //                 );
-                    //               },
-                    //             ),
-                    //           ],
-                    //           pinned: true,
-                    //           floating: true,
-                    //           snap: true,
-                    //         ),
-                    //       ),
-                    //     ];
-                    //   },
-                    //   body: TabBarView(
-                    //     controller: _tabController,
-                    //     children: pages,
-                    //   ),
-                    // ),
                   );
                 },
               ),
