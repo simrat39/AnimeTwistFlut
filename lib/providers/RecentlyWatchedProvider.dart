@@ -35,7 +35,7 @@ class RecentlyWatchedProvider extends ChangeNotifier {
         recentlyWatchedAnimes.add(contents[i]);
       }
     } catch (e) {
-      throw Exception("Cannot load recently watched animes\n" + e);
+      throw Exception("Cannot load recently watched animes\n" + e.toString());
     }
   }
 

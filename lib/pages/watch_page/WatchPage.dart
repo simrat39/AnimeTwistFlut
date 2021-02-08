@@ -7,7 +7,6 @@ import 'package:anime_twist_flut/pages/settings_page/PlaybackSpeedSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
-import 'package:anime_twist_flut/providers/settings/PlaybackSpeedProvider.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

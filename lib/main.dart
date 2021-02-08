@@ -1,14 +1,9 @@
 // Flutter imports:
-import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
-import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
-import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
-import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
-import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
-import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
+import 'package:anime_twist_flut/pages/root_window/root_window.dart';
 import 'package:anime_twist_flut/providers/TVInfoProvider.dart';
 import 'package:anime_twist_flut/providers/settings/AccentColorProvider.dart';
 import 'package:anime_twist_flut/providers/FavouriteAnimeProvider.dart';
@@ -25,9 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
 
-// Project imports:
-import 'pages/homepage/HomePage.dart';
-
 class CustomImageCache extends WidgetsFlutterBinding {
   @override
   ImageCache createImageCache() {
@@ -41,7 +33,7 @@ class CustomImageCache extends WidgetsFlutterBinding {
 
 void main() {
   CustomImageCache();
-  runApp(ProviderScope(child: RootWindow()));
+  runApp(ProviderScope(child: MainWidget()));
 }
 
 final sharedPreferencesProvider = Provider<SharedPreferencesManager>((ref) {
@@ -82,16 +74,13 @@ final toWatchProvider = ChangeNotifierProvider<ToWatchProvider>((ref) {
 final favouriteAnimeProvider = ChangeNotifierProvider<FavouriteAnimeProvider>(
     (ref) => FavouriteAnimeProvider());
 
-class RootWindow extends StatefulWidget {
+class MainWidget extends StatefulWidget {
   @override
-  _RootWindowState createState() => _RootWindowState();
+  _MainWidgetState createState() => _MainWidgetState();
 }
 
-class _RootWindowState extends State<RootWindow>
+class _MainWidgetState extends State<MainWidget>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  var pages = [HomePage(), FavouritesPage()];
-
   var _initDataProvider = FutureProvider.autoDispose((ref) async {
     ref.maintainState = true;
 
@@ -122,12 +111,6 @@ class _RootWindowState extends State<RootWindow>
   });
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: pages.length, vsync: this);
-  }
-
-  @override
   Widget build(BuildContext context) {
     Color bgColor = Color(0xff121212);
     Color cardColor = Color(0xff11D1D1D);
@@ -142,67 +125,7 @@ class _RootWindowState extends State<RootWindow>
           child: MaterialApp(
             home: watch(_initDataProvider).when(
               data: (v) => Consumer(
-                builder: (context, watch, child) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      primary: true,
-                      bottom: TabBar(
-                        controller: _tabController,
-                        indicatorColor: Theme.of(context).accentColor,
-                        tabs: [
-                          Tab(icon: Icon(Icons.home)),
-                          Tab(icon: Icon(Icons.favorite_outline)),
-                        ],
-                      ),
-                      title: AppbarText(),
-                      actions: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.settings,
-                          ),
-                          onPressed: () {
-                            Transitions.slideTransition(
-                              context: context,
-                              pageBuilder: () => SettingsPage(),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.chat_bubble,
-                          ),
-                          onPressed: () {
-                            Transitions.slideTransition(
-                              context: context,
-                              pageBuilder: () => ChatPage(),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.search,
-                          ),
-                          onPressed: () {
-                            Transitions.slideTransition(
-                              context: context,
-                              pageBuilder: () => SearchPage(),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    body: CustomScrollView(
-                      slivers: [
-                        SliverFillRemaining(
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: pages,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                builder: (context, watch, child) => RootWindow(),
               ),
               loading: () {
                 return Scaffold(
