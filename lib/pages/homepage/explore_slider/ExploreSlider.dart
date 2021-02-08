@@ -15,6 +15,8 @@ import 'ExploreRowItem.dart';
 import '../../../animations/TwistLoadingWidget.dart';
 
 class ExploreRow extends StatefulWidget {
+  const ExploreRow({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ExploreRowState();

@@ -12,6 +12,8 @@ import '../../../utils/homepage/DonationUtils.dart';
 import '../../../animations/TwistLoadingWidget.dart';
 
 class DonationCard extends StatefulWidget {
+  const DonationCard({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _DonationCardState();

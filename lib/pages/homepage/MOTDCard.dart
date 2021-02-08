@@ -11,6 +11,8 @@ import '../../animations/TwistLoadingWidget.dart';
 import '../../services/twist_service/TwistApiService.dart';
 
 class MOTDCard extends StatefulWidget {
+  const MOTDCard({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _MOTDCardState();

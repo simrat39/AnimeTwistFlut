@@ -33,14 +33,14 @@ class _HomePageState extends State<HomePage>
       height: 15.0,
     ),
     ToWatchRow(),
-    ExploreRow(),
+    ExploreRow(key: GlobalObjectKey("explore")),
     Padding(
       padding: EdgeInsets.only(
         left: 15.0,
         right: 15.0,
         bottom: 8.0,
       ),
-      child: DonationCard(),
+      child: DonationCard(key: GlobalObjectKey("donation")),
     ),
     // View all anime card
     Padding(
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage>
       child: ViewAllAnimeCard(),
     ),
     // Message Of The Day Card
-    MOTDCard(),
+    MOTDCard(key: GlobalObjectKey("motd")),
   ];
 
   @override
