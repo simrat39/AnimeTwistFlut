@@ -50,6 +50,14 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
       _checkURIAndLaunchPage(url);
     });
     _tabController = TabController(length: pages.length, vsync: this);
+
+    _tabController.addListener(() {
+      context.read(indexProvider).state = _tabController.index;
+    });
+
+    context.read(indexProvider).addListener((state) {
+      _tabController.animateTo(state);
+    });
   }
 
   Future _checkURIAndLaunchPage([String url]) async {
