@@ -1,7 +1,6 @@
 import 'package:anime_twist_flut/pages/homepage/HomePageLandscape.dart';
 import 'package:anime_twist_flut/pages/homepage/HomePagePortrait.dart';
 import 'package:anime_twist_flut/pages/homepage/to_watch_row/ToWatchRow.dart';
-import 'package:anime_twist_flut/services/AppUpdateService.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
 
@@ -11,22 +10,7 @@ import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
 import 'explore_slider/ExploreSlider.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _HomePageState();
-  }
-}
-
-class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    AppUpdateService appUpdateService = AppUpdateService();
-    appUpdateService.checkUpdate(context: context);
-  }
-
+class HomePage extends StatelessWidget {
   final List<Widget> widgets = [
     RecentlyWatchedSlider(),
     SizedBox(
@@ -57,13 +41,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return DeviceOrientationBuilder(
       portrait: HomePagePortrait(widgets: widgets),
       landscape: HomePageLandscape(widgets: widgets),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

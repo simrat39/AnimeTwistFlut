@@ -7,6 +7,7 @@ import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
 import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:anime_twist_flut/pages/root_window/root_window_landscape.dart';
 import 'package:anime_twist_flut/pages/root_window/root_window_portrait.dart';
+import 'package:anime_twist_flut/services/AppUpdateService.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,14 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
 
     _uriSub.cancel();
     _tabController.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    AppUpdateService appUpdateService = AppUpdateService();
+    appUpdateService.checkUpdate(context: context);
   }
 
   @override
