@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' show pi;
 
 class RotatingPinLoadingAnimation extends StatefulWidget {
   RotatingPinLoadingAnimation({Key key}) : super(key: key);
@@ -16,8 +17,8 @@ class _RotatingPinLoadingAnimationState
   @override
   void initState() {
     animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 60));
-    angleAnimation = Tween(begin: 0.0, end: 360.0).animate(
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    angleAnimation = Tween(begin: 0.0, end: (2 * pi)).animate(
       CurvedAnimation(curve: Curves.linear, parent: animationController),
     );
     animationController.repeat();
