@@ -64,9 +64,6 @@ class RootWindowPortrait extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: prov.state,
             onTap: (index) => prov.state = index,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            showSelectedLabels: true,
-            showUnselectedLabels: false,
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),

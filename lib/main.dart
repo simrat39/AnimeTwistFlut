@@ -113,7 +113,8 @@ class _MainWidgetState extends State<MainWidget>
   @override
   Widget build(BuildContext context) {
     Color bgColor = Color(0xff121212);
-    Color cardColor = Color(0xff11D1D1D);
+    Color cardColor = Color(0xff1D1D1D);
+    Color bottomNavbarColor = Color(0xff1f1f1f);
 
     return Consumer(
       builder: (context, watch, child) {
@@ -182,6 +183,12 @@ class _MainWidgetState extends State<MainWidget>
                   style: ElevatedButton.styleFrom(primary: accentColor)),
               bottomSheetTheme: BottomSheetThemeData(
                 backgroundColor: bgColor,
+              ),
+              bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                backgroundColor: bottomNavbarColor,
+                elevation: 8.0,
+                showSelectedLabels: true,
+                showUnselectedLabels: false,
               ),
             ),
             themeMode: ThemeMode.dark,
