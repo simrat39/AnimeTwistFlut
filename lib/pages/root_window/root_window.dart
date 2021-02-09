@@ -122,7 +122,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return DeviceOrientationBuilder(
       portrait: RootWindowPortrait(
-        tabController: _tabController,
+        indexProvider: indexProvider,
         pages: pages,
       ),
       landscape: RootWindowLandscape(
