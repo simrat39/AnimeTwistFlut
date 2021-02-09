@@ -613,13 +613,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
-  responsive_builder:
-    dependency: "direct main"
-    description:
-      name: responsive_builder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   riverpod:
     dependency: transitive
     description:

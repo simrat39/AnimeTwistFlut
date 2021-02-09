@@ -2,13 +2,13 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supercharged/supercharged.dart';
 
 class GenericDonationSheet extends StatefulWidget {
@@ -54,8 +54,8 @@ class _GenericDonationSheetState extends State<GenericDonationSheet> {
         15.0,
       ),
       height: height * 0.6,
-      child: OrientationLayoutBuilder(
-        portrait: (context) => Column(
+      child: DeviceOrientationBuilder(
+        portrait: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
@@ -128,7 +128,7 @@ class _GenericDonationSheetState extends State<GenericDonationSheet> {
             ),
           ],
         ),
-        landscape: (context) => Row(
+        landscape: Row(
           children: [
             Expanded(
               child: Column(
