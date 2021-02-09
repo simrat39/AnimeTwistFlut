@@ -1,3 +1,4 @@
+import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
@@ -97,7 +98,7 @@ class RootWindowLandscape extends StatelessWidget {
                 endIndent: 0.0,
               ),
               Expanded(
-                child: IndexedStack(
+                child: FadeThroughIndexedStack(
                   index: prov.state,
                   children: pages,
                 ),

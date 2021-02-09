@@ -1,3 +1,4 @@
+import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
@@ -77,7 +78,7 @@ class RootWindowPortrait extends StatelessWidget {
               ),
             ],
           ),
-          body: IndexedStack(
+          body: FadeThroughIndexedStack(
             children: pages,
             index: prov.state,
           ),
