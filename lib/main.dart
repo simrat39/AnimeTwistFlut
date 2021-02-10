@@ -103,11 +103,10 @@ class _MainWidgetState extends State<MainWidget>
     await ref.read(toWatchProvider).initialize();
     await ref.read(favouriteAnimeProvider).initialize();
 
-    // dont be blocking
-    ref.read(zoomFactorProvider).initalize();
-    ref.read(doubleTapDurationProvider).initalize();
-    ref.read(playbackSpeeedProvider).initalize();
-    ref.read(tvInfoProvider).initialize();
+    await ref.read(zoomFactorProvider).initalize();
+    await ref.read(doubleTapDurationProvider).initalize();
+    await ref.read(playbackSpeeedProvider).initalize();
+    await ref.read(tvInfoProvider).initialize();
   });
 
   @override
