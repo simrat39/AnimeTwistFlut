@@ -74,15 +74,21 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _scrollController = ScrollController();
     _placeholderController = ScrollController();
     _scrollController.addListener(() {
-      double offset = _placeholderController.offset /
-          MediaQuery.of(context).size.height *
-          5;
-      context.read(offsetProvider).state = offset;
+      setImageOffset();
     });
     Get.put<TwistModel>(widget.twistModel);
     _initDataProvider = FutureProvider((ref) async {
       await initData();
     });
+  }
+
+  void setImageOffset() {
+    var controller = _placeholderController;
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+      controller = _scrollController;
+    }
+    double offset = controller.offset / MediaQuery.of(context).size.height * 5;
+    context.read(offsetProvider).state = offset;
   }
 
   @override
