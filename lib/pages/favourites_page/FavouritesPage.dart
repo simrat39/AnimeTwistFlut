@@ -19,11 +19,18 @@ class FavouritesPage extends StatefulWidget {
 class _FavouritesPageState extends State<FavouritesPage>
     with AutomaticKeepAliveClientMixin {
   TwistApiService twistApiService = Get.find();
-  final dummyScrollController = ScrollController();
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,8 +57,9 @@ class _FavouritesPageState extends State<FavouritesPage>
         }
         return Scrollbar(
           thickness: 4,
-          controller: dummyScrollController,
+          controller: _scrollController,
           child: CustomScrollView(
+            controller: _scrollController,
             slivers: [
               SliverPadding(
                 padding: EdgeInsets.all(15.0),
