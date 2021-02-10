@@ -39,14 +39,6 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    AppUpdateService appUpdateService = AppUpdateService();
-    appUpdateService.checkUpdate(context: context);
-  }
-
-  @override
   void initState() {
     super.initState();
 
@@ -67,6 +59,9 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
     context.read(indexProvider).addListener((state) {
       _tabController.animateTo(state);
     });
+
+    AppUpdateService appUpdateService = AppUpdateService();
+    appUpdateService.checkUpdate(context: context);
   }
 
   Future _checkURIAndLaunchPage([String url]) async {
