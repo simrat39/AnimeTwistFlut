@@ -28,6 +28,12 @@ class _FadeThroughIndexedStackState extends State<FadeThroughIndexedStack>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(covariant FadeThroughIndexedStack oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.index != widget.index) {
