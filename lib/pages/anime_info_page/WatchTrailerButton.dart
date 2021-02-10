@@ -17,18 +17,14 @@ class WatchTrailerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Container(
+      height: 55,
       margin: EdgeInsets.only(
         left: 16.0,
         right: 4.0,
         top: 25.0,
         bottom: 20.0,
       ),
-      height:
-          orientation == Orientation.portrait ? height * 0.06 : width * 0.06,
       child: ElevatedButton(
         onPressed: () {
           launchTrailer(kitsuModel.trailerURL);

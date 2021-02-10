@@ -14,12 +14,8 @@ class FavouriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     Color accentColor = Theme.of(context).accentColor;
-    var side =
-        orientation == Orientation.portrait ? height * 0.06 : width * 0.06;
+    var side = 55;
 
     return Container(
       margin: EdgeInsets.only(
@@ -27,8 +23,8 @@ class FavouriteButton extends StatelessWidget {
         top: 25.0,
         bottom: 20.0,
       ),
-      height: side,
-      width: side,
+      height: side.toDouble(),
+      width: side.toDouble(),
       decoration: BoxDecoration(
         color: accentColor,
         borderRadius: BorderRadius.circular(
