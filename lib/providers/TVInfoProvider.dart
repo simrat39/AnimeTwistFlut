@@ -8,6 +8,6 @@ class TVInfoProvider {
       isTV = await MethodChannel("tv_info").invokeMethod("isTV");
     } on PlatformException {
       isTV = false;
-    }
+    } catch (e) {}
   }
 }
