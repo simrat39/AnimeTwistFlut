@@ -49,6 +49,13 @@ class _DonationCardState extends State<DonationCard>
                         child: Column(
                           children: [
                             ListTile(
+                              autofocus: true,
+                              title: Text("Back"),
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            ListTile(
                               title: Text("Patreon"),
                               onTap: () {
                                 DonationUtils.donatePatreon();
