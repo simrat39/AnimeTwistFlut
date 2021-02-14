@@ -19,6 +19,7 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
+import 'dart:io' show Platform;
 
 class CustomImageCache extends WidgetsFlutterBinding {
   @override
@@ -188,6 +189,14 @@ class _MainWidgetState extends State<MainWidget>
                 elevation: 8.0,
                 showSelectedLabels: true,
                 showUnselectedLabels: false,
+              ),
+              scrollbarTheme: ScrollbarThemeData(
+                thickness: MaterialStateProperty.all(4),
+                showTrackOnHover: true,
+                trackColor: MaterialStateProperty.all(cardColor),
+                trackBorderColor: MaterialStateProperty.all(cardColor),
+                isAlwaysShown:
+                    Platform.isLinux || Platform.isWindows || Platform.isMacOS,
               ),
             ),
             themeMode: ThemeMode.dark,

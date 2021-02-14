@@ -84,7 +84,6 @@ class _AllAnimePageState extends State<AllAnimePage> {
           elevation: 0.0,
         ),
         body: Scrollbar(
-          thickness: 4,
           controller: _controller,
           child: ListView.builder(
             controller: _controller,

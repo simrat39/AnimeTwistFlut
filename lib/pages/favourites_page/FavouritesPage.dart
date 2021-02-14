@@ -56,7 +56,6 @@ class _FavouritesPageState extends State<FavouritesPage>
           );
         }
         return Scrollbar(
-          thickness: 4,
           controller: _scrollController,
           child: CustomScrollView(
             controller: _scrollController,

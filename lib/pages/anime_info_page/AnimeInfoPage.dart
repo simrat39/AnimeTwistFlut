@@ -211,7 +211,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                     (timeStamp) => scrollToLastWatched(context));
                 return DeviceOrientationBuilder(
                   portrait: Scrollbar(
-                    thickness: 4,
                     controller: _scrollController,
                     child: CustomScrollView(
                       controller: _scrollController,

@@ -38,7 +38,6 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       body: Scrollbar(
         controller: scrollController,
-        thickness: 4,
         child: ListView(
           controller: scrollController,
           children: [

@@ -107,7 +107,6 @@ class _SearchPageState extends State<SearchPage> {
                         );
                       return Scrollbar(
                         controller: _scrollController,
-                        thickness: 4,
                         child: ListView.builder(
                           controller: _scrollController,
                           shrinkWrap: true,

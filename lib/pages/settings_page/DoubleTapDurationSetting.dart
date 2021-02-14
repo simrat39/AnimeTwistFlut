@@ -33,7 +33,6 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
                   )
                 ],
                 content: Scrollbar(
-                  thickness: 4,
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
