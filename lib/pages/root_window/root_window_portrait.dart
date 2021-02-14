@@ -29,17 +29,6 @@ class RootWindowPortrait extends StatelessWidget {
             actions: [
               IconButton(
                 icon: Icon(
-                  Icons.settings,
-                ),
-                onPressed: () {
-                  Transitions.slideTransition(
-                    context: context,
-                    pageBuilder: () => SettingsPage(),
-                  );
-                },
-              ),
-              IconButton(
-                icon: Icon(
                   Icons.chat_bubble,
                 ),
                 onPressed: () {
@@ -75,6 +64,11 @@ class RootWindowPortrait extends StatelessWidget {
                 icon: Icon(Icons.favorite_outline),
                 label: "Favorites",
                 tooltip: "Favorites",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: "Settings",
+                tooltip: "Settings",
               ),
             ],
           ),

@@ -26,17 +26,6 @@ class RootWindowLandscape extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(
-              Icons.settings,
-            ),
-            onPressed: () {
-              Transitions.slideTransition(
-                context: context,
-                pageBuilder: () => SettingsPage(),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(
               Icons.chat_bubble,
             ),
             onPressed: () {
@@ -86,7 +75,12 @@ class RootWindowLandscape extends StatelessWidget {
                       icon: Icon(Icons.favorite_outline),
                       selectedIcon: Icon(Icons.favorite),
                       label: Text("Favorites"),
-                    )
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.settings_outlined),
+                      selectedIcon: Icon(Icons.settings),
+                      label: Text("Settings"),
+                    ),
                   ],
                   selectedIndex: prov.state,
                 ),

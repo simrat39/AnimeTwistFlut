@@ -7,6 +7,7 @@ import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
 import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:anime_twist_flut/pages/root_window/root_window_landscape.dart';
 import 'package:anime_twist_flut/pages/root_window/root_window_portrait.dart';
+import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:anime_twist_flut/services/AppUpdateService.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
@@ -27,7 +28,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   TabController _tabController;
   StreamSubscription _uriSub;
 
-  var pages = [HomePage(), FavouritesPage()];
+  var pages = [HomePage(), FavouritesPage(), SettingsPage()];
   final indexProvider = StateProvider<int>((ref) => 0);
 
   @override

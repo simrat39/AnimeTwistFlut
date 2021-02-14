@@ -1,4 +1,3 @@
-import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/settings_page/AboutAppSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/AccentPickerSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/CheckUpdateSetting.dart';
@@ -18,11 +17,6 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: AppbarText(
-          custom: "settings",
-        ),
-      ),
       body: Scrollbar(
         thickness: 4,
         child: ListView(
