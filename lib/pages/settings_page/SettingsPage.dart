@@ -11,15 +11,36 @@ import 'package:anime_twist_flut/pages/settings_page/SettingsCategory.dart';
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({Key key}) : super(key: key);
+
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Scrollbar(
+        controller: scrollController,
         thickness: 4,
         child: ListView(
+          controller: scrollController,
           children: [
             SizedBox(height: 4.0),
             SettingsCategory(title: "Data"),
