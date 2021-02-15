@@ -10,27 +10,15 @@ class HomePageLandscape extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => widgets.elementAt(index),
-                  childCount: 4,
-                ),
-              ),
-            ],
+          child: ListView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) => widgets.elementAt(index),
           ),
         ),
         Expanded(
-          child: CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => widgets.elementAt(index + 4),
-                  childCount: widgets.length - 4,
-                ),
-              ),
-            ],
+          child: ListView.builder(
+            itemCount: widgets.length - 4,
+            itemBuilder: (context, index) => widgets.elementAt(index + 4),
           ),
         ),
       ],
