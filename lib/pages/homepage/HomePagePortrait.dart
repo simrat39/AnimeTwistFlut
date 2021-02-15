@@ -7,14 +7,9 @@ class HomePagePortrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-              (context, index) => widgets.elementAt(index),
-              childCount: widgets.length),
-        ),
-      ],
+    return ListView.builder(
+      itemBuilder: (context, index) => widgets.elementAt(index),
+      itemCount: widgets.length,
     );
   }
 }
