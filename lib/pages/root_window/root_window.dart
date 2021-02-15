@@ -26,7 +26,6 @@ class RootWindow extends StatefulWidget {
 }
 
 class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
-  TabController _tabController;
   StreamSubscription _uriSub;
   PageController _pageController;
 
@@ -40,7 +39,6 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
 
     _pageController.dispose();
     _uriSub.cancel();
-    _tabController.dispose();
   }
 
   @override
@@ -55,14 +53,6 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
     // Check and launch a page every times a user clicks on a relevant link.
     _uriSub = getLinksStream().listen((String url) {
       _checkURIAndLaunchPage(url);
-    });
-    _tabController = TabController(length: pages.length, vsync: this);
-    _tabController.addListener(() {
-      context.read(indexProvider).state = _tabController.index;
-    });
-
-    context.read(indexProvider).addListener((state) {
-      _tabController.animateTo(state);
     });
 
     AppUpdateService appUpdateService = AppUpdateService();
