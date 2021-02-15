@@ -4,22 +4,24 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:anime_twist_flut/cached_http_get/CachedHttpGet.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 // Project imports:
 import '../../secrets.dart';
 
 class MOTDApiService {
   static Future<List<String>> getMOTD() async {
-    var response = await http.get(
-      TwistApiService.BASE_API_URL + '/motd',
-      headers: {
-        'x-access-token': x_access_token,
-      },
+    String response = await CachedHttpGet.get(
+      Request(
+        url: TwistApiService.BASE_API_URL + '/motd',
+        header: {
+          'x-access-token': x_access_token,
+        },
+      ),
     );
-    return await compute(_computeData, response.body);
+    return await compute(_computeData, response);
   }
 
   static String _parseMOTD(String motd) {
