@@ -45,7 +45,10 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _pageController = PageController(initialPage: 0, keepPage: true);
+    _pageController = PageController(initialPage: 0, keepPage: true)
+      ..addListener(() {
+        FocusScope.of(context).unfocus();
+      });
     // Check and launch an anime page on initial app launch, this is needed when
     // the app is not running in the background and the user clicks a relevant
     // link.
