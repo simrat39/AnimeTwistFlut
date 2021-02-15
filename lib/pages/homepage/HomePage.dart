@@ -10,7 +10,13 @@ import 'ViewAllAnimeCard.dart';
 import 'donation_card/DonationCard.dart';
 import 'explore_slider/ExploreSlider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   final List<Widget> widgets = [
     RecentlyWatchedSlider(),
     SizedBox(
@@ -41,9 +47,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DeviceOrientationBuilder(
       portrait: HomePagePortrait(widgets: widgets),
       landscape: HomePageLandscape(widgets: widgets),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

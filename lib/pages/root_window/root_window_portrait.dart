@@ -1,9 +1,6 @@
-import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
-import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
-import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 
@@ -12,10 +9,14 @@ class RootWindowPortrait extends StatelessWidget {
     Key key,
     @required this.pages,
     @required this.indexProvider,
+    @required this.pageController,
+    @required this.pageViewKey,
   }) : super(key: key);
 
   final List<Widget> pages;
   final StateProvider indexProvider;
+  final PageController pageController;
+  final GlobalKey pageViewKey;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,10 @@ class RootWindowPortrait extends StatelessWidget {
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: prov.state,
-            onTap: (index) => prov.state = index,
+            onTap: (index) {
+              pageController.jumpToPage(index);
+              return prov.state = index;
+            },
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -66,9 +70,12 @@ class RootWindowPortrait extends StatelessWidget {
               ),
             ],
           ),
-          body: FadeThroughIndexedStack(
+          // body: pages.elementAt(prov.state),
+          body: PageView(
+            key: pageViewKey,
+            controller: pageController,
             children: pages,
-            index: prov.state,
+            physics: NeverScrollableScrollPhysics(),
           ),
         );
       },

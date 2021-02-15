@@ -28,14 +28,17 @@ class RootWindow extends StatefulWidget {
 class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   TabController _tabController;
   StreamSubscription _uriSub;
+  PageController _pageController;
 
   var pages = [HomePage(), FavouritesPage(), SearchPage(), SettingsPage()];
   final indexProvider = StateProvider<int>((ref) => 0);
+  final GlobalKey pageViewKey = GlobalKey(debugLabel: 'page_view');
 
   @override
   void dispose() {
     super.dispose();
 
+    _pageController.dispose();
     _uriSub.cancel();
     _tabController.dispose();
   }
@@ -44,6 +47,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    _pageController = PageController(initialPage: 0, keepPage: true);
     // Check and launch an anime page on initial app launch, this is needed when
     // the app is not running in the background and the user clicks a relevant
     // link.
@@ -53,7 +57,6 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
       _checkURIAndLaunchPage(url);
     });
     _tabController = TabController(length: pages.length, vsync: this);
-
     _tabController.addListener(() {
       context.read(indexProvider).state = _tabController.index;
     });
@@ -120,11 +123,15 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
     return DeviceOrientationBuilder(
       portrait: RootWindowPortrait(
         indexProvider: indexProvider,
+        pageController: _pageController,
         pages: pages,
+        pageViewKey: pageViewKey,
       ),
       landscape: RootWindowLandscape(
         indexProvider: indexProvider,
+        pageController: _pageController,
         pages: pages,
+        pageViewKey: pageViewKey,
       ),
     );
   }

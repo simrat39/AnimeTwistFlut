@@ -1,9 +1,6 @@
-import 'package:anime_twist_flut/animations/FadeThroughIndexedStack.dart';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
-import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
-import 'package:anime_twist_flut/pages/settings_page/SettingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 
@@ -12,10 +9,14 @@ class RootWindowLandscape extends StatelessWidget {
     Key key,
     @required this.indexProvider,
     @required this.pages,
+    @required this.pageController,
+    @required this.pageViewKey,
   }) : super(key: key);
 
   final StateProvider indexProvider;
   final List<Widget> pages;
+  final PageController pageController;
+  final GlobalKey pageViewKey;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,10 @@ class RootWindowLandscape extends StatelessWidget {
                   ),
                 ),
                 child: NavigationRail(
-                  onDestinationSelected: (index) => prov.state = index,
+                  onDestinationSelected: (index) {
+                    pageController.jumpToPage(index);
+                    return prov.state = index;
+                  },
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   selectedIconTheme: IconThemeData(
                     color: Theme.of(context).accentColor,
@@ -86,9 +90,11 @@ class RootWindowLandscape extends StatelessWidget {
                 endIndent: 0.0,
               ),
               Expanded(
-                child: FadeThroughIndexedStack(
-                  index: prov.state,
+                child: PageView(
+                  key: pageViewKey,
+                  controller: pageController,
                   children: pages,
+                  physics: NeverScrollableScrollPhysics(),
                 ),
               ),
             ],

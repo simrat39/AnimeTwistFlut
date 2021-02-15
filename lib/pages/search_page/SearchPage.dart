@@ -16,7 +16,8 @@ class SearchPage extends StatefulWidget {
   }
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage>
+    with AutomaticKeepAliveClientMixin {
   TextEditingController _textEditingController;
   ScrollController _scrollController;
   FocusNode listTileNode;
@@ -42,6 +43,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -113,4 +115,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
