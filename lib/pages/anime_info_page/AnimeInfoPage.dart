@@ -200,6 +200,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
     return WillPopScope(
       onWillPop: () async {
+        FocusScope.of(context).unfocus();
         return true;
       },
       child: Scaffold(
