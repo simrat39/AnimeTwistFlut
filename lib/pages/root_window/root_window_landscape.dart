@@ -35,17 +35,6 @@ class RootWindowLandscape extends StatelessWidget {
               );
             },
           ),
-          IconButton(
-            icon: Icon(
-              Icons.search,
-            ),
-            onPressed: () {
-              Transitions.slideTransition(
-                context: context,
-                pageBuilder: () => SearchPage(),
-              );
-            },
-          ),
         ],
       ),
       body: Consumer(
@@ -75,6 +64,11 @@ class RootWindowLandscape extends StatelessWidget {
                       icon: Icon(Icons.favorite_outline),
                       selectedIcon: Icon(Icons.favorite),
                       label: Text("Favorites"),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.search_outlined),
+                      selectedIcon: Icon(Icons.search),
+                      label: Text("Search"),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.settings_outlined),

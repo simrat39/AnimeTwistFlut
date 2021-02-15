@@ -186,6 +186,7 @@ class _MainWidgetState extends State<MainWidget>
               ),
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
                 backgroundColor: bottomNavbarColor,
+                type: BottomNavigationBarType.fixed,
                 elevation: 8.0,
                 showSelectedLabels: true,
                 showUnselectedLabels: false,

@@ -30,7 +30,6 @@ class SearchPageInputBox extends StatelessWidget {
       },
       child: TextField(
         controller: controller,
-        autofocus: true,
         cursorColor: Theme.of(context).accentColor,
         onSubmitted: (value) => listTileFocusNode.requestFocus(),
         decoration: InputDecoration(

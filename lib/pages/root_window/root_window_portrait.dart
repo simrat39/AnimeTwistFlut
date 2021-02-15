@@ -38,17 +38,6 @@ class RootWindowPortrait extends StatelessWidget {
                   );
                 },
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  Transitions.slideTransition(
-                    context: context,
-                    pageBuilder: () => SearchPage(),
-                  );
-                },
-              ),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -64,6 +53,11 @@ class RootWindowPortrait extends StatelessWidget {
                 icon: Icon(Icons.favorite_outline),
                 label: "Favorites",
                 tooltip: "Favorites",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search_outlined),
+                label: "Discover",
+                tooltip: "Discover",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),

@@ -7,11 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import '../../animations/Transitions.dart';
 import '../../models/TwistModel.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import '../search_page/SearchListTile.dart';
-import '../search_page/SearchPage.dart';
 
 class AllAnimePage extends StatefulWidget {
   @override
@@ -65,18 +63,6 @@ class _AllAnimePageState extends State<AllAnimePage> {
                         : _controller.position.maxScrollExtent ~/ 5,
                   ),
                   curve: Curves.ease,
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.search,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Transitions.slideTransition(
-                  context: context,
-                  pageBuilder: () => SearchPage(),
                 );
               },
             ),
