@@ -10,6 +10,9 @@ class RatingGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var orientation = MediaQuery.of(context).orientation;
+
     return Container(
       margin: EdgeInsets.only(
         left: 16,
@@ -17,7 +20,9 @@ class RatingGraph extends StatelessWidget {
         bottom: 10,
       ),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: orientation == Orientation.portrait
+          ? size.height * 0.4
+          : size.width * 0.4,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Theme.of(context).cardColor,
@@ -51,6 +56,7 @@ class RatingGraph extends StatelessWidget {
             LineChartBarData(
               dotData: FlDotData(show: false),
               isCurved: true,
+              preventCurveOverShooting: true,
               colors: [Theme.of(context).accentColor],
               belowBarData: BarAreaData(
                 colors: [Theme.of(context).accentColor.withOpacity(0.3)],
