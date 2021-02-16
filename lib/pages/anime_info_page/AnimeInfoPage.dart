@@ -34,7 +34,6 @@ import 'FavouriteButton.dart';
 
 class AnimeInfoPage extends StatefulWidget {
   final TwistModel twistModel;
-  final KitsuModel kitsuModel;
   final bool isFromSearchPage;
   final FocusNode focusNode;
   final bool isFromRecentlyWatched;
@@ -42,7 +41,6 @@ class AnimeInfoPage extends StatefulWidget {
 
   AnimeInfoPage({
     this.twistModel,
-    this.kitsuModel,
     this.isFromSearchPage,
     this.focusNode,
     this.isFromRecentlyWatched = false,
@@ -110,13 +108,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
       twistModel: widget.twistModel,
     );
 
-    if (widget.kitsuModel == null)
-      kitsuModel = await KitsuApiService.getKitsuModel(
-          widget.twistModel.kitsuId, widget.twistModel.ongoing);
-    else {
-      await Future.delayed(400.milliseconds);
-      kitsuModel = widget.kitsuModel;
-    }
+    kitsuModel = await KitsuApiService.getKitsuModel(
+        widget.twistModel.kitsuId, widget.twistModel.ongoing);
 
     Get.delete<KitsuModel>();
     Get.put<KitsuModel>(kitsuModel);
@@ -136,6 +129,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
         _episodesWatchedProvider);
 
     await context.read(_episodesWatchedProvider).getWatchedPref();
+
+    // Prevent content rendering in between the transition
+    await Future.delayed(400.milliseconds);
   }
 
   // Scrolls to the latest watched episode if isFromRecentlyWatched is true and

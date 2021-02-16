@@ -124,7 +124,6 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
                     context: context,
                     pageBuilder: () => AnimeInfoPage(
                       twistModel: widget.lastWatchedModel.twistModel,
-                      kitsuModel: widget.lastWatchedModel.kitsuModel,
                       isFromRecentlyWatched: true,
                       lastWatchedEpisodeNum:
                           widget.lastWatchedModel.episodeModel.number,

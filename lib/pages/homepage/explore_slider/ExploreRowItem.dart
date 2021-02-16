@@ -49,7 +49,6 @@ class _ExploreRowItemState extends State<ExploreRowItem> {
                     context: context,
                     pageBuilder: () => AnimeInfoPage(
                       twistModel: widget.twistModel,
-                      kitsuModel: widget.kitsuModel,
                     ),
                   );
                 }),
