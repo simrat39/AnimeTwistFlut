@@ -18,6 +18,7 @@ class EpisodesSliver extends StatelessWidget {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     bool isPortrait = orientation == Orientation.portrait;
+    double width = MediaQuery.of(context).size.width;
     return SliverPadding(
       padding: EdgeInsets.symmetric(
         horizontal: 14.0,
@@ -27,7 +28,7 @@ class EpisodesSliver extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 5.0,
           crossAxisSpacing: 5.0,
-          childAspectRatio: isPortrait ? 3.5 : 3.75,
+          childAspectRatio: isPortrait ? width / 150 : width / 300,
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {
