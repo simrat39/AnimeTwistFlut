@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:anime_twist_flut/models/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
@@ -21,8 +23,7 @@ class DescriptionWidget extends StatefulWidget {
   }
 }
 
-class _DescriptionWidgetState extends State<DescriptionWidget>
-    with TickerProviderStateMixin {
+class _DescriptionWidgetState extends State<DescriptionWidget> with TickerProviderStateMixin {
   Animation<double> height;
   bool isNotExpanded = true;
   AnimationController _controller;
@@ -110,7 +111,7 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
               alignment: Alignment.centerLeft,
               key: _keyFoldChild,
               child: Text(
-                widget.kitsuModel.description,
+                utf8.decode(widget.kitsuModel.description.codeUnits),
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: Theme.of(context).hintColor,
@@ -131,9 +132,7 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
               ),
               child: GestureDetector(
                 child: Text(
-                  isNotExpanded
-                      ? "Show More".toUpperCase()
-                      : "Show Less".toUpperCase(),
+                  isNotExpanded ? "Show More".toUpperCase() : "Show Less".toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).accentColor,
