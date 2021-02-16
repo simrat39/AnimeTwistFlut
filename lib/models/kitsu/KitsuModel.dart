@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:anime_twist_flut/models/kitsu/RatingFrequency.dart';
 import 'package:hive/hive.dart';
 
 part 'KitsuModel.g.dart';
@@ -23,6 +24,9 @@ class KitsuModel extends HiveObject {
   @HiveField(5)
   final String coverImage;
 
+  @HiveField(6)
+  final RatingFrequencies ratingFrequencies;
+
   KitsuModel({
     this.id,
     this.rating,
@@ -30,6 +34,7 @@ class KitsuModel extends HiveObject {
     this.posterImage,
     this.trailerURL,
     this.coverImage,
+    this.ratingFrequencies,
   });
 
   factory KitsuModel.fromJson(Map<String, dynamic> data) {
@@ -42,6 +47,10 @@ class KitsuModel extends HiveObject {
       description: data["data"]["attributes"]["synopsis"],
       trailerURL: data["data"]["attributes"]["youtubeVideoId"],
       coverImage: coverData != null ? coverData["large"] : null,
+      ratingFrequencies: data["data"]['attributes']['ratingFrequencies'] != null
+          ? new RatingFrequencies.fromJson(
+              data["data"]['attributes']['ratingFrequencies'])
+          : null,
     );
   }
 }

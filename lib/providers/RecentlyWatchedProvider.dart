@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
+import 'package:anime_twist_flut/models/kitsu/RatingFrequency.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -22,6 +23,7 @@ class RecentlyWatchedProvider extends ChangeNotifier {
     try {
       await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
       Hive.registerAdapter<TwistModel>(TwistModelAdapter());
+      Hive.registerAdapter<RatingFrequencies>(RatingFrequenciesAdapter());
       Hive.registerAdapter<KitsuModel>(KitsuModelAdapter());
       Hive.registerAdapter<EpisodeModel>(EpisodeModelAdapter());
       Hive.registerAdapter<RecentlyWatchedModel>(RecentlyWatchedModelAdapter());

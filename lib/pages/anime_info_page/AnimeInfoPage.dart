@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/RatingGraph.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
 import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
@@ -408,6 +409,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 twistModel: widget.twistModel,
                                 kitsuModel: kitsuModel,
                               ),
+                              RatingGraph(
+                                  ratingFrequencies:
+                                      kitsuModel.ratingFrequencies),
                               Container(
                                 padding: EdgeInsets.only(
                                   left: 16.0,
@@ -641,6 +645,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   DescriptionWidget(
                                     twistModel: widget.twistModel,
                                     kitsuModel: kitsuModel,
+                                  ),
+                                  RatingGraph(
+                                    ratingFrequencies:
+                                        kitsuModel.ratingFrequencies,
                                   ),
                                 ],
                               ),

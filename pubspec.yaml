@@ -37,6 +37,7 @@ dependencies:
   cached_network_image: ^2.5.0
   edit_distance: ^0.4.1
   encrypt: ^4.1.0
+  fl_chart: ^0.12.2
   flutter_riverpod: ^0.12.1
   font_awesome_flutter: ^8.10.0
   get_it: ^5.0.1
