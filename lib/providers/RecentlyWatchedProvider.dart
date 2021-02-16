@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import '../models/EpisodeModel.dart';
-import '../models/KitsuModel.dart';
+import '../models/kitsu/KitsuModel.dart';
 import '../models/TwistModel.dart';
 
 class RecentlyWatchedProvider extends ChangeNotifier {

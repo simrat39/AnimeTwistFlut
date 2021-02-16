@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:supercharged/supercharged.dart';
 
 import '../cached_http_get/CachedHttpGet.dart';
-import '../models/KitsuModel.dart';
+import '../models/kitsu/KitsuModel.dart';
 
 class KitsuApiService {
   static Future<KitsuModel> getKitsuModel(int kitsuID, bool ongoing) async {

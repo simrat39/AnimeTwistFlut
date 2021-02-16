@@ -23,7 +23,7 @@ import 'package:video_player_header/video_player_header.dart';
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
-import '../../models/KitsuModel.dart';
+import '../../models/kitsu/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../secrets.dart';

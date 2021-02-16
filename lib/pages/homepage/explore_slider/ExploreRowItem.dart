@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../../animations/Transitions.dart';
-import '../../../models/KitsuModel.dart';
+import '../../../models/kitsu/KitsuModel.dart';
 import '../../../models/TwistModel.dart';
 
 class ExploreRowItem extends StatefulWidget {

@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/all.dart';
 // Project imports:
 import '../../../animations/Transitions.dart';
 import '../../../models/EpisodeModel.dart';
-import '../../../models/KitsuModel.dart';
+import '../../../models/kitsu/KitsuModel.dart';
 import '../../../models/TwistModel.dart';
 import '../../../providers/EpisodesWatchedProvider.dart';
 import '../../watch_page/WatchPage.dart';

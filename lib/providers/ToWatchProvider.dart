@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 
 // Project imports:
 import '../models/EpisodeModel.dart';
-import '../models/KitsuModel.dart';
+import '../models/kitsu/KitsuModel.dart';
 import '../models/TwistModel.dart';
 import 'RecentlyWatchedProvider.dart';
 

@@ -1,5 +1,5 @@
 import 'package:anime_twist_flut/models/FavouritedModel.dart';
-import 'package:anime_twist_flut/models/KitsuModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';

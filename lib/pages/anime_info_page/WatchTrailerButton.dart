@@ -1,4 +1,4 @@
-import 'package:anime_twist_flut/models/KitsuModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

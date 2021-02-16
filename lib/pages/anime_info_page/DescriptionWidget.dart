@@ -1,4 +1,4 @@
-import 'package:anime_twist_flut/models/KitsuModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';

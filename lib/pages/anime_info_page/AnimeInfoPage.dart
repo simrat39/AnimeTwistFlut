@@ -21,7 +21,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:anime_twist_flut/pages/anime_info_page/episodes/EpisodesSliver.dart';
 import '../../models/EpisodeModel.dart';
-import '../../models/KitsuModel.dart';
+import '../../models/kitsu/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../services/KitsuApiService.dart';

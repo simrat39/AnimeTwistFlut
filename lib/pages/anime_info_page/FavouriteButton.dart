@@ -1,5 +1,5 @@
 import 'package:anime_twist_flut/main.dart';
-import 'package:anime_twist_flut/models/KitsuModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';

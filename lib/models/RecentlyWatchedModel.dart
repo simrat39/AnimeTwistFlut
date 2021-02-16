@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:anime_twist_flut/models/EpisodeModel.dart';
-import 'package:anime_twist_flut/models/KitsuModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:hive/hive.dart';
 
