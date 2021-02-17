@@ -32,12 +32,12 @@ class RatingGraph extends StatelessWidget {
       margin: EdgeInsets.only(
         left: 16,
         right: 16,
-        bottom: 10,
+        bottom: 16,
       ),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       height: orientation == Orientation.portrait
-          ? size.height * 0.4
-          : size.width * 0.4,
+          ? size.height * 0.25
+          : size.width * 0.25,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Theme.of(context).cardColor,
