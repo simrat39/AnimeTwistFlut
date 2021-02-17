@@ -28,7 +28,7 @@ class EpisodesSliver extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 5.0,
           crossAxisSpacing: 5.0,
-          childAspectRatio: isPortrait ? width / 150 : width / 300,
+          childAspectRatio: isPortrait ? width / 125 : width / 250,
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {
