@@ -8,6 +8,21 @@ class RatingGraph extends StatelessWidget {
 
   final RatingFrequencies ratingFrequencies;
 
+  List<FlSpot> getGraphSpots() {
+    List<FlSpot> ret = [];
+    int i = 0;
+    for (var rating in ratingFrequencies.alternateList) {
+      ret.add(
+        FlSpot(
+          i.toDouble(),
+          int.parse(rating ?? "0").toDouble(),
+        ),
+      );
+      i++;
+    }
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -62,14 +77,7 @@ class RatingGraph extends StatelessWidget {
                 colors: [Theme.of(context).accentColor.withOpacity(0.3)],
                 show: true,
               ),
-              spots: ratingFrequencies.alternateList
-                  .map(
-                    (e) => FlSpot(
-                      ratingFrequencies.alternateList.indexOf(e).toDouble(),
-                      int.parse(e).toDouble(),
-                    ),
-                  )
-                  .toList(),
+              spots: getGraphSpots(),
             ),
           ],
         ),
