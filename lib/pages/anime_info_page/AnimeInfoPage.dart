@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/RatingGraph.dart';
+import 'package:anime_twist_flut/pages/anime_info_page/RatingWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
 import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
@@ -218,44 +219,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                               ? height * 0.4
                               : width * 0.28,
                           stretch: true,
-                          actions: [
-                            Center(
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  right: 20.0,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 14.0,
-                                  vertical: 6.0,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Color(0xfff8f8f2),
-                                  borderRadius: BorderRadius.circular(
-                                    20.0,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 5),
-                                      child: Icon(
-                                        Icons.star,
-                                        color: Colors.pink,
-                                      ),
-                                    ),
-                                    Text(
-                                      (kitsuModel?.rating?.toString() ?? "??") +
-                                          " / 100",
-                                      style: TextStyle(
-                                        color: Colors.pink,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                          actions: [RatingWidget(kitsuModel: kitsuModel)],
                           flexibleSpace: FlexibleSpaceBar(
                             background: Container(
                               child: Stack(
@@ -405,9 +369,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 twistModel: widget.twistModel,
                                 kitsuModel: kitsuModel,
                               ),
-                              RatingGraph(
-                                  ratingFrequencies:
-                                      kitsuModel.ratingFrequencies),
                               Container(
                                 padding: EdgeInsets.only(
                                   left: 16.0,
@@ -449,45 +410,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                       ? height * 0.4
                                       : width * 0.28,
                               stretch: true,
-                              actions: [
-                                Center(
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      right: 20.0,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 14.0,
-                                      vertical: 6.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xfff8f8f2),
-                                      borderRadius: BorderRadius.circular(
-                                        20.0,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 5),
-                                          child: Icon(
-                                            Icons.star,
-                                            color: Colors.pink,
-                                          ),
-                                        ),
-                                        Text(
-                                          (kitsuModel?.rating?.toString() ??
-                                                  "??") +
-                                              " / 100",
-                                          style: TextStyle(
-                                            color: Colors.pink,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              actions: [RatingWidget(kitsuModel: kitsuModel)],
                               flexibleSpace: FlexibleSpaceBar(
                                 background: Container(
                                   child: Stack(
@@ -642,9 +565,12 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     twistModel: widget.twistModel,
                                     kitsuModel: kitsuModel,
                                   ),
-                                  RatingGraph(
-                                    ratingFrequencies:
-                                        kitsuModel.ratingFrequencies,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 8.0),
+                                    child: RatingGraph(
+                                        ratingFrequencies:
+                                            kitsuModel.ratingFrequencies),
                                   ),
                                 ],
                               ),

@@ -29,11 +29,6 @@ class RatingGraph extends StatelessWidget {
     var orientation = MediaQuery.of(context).orientation;
 
     return Container(
-      margin: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        bottom: 16,
-      ),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       height: orientation == Orientation.portrait
           ? size.height * 0.25
