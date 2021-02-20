@@ -82,9 +82,9 @@ class RootWindowLandscape extends StatelessWidget {
                       label: Text("Favorites"),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.search_outlined),
-                      selectedIcon: Icon(Icons.search),
-                      label: Text("Search"),
+                      icon: Icon(Icons.grid_view),
+                      selectedIcon: Icon(Icons.grid_view),
+                      label: Text("Discover"),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.settings_outlined),

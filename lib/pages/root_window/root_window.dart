@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
+import 'package:anime_twist_flut/pages/discover_page/DiscoverPage.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
 import 'package:anime_twist_flut/pages/homepage/HomePage.dart';
 import 'package:anime_twist_flut/pages/root_window/root_window_landscape.dart';
@@ -29,7 +30,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   StreamSubscription _uriSub;
   PageController _pageController;
 
-  var pages = [HomePage(), FavouritesPage(), SettingsPage()];
+  var pages = [HomePage(), FavouritesPage(), DiscoverPage(), SettingsPage()];
   final indexProvider = StateProvider<int>((ref) => 0);
   final GlobalKey pageViewKey = GlobalKey(debugLabel: 'page_view');
 
