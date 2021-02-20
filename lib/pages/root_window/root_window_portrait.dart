@@ -1,6 +1,7 @@
 import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
+import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 
@@ -36,6 +37,17 @@ class RootWindowPortrait extends StatelessWidget {
                   Transitions.slideTransition(
                     context: context,
                     pageBuilder: () => ChatPage(),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                ),
+                onPressed: () {
+                  Transitions.slideTransition(
+                    context: context,
+                    pageBuilder: () => SearchPage(),
                   );
                 },
               ),

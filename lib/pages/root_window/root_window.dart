@@ -29,7 +29,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
   StreamSubscription _uriSub;
   PageController _pageController;
 
-  var pages = [HomePage(), FavouritesPage(), SearchPage(), SettingsPage()];
+  var pages = [HomePage(), FavouritesPage(), SettingsPage()];
   final indexProvider = StateProvider<int>((ref) => 0);
   final GlobalKey pageViewKey = GlobalKey(debugLabel: 'page_view');
 

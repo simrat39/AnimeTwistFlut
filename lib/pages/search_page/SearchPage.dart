@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -45,6 +46,11 @@ class _SearchPageState extends State<SearchPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        title: AppbarText(
+          custom: "search",
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 8.0),
