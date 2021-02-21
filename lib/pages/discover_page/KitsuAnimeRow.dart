@@ -1,4 +1,3 @@
-import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';

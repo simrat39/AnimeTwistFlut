@@ -21,8 +21,6 @@ class _ToWatchRowState extends State<ToWatchRow> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    Orientation orientation = MediaQuery.of(context).orientation;
     return Consumer(
       builder: (context, watch, child) {
         final provider = watch(toWatchProvider);
