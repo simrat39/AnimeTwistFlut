@@ -16,6 +16,7 @@ import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
+import 'package:anime_twist_flut/widgets/InitialLoadingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -128,13 +129,7 @@ class _MainWidgetState extends State<MainWidget>
               data: (v) => Consumer(
                 builder: (context, watch, child) => RootWindow(),
               ),
-              loading: () {
-                return Scaffold(
-                  body: Center(
-                    child: RotatingPinLoadingAnimation(),
-                  ),
-                );
-              },
+              loading: () => InitialLoadingScreen(),
               error: (e, s) {
                 var message = 'Whoops! An error occured';
                 if (e is NoInternetException) {
