@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
+import 'package:anime_twist_flut/pages/discover_page/SubCategoryText.dart';
 import 'package:anime_twist_flut/pages/homepage/explore_slider/ExploreRowItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -27,24 +28,14 @@ class _ToWatchRowState extends State<ToWatchRow> {
         final provider = watch(toWatchProvider);
         if (!provider.hasData()) return Container();
         return Container(
-          margin: EdgeInsets.only(
-            bottom: 15.0,
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 15.0,
-                  left: 15.0,
-                ),
-                child: Text(
-                  "To Watch".toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                    fontSize: 17.0,
-                  ),
+              SubCategoryText(
+                text: "To Watch",
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
                 ),
               ),
               Container(

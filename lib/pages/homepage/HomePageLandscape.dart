@@ -11,8 +11,14 @@ class HomePageLandscape extends StatelessWidget {
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: 4,
-            itemBuilder: (context, index) => widgets.elementAt(index),
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              if (index == 4)
+                return SizedBox(
+                  height: 8.0,
+                );
+              return widgets.elementAt(index);
+            },
           ),
         ),
         Expanded(

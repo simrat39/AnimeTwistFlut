@@ -1,16 +1,11 @@
 // Flutter imports:
-import 'package:anime_twist_flut/animations/Transitions.dart';
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
-import 'package:anime_twist_flut/pages/all_anime_page/AllAnimePage.dart';
 import 'package:anime_twist_flut/pages/homepage/recently_watched_slider/DefaultCard.dart';
 import 'package:anime_twist_flut/pages/homepage/recently_watched_slider/RecentlyWatchedText.dart';
-import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:anime_twist_flut/constants.dart';
 
 // Project imports:
 import 'RecentlyWatchedCard.dart';
