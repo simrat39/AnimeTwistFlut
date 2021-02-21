@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
-import 'package:anime_twist_flut/services/KitsuApiService.dart';
+import 'package:anime_twist_flut/services/kitsu_service/KitsuApiService.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:

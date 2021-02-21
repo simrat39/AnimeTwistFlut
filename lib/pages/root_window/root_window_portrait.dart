@@ -71,7 +71,7 @@ class RootWindowPortrait extends StatelessWidget {
                 tooltip: "Favorites",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.grid_off_outlined),
+                icon: Icon(Icons.grid_view),
                 label: "Discover",
                 tooltip: "Discover",
               ),

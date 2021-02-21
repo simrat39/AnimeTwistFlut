@@ -1,16 +1,14 @@
-// Dart imports:
 import 'dart:convert';
 
-// Project imports:
-import 'package:anime_twist_flut/services/CacheService.dart';
+import 'package:anime_twist_flut/cached_http_get/CachedHttpGet.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/utils/JsonUtils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supercharged/supercharged.dart';
 
-import '../cached_http_get/CachedHttpGet.dart';
-import '../models/kitsu/KitsuModel.dart';
+import '../CacheService.dart';
 
-class KitsuApiService {
+class KitsuModelApiService {
   static Future<KitsuModel> getKitsuModel(int kitsuID, bool ongoing) async {
     CacheService cacheService = CacheService(
       "/anime/kitsuData/$kitsuID",

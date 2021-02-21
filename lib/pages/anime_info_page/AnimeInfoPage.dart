@@ -26,7 +26,7 @@ import '../../models/EpisodeModel.dart';
 import '../../models/kitsu/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
-import '../../services/KitsuApiService.dart';
+import '../../services/kitsu_service/KitsuApiService.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/constants.dart';
 import '../../animations/TwistLoadingWidget.dart';

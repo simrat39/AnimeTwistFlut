@@ -37,19 +37,23 @@ class KitsuModel extends HiveObject {
     this.ratingFrequencies,
   });
 
-  factory KitsuModel.fromJson(Map<String, dynamic> data) {
-    var coverData = data["data"]["attributes"]["coverImage"];
-    var posterData = data["data"]["attributes"]["posterImage"];
+  factory KitsuModel.fromJson(Map<String, dynamic> data,
+      [bool isNested = false]) {
+    var innerData = data["data"];
+    if (isNested) innerData = data;
+
+    var coverData = innerData["attributes"]["coverImage"];
+    var posterData = innerData["attributes"]["posterImage"];
     return KitsuModel(
-      id: data["data"]["id"],
-      rating: data["data"]["attributes"]["averageRating"],
+      id: innerData["id"],
+      rating: innerData["attributes"]["averageRating"],
       posterImage: posterData != null ? posterData["large"] : null,
-      description: data["data"]["attributes"]["synopsis"],
-      trailerURL: data["data"]["attributes"]["youtubeVideoId"],
+      description: innerData["attributes"]["synopsis"],
+      trailerURL: innerData["attributes"]["youtubeVideoId"],
       coverImage: coverData != null ? coverData["large"] : null,
-      ratingFrequencies: data["data"]['attributes']['ratingFrequencies'] != null
+      ratingFrequencies: innerData['attributes']['ratingFrequencies'] != null
           ? new RatingFrequencies.fromJson(
-              data["data"]['attributes']['ratingFrequencies'])
+              innerData['attributes']['ratingFrequencies'])
           : null,
     );
   }

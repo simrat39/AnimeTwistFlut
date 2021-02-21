@@ -8,10 +8,14 @@ import 'MOTDApiService.dart';
 
 class TwistApiService {
   static List<TwistModel> allTwistModel = [];
+  static List<String> allKitsuIds = [];
   static const String BASE_API_URL = "https://api.twist.moe/api";
 
   Future setTwistModels() async {
     allTwistModel = await AnimeApiService.getAllTwistModel();
+    allTwistModel.forEach((element) {
+      allKitsuIds.add(element.kitsuId.toString());
+    });
   }
 
   Future<List<EpisodeModel>> getEpisodesForSource(

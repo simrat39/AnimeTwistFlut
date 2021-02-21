@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
 import '../../../models/kitsu/KitsuModel.dart';
-import '../../../services/KitsuApiService.dart';
+import '../../../services/kitsu_service/KitsuApiService.dart';
 import '../../../services/twist_service/TwistApiService.dart';
 import 'ExploreRowItem.dart';
 import '../../../animations/TwistLoadingWidget.dart';
