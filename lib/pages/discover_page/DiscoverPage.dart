@@ -26,6 +26,12 @@ class _DiscoverPageState extends State<DiscoverPage>
             (ref) async => await KitsuApiService.getFanFavourites(),
           ),
         ),
+        SubCategoryText(text: "Top Rated Movies"),
+        KitsuAnimeRow(
+          futureProvider: FutureProvider<Map<TwistModel, KitsuModel>>(
+            (ref) async => await KitsuApiService.getTopMovies(),
+          ),
+        ),
       ],
     );
   }

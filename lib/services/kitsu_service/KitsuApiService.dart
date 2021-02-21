@@ -34,6 +34,15 @@ class KitsuApiService {
     return airingPopularService.getData();
   }
 
+  static Future<Map<TwistModel, KitsuModel>> getTopMovies() async {
+    KitsuAnimeListApiService topMoviesService = KitsuAnimeListApiService(
+      url:
+          "https://www.kitsu.io/api/edge/anime?filter[subtype]=movie&sort=-averageRating&page[limit]=20",
+      cacheKey: "topMovies",
+    );
+    return topMoviesService.getData();
+  }
+
   static TwistModel getTwistModel(String kitsuId) {
     if (TwistApiService.allKitsuIds.contains(kitsuId)) {
       return TwistApiService.allTwistModel
