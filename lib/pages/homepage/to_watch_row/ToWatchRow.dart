@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:anime_twist_flut/main.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
+import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';
 import 'package:anime_twist_flut/pages/discover_page/SubCategoryText.dart';
 import 'package:anime_twist_flut/pages/homepage/explore_slider/ExploreRowItem.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +40,7 @@ class _ToWatchRowState extends State<ToWatchRow> {
                 ),
               ),
               Container(
-                height: orientation == Orientation.portrait
-                    ? height * 0.29
-                    : height * 0.4,
+                height: 300,
                 margin: EdgeInsets.symmetric(
                   horizontal: 8.0,
                 ),
@@ -53,9 +52,13 @@ class _ToWatchRowState extends State<ToWatchRow> {
                     // anime first
                     RecentlyWatchedModel recentlyWatchedModel =
                         provider.toWatchAnimes.reversed.elementAt(index);
-                    return ExploreRowItem(
-                      twistModel: recentlyWatchedModel.twistModel,
-                      kitsuModel: recentlyWatchedModel.kitsuModel,
+                    return Container(
+                      width: 200,
+                      padding: EdgeInsets.symmetric(horizontal: 4.0),
+                      child: DiscoverAnimeTile(
+                        twistModel: recentlyWatchedModel.twistModel,
+                        kitsuModel: recentlyWatchedModel.kitsuModel,
+                      ),
                     );
                   },
                   itemCount: provider.toWatchAnimes.length,
