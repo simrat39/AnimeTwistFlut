@@ -76,7 +76,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     _scrollController.addListener(() {
       setImageOffset();
     });
-    Get.put<TwistModel>(widget.twistModel);
     _initDataProvider = FutureProvider((ref) async {
       await initData();
     });
@@ -103,6 +102,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   }
 
   Future initData() async {
+    Get.delete<TwistModel>();
+    Get.put<TwistModel>(widget.twistModel);
+
     TwistApiService twistApiService = Get.find();
 
     episodes = await twistApiService.getEpisodesForSource(
