@@ -13,7 +13,7 @@ class ErrorPage extends StatefulWidget {
   final String message;
   final VoidCallback onRefresh;
   final StackTrace stackTrace;
-  final Exception e;
+  final Object e;
 
   @override
   _ErrorPageState createState() => _ErrorPageState();
