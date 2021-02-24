@@ -2,7 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/DescriptionWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/RatingGraph.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/RatingWidget.dart';

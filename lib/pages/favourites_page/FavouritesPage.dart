@@ -1,5 +1,5 @@
 import 'package:anime_twist_flut/animations/SlideInAnimation.dart';
-import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/models/FavouritedModel.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritedAnimeTile.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';

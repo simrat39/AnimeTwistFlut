@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';
 import 'package:anime_twist_flut/pages/discover_page/SubCategoryText.dart';

@@ -30,7 +30,7 @@ import '../../secrets.dart';
 import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/providers.dart';
 
 enum VideoMode {
   Normal,

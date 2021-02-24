@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/homepage/recently_watched_slider/DefaultCard.dart';
 import 'package:anime_twist_flut/pages/homepage/recently_watched_slider/RecentlyWatchedText.dart';

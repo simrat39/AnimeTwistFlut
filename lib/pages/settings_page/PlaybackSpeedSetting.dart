@@ -1,4 +1,4 @@
-import 'package:anime_twist_flut/main.dart';
+import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/providers/settings/PlaybackSpeedProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
