@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
@@ -15,12 +14,12 @@ import 'package:anime_twist_flut/providers/settings/PlaybackSpeedProvider.dart';
 import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
+import 'package:anime_twist_flut/theme.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:anime_twist_flut/widgets/InitialLoadingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'dart:io' show Platform;
 
 class CustomImageCache extends WidgetsFlutterBinding {
   @override
@@ -113,10 +112,6 @@ class _MainWidgetState extends State<MainWidget>
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = Color(0xff121212);
-    Color cardColor = Color(0xff1D1D1D);
-    Color bottomNavbarColor = Color(0xff1f1f1f);
-
     return Consumer(
       builder: (context, watch, child) {
         var accentColor = watch(accentProvider).value;
@@ -147,54 +142,7 @@ class _MainWidgetState extends State<MainWidget>
                 );
               },
             ),
-            darkTheme: ThemeData.dark().copyWith(
-              cardColor: cardColor,
-              scaffoldBackgroundColor: bgColor,
-              dialogBackgroundColor: bgColor,
-              accentColor: accentColor,
-              toggleableActiveColor: accentColor,
-              appBarTheme: AppBarTheme(
-                color: bgColor,
-                elevation: 0.0,
-              ),
-              cardTheme: CardTheme(
-                margin: EdgeInsets.zero,
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              textButtonTheme: TextButtonThemeData(
-                style: ButtonStyle(
-                  foregroundColor: ButtonStyleButton.allOrNull<Color>(
-                    accentColor,
-                  ),
-                  overlayColor: ButtonStyleButton.allOrNull<Color>(
-                    accentColor.withOpacity(0.2),
-                  ),
-                ),
-              ),
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                  style: ElevatedButton.styleFrom(primary: accentColor)),
-              bottomSheetTheme: BottomSheetThemeData(
-                backgroundColor: bgColor,
-              ),
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: bottomNavbarColor,
-                type: BottomNavigationBarType.fixed,
-                elevation: 8.0,
-                showSelectedLabels: true,
-                showUnselectedLabels: false,
-              ),
-              scrollbarTheme: ScrollbarThemeData(
-                thickness: MaterialStateProperty.all(4),
-                showTrackOnHover: true,
-                trackColor: MaterialStateProperty.all(cardColor),
-                trackBorderColor: MaterialStateProperty.all(cardColor),
-                isAlwaysShown:
-                    Platform.isLinux || Platform.isWindows || Platform.isMacOS,
-              ),
-            ),
+            darkTheme: getDarkTheme(accentColor),
             themeMode: ThemeMode.dark,
           ),
         );
