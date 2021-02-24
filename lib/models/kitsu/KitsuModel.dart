@@ -39,20 +39,20 @@ class KitsuModel extends HiveObject {
 
   factory KitsuModel.fromJson(Map<String, dynamic> data,
       [bool isNested = false]) {
-    var innerData = data["data"];
+    var innerData = data['data'];
     if (isNested) innerData = data;
 
-    var coverData = innerData["attributes"]["coverImage"];
-    var posterData = innerData["attributes"]["posterImage"];
+    var coverData = innerData['attributes']['coverImage'];
+    var posterData = innerData['attributes']['posterImage'];
     return KitsuModel(
-      id: innerData["id"],
-      rating: innerData["attributes"]["averageRating"],
-      posterImage: posterData != null ? posterData["large"] : null,
-      description: innerData["attributes"]["synopsis"],
-      trailerURL: innerData["attributes"]["youtubeVideoId"],
-      coverImage: coverData != null ? coverData["large"] : null,
+      id: innerData['id'],
+      rating: innerData['attributes']['averageRating'],
+      posterImage: posterData != null ? posterData['large'] : null,
+      description: innerData['attributes']['synopsis'],
+      trailerURL: innerData['attributes']['youtubeVideoId'],
+      coverImage: coverData != null ? coverData['large'] : null,
       ratingFrequencies: innerData['attributes']['ratingFrequencies'] != null
-          ? new RatingFrequencies.fromJson(
+          ? RatingFrequencies.fromJson(
               innerData['attributes']['ratingFrequencies'])
           : null,
     );

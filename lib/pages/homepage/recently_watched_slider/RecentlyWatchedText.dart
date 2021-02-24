@@ -19,7 +19,7 @@ class RecentlyWatchedText extends StatelessWidget {
         ),
       ),
       child: Text(
-        "Recently Watched".toUpperCase(),
+        'Recently Watched'.toUpperCase(),
         style: TextStyle(
           letterSpacing: 1.25,
           fontWeight: FontWeight.bold,

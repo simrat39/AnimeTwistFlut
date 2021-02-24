@@ -9,13 +9,13 @@ class RatingGraph extends StatelessWidget {
   final RatingFrequencies ratingFrequencies;
 
   List<FlSpot> getGraphSpots() {
-    List<FlSpot> ret = [];
-    int i = 0;
+    var ret = <FlSpot>[];
+    var i = 0;
     for (var rating in ratingFrequencies.alternateList) {
       ret.add(
         FlSpot(
           i.toDouble(),
-          int.parse(rating ?? "0").toDouble(),
+          int.parse(rating ?? '0').toDouble(),
         ),
       );
       i++;
@@ -44,7 +44,7 @@ class RatingGraph extends StatelessWidget {
           axisTitleData: FlAxisTitleData(
             bottomTitle: AxisTitle(
                 showTitle: true,
-                titleText: "Ratings",
+                titleText: 'Ratings',
                 textStyle: TextStyle(
                   color: Colors.white,
                 )),

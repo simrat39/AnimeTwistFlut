@@ -18,31 +18,32 @@ class AnimeApiService {
   static const String baseUrl = 'https://twist.moe/api/anime';
 
   static Future<List<TwistModel>> getAllTwistModel() async {
-    CacheService cacheService = CacheService(
-      "/anime",
+    var cacheService = CacheService(
+      '/anime',
       7.days,
     );
 
     await cacheService.initialize();
 
-    String response = await cacheService.getDataAndCacheIfNeeded(
+    var response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         var ret = await get(
-          TwistApiService.BASE_API_URL + "/anime",
+          TwistApiService.BASE_API_URL + '/anime',
           headers: {
             'x-access-token': x_access_token,
           },
         );
         if (ret.statusCode != HttpStatus.ok) {
           throw TwistDownException();
-        } else
+        } else {
           return ret.body;
+        }
       },
       onCache: () {
-        print("Data is not cached or very old");
+        print('Data is not cached or very old');
       },
       onSkipCache: () async {
-        print("Data is cached");
+        print('Data is cached');
         await Future.delayed(Duration(milliseconds: 400));
       },
       willUpdateCache: (cachedData, cachedDateTime) async {
@@ -54,14 +55,14 @@ class AnimeApiService {
       throw TwistDownException();
     }
 
-    List<TwistModel> ret = [];
+    var ret = <TwistModel>[];
     ret = await compute(_parseAndAdd, response);
 
     return ret;
   }
 
   static Future<List<TwistModel>> _parseAndAdd(String data) async {
-    List<TwistModel> ret = [];
+    var ret = <TwistModel>[];
 
     List<dynamic> jsonData = jsonDecode(data);
 

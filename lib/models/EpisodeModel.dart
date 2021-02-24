@@ -15,8 +15,8 @@ class EpisodeModel extends HiveObject {
 
   factory EpisodeModel.fromJson(Map<String, dynamic> data) {
     return EpisodeModel(
-      source: data["source"],
-      number: data["number"],
+      source: data['source'],
+      number: data['number'],
     );
   }
 }

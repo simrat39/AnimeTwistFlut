@@ -7,10 +7,9 @@ import 'package:supercharged/supercharged.dart';
 class DescriptionWidget extends StatefulWidget {
   final TwistModel twistModel;
   final KitsuModel kitsuModel;
-  final Key key;
 
   DescriptionWidget({
-    this.key,
+    Key key,
     this.twistModel,
     this.kitsuModel,
   }) : super(key: key);
@@ -132,8 +131,8 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
               child: GestureDetector(
                 child: Text(
                   isNotExpanded
-                      ? "Show More".toUpperCase()
-                      : "Show Less".toUpperCase(),
+                      ? 'Show More'.toUpperCase()
+                      : 'Show Less'.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).accentColor,

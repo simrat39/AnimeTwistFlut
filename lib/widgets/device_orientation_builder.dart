@@ -12,8 +12,9 @@ class DeviceOrientationBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).orientation == Orientation.portrait)
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
       return portrait;
+    }
     return landscape;
   }
 }

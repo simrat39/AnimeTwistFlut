@@ -6,11 +6,11 @@ class DoubleTapDurationProvider extends CustomSettingProvider<int> {
       : super(sharedPreferencesManager);
 
   @override
-  String preferenceName = "doubleTapDuration";
+  String preferenceName = 'doubleTapDuration';
 
   @override
   String exceptionMessage =
-      "An error occured while getting the double tap duration";
+      'An error occured while getting the double tap duration';
 
   @override
   int value = DEFAULT_VALUE;

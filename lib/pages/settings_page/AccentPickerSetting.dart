@@ -17,8 +17,8 @@ class _AccentPickerSettingState extends State<AccentPickerSetting> {
       builder: (context, watch, child) {
         var provider = watch(accentProvider);
         return ListTile(
-          title: Text("Accent Color"),
-          subtitle: Text("Make it colorful"),
+          title: Text('Accent Color'),
+          subtitle: Text('Make it colorful'),
           onTap: () => showModalBottomSheet(
             context: context,
             builder: (context) => Container(

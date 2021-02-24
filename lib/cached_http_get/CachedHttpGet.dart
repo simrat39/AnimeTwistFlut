@@ -36,8 +36,7 @@ class Request {
   bool operator ==(covariant Request req) {
     if (identical(this, req)) return true;
 
-    return (req.url == this.url &&
-        req.header.toString() == this.header.toString());
+    return (req.url == url && req.header.toString() == header.toString());
   }
 
   @override

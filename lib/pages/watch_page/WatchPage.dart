@@ -44,7 +44,7 @@ class WatchPage extends StatefulWidget {
   final bool isFromPrevEpisode;
   final ChangeNotifierProvider<EpisodesWatchedProvider> episodesWatchedProvider;
 
-  final TwistModel twistModel = Get.find();
+  final TwistModel twistModel = Get.find<TwistModel>();
   final KitsuModel kitsuModel = Get.find<KitsuModel>();
 
   WatchPage({
@@ -102,7 +102,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     };
 
     if (key.isNotEmpty) {
-      String sourceSuffix =
+      var sourceSuffix =
           CryptoUtils.decryptAESCryptoJS(widget.episodeModel.source, key);
 
       String vidUrl;
@@ -110,7 +110,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         vidUrl = Uri.parse(sourceSuffix).toString();
       } else {
         vidUrl =
-            Uri.parse("https://air-cdn.twist.moe" + sourceSuffix).toString();
+            Uri.parse('https://air-cdn.twist.moe' + sourceSuffix).toString();
       }
 
       _controller = VideoPlayerController.network(vidUrl, headers: headers)
@@ -132,10 +132,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       });
 
       t = Timer(5.seconds, () {
-        if (!isTouchingSlider)
+        if (!isTouchingSlider) {
           setState(() {
             isUIvisible = false;
           });
+        }
       });
 
       _init = init();
@@ -172,10 +173,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     if (isUIvisible) {
       t.cancel();
       t = Timer(5.seconds, () {
-        if (!isTouchingSlider)
+        if (!isTouchingSlider) {
           setState(() {
             isUIvisible = false;
           });
+        }
       });
     }
   }
@@ -242,13 +244,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   // Most intros/outros are 85 seconds so skip that much time.
   Future skipIntro() async {
-    _controller
+    await _controller
         .seekTo(Duration(seconds: (await _controller.position).inSeconds + 85));
   }
 
   double getScreenAspectRatio(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
+    var size = MediaQuery.of(context).size;
     return size.aspectRatio;
   }
 
@@ -297,7 +298,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   }
 
   Future setSpeed(double speed) async {
-    _controller.setPlaybackSpeed(speed);
+    await _controller.setPlaybackSpeed(speed);
   }
 
   Future init() async {
@@ -310,12 +311,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    double containerHeight =
+    var containerHeight =
         MediaQuery.of(context).orientation == Orientation.portrait
             ? MediaQuery.of(context).size.height * 0.05
             : MediaQuery.of(context).size.height * 0.1;
 
-    if (key.isEmpty)
+    if (key.isEmpty) {
       return Scaffold(
         body: Center(
           child: Padding(
@@ -328,13 +329,14 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                     textAlign: TextAlign.center),
                 SizedBox(height: 10),
                 ElevatedButton(
-                    child: Text("Go back"),
+                    child: Text('Go back'),
                     onPressed: () => Navigator.of(context).pop()),
               ],
             ),
           ),
         ),
       );
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -351,8 +353,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                     height: 24.0,
                   ),
                   widget.isFromPrevEpisode
-                      ? Text("Loading Next Episode")
-                      : Text("Loading Episode"),
+                      ? Text('Loading Next Episode')
+                      : Text('Loading Episode'),
                 ],
               ),
             );
@@ -537,10 +539,10 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         right: 15.0,
                                       ),
                                       child: AutoSizeText(
-                                        "S" +
+                                        'S' +
                                             widget.twistModel.season
                                                 .toString() +
-                                            " | E" +
+                                            ' | E' +
                                             widget.episodeModel.number
                                                 .toString(),
                                         maxLines: 1,

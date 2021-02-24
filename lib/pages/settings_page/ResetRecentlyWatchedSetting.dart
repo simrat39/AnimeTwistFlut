@@ -14,7 +14,7 @@ class _ResetRecentlyWatchedSettingState
     extends State<ResetRecentlyWatchedSetting> {
   void showConfirmationSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Recently watched animes cleared!"),
+      content: Text('Recently watched animes cleared!'),
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -23,8 +23,8 @@ class _ResetRecentlyWatchedSettingState
   Widget build(BuildContext context) {
     var provider = context.read(recentlyWatchedProvider);
     return ListTile(
-      title: Text("Reset Recently Watched"),
-      subtitle: Text("Clear recently watched animes"),
+      title: Text('Reset Recently Watched'),
+      subtitle: Text('Clear recently watched animes'),
       trailing: IconButton(
         icon: Icon(Icons.restore),
         onPressed: provider.hasData()

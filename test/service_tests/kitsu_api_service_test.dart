@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/services/kitsu_service/KitsuApiService.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Kitsu API service test', () async {
-    KitsuModel kitsuModel = await KitsuApiService.getKitsuModel(43124, false);
-    expect(kitsuModel.trailerURL, "rU6HjgMIIBs");
+    var kitsuModel = await KitsuApiService.getKitsuModel(43124, false);
+    expect(kitsuModel.trailerURL, 'rU6HjgMIIBs');
   });
 }

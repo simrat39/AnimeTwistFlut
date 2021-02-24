@@ -10,14 +10,14 @@ import '../CacheService.dart';
 
 class KitsuModelApiService {
   static Future<KitsuModel> getKitsuModel(int kitsuID, bool ongoing) async {
-    CacheService cacheService = CacheService(
-      "/anime/kitsuData/$kitsuID",
+    var cacheService = CacheService(
+      '/anime/kitsuData/$kitsuID',
       7.days,
     );
 
     await cacheService.initialize(false);
 
-    String response = await cacheService.getDataAndCacheIfNeeded(
+    var response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         return await CachedHttpGet.get(
           Request(
@@ -45,7 +45,7 @@ class KitsuModelApiService {
     // Check if the kitsu id is invalid.
     // A better solution would be to check for the status code but CachedHttpGet
     // doesnt support this as of now.
-    if (jsonData["errors"] != null) return null;
+    if (jsonData['errors'] != null) return null;
 
     return KitsuModel.fromJson(jsonData);
   }

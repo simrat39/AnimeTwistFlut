@@ -7,12 +7,12 @@ class AccentColorProvider extends CustomSettingProvider<Color> {
       : super(sharedPreferencesManager);
 
   @override
-  String exceptionMessage = "An error occured while getting accent data";
+  String exceptionMessage = 'An error occured while getting accent data';
 
   static const Color DEFAULT_COLOR = Color(0xfffb76a9);
 
   @override
-  String preferenceName = "accent";
+  String preferenceName = 'accent';
 
   @override
   Color value = DEFAULT_COLOR;

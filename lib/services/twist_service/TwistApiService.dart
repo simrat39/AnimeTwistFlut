@@ -9,7 +9,7 @@ import 'MOTDApiService.dart';
 class TwistApiService {
   static List<TwistModel> allTwistModel = [];
   static List<String> allKitsuIds = [];
-  static const String BASE_API_URL = "https://api.twist.moe/api";
+  static const String BASE_API_URL = 'https://api.twist.moe/api';
 
   Future setTwistModels() async {
     allTwistModel = await AnimeApiService.getAllTwistModel();
@@ -32,7 +32,7 @@ class TwistApiService {
   }
 
   TwistModel getTwistModelFromSlug(String slug) {
-    for (int i = 0; i < allTwistModel.length; i++) {
+    for (var i = 0; i < allTwistModel.length; i++) {
       if (allTwistModel.elementAt(i).slug == slug) {
         return allTwistModel.elementAt(i);
       }

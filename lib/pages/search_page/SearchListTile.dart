@@ -30,8 +30,8 @@ class SearchListTile extends StatelessWidget {
       ),
       subtitle: Text(
         twistModel.altTitle == null
-            ? "Season " + twistModel.season.toString()
-            : twistModel.altTitle + " | Season " + twistModel.season.toString(),
+            ? 'Season ' + twistModel.season.toString()
+            : twistModel.altTitle + ' | Season ' + twistModel.season.toString(),
         maxLines: 1,
       ),
       trailing: Row(
@@ -42,7 +42,7 @@ class SearchListTile extends StatelessWidget {
           !twistModel.ongoing
               ? Container()
               : Text(
-                  "Ongoing".toUpperCase(),
+                  'Ongoing'.toUpperCase(),
                   style: TextStyle(
                     color: Theme.of(context).accentColor,
                     fontWeight: FontWeight.bold,

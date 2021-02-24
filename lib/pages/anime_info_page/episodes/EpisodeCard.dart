@@ -33,9 +33,9 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    var orientation = MediaQuery.of(context).orientation;
 
     return Consumer(
       builder: (context, watch, child) {
@@ -56,8 +56,8 @@ class EpisodeCard extends StatelessWidget {
                 primary: Theme.of(context).dialogBackgroundColor,
               ),
               child: Text(prov.isWatched(episodeModel.number)
-                  ? "Remove from watched"
-                  : "Add to watched"),
+                  ? 'Remove from watched'
+                  : 'Add to watched'),
               onPressed: () {
                 prov.toggleWatched(episodeModel.number);
                 Navigator.of(context).pop();
@@ -79,7 +79,7 @@ class EpisodeCard extends StatelessWidget {
                 elevation: 0,
                 primary: Theme.of(context).dialogBackgroundColor,
               ),
-              child: Text("Set watched till here"),
+              child: Text('Set watched till here'),
               onPressed: () {
                 prov.setWatchedTill(episodeModel.number);
                 Navigator.of(context).pop();
@@ -117,7 +117,7 @@ class EpisodeCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       AutoSizeText(
-                        "EP " + episodeModel.number.toString(),
+                        'EP ' + episodeModel.number.toString(),
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Theme.of(context)

@@ -5,9 +5,11 @@ class TVInfoProvider {
 
   Future initialize() async {
     try {
-      isTV = await MethodChannel("tv_info").invokeMethod("isTV");
+      isTV = await MethodChannel('tv_info').invokeMethod('isTV');
     } on PlatformException {
       isTV = false;
-    } catch (e) {}
+    } catch (e) {
+      isTV = false;
+    }
   }
 }

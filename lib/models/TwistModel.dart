@@ -41,20 +41,20 @@ class TwistModel extends HiveObject {
 
   factory TwistModel.fromJson(Map<String, dynamic> data) {
     return TwistModel(
-      id: data["id"],
-      title: data["title"],
-      altTitle: data["alt_title"],
-      season: data["season"] == 0 ? 1 : data["season"],
-      ongoing: data["ongoing"] == 1,
-      kitsuId: data["hb_id"],
-      slug: data["slug"]["slug"],
-      malId: data["mal_id"],
+      id: data['id'],
+      title: data['title'],
+      altTitle: data['alt_title'],
+      season: data['season'] == 0 ? 1 : data['season'],
+      ongoing: data['ongoing'] == 1,
+      kitsuId: data['hb_id'],
+      slug: data['slug']['slug'],
+      malId: data['mal_id'],
     );
   }
   @override
   bool operator ==(covariant TwistModel twistModel) {
     if (identical(this, twistModel)) return true;
-    return (twistModel.id == this.id && twistModel.title == this.title);
+    return (twistModel.id == id && twistModel.title == title);
   }
 
   @override

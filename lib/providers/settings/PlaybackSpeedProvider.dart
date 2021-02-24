@@ -12,10 +12,10 @@ class PlaybackSpeedProvider extends CustomSettingProvider<double> {
   ];
 
   @override
-  String preferenceName = "playbackSpeed";
+  String preferenceName = 'playbackSpeed';
 
   @override
-  String exceptionMessage = "An error occured while getting the playback speed";
+  String exceptionMessage = 'An error occured while getting the playback speed';
 
   @override
   double value = DEFAULT_VALUE;

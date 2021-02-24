@@ -11,7 +11,7 @@ class ClearCacheSetting extends StatefulWidget {
 class _ClearCacheSettingState extends State<ClearCacheSetting> {
   void showConfirmationSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Network cache cleared"),
+      content: Text('Network cache cleared'),
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -19,8 +19,8 @@ class _ClearCacheSettingState extends State<ClearCacheSetting> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("Clear network cache"),
-      subtitle: Text("Get the newest data next time you open the app"),
+      title: Text('Clear network cache'),
+      subtitle: Text('Get the newest data next time you open the app'),
       trailing: IconButton(
         icon: Icon(Icons.restore),
         onPressed: () async {

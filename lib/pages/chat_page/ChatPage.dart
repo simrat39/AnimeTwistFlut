@@ -22,10 +22,10 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   IOWebSocketChannel _channel;
   ScrollController _controller;
-  List<MessageModel> _messages = [];
+  final _messages = <MessageModel>[];
 
   void connect() async {
-    _channel = IOWebSocketChannel.connect("wss://ws.twist.moe/");
+    _channel = IOWebSocketChannel.connect('wss://ws.twist.moe/');
   }
 
   @override
@@ -67,7 +67,7 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(
         title: AppbarText(
-          custom: "chat",
+          custom: 'chat',
         ),
         actions: [
           IconButton(
@@ -95,19 +95,20 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var jsonData = jsonDecode(snapshot.data);
-            if (jsonData["type"] == "msg") {
+            if (jsonData['type'] == 'msg') {
               var message = MessageModel.fromJson(jsonData);
               if (!_messages.contains(message)) {
                 _messages.add(message);
               }
               if (_controller.hasClients) {
                 if (_controller.position.pixels ==
-                    _controller.position.maxScrollExtent)
+                    _controller.position.maxScrollExtent) {
                   WidgetsBinding.instance.addPostFrameCallback(
                     (_) {
                       _controller.jumpTo(_controller.position.maxScrollExtent);
                     },
                   );
+                }
               }
             }
           }

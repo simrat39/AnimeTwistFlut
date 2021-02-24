@@ -10,35 +10,35 @@ class KitsuApiService {
   }
 
   static Future<Map<TwistModel, KitsuModel>> getAllTimePopularAnimes() async {
-    KitsuAnimeListApiService allTimePopService = KitsuAnimeListApiService(
-      url: "https://www.kitsu.io/api/edge/anime?sort=-averageRating",
-      cacheKey: "allTimePopular",
+    var allTimePopService = KitsuAnimeListApiService(
+      url: 'https://www.kitsu.io/api/edge/anime?sort=-averageRating',
+      cacheKey: 'allTimePopular',
     );
     return allTimePopService.getData();
   }
 
   static Future<Map<TwistModel, KitsuModel>> getAiringPopular() async {
-    KitsuAnimeListApiService airingPopularService = KitsuAnimeListApiService(
+    var airingPopularService = KitsuAnimeListApiService(
       url:
-          "https://www.kitsu.io/api/edge/anime?sort=-averageRating&filter[status]=current",
-      cacheKey: "airingPopular",
+          'https://www.kitsu.io/api/edge/anime?sort=-averageRating&filter[status]=current',
+      cacheKey: 'airingPopular',
     );
     return airingPopularService.getData();
   }
 
   static Future<Map<TwistModel, KitsuModel>> getFanFavourites() async {
-    KitsuAnimeListApiService airingPopularService = KitsuAnimeListApiService(
-      url: "https://www.kitsu.io/api/edge/anime?sort=-favoritesCount",
-      cacheKey: "fanFavourites",
+    var airingPopularService = KitsuAnimeListApiService(
+      url: 'https://www.kitsu.io/api/edge/anime?sort=-favoritesCount',
+      cacheKey: 'fanFavourites',
     );
     return airingPopularService.getData();
   }
 
   static Future<Map<TwistModel, KitsuModel>> getTopMovies() async {
-    KitsuAnimeListApiService topMoviesService = KitsuAnimeListApiService(
+    var topMoviesService = KitsuAnimeListApiService(
       url:
-          "https://www.kitsu.io/api/edge/anime?filter[subtype]=movie&sort=-averageRating&page[limit]=20",
-      cacheKey: "topMovies",
+          'https://www.kitsu.io/api/edge/anime?filter[subtype]=movie&sort=-averageRating&page[limit]=20',
+      cacheKey: 'topMovies',
     );
     return topMoviesService.getData();
   }

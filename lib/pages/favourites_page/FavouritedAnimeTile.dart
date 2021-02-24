@@ -21,7 +21,7 @@ class FavouritedAnimeTile extends StatelessWidget {
   final FavouritedModel favouritedModel;
 
   String getImageUrl(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
+    var orientation = MediaQuery.of(context).orientation;
     if (orientation == Orientation.portrait) {
       return favouritedModel.posterURL ??
           favouritedModel.coverURL ??

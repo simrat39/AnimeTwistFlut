@@ -20,18 +20,18 @@ class KitsuAnimeListApiService {
   });
 
   Future<Map<TwistModel, KitsuModel>> getData() async {
-    CacheService cacheService = CacheService(
-      "/kitsu/${this.cacheKey}",
+    var cacheService = CacheService(
+      '/kitsu/${cacheKey}',
       2.days,
     );
 
     await cacheService.initialize(false);
 
-    String response = await cacheService.getDataAndCacheIfNeeded(
+    var response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         return await CachedHttpGet.get(
           Request(
-            url: this.url,
+            url: url,
             header: {
               'accept': 'application/vnd.api+json',
               'content-type': 'application/vnd.api+json'
@@ -54,15 +54,15 @@ class KitsuAnimeListApiService {
     // Check if the kitsu id is invalid.
     // A better solution would be to check for the status code but CachedHttpGet
     // doesnt support this as of now.
-    if (jsonData["errors"] != null) return null;
+    if (jsonData['errors'] != null) return null;
 
-    var dataList = jsonData["data"];
+    var dataList = jsonData['data'];
 
-    Map<TwistModel, KitsuModel> ret = {};
+    var ret = <TwistModel, KitsuModel>{};
 
-    for (int i = 0; i < dataList.length; i++) {
-      KitsuModel kModel = KitsuModel.fromJson(dataList[i], true);
-      TwistModel tModel = KitsuApiService.getTwistModel(kModel.id);
+    for (var i = 0; i < dataList.length; i++) {
+      var kModel = KitsuModel.fromJson(dataList[i], true);
+      var tModel = KitsuApiService.getTwistModel(kModel.id);
       if (tModel != null) {
         ret.putIfAbsent(tModel, () => kModel);
       }

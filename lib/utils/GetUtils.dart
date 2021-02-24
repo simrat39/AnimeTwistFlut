@@ -5,14 +5,18 @@ class Get {
     T ret;
     try {
       ret = GetIt.I.get<T>();
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
     return ret;
   }
 
   static void delete<T>() {
     try {
       GetIt.I.unregister<T>();
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
   }
 
   static T put<T>(T val) {

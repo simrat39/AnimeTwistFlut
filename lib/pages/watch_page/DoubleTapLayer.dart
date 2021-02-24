@@ -18,13 +18,13 @@ class DoubleTapLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    var width = MediaQuery.of(context).size.width;
     return Material(
       color: Colors.transparent,
       child: Consumer(
         builder: (context, watch, child) {
           var prov = watch(doubleTapDurationProvider);
-          int skipDuration = prov.value;
+          var skipDuration = prov.value;
           return Row(
             children: [
               Container(
@@ -33,7 +33,7 @@ class DoubleTapLayer extends StatelessWidget {
                 width: width * 0.5,
                 child: GestureDetector(
                   onDoubleTap: () async {
-                    videoPlayerController.seekTo(
+                    await videoPlayerController.seekTo(
                         await (videoPlayerController.position) -
                             skipDuration.seconds);
                     toggleUI();
@@ -47,7 +47,7 @@ class DoubleTapLayer extends StatelessWidget {
                 width: width * 0.5,
                 child: GestureDetector(
                   onDoubleTap: () async {
-                    videoPlayerController.seekTo(
+                    await videoPlayerController.seekTo(
                         await (videoPlayerController.position) +
                             skipDuration.seconds);
                     toggleUI();

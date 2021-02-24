@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:anime_twist_flut/animations/Transitions.dart';
-import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverPage.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritesPage.dart';
@@ -49,8 +48,9 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
       ..addListener(() {
         // If the current page is the SearchPage, then request focus for the
         // search box, else unfocus.
-        if (_pageController.page.ceil() == 2)
+        if (_pageController.page.ceil() == 2) {
           FocusScope.of(context).requestFocus();
+        }
         FocusScope.of(context).unfocus();
       });
     // Check and launch an anime page on initial app launch, this is needed when
@@ -62,8 +62,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
       _checkURIAndLaunchPage(url);
     });
 
-    AppUpdateService appUpdateService = AppUpdateService();
-    appUpdateService.checkUpdate(context: context);
+    AppUpdateService().checkUpdate(context: context);
   }
 
   Future _checkURIAndLaunchPage([String url]) async {
@@ -73,23 +72,23 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
     }
 
     try {
-      String recievedUrl = (url ?? await getInitialLink()) ?? "";
-      RegExp regex = RegExp(r'https://twist.moe/a/(.*)/+(.*)');
+      var recievedUrl = (url ?? await getInitialLink()) ?? '';
+      var regex = RegExp(r'https://twist.moe/a/(.*)/+(.*)');
       Iterable<Match> matches = regex.allMatches(recievedUrl);
-      String slug = matches.length > 0 ? matches.elementAt(0).group(1) : "";
-      int episodeNum =
-          matches.length > 0 ? int.parse(matches.elementAt(0).group(2)) : null;
+      var slug = matches.isNotEmpty ? matches.elementAt(0).group(1) : '';
+      var episodeNum =
+          matches.isNotEmpty ? int.parse(matches.elementAt(0).group(2)) : null;
 
       if (slug.isNotEmpty) {
-        for (int i = 0; i < TwistApiService.allTwistModel.length; i++) {
-          TwistModel twistModel = TwistApiService.allTwistModel.elementAt(i);
+        for (var i = 0; i < TwistApiService.allTwistModel.length; i++) {
+          var twistModel = TwistApiService.allTwistModel.elementAt(i);
           if (twistModel.slug == slug) {
             // If the current page is home page, then launch the anime page
             // normally, but if its any other page, then launch replaced as we
             // dont want to nest a lot of pages, if users spams the same link
             // again and again.
             if (ModalRoute.of(context).isCurrent) {
-              Transitions.slideTransition(
+              await Transitions.slideTransition(
                 context: context,
                 pageBuilder: () => AnimeInfoPage(
                   twistModel: twistModel,
@@ -98,7 +97,7 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
                 ),
               );
             } else {
-              Transitions.slideTransitionReplaced(
+              await Transitions.slideTransitionReplaced(
                 context: context,
                 pageBuilder: () => AnimeInfoPage(
                   twistModel: twistModel,

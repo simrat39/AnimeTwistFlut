@@ -25,7 +25,7 @@ class _MOTDCardState extends State<MOTDCard>
 
   final _dataInitProvider =
       FutureProvider.autoDispose<List<String>>((ref) async {
-    TwistApiService twistApiService = Get.find();
+    var twistApiService = Get.find<TwistApiService>();
     return twistApiService.getMOTD();
   });
 
@@ -136,9 +136,9 @@ class _MOTDCardState extends State<MOTDCard>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Failed to get MOTD"),
+                      Text('Failed to get MOTD'),
                       ElevatedButton(
-                        child: Text("Retry"),
+                        child: Text('Retry'),
                         onPressed: () => context.refresh(_dataInitProvider),
                       ),
                     ],

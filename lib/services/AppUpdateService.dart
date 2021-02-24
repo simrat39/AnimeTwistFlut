@@ -7,25 +7,25 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AppUpdateService {
   static const URL =
-      "https://raw.githubusercontent.com/simrat39/AnimeTwistFlut/master/release.json";
+      'https://raw.githubusercontent.com/simrat39/AnimeTwistFlut/master/release.json';
 
-  String latestVersion = "";
-  String currentVersion = "";
-  String downloadLink = "";
+  String latestVersion = '';
+  String currentVersion = '';
+  String downloadLink = '';
   bool hasUpdate = false;
 
   Future checkUpdate(
       {BuildContext context, bool showPopupOnUpdate = true}) async {
-    http.Response req = await http.get(URL);
+    var req = await http.get(URL);
     var jsonData = jsonDecode(req.body);
-    latestVersion = jsonData["latest_version"];
-    downloadLink = jsonData["download_link"];
+    latestVersion = jsonData['latest_version'];
+    downloadLink = jsonData['download_link'];
     currentVersion = (await PackageInfo.fromPlatform()).version;
     if (latestVersion != currentVersion) {
       hasUpdate = true;
     }
     if (showPopupOnUpdate && hasUpdate) {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (context) => updateDialog(context),
       );
@@ -35,13 +35,13 @@ class AppUpdateService {
 
   void launchDownloadLink() async {
     if (await canLaunch(downloadLink)) {
-      launch(downloadLink);
+      await launch(downloadLink);
     }
   }
 
   Widget updateDialog(BuildContext context) {
     return AlertDialog(
-      title: Text(hasUpdate ? "Update available!" : "No Update available!"),
+      title: Text(hasUpdate ? 'Update available!' : 'No Update available!'),
       contentTextStyle: Theme.of(context).textTheme.subtitle2.copyWith(
             color: Theme.of(context).hintColor,
           ),
@@ -51,23 +51,23 @@ class AppUpdateService {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "Latest version: $latestVersion",
+            'Latest version: $latestVersion',
             textAlign: TextAlign.left,
           ),
           Text(
-            "Current version: $currentVersion",
+            'Current version: $currentVersion',
             textAlign: TextAlign.left,
           ),
         ],
       ),
       actions: [
         TextButton(
-          child: Text("Close"),
+          child: Text('Close'),
           onPressed: () => Navigator.of(context).pop(),
         ),
         if (hasUpdate)
           TextButton(
-            child: Text("Download"),
+            child: Text('Download'),
             onPressed: () => launchDownloadLink(),
           ),
       ],

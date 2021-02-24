@@ -10,9 +10,9 @@ class DefaultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    var orientation = MediaQuery.of(context).orientation;
 
     var containerHeight =
         orientation == Orientation.portrait ? height * 0.4 : width * 0.3;
@@ -54,7 +54,7 @@ class DefaultCard extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "Recently Watched".toUpperCase(),
+                'Recently Watched'.toUpperCase(),
                 style: TextStyle(
                   letterSpacing: 1.25,
                   fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class DefaultCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Start Watching".toUpperCase(),
+                    'Start Watching'.toUpperCase(),
                     style: TextStyle(
                       letterSpacing: 1.25,
                       fontWeight: FontWeight.bold,

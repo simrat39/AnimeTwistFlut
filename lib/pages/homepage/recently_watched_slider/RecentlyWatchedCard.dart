@@ -102,9 +102,9 @@ class _RecentlyWatchedCardState extends State<RecentlyWatchedCard> {
                   height: 5.0,
                 ),
                 Text(
-                  "Season " +
+                  'Season ' +
                       widget.lastWatchedModel.twistModel.season.toString() +
-                      " Episode " +
+                      ' Episode ' +
                       widget.lastWatchedModel.episodeModel.number.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(

@@ -31,7 +31,7 @@ class ViewAllAnimeCard extends StatelessWidget {
                   vertical: 15.0,
                 ),
                 child: Text(
-                  "View All Anime",
+                  'View All Anime',
                   style: TextStyle(
                     color: Theme.of(context).accentColor,
                     fontSize: 23.0,

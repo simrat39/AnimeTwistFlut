@@ -16,20 +16,20 @@ import '../../secrets.dart';
 
 class EpisodeApiService {
   static Future<List<EpisodeModel>> getEpisodes(TwistModel twistModel) async {
-    CacheService cacheService = CacheService(
-      "/anime/episodes/${twistModel.slug}",
+    var cacheService = CacheService(
+      '/anime/episodes/${twistModel.slug}',
       7.days,
     );
 
     await cacheService.initialize(false);
 
-    String response = await cacheService.getDataAndCacheIfNeeded(
+    var response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         return await CachedHttpGet.get(
           Request(
             url: '${TwistApiService.BASE_API_URL}/anime/' +
                 twistModel.slug.toString() +
-                "/sources",
+                '/sources',
             header: {
               'x-access-token': x_access_token,
             },
@@ -48,7 +48,7 @@ class EpisodeApiService {
   }
 
   static Future<List<EpisodeModel>> _computeData(String data) async {
-    List<EpisodeModel> ret = [];
+    var ret = <EpisodeModel>[];
     List<dynamic> jsonData = jsonDecode(data);
 
     jsonData.forEach(

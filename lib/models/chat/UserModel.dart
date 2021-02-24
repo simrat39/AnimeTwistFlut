@@ -21,7 +21,7 @@ class UserModel {
   bool operator ==(covariant UserModel userModel) {
     if (identical(this, userModel)) return true;
 
-    return (userModel.username == this.username && userModel.id == this.id);
+    return (userModel.username == username && userModel.id == id);
   }
 
   @override

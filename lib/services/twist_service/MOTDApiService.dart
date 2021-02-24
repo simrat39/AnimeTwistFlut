@@ -16,13 +16,13 @@ import '../../secrets.dart';
 
 class MOTDApiService {
   static Future<List<String>> getMOTD() async {
-    CacheService cacheService = CacheService(
-      "/data/motd",
+    var cacheService = CacheService(
+      '/data/motd',
       7.days,
     );
 
     await cacheService.initialize(false);
-    String response = await cacheService.getDataAndCacheIfNeeded(
+    var response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         return await CachedHttpGet.get(
           Request(
@@ -44,17 +44,17 @@ class MOTDApiService {
   }
 
   static String _parseMOTD(String motd) {
-    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    var exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
 
     return motd.replaceAll(exp, '');
   }
 
   static Future<List<String>> _computeData(String data) async {
-    List<String> ret = [];
+    var ret = <String>[];
     Map<String, dynamic> jsonData = jsonDecode(data);
 
-    ret.add(jsonData["title"]);
-    ret.add(_parseMOTD(jsonData["message"]));
+    ret.add(jsonData['title']);
+    ret.add(_parseMOTD(jsonData['message']));
     return ret;
   }
 }

@@ -12,7 +12,7 @@ class ResetToWatchSetting extends StatefulWidget {
 class _ResetToWatchSettingState extends State<ResetToWatchSetting> {
   void showConfirmationSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("To watch list cleared!"),
+      content: Text('To watch list cleared!'),
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -21,8 +21,8 @@ class _ResetToWatchSettingState extends State<ResetToWatchSetting> {
   Widget build(BuildContext context) {
     var provider = context.read(toWatchProvider);
     return ListTile(
-      title: Text("Reset To Watch list"),
-      subtitle: Text("Clear to watch animes"),
+      title: Text('Reset To Watch list'),
+      subtitle: Text('Clear to watch animes'),
       trailing: IconButton(
         icon: Icon(Icons.restore),
         onPressed: provider.hasData()

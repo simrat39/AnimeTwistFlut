@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import '../../models/TwistModel.dart';
 import '../../services/twist_service/TwistApiService.dart';
 import '../search_page/SearchListTile.dart';
 
@@ -19,9 +18,7 @@ class AllAnimePage extends StatefulWidget {
 }
 
 class _AllAnimePageState extends State<AllAnimePage> {
-  // static double _previousScrollOffset = 0;
-  final ScrollController _controller =
-      new ScrollController(/*initialScrollOffset: _previousScrollOffset*/);
+  final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +71,9 @@ class _AllAnimePageState extends State<AllAnimePage> {
           child: ListView.builder(
             controller: _controller,
             itemBuilder: (context, index) {
-              TwistModel model = TwistApiService.allTwistModel.elementAt(index);
+              var twistModel = TwistApiService.allTwistModel.elementAt(index);
               return SearchListTile(
-                twistModel: model,
+                twistModel: twistModel,
               );
             },
             itemCount: TwistApiService.allTwistModel.length,

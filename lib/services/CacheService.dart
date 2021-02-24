@@ -13,14 +13,15 @@ class CacheService {
 
   /// Open the hive box and get ready for reading and writing the cache.
   Future initialize([bool initHive = true]) async {
-    if (initHive)
+    if (initHive) {
       await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
+    }
     await Hive.openBox(BOX_NAME);
   }
 
   static Future<void> clearCache() async {
-    Box b = await Hive.openBox(BOX_NAME);
-    await b.clear();
+    var box = await Hive.openBox(BOX_NAME);
+    await box.clear();
   }
 
   /// Caches the given data with [DateTime.now()] so that the time can be
@@ -52,7 +53,7 @@ class CacheService {
     if (cachedData.isEmpty) return true;
     if (cachedDateTime == null) return true;
     if (await willUpdateCache(cachedData, cachedDateTime)) return true;
-    DateTime now = DateTime.now();
+    var now = DateTime.now();
     return now.difference(cachedDateTime).abs() > cacheUpdateInterval;
   }
 
@@ -64,8 +65,8 @@ class CacheService {
         Future<bool> Function(String cachedData, DateTime cachedDateTime)
             willUpdateCache,
   }) async {
-    String cachedAnimeData = await getCachedData();
-    DateTime cachedDate = await getCachedDateTime();
+    var cachedAnimeData = await getCachedData();
+    var cachedDate = await getCachedDateTime();
     String ret;
 
     if (await shouldUpdateCache(
@@ -74,7 +75,7 @@ class CacheService {
       willUpdateCache: willUpdateCache,
     )) {
       ret = await getData();
-      cache(data: ret);
+      await cache(data: ret);
       await onCache();
     } else {
       ret = cachedAnimeData;

@@ -8,6 +8,7 @@ import 'package:anime_twist_flut/pages/anime_info_page/RatingGraph.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/RatingWidget.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/WatchTrailerButton.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
+import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/widgets/custom_shimmer.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -27,7 +28,6 @@ import '../../models/kitsu/KitsuModel.dart';
 import '../../models/TwistModel.dart';
 import '../../providers/EpisodesWatchedProvider.dart';
 import '../../services/kitsu_service/KitsuApiService.dart';
-import '../../services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/constants.dart';
 import '../../animations/TwistLoadingWidget.dart';
 
@@ -86,7 +86,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       controller = _scrollController;
     }
-    double offset = controller.offset / MediaQuery.of(context).size.height * 5;
+    var offset = controller.offset / MediaQuery.of(context).size.height * 5;
     context.read(offsetProvider).state = offset;
   }
 
@@ -105,7 +105,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
     Get.delete<TwistModel>();
     Get.put<TwistModel>(widget.twistModel);
 
-    TwistApiService twistApiService = Get.find();
+    var twistApiService = Get.find<TwistApiService>();
 
     episodes = await twistApiService.getEpisodesForSource(
       twistModel: widget.twistModel,
@@ -140,8 +140,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
   // Scrolls to the latest watched episode if isFromRecentlyWatched is true and
   // a last watched episode number is provided.
   void scrollToLastWatched(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double height = MediaQuery.of(context).size.height;
+    var orientation = MediaQuery.of(context).orientation;
+    var height = MediaQuery.of(context).size.height;
 
     if (hasScrolled) return;
     if (widget.isFromRecentlyWatched && widget.lastWatchedEpisodeNum != null) {
@@ -166,7 +166,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
         // maximum
         if (scrollLength > maxScrollExtent) scrollLength = maxScrollExtent;
 
-        int duration = max(1000, widget.lastWatchedEpisodeNum * 10);
+        var duration = max(1000, widget.lastWatchedEpisodeNum * 10);
 
         _scrollController
             .animateTo(
@@ -179,7 +179,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
         var cardHeight =
             _scrollController.position.maxScrollExtent / episodes.length;
         var scrollLength = cardHeight * widget.lastWatchedEpisodeNum;
-        int duration = max(1000, widget.lastWatchedEpisodeNum * 10);
+        var duration = max(1000, widget.lastWatchedEpisodeNum * 10);
 
         _scrollController
             .animateTo(
@@ -194,9 +194,9 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    var orientation = MediaQuery.of(context).orientation;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
 
     return WillPopScope(
       onWillPop: () async {
@@ -331,10 +331,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                           Text(
                                             (episodes?.length?.toString() ??
                                                     '0') +
-                                                " Episodes | " +
+                                                ' Episodes | ' +
                                                 (widget.twistModel.ongoing
-                                                    ? "Ongoing"
-                                                    : "Finished"),
+                                                    ? 'Ongoing'
+                                                    : 'Finished'),
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontSize: 15.0,
@@ -378,7 +378,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                   bottom: 8.0,
                                 ),
                                 child: Text(
-                                  "SEASON " +
+                                  'SEASON ' +
                                       widget.twistModel.season.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -527,10 +527,10 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                               Text(
                                                 (episodes?.length?.toString() ??
                                                         '0') +
-                                                    " Episodes | " +
+                                                    ' Episodes | ' +
                                                     (widget.twistModel.ongoing
-                                                        ? "Ongoing"
-                                                        : "Finished"),
+                                                        ? 'Ongoing'
+                                                        : 'Finished'),
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                   fontSize: 15.0,
@@ -596,7 +596,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                     top: 8.0,
                                   ),
                                   child: Text(
-                                    "SEASON " +
+                                    'SEASON ' +
                                         widget.twistModel.season.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -621,7 +621,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                 stackTrace: s,
                 e: e,
                 message:
-                    "Whoops! An error occured. Looks like twist.moe is down, or your internet is not working. Please try again later.",
+                    'Whoops! An error occured. Looks like twist.moe is down, or your internet is not working. Please try again later.',
                 onRefresh: () => context.refresh(_initDataProvider),
               ),
             );

@@ -13,8 +13,8 @@ class _AboutAppSettingState extends State<AboutAppSetting> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("About App"),
-      subtitle: Text("Learn more!"),
+      title: Text('About App'),
+      subtitle: Text('Learn more!'),
       onTap: () => showInfoDialog(),
       trailing: IconButton(
         icon: Icon(Icons.info_outline_rounded),
@@ -26,7 +26,7 @@ class _AboutAppSettingState extends State<AboutAppSetting> {
   void showInfoDialog() {
     showAboutDialog(
       context: context,
-      applicationName: "AnimeTwistFlut",
+      applicationName: 'AnimeTwistFlut',
       children: <Widget>[
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -38,9 +38,9 @@ class _AboutAppSettingState extends State<AboutAppSetting> {
               ),
               iconSize: 50.0,
               onPressed: () async {
-                String url = "https://github.com/simrat39/AnimeTwistFlut";
+                var url = 'https://github.com/simrat39/AnimeTwistFlut';
                 if (await canLaunch(url)) {
-                  launch(url);
+                  await launch(url);
                 }
               },
             ),
@@ -50,9 +50,9 @@ class _AboutAppSettingState extends State<AboutAppSetting> {
               ),
               iconSize: 50.0,
               onPressed: () async {
-                String url = "https://discord.gg/Ea3Mq9n";
+                var url = 'https://discord.gg/Ea3Mq9n';
                 if (await canLaunch(url)) {
-                  launch(url);
+                  await launch(url);
                 }
               },
             ),

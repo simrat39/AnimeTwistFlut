@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
 ThemeData getDarkTheme(Color accentColor) {
-  Color bgColor = Color(0xff121212);
-  Color cardColor = Color(0xff1D1D1D);
-  Color bottomNavbarColor = Color(0xff1f1f1f);
+  var bgColor = Color(0xff121212);
+  var cardColor = Color(0xff1D1D1D);
+  var bottomNavbarColor = Color(0xff1f1f1f);
 
   return ThemeData.dark().copyWith(
     cardColor: cardColor,

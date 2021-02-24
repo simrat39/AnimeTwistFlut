@@ -12,7 +12,7 @@ class ResetFavouritesSetting extends StatefulWidget {
 class _ResetFavouritesSettingState extends State<ResetFavouritesSetting> {
   void showConfirmationSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Favourited anime cleared!"),
+      content: Text('Favourited anime cleared!'),
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -21,8 +21,8 @@ class _ResetFavouritesSettingState extends State<ResetFavouritesSetting> {
   Widget build(BuildContext context) {
     var provider = context.read(favouriteAnimeProvider);
     return ListTile(
-      title: Text("Reset Favourited animes"),
-      subtitle: Text("Clear your favourite animes"),
+      title: Text('Reset Favourited animes'),
+      subtitle: Text('Clear your favourite animes'),
       trailing: IconButton(
         icon: Icon(Icons.restore),
         onPressed: provider.hasData()

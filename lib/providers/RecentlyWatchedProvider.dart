@@ -33,11 +33,11 @@ class RecentlyWatchedProvider extends ChangeNotifier {
       // box.get(KEY_NAME) does not work, so loop through all the elements and add
       // it to the list one by one.
       dynamic contents = box?.get(KEY_NAME) ?? [];
-      for (int i = 0; i < contents?.length ?? 0; i++) {
+      for (var i = 0; i < contents?.length ?? 0; i++) {
         recentlyWatchedAnimes.add(contents[i]);
       }
     } catch (e) {
-      throw Exception("Cannot load recently watched animes\n" + e.toString());
+      throw Exception('Cannot load recently watched animes\n' + e.toString());
     }
   }
 
@@ -46,16 +46,16 @@ class RecentlyWatchedProvider extends ChangeNotifier {
     KitsuModel kitsuModel,
     EpisodeModel episodeModel,
   }) {
-    RecentlyWatchedModel lastWatchedModel = RecentlyWatchedModel(
+    var lastWatchedModel = RecentlyWatchedModel(
       twistModel,
       kitsuModel,
       episodeModel,
     );
-    if (recentlyWatchedAnimes == null) recentlyWatchedAnimes = [];
+    recentlyWatchedAnimes ??= [];
 
     // If lastWatchedAnimes already contains the anime we are trying to add,
     // then remove that anime from the list and proceed.
-    int index = isAlreadyInWatching(lastWatchedModel);
+    var index = isAlreadyInWatching(lastWatchedModel);
     if (index != -1) {
       recentlyWatchedAnimes.removeAt(index);
     }
@@ -76,8 +76,8 @@ class RecentlyWatchedProvider extends ChangeNotifier {
   /// Checks if [recentlyWatchedAnimes] contains [lastWatchedModel] and returns its
   /// index, else returns -1
   int isAlreadyInWatching(RecentlyWatchedModel lastWatchedModel) {
-    int index = -1;
-    for (int i = 0; i < recentlyWatchedAnimes.length; i++) {
+    var index = -1;
+    for (var i = 0; i < recentlyWatchedAnimes.length; i++) {
       index++;
       if (recentlyWatchedAnimes[i].twistModel == lastWatchedModel.twistModel) {
         return index;

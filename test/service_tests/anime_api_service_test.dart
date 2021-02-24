@@ -3,12 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:anime_twist_flut/models/EpisodeModel.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 
 void main() {
   group('Twist API Service Tests\n', () {
-    TwistApiService twistApiService = TwistApiService();
+    var twistApiService = TwistApiService();
 
     test('Anime API service test\n', () async {
       SharedPreferences.setMockInitialValues({
@@ -16,14 +15,14 @@ void main() {
       });
 
       await twistApiService.setTwistModels();
-      expect(TwistApiService.allTwistModel.length > 0, true);
+      expect(TwistApiService.allTwistModel.isNotEmpty, true);
       expect(TwistApiService.allTwistModel[0].runtimeType.toString(),
-          "TwistModel");
-      expect(TwistApiService.allTwistModel[0].slug, "07-ghost");
+          'TwistModel');
+      expect(TwistApiService.allTwistModel[0].slug, '07-ghost');
     });
 
     test('Donation API service test\n', () async {
-      List<int> data = await twistApiService.getDonationsData();
+      var data = await twistApiService.getDonationsData();
       expect(data[0].runtimeType, int);
       expect(data[1].runtimeType, int);
 
@@ -32,20 +31,20 @@ void main() {
     });
 
     test('MOTD API service test\n', () async {
-      List<String> data = await twistApiService.getMOTD();
+      var data = await twistApiService.getMOTD();
       expect(data[0].runtimeType, String);
       expect(data[1].runtimeType, String);
 
-      expect(data[0].length > 0, true);
-      expect(data[1].length > 0, true);
+      expect(data[0].isNotEmpty, true);
+      expect(data[1].isNotEmpty, true);
     });
 
     test('Episode API service test\n', () async {
-      List<EpisodeModel> data = await twistApiService.getEpisodesForSource(
+      var data = await twistApiService.getEpisodesForSource(
         twistModel: TwistApiService.allTwistModel.first,
       );
-      expect(data.length > 0, true);
-      expect(data.first.source.length > 0, true);
+      expect(data.isNotEmpty, true);
+      expect(data.first.source.isNotEmpty, true);
       expect(data.first.source.runtimeType, String);
     });
   });

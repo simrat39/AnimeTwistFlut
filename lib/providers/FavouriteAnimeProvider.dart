@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 class FavouriteAnimeProvider extends ChangeNotifier {
-  static const String BOX_NAME = "favouritedAnime";
-  static const String KEY = "1";
+  static const String BOX_NAME = 'favouritedAnime';
+  static const String KEY = '1';
 
   List<FavouritedModel> favouritedAnimes = [];
 
@@ -16,11 +16,11 @@ class FavouriteAnimeProvider extends ChangeNotifier {
       var box = await Hive.openBox(BOX_NAME);
       dynamic contents = box?.get(KEY) ?? [];
 
-      for (int i = 0; i < contents?.length ?? 0; i++) {
+      for (var i = 0; i < contents?.length ?? 0; i++) {
         favouritedAnimes.add(contents[i]);
       }
     } catch (e) {
-      throw Exception("Cannot load to watch animes");
+      throw Exception('Cannot load to watch animes');
     }
     notifyListeners();
   }
@@ -44,8 +44,8 @@ class FavouriteAnimeProvider extends ChangeNotifier {
     favouritedAnimes.add(
       FavouritedModel(
         slug: twistModel.slug,
-        coverURL: kitsuModel?.coverImage ?? null,
-        posterURL: kitsuModel?.posterImage ?? null,
+        coverURL: kitsuModel?.coverImage,
+        posterURL: kitsuModel?.posterImage,
       ),
     );
     _writeData();

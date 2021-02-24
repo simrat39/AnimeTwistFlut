@@ -23,7 +23,7 @@ class RootWindowPortrait extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, watch, child) {
-        var prov = watch(this.indexProvider);
+        var prov = watch(indexProvider);
         return Scaffold(
           appBar: AppBar(
             primary: true,
@@ -62,23 +62,23 @@ class RootWindowPortrait extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: "Home",
-                tooltip: "Home",
+                label: 'Home',
+                tooltip: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.favorite_outline),
-                label: "Favorites",
-                tooltip: "Favorites",
+                label: 'Favorites',
+                tooltip: 'Favorites',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.grid_view),
-                label: "Discover",
-                tooltip: "Discover",
+                label: 'Discover',
+                tooltip: 'Discover',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
-                label: "Settings",
-                tooltip: "Settings",
+                label: 'Settings',
+                tooltip: 'Settings',
               ),
             ],
           ),

@@ -17,8 +17,8 @@ class PlaybackSpeedSettingState extends State<PlaybackSpeedSetting> {
       builder: (context, watch, child) {
         var speedProv = watch(playbackSpeeedProvider);
         return ListTile(
-          title: Text("Playback speed"),
-          subtitle: Text("Video go brrr..."),
+          title: Text('Playback speed'),
+          subtitle: Text('Video go brrr...'),
           trailing: DropdownButton<double>(
             onChanged: (value) {
               speedProv.updateValue(value);
@@ -31,7 +31,7 @@ class PlaybackSpeedSettingState extends State<PlaybackSpeedSetting> {
                 return DropdownMenuItem<double>(
                   value: e,
                   child: Text(
-                    "${e}x",
+                    '${e}x',
                   ),
                 );
               },

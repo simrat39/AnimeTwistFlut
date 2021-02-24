@@ -6,10 +6,10 @@ class ZoomFactorProvider extends CustomSettingProvider<double> {
       : super(sharedPreferencesManager);
 
   @override
-  String preferenceName = "zoomFactor";
+  String preferenceName = 'zoomFactor';
 
   @override
-  String exceptionMessage = "An error occured while getting the zoom factor";
+  String exceptionMessage = 'An error occured while getting the zoom factor';
 
   @override
   double value = DEFAULT_VALUE;

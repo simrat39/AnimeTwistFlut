@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WatchTrailerButton extends StatelessWidget {
-  final Key key;
   final KitsuModel kitsuModel;
 
   WatchTrailerButton({
-    this.key,
+    Key key,
     this.kitsuModel,
-  });
+  }) : super(key: key);
 
   Future launchTrailer(String link) async {
     if (link != null) await launch('https://youtu.be/$link');
@@ -48,7 +47,7 @@ class WatchTrailerButton extends StatelessWidget {
               width: 5.0,
             ),
             Text(
-              "Watch Trailer".toUpperCase(),
+              'Watch Trailer'.toUpperCase(),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15.0,

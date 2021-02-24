@@ -16,7 +16,7 @@ import 'package:anime_twist_flut/providers.dart';
 class CustomImageCache extends WidgetsFlutterBinding {
   @override
   ImageCache createImageCache() {
-    ImageCache imageCache = super.createImageCache();
+    var imageCache = super.createImageCache();
     // Set your image cache size
     imageCache.maximumSizeBytes = 1024 * 1024 * 1024; // 1 GB
     imageCache.maximumSize = 1000; // 1000 Items
@@ -36,7 +36,7 @@ class MainWidget extends StatefulWidget {
 
 class _MainWidgetState extends State<MainWidget>
     with SingleTickerProviderStateMixin {
-  var _initDataProvider = FutureProvider.autoDispose((ref) async {
+  final _initDataProvider = FutureProvider.autoDispose((ref) async {
     ref.maintainState = true;
 
     // android: Make the navbar transparent, the actual color will be set in
@@ -51,7 +51,7 @@ class _MainWidgetState extends State<MainWidget>
     await ref.read(sharedPreferencesProvider).initialize();
 
     await ref.read(accentProvider).initalize();
-    TwistApiService twistApiService = Get.put(TwistApiService());
+    var twistApiService = Get.put(TwistApiService());
     await NetworkInfoProvider().throwIfNoNetwork();
     await twistApiService.setTwistModels();
     await ref.read(recentlyWatchedProvider).initialize();
@@ -83,10 +83,10 @@ class _MainWidgetState extends State<MainWidget>
                 var message = 'Whoops! An error occured';
                 if (e is NoInternetException) {
                   message =
-                      "Looks like you are not connected to the internet. Please reconnect and try again";
+                      'Looks like you are not connected to the internet. Please reconnect and try again';
                 } else if (e is TwistDownException) {
                   message =
-                      "Looks like twist.moe is down. Please try again later";
+                      'Looks like twist.moe is down. Please try again later';
                 }
                 return ErrorPage(
                   message: message,

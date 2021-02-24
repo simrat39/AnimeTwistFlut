@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:anime_twist_flut/providers.dart';
-import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';
 import 'package:anime_twist_flut/pages/discover_page/SubCategoryText.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class _ToWatchRowState extends State<ToWatchRow> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SubCategoryText(
-                text: "To Watch",
+                text: 'To Watch',
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.0,
                   vertical: 12.0,
@@ -47,7 +46,7 @@ class _ToWatchRowState extends State<ToWatchRow> {
                     // The list is reversed as the animes are stored from old
                     // to new and we want the user to see the latest added
                     // anime first
-                    RecentlyWatchedModel recentlyWatchedModel =
+                    var recentlyWatchedModel =
                         provider.toWatchAnimes.reversed.elementAt(index);
                     return Container(
                       width: 200,

@@ -15,7 +15,7 @@ class _CheckUpdateSettingState extends State<CheckUpdateSetting> {
 
   final updateCheckerProvider =
       FutureProvider.autoDispose<AppUpdateService>((ref) async {
-    AppUpdateService appUpdateService = AppUpdateService();
+    var appUpdateService = AppUpdateService();
     await appUpdateService.checkUpdate(showPopupOnUpdate: false);
     return appUpdateService;
   });
@@ -28,8 +28,8 @@ class _CheckUpdateSettingState extends State<CheckUpdateSetting> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("Check for updates"),
-      subtitle: Text("Get the latest and the greatest"),
+      title: Text('Check for updates'),
+      subtitle: Text('Get the latest and the greatest'),
       onTap: () => showUpdateDialog(),
     );
   }
@@ -42,7 +42,7 @@ class _CheckUpdateSettingState extends State<CheckUpdateSetting> {
                   watch(updateCheckerProvider).when(
                 data: (data) => data.updateDialog(context),
                 loading: () => AlertDialog(
-                  title: Text("Checking for updates"),
+                  title: Text('Checking for updates'),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -15,7 +15,7 @@ class _ZoomFactorSettingState extends State<ZoomFactorSetting> {
   Widget build(BuildContext context) {
     var provider = context.read(zoomFactorProvider);
     return ListTile(
-      title: Text("Zoom factor in fill mode"),
+      title: Text('Zoom factor in fill mode'),
       leading: Icon(Icons.zoom_in),
       subtitle: MediaQuery.removePadding(
         context: context,
@@ -42,6 +42,7 @@ class _ZoomFactorSettingState extends State<ZoomFactorSetting> {
 }
 
 class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
   Rect getPreferredRect({
     @required RenderBox parentBox,
     Offset offset = Offset.zero,
@@ -49,11 +50,10 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
     bool isEnabled = false,
     bool isDiscrete = false,
   }) {
-    final double trackHeight = sliderTheme.trackHeight;
-    final double trackLeft = offset.dx;
-    final double trackTop =
-        offset.dy + (parentBox.size.height - trackHeight) / 2;
-    final double trackWidth = parentBox.size.width;
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final trackWidth = parentBox.size.width;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }

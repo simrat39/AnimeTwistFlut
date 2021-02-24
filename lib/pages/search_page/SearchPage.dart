@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage>
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController(text: "");
+    _textEditingController = TextEditingController(text: '');
     _scrollController = ScrollController();
     listTileNode = FocusNode();
     backButtonNode = FocusNode();
@@ -48,7 +48,7 @@ class _SearchPageState extends State<SearchPage>
     return Scaffold(
       appBar: AppBar(
         title: AppbarText(
-          custom: "search",
+          custom: 'search',
         ),
       ),
       body: SafeArea(
@@ -77,8 +77,8 @@ class _SearchPageState extends State<SearchPage>
                   ),
                   child: Builder(
                     builder: (context) {
-                      List<Widget> results = [];
-                      for (int i = 0;
+                      var results = <Widget>[];
+                      for (var i = 0;
                           i < TwistApiService.allTwistModel.length;
                           i++) {
                         var elem = TwistApiService.allTwistModel.elementAt(i);
@@ -88,7 +88,7 @@ class _SearchPageState extends State<SearchPage>
                         )) {
                           results.add(
                             SearchListTile(
-                              isFirstResult: results.length == 0,
+                              isFirstResult: results.isEmpty,
                               twistModel: elem,
                               firstTileNode: listTileNode,
                               backButtonNode: backButtonNode,
@@ -96,12 +96,13 @@ class _SearchPageState extends State<SearchPage>
                           );
                         }
                       }
-                      if (results.isEmpty)
+                      if (results.isEmpty) {
                         return ListTile(
                           title: Center(
-                            child: Text("No results found :("),
+                            child: Text('No results found :('),
                           ),
                         );
+                      }
                       return Scrollbar(
                         controller: _scrollController,
                         child: ListView.builder(

@@ -37,7 +37,7 @@ class RatingWidget extends StatelessWidget {
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text("Close"),
+                      child: Text('Close'),
                     ),
                   ],
                 ),
@@ -58,7 +58,7 @@ class RatingWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    (kitsuModel?.rating?.toString() ?? "??") + " / 100",
+                    (kitsuModel?.rating?.toString() ?? '??') + ' / 100',
                     style: TextStyle(
                       color: Colors.pink,
                       fontWeight: FontWeight.bold,

@@ -20,13 +20,13 @@ class _DiscoverPageState extends State<DiscoverPage>
     super.build(context);
     return ListView(
       children: [
-        SubCategoryText(text: "Fan Favourites"),
+        SubCategoryText(text: 'Fan Favourites'),
         KitsuAnimeRow(
           futureProvider: FutureProvider<Map<TwistModel, KitsuModel>>(
             (ref) async => await KitsuApiService.getFanFavourites(),
           ),
         ),
-        SubCategoryText(text: "Top Rated Movies"),
+        SubCategoryText(text: 'Top Rated Movies'),
         KitsuAnimeRow(
           futureProvider: FutureProvider<Map<TwistModel, KitsuModel>>(
             (ref) async => await KitsuApiService.getTopMovies(),

@@ -13,9 +13,8 @@ class SubCategoryText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding != null
-          ? padding
-          : const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      padding: padding ??
+          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Text(
         text.toUpperCase(),
         style: TextStyle(

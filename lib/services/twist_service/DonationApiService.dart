@@ -14,13 +14,13 @@ import '../../secrets.dart';
 
 class DonationApiService {
   static Future<List<int>> getDonations() async {
-    CacheService cacheService = CacheService(
-      "/data/donation",
+    var cacheService = CacheService(
+      '/data/donation',
       3.days,
     );
 
     await cacheService.initialize(false);
-    String response = await cacheService.getDataAndCacheIfNeeded(
+    var response = await cacheService.getDataAndCacheIfNeeded(
       getData: () async {
         return await CachedHttpGet.get(
           Request(
@@ -42,12 +42,12 @@ class DonationApiService {
   }
 
   static Future<List<int>> _computeData(String body) async {
-    List<int> data = [];
+    var data = <int>[];
     Map<String, dynamic> jsonData = jsonDecode(body);
 
-    if (jsonData["received"] != null) {
-      data.add(jsonData["received"].floor());
-      data.add(jsonData["target"].floor());
+    if (jsonData['received'] != null) {
+      data.add(jsonData['received'].floor());
+      data.add(jsonData['target'].floor());
     }
     return data;
   }

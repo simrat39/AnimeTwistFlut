@@ -6,19 +6,19 @@ import 'package:anime_twist_flut/models/EpisodeModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/episodes/EpisodeCard.dart';
 
 class EpisodesSliver extends StatelessWidget {
-  final Key key;
   final List<EpisodeModel> episodes;
 
   EpisodesSliver({
-    this.key,
+    Key key,
     @required this.episodes,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    bool isPortrait = orientation == Orientation.portrait;
-    double width = MediaQuery.of(context).size.width;
+    var orientation = MediaQuery.of(context).orientation;
+    var isPortrait = orientation == Orientation.portrait;
+    var width = MediaQuery.of(context).size.width;
+
     return SliverPadding(
       padding: EdgeInsets.symmetric(
         horizontal: 14.0,

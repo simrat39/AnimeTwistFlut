@@ -24,7 +24,7 @@ class DonationCard extends StatefulWidget {
 class _DonationCardState extends State<DonationCard>
     with AutomaticKeepAliveClientMixin {
   final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) async {
-    TwistApiService twistApiService = Get.find();
+    var twistApiService = Get.find<TwistApiService>();
     await Future.delayed(100.milliseconds);
     return twistApiService.getDonationsData();
   });
@@ -36,7 +36,7 @@ class _DonationCardState extends State<DonationCard>
       return watch(_dataInitProvider).when(
         data: (data) {
           int currentAmount, totalAmount;
-          if ((data).length > 0) {
+          if (data.isNotEmpty) {
             currentAmount = data[0];
             totalAmount = data[1];
           }
@@ -52,25 +52,25 @@ class _DonationCardState extends State<DonationCard>
                           children: [
                             ListTile(
                               autofocus: true,
-                              title: Text("Back"),
+                              title: Text('Back'),
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
                             ),
                             ListTile(
-                              title: Text("Patreon"),
+                              title: Text('Patreon'),
                               onTap: () {
                                 DonationUtils.donatePatreon();
                               },
                             ),
                             ListTile(
-                              title: Text("Bitcoin"),
+                              title: Text('Bitcoin'),
                               onTap: () {
                                 showModalBottomSheet<dynamic>(
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) => GenericDonationSheet(
-                                    name: "Bitcoin",
+                                    name: 'Bitcoin',
                                     address:
                                         '1ATvQNxFnyVBa4Pd5njdvjTXcECgptzcZo',
                                     qrURL:
@@ -80,15 +80,15 @@ class _DonationCardState extends State<DonationCard>
                               },
                             ),
                             ListTile(
-                              title: Text("Ethereum"),
+                              title: Text('Ethereum'),
                               onTap: () {
                                 showModalBottomSheet<dynamic>(
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) => GenericDonationSheet(
-                                    name: "Ethereum",
+                                    name: 'Ethereum',
                                     address:
-                                        "0x8337104096a3297a71ee16a9C922a5ff3818DF46",
+                                        '0x8337104096a3297a71ee16a9C922a5ff3818DF46',
                                     qrURL:
                                         'https://twist.moe/public/img/ethereum-qr.png',
                                   ),
@@ -117,7 +117,7 @@ class _DonationCardState extends State<DonationCard>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Donations",
+                            'Donations',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontSize: 20.0,
@@ -126,9 +126,9 @@ class _DonationCardState extends State<DonationCard>
                             ),
                           ),
                           Text(
-                            (currentAmount?.toString() ?? "?") +
-                                " / " +
-                                (totalAmount?.toString() ?? "?"),
+                            (currentAmount?.toString() ?? '?') +
+                                ' / ' +
+                                (totalAmount?.toString() ?? '?'),
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontSize: 20.0,
@@ -151,7 +151,7 @@ class _DonationCardState extends State<DonationCard>
                       ),
                     ),
                     Text(
-                      "Tap to contribute!",
+                      'Tap to contribute!',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.5,
@@ -194,9 +194,9 @@ class _DonationCardState extends State<DonationCard>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Failed to get donation data"),
+                  Text('Failed to get donation data'),
                   ElevatedButton(
-                    child: Text("Retry"),
+                    child: Text('Retry'),
                     onPressed: () => context.refresh(_dataInitProvider),
                   ),
                 ],

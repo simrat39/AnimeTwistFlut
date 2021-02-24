@@ -24,7 +24,7 @@ class _ErrorPageState extends State<ErrorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppbarText(custom: "error"),
+        title: AppbarText(custom: 'error'),
       ),
       body: Center(
         child: Padding(
@@ -38,14 +38,14 @@ class _ErrorPageState extends State<ErrorPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                child: Text("Retry"),
+                child: Text('Retry'),
                 onPressed: widget.onRefresh,
                 style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).accentColor),
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                child: Text("More info"),
+                child: Text('More info'),
                 onPressed: () {
                   showDialog(
                     context: context,

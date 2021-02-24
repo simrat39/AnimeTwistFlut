@@ -25,11 +25,11 @@ class ToWatchProvider extends ChangeNotifier {
       // box.get(KEY_NAME) does not work, so loop through all the elements and
       // add it to the list one by one.
       dynamic contents = box?.get(KEY_NAME) ?? [];
-      for (int i = 0; i < contents?.length ?? 0; i++) {
+      for (var i = 0; i < contents?.length ?? 0; i++) {
         toWatchAnimes.add(contents[i]);
       }
     } catch (e) {
-      throw Exception("Cannot load to watch animes");
+      throw Exception('Cannot load to watch animes');
     }
   }
 
@@ -38,16 +38,16 @@ class ToWatchProvider extends ChangeNotifier {
     KitsuModel kitsuModel,
     EpisodeModel episodeModel,
   }) {
-    RecentlyWatchedModel lastWatchedModel = RecentlyWatchedModel(
+    var lastWatchedModel = RecentlyWatchedModel(
       twistModel,
       kitsuModel,
       episodeModel,
     );
-    if (toWatchAnimes == null) toWatchAnimes = [];
+    toWatchAnimes ??= [];
 
     // Checks if lastWatchedModel is already in toWatchAnimes, deletes if its
     // present and adds if its not
-    int index = isAlreadyInToWatch(lastWatchedModel.twistModel);
+    var index = isAlreadyInToWatch(lastWatchedModel.twistModel);
     if (index != -1) {
       toWatchAnimes.removeAt(index);
     } else {
@@ -60,8 +60,8 @@ class ToWatchProvider extends ChangeNotifier {
   /// Checks if [toWatchAnimes] contains [twistModel] and returns its
   /// index, else returns -1
   int isAlreadyInToWatch(TwistModel twistModel) {
-    int index = -1;
-    for (int i = 0; i < toWatchAnimes.length; i++) {
+    var index = -1;
+    for (var i = 0; i < toWatchAnimes.length; i++) {
       index++;
       if (toWatchAnimes[i].twistModel == twistModel) {
         return index;

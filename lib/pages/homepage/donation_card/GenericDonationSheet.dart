@@ -27,8 +27,8 @@ class GenericDonationSheet extends StatefulWidget {
 
 class _GenericDonationSheetState extends State<GenericDonationSheet> {
   final List<String> topTexts = [
-    "Send your generous donation to the address below. Thanks!",
-    "Copied!"
+    'Send your generous donation to the address below. Thanks!',
+    'Copied!'
   ];
 
   bool isCopied = false;
@@ -38,17 +38,18 @@ class _GenericDonationSheetState extends State<GenericDonationSheet> {
       isCopied = true;
     });
     Timer(2.seconds, () {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isCopied = false;
         });
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.all(
         15.0,

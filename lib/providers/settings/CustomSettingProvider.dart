@@ -6,8 +6,8 @@ abstract class CustomSettingProvider<T> extends ChangeNotifier {
 
   final SharedPreferencesManager sharedPreferencesManager;
 
-  String preferenceName = "pref";
-  String exceptionMessage = "Could not load setting";
+  String preferenceName = 'pref';
+  String exceptionMessage = 'Could not load setting';
 
   T value;
 

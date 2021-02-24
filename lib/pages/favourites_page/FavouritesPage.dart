@@ -1,6 +1,5 @@
 import 'package:anime_twist_flut/animations/SlideInAnimation.dart';
 import 'package:anime_twist_flut/providers.dart';
-import 'package:anime_twist_flut/models/FavouritedModel.dart';
 import 'package:anime_twist_flut/pages/favourites_page/FavouritedAnimeTile.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
@@ -42,8 +41,7 @@ class _FavouritesPageState extends State<FavouritesPage>
     return Consumer(
       builder: (context, watch, child) {
         var prov = watch(favouriteAnimeProvider);
-        List<FavouritedModel> favouritedAnimes =
-            prov.favouritedAnimes.reversed.toList();
+        var favouritedAnimes = prov.favouritedAnimes.reversed.toList();
 
         if (favouritedAnimes.isEmpty) {
           return SlideInAnimation(

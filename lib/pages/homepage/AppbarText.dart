@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppbarText extends StatelessWidget {
-  const AppbarText({Key key, this.custom = "twist"}) : super(key: key);
+  const AppbarText({Key key, this.custom = 'twist'}) : super(key: key);
 
   final String custom;
 
@@ -14,14 +14,14 @@ class AppbarText extends StatelessWidget {
         ),
         children: <TextSpan>[
           TextSpan(
-            text: "$custom.",
+            text: '$custom.',
             style: TextStyle(
               fontSize: 20.0,
               color: Theme.of(context).textTheme.headline6.color,
             ),
           ),
           TextSpan(
-            text: "moe",
+            text: 'moe',
             style: TextStyle(
               fontSize: 20.0,
               color: Theme.of(context).accentColor,

@@ -18,17 +18,17 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
       builder: (context, watch, child) {
         var provider = watch(doubleTapDurationProvider);
         return ListTile(
-          title: Text("Double-tap to seek duration"),
-          subtitle: Text(provider.value.toString() + " Seconds"),
+          title: Text('Double-tap to seek duration'),
+          subtitle: Text(provider.value.toString() + ' Seconds'),
           onTap: () => showDialog(
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text("Double-tap to seek"),
+                title: Text('Double-tap to seek'),
                 contentPadding: EdgeInsets.symmetric(vertical: 8),
                 actions: [
                   TextButton(
-                    child: Text("Close"),
+                    child: Text('Close'),
                     onPressed: () => Navigator.of(context).pop(),
                   )
                 ],
@@ -41,7 +41,7 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
                             .map(
                               (e) => RadioListTile<int>(
                                 value: e,
-                                title: Text("$e Seconds"),
+                                title: Text('$e Seconds'),
                                 groupValue: provider.value,
                                 onChanged: (value) {
                                   provider.updateValue(value);

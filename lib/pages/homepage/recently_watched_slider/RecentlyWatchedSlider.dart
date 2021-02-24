@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:anime_twist_flut/providers.dart';
-import 'package:anime_twist_flut/models/RecentlyWatchedModel.dart';
 import 'package:anime_twist_flut/pages/homepage/recently_watched_slider/DefaultCard.dart';
 import 'package:anime_twist_flut/pages/homepage/recently_watched_slider/RecentlyWatchedText.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
   void initState() {
     _controller = PageController();
     _controller.addListener(() {
-      double offset = _controller.page - _controller.page.floor();
+      var offset = _controller.page - _controller.page.floor();
       context.read(offsetProvider).state = offset;
     });
     super.initState();
@@ -37,10 +36,10 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double topInset = MediaQuery.of(context).viewPadding.top;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    var orientation = MediaQuery.of(context).orientation;
+    var topInset = MediaQuery.of(context).viewPadding.top;
 
     var containerHeight =
         orientation == Orientation.portrait ? height * 0.4 : width * 0.3;
@@ -62,7 +61,7 @@ class _RecentlyWatchedSliderState extends State<RecentlyWatchedSlider> {
                       // newest last, reverse the list so that the latest watched
                       // anime is shown first. Maybe do this in the service itself
                       // but fine here for now.
-                      List<RecentlyWatchedModel> lastWatchedAnimes =
+                      var lastWatchedAnimes =
                           provider.recentlyWatchedAnimes.reversed.toList();
 
                       return RecentlyWatchedCard(

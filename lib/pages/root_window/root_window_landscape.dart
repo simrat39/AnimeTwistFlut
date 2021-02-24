@@ -74,22 +74,22 @@ class RootWindowLandscape extends StatelessWidget {
                     NavigationRailDestination(
                       icon: Icon(Icons.home_outlined),
                       selectedIcon: Icon(Icons.home),
-                      label: Text("Home"),
+                      label: Text('Home'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.favorite_outline),
                       selectedIcon: Icon(Icons.favorite),
-                      label: Text("Favorites"),
+                      label: Text('Favorites'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.grid_view),
                       selectedIcon: Icon(Icons.grid_view),
-                      label: Text("Discover"),
+                      label: Text('Discover'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.settings_outlined),
                       selectedIcon: Icon(Icons.settings),
-                      label: Text("Settings"),
+                      label: Text('Settings'),
                     ),
                   ],
                   selectedIndex: prov.state,

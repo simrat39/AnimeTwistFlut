@@ -14,7 +14,7 @@ class FavouriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color accentColor = Theme.of(context).accentColor;
+    var accentColor = Theme.of(context).accentColor;
     var side = 55;
 
     return Container(
@@ -34,7 +34,7 @@ class FavouriteButton extends StatelessWidget {
       child: Consumer(
         builder: (context, watch, child) {
           var prov = watch(favouriteAnimeProvider);
-          bool isFav = prov.isFavourite(twistModel.slug);
+          var isFav = prov.isFavourite(twistModel.slug);
 
           return Material(
             color: Colors.transparent,

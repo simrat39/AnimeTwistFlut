@@ -87,26 +87,26 @@ class RatingFrequencies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['2'] = this.s2;
-    data['3'] = this.s3;
-    data['4'] = this.s4;
-    data['5'] = this.s5;
-    data['6'] = this.s6;
-    data['7'] = this.s7;
-    data['8'] = this.s8;
-    data['9'] = this.s9;
-    data['10'] = this.s10;
-    data['11'] = this.s11;
-    data['12'] = this.s12;
-    data['13'] = this.s13;
-    data['14'] = this.s14;
-    data['15'] = this.s15;
-    data['16'] = this.s16;
-    data['17'] = this.s17;
-    data['18'] = this.s18;
-    data['19'] = this.s19;
-    data['20'] = this.s20;
+    final data = <String, dynamic>{};
+    data['2'] = s2;
+    data['3'] = s3;
+    data['4'] = s4;
+    data['5'] = s5;
+    data['6'] = s6;
+    data['7'] = s7;
+    data['8'] = s8;
+    data['9'] = s9;
+    data['10'] = s10;
+    data['11'] = s11;
+    data['12'] = s12;
+    data['13'] = s13;
+    data['14'] = s14;
+    data['15'] = s15;
+    data['16'] = s16;
+    data['17'] = s17;
+    data['18'] = s18;
+    data['19'] = s19;
+    data['20'] = s20;
     return data;
   }
 

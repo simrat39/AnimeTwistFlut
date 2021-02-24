@@ -50,18 +50,18 @@ class _RotatingPinLoadingAnimationState
 class PinPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    double centerX = size.width / 2;
-    double centerY = size.height / 2;
-    double circleRadius = 10;
+    var centerX = size.width / 2;
+    var centerY = size.height / 2;
+    var circleRadius = 10.0;
 
-    Paint pinHeadPainter = Paint()..color = Colors.white;
+    var pinHeadPainter = Paint()..color = Colors.white;
 
-    Paint pinTrianglePainter = Paint()
+    var pinTrianglePainter = Paint()
       ..color = Colors.white
       ..strokeWidth = 10
       ..style = PaintingStyle.fill;
 
-    Paint bgCirclePainter = Paint()..color = Colors.black.withOpacity(0.7);
+    var bgCirclePainter = Paint()..color = Colors.black.withOpacity(0.7);
 
     canvas.drawCircle(
         Offset(centerX, centerY), circleRadius * 5, bgCirclePainter);
