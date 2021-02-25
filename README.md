@@ -16,16 +16,17 @@
 Grab the latest apk from the assets [here](https://github.com/simrat39/AnimeTwistFlut/releases).
 
 Make sure to select the correct apk while downloading.
-<i> For newer phones: </i> <b> app-arm64-v8a-release.apk </b> will work fine.
-<i> For Smart Tvs and older phones: </i> <b> app-armeabi-v7a-release.apk </b> will work fine. 
-<i> For other special phones and emulators: </i> <b> app-x86_64-release.apk </b> will be the best bet.
+
+<i> For newer phones: </i> <b> app-arm64-v8a-release.apk </b> will work fine. <br/>
+<i> For Smart Tvs and older phones: </i> <b> app-armeabi-v7a-release.apk </b> will work fine. <br/>
+<i> For other special phones and emulators: </i> <b> app-x86_64-release.apk </b> will be the best bet. <br/>
 
 ## Building
 
 This app is built on flutter's dev channel, therefore before compiling, a switch to the dev channel is needed.
 
     flutter channel dev
-    flutter upgrade --froce
+    flutter upgrade --force
 
 Anime Twist requires a secret key to be provided or else video streams wont work. We provide the secret key at compile time with the dart-define flag. We can't show the key for obvious reasons, if you need it for serious development of the video player, please contact someone from the dev team.
 
