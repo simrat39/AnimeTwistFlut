@@ -10,7 +10,6 @@ import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:flutter_riverpod/all.dart';
 import '../../../utils/homepage/DonationUtils.dart';
 import '../../../animations/TwistLoadingWidget.dart';
-import 'package:supercharged/supercharged.dart';
 
 class DonationCard extends StatefulWidget {
   const DonationCard({Key key}) : super(key: key);
@@ -25,7 +24,6 @@ class _DonationCardState extends State<DonationCard>
     with AutomaticKeepAliveClientMixin {
   final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) async {
     var twistApiService = Get.find<TwistApiService>();
-    await Future.delayed(1000.milliseconds);
     return twistApiService.getDonationsData();
   });
 
