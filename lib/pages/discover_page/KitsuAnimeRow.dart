@@ -1,14 +1,17 @@
 import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuAnimeListModel.dart';
 import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';
 import 'package:anime_twist_flut/pages/discover_page/LoadingAnimeTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
+import 'package:tuple/tuple.dart';
 
 class KitsuAnimeRow extends StatefulWidget {
   KitsuAnimeRow({Key key, @required this.futureProvider}) : super(key: key);
 
-  final FutureProvider<Map<TwistModel, KitsuModel>> futureProvider;
+  final FutureProvider<Tuple2<Map<TwistModel, KitsuModel>, KitsuAnimeListModel>>
+      futureProvider;
 
   @override
   _KitsuAnimeRowState createState() => _KitsuAnimeRowState();
@@ -28,14 +31,14 @@ class _KitsuAnimeRowState extends State<KitsuAnimeRow>
               margin: EdgeInsets.symmetric(horizontal: 12),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: data.keys.length,
+                itemCount: data.item1.keys.length,
                 itemBuilder: (context, index) {
                   return Container(
                     width: 200,
                     padding: EdgeInsets.symmetric(horizontal: 4.0),
                     child: DiscoverAnimeTile(
-                      kitsuModel: data.values.elementAt(index),
-                      twistModel: data.keys.elementAt(index),
+                      kitsuModel: data.item1.values.elementAt(index),
+                      twistModel: data.item1.keys.elementAt(index),
                     ),
                   );
                 },

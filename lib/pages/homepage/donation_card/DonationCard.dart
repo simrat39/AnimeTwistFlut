@@ -25,7 +25,7 @@ class _DonationCardState extends State<DonationCard>
     with AutomaticKeepAliveClientMixin {
   final _dataInitProvider = FutureProvider.autoDispose<List<int>>((ref) async {
     var twistApiService = Get.find<TwistApiService>();
-    await Future.delayed(100.milliseconds);
+    await Future.delayed(1000.milliseconds);
     return twistApiService.getDonationsData();
   });
 

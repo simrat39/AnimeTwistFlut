@@ -1,4 +1,5 @@
 import 'package:anime_twist_flut/models/TwistModel.dart';
+import 'package:anime_twist_flut/models/kitsu/KitsuAnimeListModel.dart';
 import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/pages/discover_page/KitsuAnimeRow.dart';
 import 'package:anime_twist_flut/pages/discover_page/SubCategoryText.dart';
@@ -9,6 +10,7 @@ import 'package:anime_twist_flut/services/kitsu_service/KitsuApiService.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
+import 'package:tuple/tuple.dart';
 
 import 'recently_watched_slider/RecentlyWatchedSlider.dart';
 import 'MOTDCard.dart';
@@ -33,7 +35,8 @@ class _HomePageState extends State<HomePage>
       ),
     ),
     KitsuAnimeRow(
-      futureProvider: FutureProvider<Map<TwistModel, KitsuModel>>(
+      futureProvider: FutureProvider<
+          Tuple2<Map<TwistModel, KitsuModel>, KitsuAnimeListModel>>(
         (ref) async => await KitsuApiService.getAiringPopular(),
       ),
     ),
@@ -45,7 +48,8 @@ class _HomePageState extends State<HomePage>
       ),
     ),
     KitsuAnimeRow(
-      futureProvider: FutureProvider<Map<TwistModel, KitsuModel>>(
+      futureProvider: FutureProvider<
+          Tuple2<Map<TwistModel, KitsuModel>, KitsuAnimeListModel>>(
         (ref) async => await KitsuApiService.getAllTimePopularAnimes(),
       ),
     ),

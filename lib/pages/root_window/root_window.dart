@@ -46,13 +46,9 @@ class _RootWindowState extends State<RootWindow> with TickerProviderStateMixin {
 
     _pageController = PageController(initialPage: 0, keepPage: true)
       ..addListener(() {
-        // If the current page is the SearchPage, then request focus for the
-        // search box, else unfocus.
-        if (_pageController.page.ceil() == 2) {
-          FocusScope.of(context).requestFocus();
-        }
         FocusScope.of(context).unfocus();
       });
+
     // Check and launch an anime page on initial app launch, this is needed when
     // the app is not running in the background and the user clicks a relevant
     // link.

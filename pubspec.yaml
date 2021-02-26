@@ -35,6 +35,7 @@ dependencies:
   import_sorter: ^4.2.2
   package_info: ^0.4.3+4
   path_provider: ^1.6.22
+  pedantic: ^1.10.0
   shared_preferences: ^0.5.12+2
   shimmer: ^1.1.2
   smooth_page_indicator: ^0.2.0
@@ -50,9 +51,9 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.10.4
   hive_generator: ^0.8.1
-  pedantic: ^1.10.0
 
 flutter:
   uses-material-design: true
   assets:
     - assets/icon.png
+    - assets/discover_placeholder.png
