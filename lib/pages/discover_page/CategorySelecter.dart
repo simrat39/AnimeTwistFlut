@@ -26,34 +26,37 @@ class CategorySelecter extends StatelessWidget {
             onTap: () => showModalBottomSheet(
               context: context,
               builder: (context) {
-                return ListView(
-                  children: KitsuCategory.values
-                      .map(
-                        (e) => ListTile(
-                          trailing: e == prov.kitsuCategory
-                              ? Icon(
-                                  Icons.check,
-                                  color: Theme.of(context).accentColor,
-                                )
-                              : null,
-                          title: Text(
-                            prov.parseCategory(e),
-                            style: TextStyle(
-                              fontWeight: e == prov.kitsuCategory
-                                  ? FontWeight.bold
-                                  : null,
-                              color: e == prov.kitsuCategory
-                                  ? Theme.of(context).accentColor
-                                  : null,
+                return Scrollbar(
+                  isAlwaysShown: true,
+                  child: ListView(
+                    children: KitsuCategory.values
+                        .map(
+                          (e) => ListTile(
+                            trailing: e == prov.kitsuCategory
+                                ? Icon(
+                                    Icons.check,
+                                    color: Theme.of(context).accentColor,
+                                  )
+                                : null,
+                            title: Text(
+                              prov.parseCategory(e),
+                              style: TextStyle(
+                                fontWeight: e == prov.kitsuCategory
+                                    ? FontWeight.bold
+                                    : null,
+                                color: e == prov.kitsuCategory
+                                    ? Theme.of(context).accentColor
+                                    : null,
+                              ),
                             ),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              prov.kitsuCategory = e;
+                            },
                           ),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            prov.kitsuCategory = e;
-                          },
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 );
               },
             ),
