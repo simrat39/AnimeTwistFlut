@@ -26,6 +26,15 @@ class DiscoverAnimeCard extends StatelessWidget {
                 ClipRRect(
                   child: Image.network(
                     kitsuModel.posterImage,
+                    frameBuilder:
+                        (context, child, frame, wasSynchronouslyLoaded) {
+                      if (frame != null) return child;
+                      return Image.asset('assets/discover_placeholder.png');
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Image.asset('assets/discover_placeholder.png');
+                    },
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
