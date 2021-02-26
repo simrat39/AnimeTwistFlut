@@ -171,7 +171,7 @@ class _DiscoverPageState extends State<DiscoverPage>
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: isPortrait ? 1 : 2,
                               crossAxisSpacing: 6,
-                              mainAxisSpacing: 6,
+                              mainAxisSpacing: 10,
                               childAspectRatio: isPortrait ? 2 : 2.25,
                             ),
                             delegate: SliverChildBuilderDelegate(
