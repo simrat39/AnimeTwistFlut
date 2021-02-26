@@ -3,7 +3,6 @@ import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/AnimeInfoPage.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverAnimeCard extends StatelessWidget {
@@ -25,11 +24,8 @@ class DiscoverAnimeCard extends StatelessWidget {
             child: Row(
               children: [
                 ClipRRect(
-                  child: CachedNetworkImage(
-                    imageUrl: kitsuModel.posterImage,
-                    placeholder: (context, url) {
-                      return Image.asset('assets/discover_placeholder.png');
-                    },
+                  child: Image.network(
+                    kitsuModel.posterImage,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
