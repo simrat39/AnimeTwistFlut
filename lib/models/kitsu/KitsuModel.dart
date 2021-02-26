@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:convert';
+
 import 'package:anime_twist_flut/models/kitsu/RatingFrequency.dart';
 import 'package:hive/hive.dart';
 
@@ -48,7 +50,8 @@ class KitsuModel extends HiveObject {
       id: innerData['id'],
       rating: innerData['attributes']['averageRating'],
       posterImage: posterData != null ? posterData['large'] : null,
-      description: innerData['attributes']['synopsis'],
+      description: utf8
+          .decode((innerData['attributes']['synopsis'] as String).codeUnits),
       trailerURL: innerData['attributes']['youtubeVideoId'],
       coverImage: coverData != null ? coverData['large'] : null,
       ratingFrequencies: innerData['attributes']['ratingFrequencies'] != null
