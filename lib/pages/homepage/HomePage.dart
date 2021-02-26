@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage>
         right: 15.0,
         bottom: 8.0,
       ),
-      child: DonationCard(key: GlobalObjectKey('donation')),
+      child: DonationCard(),
     ),
     // View all anime card
     Padding(
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage>
       child: ViewAllAnimeCard(),
     ),
     // Message Of The Day Card
-    MOTDCard(key: GlobalObjectKey('motd')),
+    MOTDCard(),
   ];
 
   @override
