@@ -20,7 +20,6 @@ dependencies:
   video_player_header:
     git:
       url: https://github.com/simrat39/videoPlayerWithHeader
-  auto_orientation: ^1.0.6
   auto_size_text: ^2.1.0
   cached_network_image: ^2.5.0
   edit_distance: ^0.4.1

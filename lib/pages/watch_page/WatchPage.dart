@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:auto_orientation/auto_orientation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_android_pip/flutter_android_pip.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -64,6 +63,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   bool isUIvisible = false;
   bool isPictureInPicture = false;
   bool isTouchingSlider = false;
+  bool shouldResetOrientation = true;
   String _duration;
   double currentPosition;
   String currentPositionStr;
@@ -92,6 +92,12 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    super.initState();
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
     SystemChrome.setEnabledSystemUIOverlays([]);
     WidgetsBinding.instance.addObserver(this);
     Wakelock.toggle(enable: true);
@@ -141,14 +147,13 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
 
       _init = init();
     }
-    super.initState();
   }
 
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-    AutoOrientation.fullAutoMode();
+    if (shouldResetOrientation) SystemChrome.setPreferredOrientations([]);
     WidgetsBinding.instance.removeObserver(this);
     Wakelock.toggle(enable: false);
     _controller.dispose();
@@ -190,16 +195,6 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     hideUIAfterWait();
   }
 
-  void rotate() {
-    setState(() {
-      if (MediaQuery.of(context).orientation == Orientation.portrait) {
-        AutoOrientation.landscapeAutoMode();
-      } else {
-        AutoOrientation.portraitAutoMode();
-      }
-    });
-  }
-
   void addEpisodeToRecentlyWatched(BuildContext context) {
     context.read(recentlyWatchedProvider).addToLastWatched(
           episodeModel: widget.episodes
@@ -210,6 +205,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   }
 
   void goToNextEpisode(BuildContext context) {
+    shouldResetOrientation = false;
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -302,6 +298,10 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   }
 
   Future init() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
     await SystemChrome.setEnabledSystemUIOverlays([]);
     await Wakelock.toggle(enable: true);
     while (!(_controller?.value?.initialized ?? false)) {
@@ -338,377 +338,376 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       );
     }
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: FutureBuilder(
-        future: _init,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() {
+          shouldResetOrientation = true;
+        });
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: FutureBuilder(
+          future: _init,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    widget.isFromPrevEpisode
+                        ? Text('Loading Next Episode')
+                        : Text('Loading Episode'),
+                  ],
+                ),
+              );
+            }
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Stack(
+                alignment: Alignment.topCenter,
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(
-                    height: 24.0,
-                  ),
-                  widget.isFromPrevEpisode
-                      ? Text('Loading Next Episode')
-                      : Text('Loading Episode'),
-                ],
-              ),
-            );
-          }
-          return Center(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Consumer(
-                  builder: (context, watch, child) {
-                    var playbackSpeed = watch(playbackSpeeedProvider).value;
-                    setSpeed(playbackSpeed);
-                    return Consumer(
-                      builder: (context, watch, child) {
-                        var zoom = watch(zoomFactorProvider);
-                        return Center(
-                          child: Transform.scale(
-                            scale: videoMode == VideoMode.Fill ? zoom.value : 1,
-                            child: AspectRatio(
-                              aspectRatio: getAspectRatio(context),
-                              child: VideoPlayer(
-                                _controller,
+                  Consumer(
+                    builder: (context, watch, child) {
+                      var playbackSpeed = watch(playbackSpeeedProvider).value;
+                      setSpeed(playbackSpeed);
+                      return Consumer(
+                        builder: (context, watch, child) {
+                          var zoom = watch(zoomFactorProvider);
+                          return Center(
+                            child: Transform.scale(
+                              scale:
+                                  videoMode == VideoMode.Fill ? zoom.value : 1,
+                              child: AspectRatio(
+                                aspectRatio: getAspectRatio(context),
+                                child: VideoPlayer(
+                                  _controller,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                Positioned.fill(
-                  child: DoubleTapLayer(
-                    videoPlayerController: _controller,
-                    isUiVisible: isUIvisible,
-                    toggleUI: showUI,
+                          );
+                        },
+                      );
+                    },
                   ),
-                ),
-                AnimatedOpacity(
-                  duration: 300.milliseconds,
-                  opacity: _controller.value.isBuffering ? 1.0 : 0.0,
-                  child: Transform.scale(
-                    scale: 0.5,
-                    child: Center(
-                      child: RotatingPinLoadingAnimation(),
+                  Positioned.fill(
+                    child: DoubleTapLayer(
+                      videoPlayerController: _controller,
+                      isUiVisible: isUIvisible,
+                      toggleUI: showUI,
                     ),
                   ),
-                ),
-                AnimatedOpacity(
-                  duration: 300.milliseconds,
-                  opacity: isUIvisible ? 1.0 : 0.0,
-                  child: IgnorePointer(
-                    ignoring: !isUIvisible,
-                    child: Visibility(
-                      visible: !isPictureInPicture,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: containerHeight,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: <Color>[
-                                  Colors.transparent,
-                                  Colors.black38,
-                                  Colors.black87,
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
+                  AnimatedOpacity(
+                    duration: 300.milliseconds,
+                    opacity: _controller.value.isBuffering ? 1.0 : 0.0,
+                    child: Transform.scale(
+                      scale: 0.5,
+                      child: Center(
+                        child: RotatingPinLoadingAnimation(),
+                      ),
+                    ),
+                  ),
+                  AnimatedOpacity(
+                    duration: 300.milliseconds,
+                    opacity: isUIvisible ? 1.0 : 0.0,
+                    child: IgnorePointer(
+                      ignoring: !isUIvisible,
+                      child: Visibility(
+                        visible: !isPictureInPicture,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: containerHeight,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Colors.transparent,
+                                    Colors.black38,
+                                    Colors.black87,
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
                               ),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.navigate_before,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            right: 20.0,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.navigate_before,
                                           ),
-                                          child: AutoSizeText(
-                                            widget.twistModel.title,
-                                            maxLines: 2,
-                                            minFontSize: 5.0,
-                                            maxFontSize: 25.0,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              right: 20.0,
                                             ),
+                                            child: AutoSizeText(
+                                              widget.twistModel.title,
+                                              maxLines: 2,
+                                              minFontSize: 5.0,
+                                              maxFontSize: 25.0,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 40,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.settings,
+                                          ),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  contentPadding:
+                                                      EdgeInsets.fromLTRB(
+                                                          24, 24, 24, 16),
+                                                  content: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Container(
+                                                        child:
+                                                            PlaybackSpeedSetting(),
+                                                      ),
+                                                      Container(
+                                                        child:
+                                                            ZoomFactorSetting(),
+                                                      ),
+                                                      Container(
+                                                        child:
+                                                            DoubleTapDurationSetting(),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 40,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.picture_in_picture_rounded,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              isPictureInPicture = true;
+                                              FlutterAndroidPip
+                                                  .enterPictureInPictureMode;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 40,
+                                        child: Consumer(
+                                          builder: (context, watch, child) {
+                                            final prov = watch(
+                                                widget.episodesWatchedProvider);
+                                            return Checkbox(
+                                              value: prov.isWatched(
+                                                widget.episodeModel.number,
+                                              ),
+                                              checkColor: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              onChanged: (val) {
+                                                setEpisodeAsCompleted(
+                                                    context, true);
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 15.0,
+                                        ),
+                                        child: AutoSizeText(
+                                          'S' +
+                                              widget.twistModel.season
+                                                  .toString() +
+                                              ' | E' +
+                                              widget.episodeModel.number
+                                                  .toString(),
+                                          maxLines: 1,
+                                          minFontSize: 5.0,
+                                          maxFontSize: 25.0,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.settings,
-                                        ),
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        24, 24, 24, 16),
-                                                content: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Container(
-                                                      child:
-                                                          PlaybackSpeedSetting(),
-                                                    ),
-                                                    Container(
-                                                      child:
-                                                          ZoomFactorSetting(),
-                                                    ),
-                                                    Container(
-                                                      child:
-                                                          DoubleTapDurationSetting(),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 40,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.picture_in_picture_rounded,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            isPictureInPicture = true;
-                                            FlutterAndroidPip
-                                                .enterPictureInPictureMode;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 40,
-                                      child: Consumer(
-                                        builder: (context, watch, child) {
-                                          final prov = watch(
-                                              widget.episodesWatchedProvider);
-                                          return Checkbox(
-                                            value: prov.isWatched(
-                                              widget.episodeModel.number,
-                                            ),
-                                            checkColor: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            onChanged: (val) {
-                                              setEpisodeAsCompleted(
-                                                  context, true);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 15.0,
-                                      ),
-                                      child: AutoSizeText(
-                                        'S' +
-                                            widget.twistModel.season
-                                                .toString() +
-                                            ' | E' +
-                                            widget.episodeModel.number
-                                                .toString(),
-                                        maxLines: 1,
-                                        minFontSize: 5.0,
-                                        maxFontSize: 25.0,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: containerHeight,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: <Color>[
-                                  Colors.transparent,
-                                  Colors.black38,
-                                  Colors.black87,
                                 ],
-                                end: Alignment.bottomCenter,
-                                begin: Alignment.topCenter,
                               ),
                             ),
-                            child: Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 8.0,
-                                      ),
-                                      child: Container(
-                                        width: 35.0,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            _controller.value.isPlaying
-                                                ? Icons.pause
-                                                : Icons.play_arrow,
+                            Container(
+                              height: containerHeight,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Colors.transparent,
+                                    Colors.black38,
+                                    Colors.black87,
+                                  ],
+                                  end: Alignment.bottomCenter,
+                                  begin: Alignment.topCenter,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 8.0,
+                                        ),
+                                        child: Container(
+                                          width: 35.0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              _controller.value.isPlaying
+                                                  ? Icons.pause
+                                                  : Icons.play_arrow,
+                                            ),
+                                            onPressed: () {
+                                              togglePlay();
+                                            },
+                                            iconSize: 22.5,
                                           ),
-                                          onPressed: () {
-                                            togglePlay();
-                                          },
-                                          iconSize: 22.5,
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      width: 35,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.skip_next_outlined,
-                                        ),
-                                        iconSize: 22.5,
-                                        onPressed: widget.episodes.last ==
-                                                widget.episodeModel
-                                            ? null
-                                            : () {
-                                                setEpisodeAsCompleted(
-                                                    context, false);
-                                                addEpisodeToRecentlyWatched(
-                                                    context);
-                                                goToNextEpisode(context);
-                                              },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Container(
+                                      Container(
                                         width: 35,
                                         child: IconButton(
-                                          icon:
-                                              Icon(Icons.fast_forward_outlined),
-                                          onPressed: () => skipIntro(),
+                                          icon: Icon(
+                                            Icons.skip_next_outlined,
+                                          ),
                                           iconSize: 22.5,
+                                          onPressed: widget.episodes.last ==
+                                                  widget.episodeModel
+                                              ? null
+                                              : () {
+                                                  setEpisodeAsCompleted(
+                                                      context, false);
+                                                  addEpisodeToRecentlyWatched(
+                                                      context);
+                                                  goToNextEpisode(context);
+                                                },
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      currentPositionStr,
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Slider(
-                                    value: _controller.value.position.inSeconds
-                                        .toDouble(),
-                                    activeColor: Theme.of(context).accentColor,
-                                    inactiveColor: Theme.of(context)
-                                        .accentColor
-                                        .withOpacity(0.5),
-                                    min: 0,
-                                    max: _controller.value.duration.inSeconds
-                                        .toDouble(),
-                                    label: TimeUtils.secondsToHumanReadable(
-                                        _controller.value.position.inSeconds),
-                                    divisions:
-                                        _controller.value.duration.inSeconds,
-                                    onChanged: (pos) {
-                                      setState(
-                                        () {
-                                          _controller.seekTo(pos.seconds);
-                                        },
-                                      );
-                                    },
-                                    onChangeStart: (val) =>
-                                        setState(() => isTouchingSlider = true),
-                                    onChangeEnd: (val) => setState(() {
-                                      isTouchingSlider = false;
-                                      hideUIAfterWait();
-                                    }),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: Container(
+                                          width: 35,
+                                          child: IconButton(
+                                            icon: Icon(
+                                                Icons.fast_forward_outlined),
+                                            onPressed: () => skipIntro(),
+                                            iconSize: 22.5,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        currentPositionStr,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 8.0,
-                                      ),
-                                      child: Text(_duration),
+                                  Expanded(
+                                    child: Slider(
+                                      value: _controller
+                                          .value.position.inSeconds
+                                          .toDouble(),
+                                      activeColor:
+                                          Theme.of(context).accentColor,
+                                      inactiveColor: Theme.of(context)
+                                          .accentColor
+                                          .withOpacity(0.5),
+                                      min: 0,
+                                      max: _controller.value.duration.inSeconds
+                                          .toDouble(),
+                                      label: TimeUtils.secondsToHumanReadable(
+                                          _controller.value.position.inSeconds),
+                                      divisions:
+                                          _controller.value.duration.inSeconds,
+                                      onChanged: (pos) {
+                                        setState(
+                                          () {
+                                            _controller.seekTo(pos.seconds);
+                                          },
+                                        );
+                                      },
+                                      onChangeStart: (val) => setState(
+                                          () => isTouchingSlider = true),
+                                      onChangeEnd: (val) => setState(() {
+                                        isTouchingSlider = false;
+                                        hideUIAfterWait();
+                                      }),
                                     ),
-                                    Container(
-                                      width: 35,
-                                      margin: EdgeInsets.only(bottom: 3),
-                                      child: IconButton(
-                                        icon: Icon(getVideoModeIcon()),
-                                        iconSize: 18,
-                                        onPressed: () {
-                                          setNextVideoMode();
-                                        },
+                                  ),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 8.0,
+                                        ),
+                                        child: Text(_duration),
                                       ),
-                                    ),
-                                    Container(
-                                      width: 35,
-                                      margin: EdgeInsets.only(bottom: 3),
-                                      child: IconButton(
-                                        icon:
-                                            Icon(Icons.screen_rotation_rounded),
-                                        iconSize: 18,
-                                        onPressed: () {
-                                          rotate();
-                                        },
+                                      Container(
+                                        width: 35,
+                                        margin: EdgeInsets.only(bottom: 3),
+                                        child: IconButton(
+                                          icon: Icon(getVideoModeIcon()),
+                                          iconSize: 18,
+                                          onPressed: () {
+                                            setNextVideoMode();
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: 8.0),
-                                  ],
-                                ),
-                              ],
+                                      SizedBox(width: 8.0),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
