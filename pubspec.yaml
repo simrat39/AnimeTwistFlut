@@ -22,6 +22,7 @@ dependencies:
       url: https://github.com/simrat39/videoPlayerWithHeader
   auto_size_text: ^2.1.0
   cached_network_image: ^2.5.0
+  device_apps: ^1.2.0
   edit_distance: ^0.4.1
   encrypt: ^4.1.0
   fl_chart: ^0.12.2

@@ -10,6 +10,7 @@ import android.content.res.Configuration.UI_MODE_TYPE_TELEVISION
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import androidx.core.app.NotificationCompat
@@ -42,13 +43,29 @@ class MainActivity : FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "tv_info").setMethodCallHandler { call, result ->
             if (call.method == "isTV") {
                 result.success(isTV())
+            } else if (call.method == "launchMxPlayer") {
+                val url = call.argument<String>("url")
+                val referer = call.argument<String>("referer")
+                if (url != null && referer != null) {
+                    launchMxPlayer(url, referer)
+                }
+                result.success(null)
             }
         }
     }
 
-    fun isTV(): Boolean {
+    private fun isTV(): Boolean {
         val uiModeManager: UiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
         return uiModeManager.currentModeType === UI_MODE_TYPE_TELEVISION
+    }
+
+    private fun launchMxPlayer(url: String, referer: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        val headers = arrayOf<String>("Referer", referer, "User-Agent", "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0")
+        intent.data = Uri.parse(url)
+        intent.putExtra("headers", headers)
+        intent.setPackage("com.mxtech.videoplayer.ad")
+        context.startActivity(intent)
     }
 }
 

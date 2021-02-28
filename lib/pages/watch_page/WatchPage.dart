@@ -7,6 +7,7 @@ import 'package:anime_twist_flut/pages/settings_page/PlaybackSpeedSetting.dart';
 import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
+import 'package:anime_twist_flut/pages/watch_page/LaunchExternalPlayerButton.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +71,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   Future _init;
   Timer t;
 
+  String _vidUrl;
+  Map<String, String> _headers;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     setState(() {
@@ -102,7 +106,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     Wakelock.toggle(enable: true);
 
-    var headers = {
+    _headers = {
       'Referer':
           'https://twist.moe/a/${widget.twistModel.slug}/${widget.episodeModel.number}'
     };
@@ -111,15 +115,14 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       var sourceSuffix =
           CryptoUtils.decryptAESCryptoJS(widget.episodeModel.source, key);
 
-      String vidUrl;
       if (sourceSuffix.startsWith('https')) {
-        vidUrl = Uri.parse(sourceSuffix).toString();
+        _vidUrl = Uri.parse(sourceSuffix).toString();
       } else {
-        vidUrl =
+        _vidUrl =
             Uri.parse('https://air-cdn.twist.moe' + sourceSuffix).toString();
       }
 
-      _controller = VideoPlayerController.network(vidUrl, headers: headers)
+      _controller = VideoPlayerController.network(_vidUrl, headers: _headers)
         ..initialize().then((_) {
           setState(() {
             play();
@@ -691,6 +694,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                             setNextVideoMode();
                                           },
                                         ),
+                                      ),
+                                      LaunchExternalPlayerButton(
+                                        url: _vidUrl,
+                                        referer: _headers.values.first,
+                                        pause: pause,
                                       ),
                                       SizedBox(width: 8.0),
                                     ],
