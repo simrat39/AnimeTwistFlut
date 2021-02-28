@@ -132,14 +132,20 @@ class _DiscoverPageState extends State<DiscoverPage>
                   ),
                   child: TextField(
                     controller: textEditingController,
+                    cursorColor: Theme.of(context).accentColor,
                     decoration: InputDecoration(
-                      fillColor: Theme.of(context).cardColor,
-                      filled: true,
-                      hintText: 'Search',
+                      labelText: 'Search',
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8.0),
                         ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Theme.of(context).accentColor, width: 2.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 2.0),
                       ),
                     ),
                     onChanged: (text) =>
@@ -158,6 +164,7 @@ class _DiscoverPageState extends State<DiscoverPage>
                   return Scrollbar(
                     controller: scrollController,
                     child: CustomScrollView(
+                      physics: BouncingScrollPhysics(),
                       controller: scrollController,
                       slivers: [
                         SliverPadding(
