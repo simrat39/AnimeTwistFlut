@@ -31,6 +31,7 @@ class _KitsuAnimeRowState extends State<KitsuAnimeRow>
               margin: EdgeInsets.symmetric(horizontal: 12),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
                 itemCount: data.item1.keys.length,
                 itemBuilder: (context, index) {
                   return Container(
