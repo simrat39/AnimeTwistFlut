@@ -23,12 +23,12 @@ class EpisodeCard extends StatelessWidget {
 
   final TwistModel twistModel = Get.find();
   final KitsuModel kitsuModel = Get.find<KitsuModel>();
-  final ChangeNotifierProvider<EpisodesWatchedProvider>
-      episodesWatchedProvider = Get.find();
+  final ChangeNotifierProvider<EpisodesWatchedProvider> episodesWatchedProvider;
 
   EpisodeCard({
     @required this.episodes,
     @required this.episodeModel,
+    @required this.episodesWatchedProvider,
   });
 
   @override

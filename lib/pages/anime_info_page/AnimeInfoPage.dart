@@ -127,9 +127,6 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
         return EpisodesWatchedProvider(slug: widget.twistModel.slug);
       },
     );
-    Get.delete<ChangeNotifierProvider>();
-    Get.put<ChangeNotifierProvider<EpisodesWatchedProvider>>(
-        _episodesWatchedProvider);
 
     await context.read(_episodesWatchedProvider).getWatchedPref();
 
@@ -391,6 +388,7 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                         ),
                         EpisodesSliver(
                           episodes: episodes,
+                          episodesWatchedProvider: _episodesWatchedProvider,
                         ),
                         SliverToBoxAdapter(
                           child: SizedBox(
@@ -606,6 +604,8 @@ class _AnimeInfoPageState extends State<AnimeInfoPage> {
                                 ),
                               ),
                               EpisodesSliver(
+                                episodesWatchedProvider:
+                                    _episodesWatchedProvider,
                                 episodes: episodes,
                               ),
                             ],

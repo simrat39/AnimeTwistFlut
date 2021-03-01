@@ -1,16 +1,20 @@
 // Flutter imports:
+import 'package:anime_twist_flut/providers/EpisodesWatchedProvider.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:anime_twist_flut/models/EpisodeModel.dart';
 import 'package:anime_twist_flut/pages/anime_info_page/episodes/EpisodeCard.dart';
+import 'package:flutter_riverpod/all.dart';
 
 class EpisodesSliver extends StatelessWidget {
   final List<EpisodeModel> episodes;
+  final ChangeNotifierProvider<EpisodesWatchedProvider> episodesWatchedProvider;
 
   EpisodesSliver({
     Key key,
     @required this.episodes,
+    @required this.episodesWatchedProvider,
   }) : super(key: key);
 
   @override
@@ -39,6 +43,7 @@ class EpisodesSliver extends StatelessWidget {
               child: EpisodeCard(
                 episodeModel: episodes.elementAt(index),
                 episodes: episodes,
+                episodesWatchedProvider: episodesWatchedProvider,
               ),
             );
           },
