@@ -17,12 +17,6 @@ class SeasonSelector extends StatelessWidget {
         var prov = watch(searchLinkProvder);
         return Card(
           child: InkWell(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Season: ' + prov.parseSeason(prov.kitsuSeason),
-              ),
-            ),
             onTap: () => showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -58,6 +52,12 @@ class SeasonSelector extends StatelessWidget {
                   ),
                 );
               },
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Season: ' + prov.parseSeason(prov.kitsuSeason),
+              ),
             ),
           ),
         );

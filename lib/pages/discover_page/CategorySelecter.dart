@@ -17,12 +17,6 @@ class CategorySelecter extends StatelessWidget {
         var prov = watch(searchLinkProvder);
         return Card(
           child: InkWell(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Category: ' + prov.parseCategory(prov.kitsuCategory),
-              ),
-            ),
             onTap: () => showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -59,6 +53,12 @@ class CategorySelecter extends StatelessWidget {
                   ),
                 );
               },
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Category: ' + prov.parseCategory(prov.kitsuCategory),
+              ),
             ),
           ),
         );

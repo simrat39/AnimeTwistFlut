@@ -105,8 +105,8 @@ class RootWindowLandscape extends StatelessWidget {
                 child: PageView(
                   key: pageViewKey,
                   controller: pageController,
-                  children: pages,
                   physics: NeverScrollableScrollPhysics(),
+                  children: pages,
                 ),
               ),
             ],

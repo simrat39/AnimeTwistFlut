@@ -340,8 +340,9 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                     textAlign: TextAlign.center),
                 SizedBox(height: 10),
                 ElevatedButton(
-                    child: Text('Go back'),
-                    onPressed: () => Navigator.of(context).pop()),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Go back'),
+                ),
               ],
             ),
           ),

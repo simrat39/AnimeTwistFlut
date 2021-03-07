@@ -28,8 +28,8 @@ class _DoubleTapDurationSettingState extends State<DoubleTapDurationSetting> {
                 contentPadding: EdgeInsets.symmetric(vertical: 8),
                 actions: [
                   TextButton(
-                    child: Text('Close'),
                     onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close'),
                   )
                 ],
                 content: Scrollbar(

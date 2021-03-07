@@ -17,12 +17,6 @@ class SubtypeSelecter extends StatelessWidget {
         var prov = watch(searchLinkProvder);
         return Card(
           child: InkWell(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Subtype: ' + prov.parseSubtype(prov.kitsuSubtype),
-              ),
-            ),
             onTap: () => showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -58,6 +52,12 @@ class SubtypeSelecter extends StatelessWidget {
                   ),
                 );
               },
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Subtype: ' + prov.parseSubtype(prov.kitsuSubtype),
+              ),
             ),
           ),
         );

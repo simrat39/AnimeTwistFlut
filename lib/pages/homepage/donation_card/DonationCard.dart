@@ -194,8 +194,8 @@ class _DonationCardState extends State<DonationCard>
                 children: [
                   Text('Failed to get donation data'),
                   ElevatedButton(
-                    child: Text('Retry'),
                     onPressed: () => context.refresh(_dataInitProvider),
+                    child: Text('Retry'),
                   ),
                 ],
               ),

@@ -86,8 +86,8 @@ class RootWindowPortrait extends StatelessWidget {
           body: PageView(
             key: pageViewKey,
             controller: pageController,
-            children: pages,
             physics: NeverScrollableScrollPhysics(),
+            children: pages,
           ),
         );
       },

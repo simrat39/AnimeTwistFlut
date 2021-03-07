@@ -24,6 +24,7 @@ class DiscoverAnimeCard extends StatelessWidget {
             child: Row(
               children: [
                 ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
                   child: Image.network(
                     kitsuModel.posterImage,
                     frameBuilder:
@@ -36,7 +37,6 @@ class DiscoverAnimeCard extends StatelessWidget {
                       return Image.asset('assets/discover_placeholder.png');
                     },
                   ),
-                  borderRadius: BorderRadius.circular(8),
                 ),
                 Expanded(
                   child: Container(

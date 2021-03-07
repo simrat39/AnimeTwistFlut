@@ -38,14 +38,13 @@ class _ErrorPageState extends State<ErrorPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                child: Text('Retry'),
                 onPressed: widget.onRefresh,
                 style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).accentColor),
+                child: Text('Retry'),
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                child: Text('More info'),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -60,6 +59,7 @@ class _ErrorPageState extends State<ErrorPage> {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).accentColor),
+                child: Text('More info'),
               ),
             ],
           ),

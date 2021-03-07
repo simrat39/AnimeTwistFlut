@@ -55,13 +55,13 @@ class EpisodeCard extends StatelessWidget {
                 elevation: 0,
                 primary: Theme.of(context).dialogBackgroundColor,
               ),
-              child: Text(prov.isWatched(episodeModel.number)
-                  ? 'Remove from watched'
-                  : 'Add to watched'),
               onPressed: () {
                 prov.toggleWatched(episodeModel.number);
                 Navigator.of(context).pop();
               },
+              child: Text(prov.isWatched(episodeModel.number)
+                  ? 'Remove from watched'
+                  : 'Add to watched'),
             ),
             SizedBox(
               height: 5.0,
@@ -79,11 +79,11 @@ class EpisodeCard extends StatelessWidget {
                 elevation: 0,
                 primary: Theme.of(context).dialogBackgroundColor,
               ),
-              child: Text('Set watched till here'),
               onPressed: () {
                 prov.setWatchedTill(episodeModel.number);
                 Navigator.of(context).pop();
               },
+              child: Text('Set watched till here'),
             ),
           ],
           child: Container(

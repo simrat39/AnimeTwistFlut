@@ -138,8 +138,8 @@ class _MOTDCardState extends State<MOTDCard>
                     children: [
                       Text('Failed to get MOTD'),
                       ElevatedButton(
-                        child: Text('Retry'),
                         onPressed: () => context.refresh(_dataInitProvider),
+                        child: Text('Retry'),
                       ),
                     ],
                   ),

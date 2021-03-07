@@ -129,6 +129,9 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
                 bottom: 0.0,
               ),
               child: GestureDetector(
+                onTap: () {
+                  toggleExpand();
+                },
                 child: Text(
                   isNotExpanded
                       ? 'Show More'.toUpperCase()
@@ -138,9 +141,6 @@ class _DescriptionWidgetState extends State<DescriptionWidget>
                     color: Theme.of(context).accentColor,
                   ),
                 ),
-                onTap: () {
-                  toggleExpand();
-                },
               ),
             ),
           ),

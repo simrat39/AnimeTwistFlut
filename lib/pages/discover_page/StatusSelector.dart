@@ -17,12 +17,6 @@ class StatusSelector extends StatelessWidget {
         var prov = watch(searchLinkProvder);
         return Card(
           child: InkWell(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Status: ' + prov.parseStatus(prov.kitsuStatus),
-              ),
-            ),
             onTap: () => showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -58,6 +52,12 @@ class StatusSelector extends StatelessWidget {
                   ),
                 );
               },
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Status: ' + prov.parseStatus(prov.kitsuStatus),
+              ),
             ),
           ),
         );

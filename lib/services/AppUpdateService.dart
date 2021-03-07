@@ -62,13 +62,13 @@ class AppUpdateService {
       ),
       actions: [
         TextButton(
-          child: Text('Close'),
           onPressed: () => Navigator.of(context).pop(),
+          child: Text('Close'),
         ),
         if (hasUpdate)
           TextButton(
-            child: Text('Download'),
             onPressed: () => launchDownloadLink(),
+            child: Text('Download'),
           ),
       ],
     );

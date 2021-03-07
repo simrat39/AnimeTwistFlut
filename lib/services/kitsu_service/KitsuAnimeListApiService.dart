@@ -28,7 +28,7 @@ class KitsuAnimeListApiService {
 
     if (shouldCache) {
       var cacheService = CacheService(
-        '/kitsu/${cacheKey}',
+        '/kitsu/$cacheKey',
         2.days,
       );
 

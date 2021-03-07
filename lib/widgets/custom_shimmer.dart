@@ -7,13 +7,13 @@ class CustomShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return s.Shimmer.fromColors(
+      baseColor: Theme.of(context).cardColor,
+      highlightColor: Colors.black,
       child: Container(
         width: double.infinity,
         height: double.infinity,
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
-      baseColor: Theme.of(context).cardColor,
-      highlightColor: Colors.black,
     );
   }
 }

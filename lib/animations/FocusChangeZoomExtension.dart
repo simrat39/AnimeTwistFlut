@@ -14,10 +14,10 @@ extension ZoomOnFocus on Widget {
         return this;
       },
       child: __ZoomOnTrue(
-        child: this,
         shouldZoom: shouldZoom,
         shouldRotateX: shouldRotateX,
         shouldRotateY: shouldRotateY,
+        child: this,
       ),
     );
   }
