@@ -25,25 +25,25 @@ dependencies:
   device_apps: ^1.2.0
   edit_distance: ^0.4.1
   encrypt: ^4.1.0
-  fl_chart: ^0.12.2
-  flutter_riverpod: ^0.12.1
+  fl_chart: ^0.20.1
+  flutter_riverpod: ^0.13.1
   font_awesome_flutter: ^8.10.0
-  get_it: ^5.0.1
+  get_it: ^6.0.0
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   http: ^0.12.2
   import_sorter: ^4.2.2
-  package_info: ^0.4.3+4
+  package_info: ^2.0.0
   path_provider: ^1.6.22
   pedantic: ^1.10.0
   shared_preferences: ^0.5.12+2
   shimmer: ^1.1.2
   smooth_page_indicator: ^0.2.0
-  supercharged: ^1.11.1
+  supercharged: ^2.0.0
   tuple: ^1.0.3
   uni_links: ^0.4.0
-  url_launcher: ^5.7.8
-  wakelock: ^0.2.1
+  url_launcher: ^6.0.2
+  wakelock: ^0.5.0+2
   web_socket_channel: ^1.1.0
 
 dev_dependencies:
