@@ -4,7 +4,7 @@ import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';
 import 'package:anime_twist_flut/pages/discover_page/LoadingAnimeTile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
 class KitsuAnimeRow extends StatefulWidget {

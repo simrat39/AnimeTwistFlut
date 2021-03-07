@@ -3,7 +3,7 @@ import 'package:anime_twist_flut/pages/chat_page/ChatPage.dart';
 import 'package:anime_twist_flut/pages/homepage/AppbarText.dart';
 import 'package:anime_twist_flut/pages/search_page/SearchPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RootWindowLandscape extends StatelessWidget {
   const RootWindowLandscape({

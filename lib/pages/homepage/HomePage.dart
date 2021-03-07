@@ -9,7 +9,7 @@ import 'package:anime_twist_flut/pages/homepage/to_watch_row/ToWatchRow.dart';
 import 'package:anime_twist_flut/services/kitsu_service/KitsuApiService.dart';
 import 'package:anime_twist_flut/widgets/device_orientation_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
 import 'recently_watched_slider/RecentlyWatchedSlider.dart';

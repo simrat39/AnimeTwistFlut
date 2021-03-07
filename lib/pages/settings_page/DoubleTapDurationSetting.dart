@@ -1,7 +1,7 @@
 import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/providers/settings/DoubleTapDuration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DoubleTapDurationSetting extends StatefulWidget {
   const DoubleTapDurationSetting({Key key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 
 // Project imports:
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utils/homepage/DonationUtils.dart';
 import '../../../animations/TwistLoadingWidget.dart';
 

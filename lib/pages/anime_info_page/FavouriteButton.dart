@@ -2,7 +2,7 @@ import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/models/kitsu/KitsuModel.dart';
 import 'package:anime_twist_flut/models/TwistModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FavouriteButton extends StatelessWidget {
   const FavouriteButton(

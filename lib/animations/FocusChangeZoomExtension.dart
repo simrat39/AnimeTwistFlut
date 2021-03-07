@@ -1,6 +1,6 @@
 import 'package:anime_twist_flut/providers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 extension ZoomOnFocus on Widget {
   Widget zoomOnFocusWidget(

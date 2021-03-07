@@ -7,7 +7,7 @@ import 'package:anime_twist_flut/providers/settings/DoubleTapDuration.dart';
 import 'package:anime_twist_flut/providers/settings/PlaybackSpeedProvider.dart';
 import 'package:anime_twist_flut/providers/settings/ZoomFactorProvider.dart';
 import 'package:anime_twist_flut/services/SharedPreferencesManager.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferencesManager>((ref) {
   return SharedPreferencesManager();

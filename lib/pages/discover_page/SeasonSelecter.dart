@@ -1,6 +1,6 @@
 import 'package:anime_twist_flut/providers/KitsuDiscoverURLProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SeasonSelector extends StatelessWidget {
   const SeasonSelector({

@@ -10,7 +10,7 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:anime_twist_flut/widgets/InitialLoadingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:anime_twist_flut/providers.dart';
 
 class CustomImageCache extends WidgetsFlutterBinding {

@@ -9,7 +9,7 @@ import 'package:anime_twist_flut/pages/discover_page/SubtypeSelecter.dart';
 import 'package:anime_twist_flut/providers/KitsuDiscoverURLProvider.dart';
 import 'package:anime_twist_flut/services/kitsu_service/KitsuAnimeListApiService.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
 class DiscoverPage extends StatefulWidget {

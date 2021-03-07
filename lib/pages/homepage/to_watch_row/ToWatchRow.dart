@@ -3,7 +3,7 @@ import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/pages/discover_page/DiscoverAnimeTile.dart';
 import 'package:anime_twist_flut/pages/discover_page/SubCategoryText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ToWatchRow extends StatefulWidget {
   @override
