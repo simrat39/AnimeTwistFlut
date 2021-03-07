@@ -64,7 +64,7 @@ class MainActivity : FlutterActivity() {
         val headers = arrayOf<String>("Referer", referer, "User-Agent", "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0")
         intent.data = Uri.parse(url)
         intent.putExtra("headers", headers)
-        intent.setPackage("com.mxtech.videoplayer.ad")
+
         context.startActivity(intent)
     }
 }
