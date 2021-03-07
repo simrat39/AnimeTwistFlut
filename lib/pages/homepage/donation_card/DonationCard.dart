@@ -8,7 +8,7 @@ import 'package:anime_twist_flut/utils/GetUtils.dart';
 // Project imports:
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../utils/homepage/DonationUtils.dart';
+// import '../../../utils/homepage/DonationUtils.dart';
 import '../../../animations/TwistLoadingWidget.dart';
 
 class DonationCard extends StatefulWidget {
@@ -55,12 +55,12 @@ class _DonationCardState extends State<DonationCard>
                                 Navigator.of(context).pop();
                               },
                             ),
-                            ListTile(
-                              title: Text('Patreon'),
-                              onTap: () {
-                                DonationUtils.donatePatreon();
-                              },
-                            ),
+                            // ListTile(
+                            //   title: Text('Patreon'),
+                            //   onTap: () {
+                            //     DonationUtils.donatePatreon();
+                            //   },
+                            // ),
                             ListTile(
                               title: Text('Bitcoin'),
                               onTap: () {
