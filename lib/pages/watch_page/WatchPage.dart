@@ -74,6 +74,15 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   String _vidUrl;
   Map<String, String> _headers;
 
+  String getCdn() {
+    if (widget.twistModel.ongoing) {
+      if (widget.episodes.length - widget.episodeModel.number < 10) {
+        return 'https://air-cdn.twist.moe';
+      }
+    }
+    return 'https://cdn.twist.moe';
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     setState(() {
@@ -118,8 +127,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
       if (sourceSuffix.startsWith('https')) {
         _vidUrl = Uri.parse(sourceSuffix).toString();
       } else {
-        _vidUrl =
-            Uri.parse('https://air-cdn.twist.moe' + sourceSuffix).toString();
+        _vidUrl = Uri.parse(getCdn() + sourceSuffix).toString();
       }
 
       _controller = VideoPlayerController.network(_vidUrl, headers: _headers)
