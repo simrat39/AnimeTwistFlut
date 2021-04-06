@@ -3,6 +3,7 @@ import 'package:anime_twist_flut/exceptions/NoInternetException.dart';
 import 'package:anime_twist_flut/exceptions/TwistDownException.dart';
 import 'package:anime_twist_flut/pages/error_page/ErrorPage.dart';
 import 'package:anime_twist_flut/pages/root_window/root_window.dart';
+import 'package:anime_twist_flut/providers.dart';
 import 'package:anime_twist_flut/providers/NetworkInfoProvider.dart';
 import 'package:anime_twist_flut/services/twist_service/TwistApiService.dart';
 import 'package:anime_twist_flut/theme.dart';
@@ -11,7 +12,11 @@ import 'package:anime_twist_flut/widgets/InitialLoadingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:anime_twist_flut/providers.dart';
+
+void main() {
+  CustomImageCache();
+  runApp(ProviderScope(child: MainWidget()));
+}
 
 class CustomImageCache extends WidgetsFlutterBinding {
   @override
@@ -24,11 +29,6 @@ class CustomImageCache extends WidgetsFlutterBinding {
   }
 }
 
-void main() {
-  CustomImageCache();
-  runApp(ProviderScope(child: MainWidget()));
-}
-
 class MainWidget extends StatefulWidget {
   @override
   _MainWidgetState createState() => _MainWidgetState();
@@ -39,7 +39,7 @@ class _MainWidgetState extends State<MainWidget>
   final _initDataProvider = FutureProvider.autoDispose((ref) async {
     ref.maintainState = true;
 
-    // android: Make the navbar transparent, the actual color will be set in
+    // android: MAKE the navbar transparent, the actual color will be set in
     // styles.xml
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,

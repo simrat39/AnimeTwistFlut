@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:anime_twist_flut/pages/settings_page/DoubleTapDurationSetting.dart';
@@ -8,6 +9,7 @@ import 'package:anime_twist_flut/pages/settings_page/ZoomFactorSetting.dart';
 import 'package:anime_twist_flut/pages/watch_page/DoubleTapLayer.dart';
 import 'package:anime_twist_flut/animations/TwistLoadingWidget.dart';
 import 'package:anime_twist_flut/pages/watch_page/LaunchExternalPlayerButton.dart';
+import 'package:anime_twist_flut/pages/watch_page/shelf_proxy.dart';
 import 'package:anime_twist_flut/utils/GetUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_player_header/video_player_header.dart';
+import 'package:shelf/shelf_io.dart' as shelf_io;
 
 // Project imports:
 import '../../models/EpisodeModel.dart';
@@ -30,7 +33,7 @@ import '../../secrets.dart';
 import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:anime_twist_flut/providers.dart';
+import 'package:anime_twist_flut/providers.dart':;
 
 enum VideoMode {
   Normal,
@@ -70,6 +73,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
   String currentPositionStr;
   Future _init;
   Timer t;
+  HttpServer req;
 
   String _vidUrl;
   Map<String, String> _headers;
@@ -168,6 +172,7 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     Wakelock.toggle(enable: false);
     _controller.dispose();
+    req.close();
     super.dispose();
   }
 
@@ -315,6 +320,11 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
     ]);
     await SystemChrome.setEnabledSystemUIOverlays([]);
     await Wakelock.toggle(enable: true);
+    req = await shelf_io.serve(
+      proxyHandler(_vidUrl, headers: _headers),
+      'localhost',
+      8080,
+    );
     while (!(_controller?.value?.initialized ?? false)) {
       await Future.delayed(100.milliseconds);
     }
@@ -705,7 +715,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
                                         ),
                                       ),
                                       LaunchExternalPlayerButton(
-                                        url: _vidUrl,
+                                        url:
+                                            'http://${req.address.host}:${req.port}',
                                         referer: _headers.values.first,
                                         pause: pause,
                                       ),

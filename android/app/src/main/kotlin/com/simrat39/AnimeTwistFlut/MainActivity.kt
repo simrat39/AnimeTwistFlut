@@ -62,7 +62,7 @@ class MainActivity : FlutterActivity() {
     private fun launchMxPlayer(url: String, referer: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         val headers = arrayOf<String>("Referer", referer, "User-Agent", "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0")
-        intent.data = Uri.parse(url)
+        intent.setDataAndType(Uri.parse(url), "video/*");
         intent.putExtra("headers", headers)
 
         context.startActivity(intent)

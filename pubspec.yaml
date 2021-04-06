@@ -20,6 +20,7 @@ dependencies:
   video_player_header:
     git:
       url: https://github.com/simrat39/videoPlayerWithHeader
+  android_intent: ^2.0.0
   auto_size_text: ^2.1.0
   cached_network_image: ^2.5.0
   device_apps: ^1.2.0
