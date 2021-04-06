@@ -33,7 +33,7 @@ import '../../secrets.dart';
 import '../../utils/TimeUtils.dart';
 import '../../utils/watch_page/CryptoUtils.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:anime_twist_flut/providers.dart':;
+import 'package:anime_twist_flut/providers.dart';
 
 enum VideoMode {
   Normal,
@@ -132,6 +132,8 @@ class _WatchPageState extends State<WatchPage> with WidgetsBindingObserver {
         _vidUrl = Uri.parse(sourceSuffix).toString();
       } else {
         _vidUrl = Uri.parse(getCdn() + sourceSuffix).toString();
+        // dont ask me why, twist servers are wack
+        _vidUrl = _vidUrl.replaceAll('\%5B', '[').replaceAll('\%5D', ']');
       }
 
       _controller = VideoPlayerController.network(_vidUrl, headers: _headers)
